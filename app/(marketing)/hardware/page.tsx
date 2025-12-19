@@ -11,7 +11,7 @@ export default function Home() {
     <>
       <div className="flex flex-col bg-white text-black">
         <Navigation />
-        <div className="px-5 pb-32 max-w-[1600px] w-full mx-auto flex flex-col gap-10">
+        <div className="px-5 pb-32 max-w-viewport w-full mx-auto flex flex-col gap-10">
           <div className="pt-32 flex flex-row gap-10">
             <div className="flex flex-col gap-12 items-start justify-center flex-1 min-w-0">
               <div className="max-w-5xl">
@@ -33,7 +33,7 @@ export default function Home() {
       <SelectHardware />
       {/* product compare */}
       <div className="py-32 bg-white text-black">
-        <div className="max-w-[1600px] w-full mx-auto px-5 flex flex-col gap-10">
+        <div className="max-w-viewport w-full mx-auto px-5 flex flex-col gap-10">
           <div className="grid grid-cols-4 gap-16 p-12">
             <h2 className="text-6xl">Compare Products</h2>
             <AnimatedCard className="min-w-[300px]" disableScale disableTextColor isOnLight>

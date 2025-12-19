@@ -32,6 +32,7 @@
   --color-accent: #4BDEB7;
   --color-dark-foreground: #BFBFBF;
   --color-light-foreground: #808080;
+  --spacing-viewport: 1600px;
   /* --container-max-width: 1600px; */
 }
 

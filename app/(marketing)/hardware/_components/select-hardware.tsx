@@ -96,7 +96,7 @@ export const SelectHardware = () => {
 
     return (
         <div>
-            <div className="bg-dark max-w-[1600px] w-full mx-auto px-5">
+            <div className="bg-dark max-w-viewport w-full mx-auto px-5">
                 {/* hw selector */}
                 <div className="py-32 pt-48 flex flex-col gap-12">
                     <div className="relative flex flex-col gap-8">
@@ -153,7 +153,7 @@ export const SelectHardware = () => {
                     </div>
                 </div>
             </div>
-            <div className="bg-dark max-w-[1600px] w-full mx-auto px-5">
+            <div className="bg-dark max-w-viewport w-full mx-auto px-5">
                 <div className="py-32 pb-48 flex flex-col gap-12">
                     <div className="flex flex-row gap-4 justify-between items-center">
                         <h2 className="text-6xl">Nvidia H100</h2>

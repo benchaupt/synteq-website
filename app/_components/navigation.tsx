@@ -3,7 +3,7 @@ import { AnimatedButton } from './animated-button';
 
 export const Navigation = () => {
     return (
-        <div className="flex flex-row items-center justify-between py-6 px-5 max-w-[1600px] w-full mx-auto">
+        <div className="flex flex-row items-center justify-between py-6 px-5 max-w-viewport w-full mx-auto">
             <svg width="159" height="50" viewBox="0 0 159 50" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clipPath="url(#clip0_407_3194)">
                     <path d="M11.3314 36.0003C4.58532 36.0003 0.155704 32.1363 0 26.2068H5.56403C5.71973 29.2256 8.19193 30.8112 11.538 30.8112C14.6298 30.8112 16.9971 29.4861 16.9971 27.1061C16.9971 24.3542 14.0102 23.7696 10.6101 23.1881C5.97394 22.3396 0.514776 21.2815 0.514776 14.6657C0.514776 9.53061 4.78869 5.98438 11.2806 5.98438C17.7725 5.98438 21.9415 9.63865 22.0464 15.1423H16.6381C16.5364 12.4413 14.4741 10.9605 11.1281 10.9605C7.98538 10.9605 6.02796 12.3905 6.02796 14.4559C6.02796 16.998 8.86241 17.4747 12.2085 18.0562C16.8955 18.8506 22.612 19.8039 22.612 26.8455C22.612 32.4032 18.1316 36.0034 11.3314 36.0034V36.0003Z" fill="currentColor" />
