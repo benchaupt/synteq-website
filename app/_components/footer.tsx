@@ -3,7 +3,7 @@ import Link from "next/link"
 export const Footer = () => {
     return (
         <div className="max-w-viewport w-full mx-auto px-5 py-24 flex flex-col gap-12 items-center justify-center">
-            <div className="grid grid-cols-2 gap-4 w-full">
+            <div className="grid lg:grid-cols-2 gap-4 w-full">
                 <div className="flex flex-row items-center justify-start">
                     <svg width="196" height="62" viewBox="0 0 196 62" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clipPath="url(#clip0_299_1571)">
@@ -27,7 +27,7 @@ export const Footer = () => {
                     <p className="text-lg">dolor sit amet, consectetur adipiscing elit. Phasellus porttitor, ex vitae vehicula sodales, urna sapien interdum orci, sed. Phasellus porttitor, ex vitae vehicula sodales phasellus.</p>
                 </div>
             </div>
-            <div className="grid grid-cols-2 gap-4 w-full">
+            <div className="grid lg:grid-cols-2 gap-16 w-full">
                 <div className="flex flex-col items-start justify-start gap-8">
                     <div className="flex flex-col gap-4">
                         <h2 className="text-2xl font-medium">Contact</h2>
@@ -72,7 +72,7 @@ export const Footer = () => {
                         </Link>
                     </div>
                 </div>
-                <div className="grid grid-cols-4 gap-8">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
                     <div className="flex flex-col gap-4">
                         <h2 className="text-xl font-medium">Company</h2>
                         <Link href="#">

@@ -1,7 +1,9 @@
 "use client";
+import { useState } from 'react';
 import { AnimatedButton } from './animated-button';
 
 export const Navigation = () => {
+    const [mobileNavbar, setMobileNavbar] = useState(false);
     return (
         <div className="flex flex-row items-center justify-between py-6 px-5 max-w-viewport w-full mx-auto">
             <svg width="159" height="50" viewBox="0 0 159 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -22,7 +24,7 @@ export const Navigation = () => {
                 </defs>
             </svg>
 
-            <div className="flex flex-row items-center gap-4">
+            <div className="hidden lg:flex flex-row items-center gap-4">
                 <button className="p-5">
                     Products
                 </button>
@@ -36,11 +38,17 @@ export const Navigation = () => {
                     Resources
                 </button>
             </div>
-            <div>
+            <div className="lg:block hidden">
                 <AnimatedButton onClick={() => console.log('clicked')}>
                     Contact
                 </AnimatedButton>
             </div>
+            <button className="lg:hidden" onClick={() => setMobileNavbar(!mobileNavbar)}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+
+            </button>
         </div>
     )
 }

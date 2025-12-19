@@ -1,6 +1,8 @@
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 
+// TODO: use class-variance-authority for the classes/different type of states
+
 interface AnimatedCardProps {
   children: ReactNode;
   className?: string;
@@ -13,7 +15,7 @@ interface AnimatedCardProps {
 export function AnimatedCard({ children, className = "", disableScale = false, disableTextColor = false, isActive = false, isOnLight = false }: AnimatedCardProps) {
   return (
     <div
-      className={cn("relative p-8 px-12 border-2 bg-transparent transition-all duration-400 font-medium group", !disableScale && "hover:scale-[1.01]", !disableTextColor && "text-white/40 hover:text-white", isActive ? "border-accent/25" : (isOnLight ? "border-black/25 text-black" : "border-white/25 text-white"), className)}
+      className={cn("relative md:p-8 md:px-12 p-4 px-6 border-2 bg-transparent transition-all duration-400 font-medium group", !disableScale && "hover:scale-[1.01]", !disableTextColor && "text-white/40 hover:text-white", isActive ? "border-accent/25" : (isOnLight ? "border-black/25 text-black" : "border-white/25 text-white"), className)}
     >
       {/* Top-left corner - vertical line crossing top border */}
       <span className={cn("absolute -left-px top-0 w-[2px] h-3 rounded-t-full -translate-x-1/2 -translate-y-full group-hover:translate-y-[25%] group-hover:translate-x-[200%] group-hover:rounded-t-none group-hover:rounded-b-full transition-transform duration-200", isOnLight ? "bg-black" : "bg-white", isActive && "bg-accent translate-y-[25%] translate-x-[200%] rounded-t-none rounded-b-full")} />
