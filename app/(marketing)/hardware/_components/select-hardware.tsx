@@ -95,9 +95,9 @@ export const SelectHardware = () => {
 
     return (
         <div>
-            <div className="bg-dark px-5">
-                {/* hw selector */}
-                <div className="py-32 flex flex-col gap-12">
+            <div className="bg-dark max-w-[1600px] w-full mx-auto px-5">
+            {/* hw selector */}
+                <div className="py-32 pt-48 flex flex-col gap-12">
                     <div className="relative flex flex-col gap-8">
                         <div className="absolute top-0 left-0 w-[200px] h-full bg-linear-to-r from-background to-transparent" style={{
                             zIndex: 999,
@@ -153,8 +153,8 @@ export const SelectHardware = () => {
                     </div>
                 </div>
             </div>
-            <div className="bg-dark max-w-[1800px] w-full mx-auto px-5">
-                <div className="py-32 flex flex-col gap-12">
+            <div className="bg-dark max-w-[1600px] w-full mx-auto px-5">
+                <div className="py-32 pb-48 flex flex-col gap-12">
                     <div className="flex flex-row gap-4 justify-between items-center">
                         <h2 className="text-6xl">Nvidia H100</h2>
                         <AnimatedButton background={"dark"}>Contact</AnimatedButton>
@@ -216,10 +216,8 @@ export const SelectHardware = () => {
                         <div className="flex items-center justify-end col-span-2">
                             <img src="/assets/hardware/Group 20.png" className="object-contain" />
                         </div>
-
                     </div>
                 </div>
-
             </div>
         </div>
     )

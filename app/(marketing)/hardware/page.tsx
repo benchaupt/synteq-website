@@ -10,7 +10,7 @@ export default function Home() {
     <>
       <div className="flex flex-col bg-white text-black">
         <Navigation />
-        <div className="px-5 pb-32 max-w-[1800px] w-full mx-auto flex flex-col gap-10">
+        <div className="px-5 pb-32 max-w-[1600px] w-full mx-auto flex flex-col gap-10">
           <div className="pt-32 flex flex-row gap-10">
             <div className="flex flex-col gap-12 items-start justify-center flex-1 min-w-0">
               <div className="max-w-5xl">

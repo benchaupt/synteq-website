@@ -15,7 +15,7 @@ export default function Home() {
     <>
       <div className="flex flex-col bg-white text-black">
         <Navigation />
-        <div className="px-5 max-w-[1800px] w-full mx-auto flex flex-col gap-10">
+        <div className="px-5 max-w-[1600px] w-full mx-auto flex flex-col gap-10">
           <div className="pt-32 grid grid-cols-2 gap-10">
             <div className="flex flex-col gap-12 items-center justify-center">
               <h1 className="text-8xl">
@@ -51,7 +51,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="bg-dark max-w-[1800px] w-full mx-auto px-5">
+      <div className="bg-dark max-w-[1600px] w-full mx-auto px-5">
         <ScrollRevealText
           text={`Synteq AI gives you production-ready AI environments without forcing you to become an infrastructure expert. No cloud gymnastics. No GPU babysitting. No "DevOps first, product later" workflow.`}
           className="py-48"

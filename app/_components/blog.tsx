@@ -4,7 +4,7 @@ import { BlogCarousel } from "@/app/_components/blog-carousel"
 export const Blog = () => {
     return (
         <div className="flex flex-col bg-white text-black">
-            <div className="max-w-[1800px] w-full mx-auto px-5 py-64 flex flex-col">
+            <div className="max-w-[1600px] w-full mx-auto px-5 py-64 flex flex-col">
                 <div className="flex flex-row items-center justify-between gap-12">
                     <h2 className="text-6xl">Lorem ipsum dolor sit</h2>
                     <AnimatedButton>View All</AnimatedButton>

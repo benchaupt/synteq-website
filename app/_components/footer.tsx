@@ -2,7 +2,7 @@ import Link from "next/link"
 
 export const Footer = () => {
     return (
-        <div className="max-w-[1800px] w-full mx-auto px-5 py-24 flex flex-col gap-12 items-center justify-center">
+        <div className="max-w-[1600px] w-full mx-auto px-5 py-24 flex flex-col gap-12 items-center justify-center">
             <div className="grid grid-cols-2 gap-4 w-full">
                 <div className="flex flex-row items-center justify-start">
                     <svg width="196" height="62" viewBox="0 0 196 62" fill="none" xmlns="http://www.w3.org/2000/svg">
