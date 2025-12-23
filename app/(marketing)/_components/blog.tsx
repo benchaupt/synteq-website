@@ -7,9 +7,7 @@ export const Blog = () => {
             <div className="flex flex-row items-center justify-between gap-12 mb-16">
                 <h2 className="text-6xl tracking-[-1.8px] leading-[110px]">Read our blog</h2>
                 <div className="relative flex items-center">
-                    <div className="absolute -top-[5px] right-0 w-[147px] h-[5px] bg-gradient-to-r from-transparent to-white/25" />
                     <AnimatedButton className="min-w-[137px]">View All</AnimatedButton>
-                    <div className="absolute -bottom-[5px] right-0 w-[147px] h-[5px] bg-gradient-to-r from-transparent to-white/25" />
                 </div>
             </div>
             <BlogCarousel blogs={[

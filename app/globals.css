@@ -28,6 +28,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-dm-sans);
   --font-mono: var(--font-jetbrains-mono);
+  --font-sequal: var(--font-sequal-sans);
   --color-dark: #0F1215;
   --color-light: #F8F2F2;
   --color-accent: #4BDEB7;
