@@ -6,7 +6,7 @@ import { Footer } from "@/app/_components/footer";
 import { Navigation } from "@/app/_components/navigation";
 import { Statistics } from "@/app/_components/statistics";
 
-export default function Home() {
+export default function Hardware() {
   return (
     <>
       <div className="flex flex-col bg-white text-black">

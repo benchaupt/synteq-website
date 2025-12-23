@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "motion/react";
+import { motion, MotionValue, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 
 interface ScrollRevealTextProps {
@@ -8,32 +8,52 @@ interface ScrollRevealTextProps {
   className?: string;
 }
 
+interface WordProps {
+  word: string;
+  index: number;
+  totalWords: number;
+  scrollYProgress: MotionValue<number>;
+}
+
+function Word({ word, index, totalWords, scrollYProgress }: WordProps) {
+  const start = index / totalWords;
+  const end = (index + 1) / totalWords;
+
+  const opacity = useTransform(scrollYProgress, [start, end], [0.2, 1]);
+
+  return (
+    <motion.span
+      className="inline-block mr-[0.25em]"
+      style={{ opacity }}
+    >
+      {word}
+    </motion.span>
+  );
+}
+
 export function ScrollRevealText({ text, className }: ScrollRevealTextProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start 0.8", "start 0.2"],
+    offset: ["start 0.9", "end 0.6"],
   });
 
-  // Gradient position moves as you scroll (-20% to 100% to fully complete)
-  const gradientY = useTransform(scrollYProgress, [0, 1], [-80, 100]);
+  // Split text into words
+  const words = text.split(" ");
 
   return (
     <div ref={containerRef} className={className}>
-      <motion.p
-        className="text-4xl md:text-5xl lg:text-6xl leading-tight max-w-7xl"
-        style={{
-          backgroundImage: useTransform(
-            gradientY,
-            (y) => `linear-gradient(to bottom, white ${y}%, rgba(60, 60, 60, 1) ${y + 30}%)`
-          ),
-          backgroundClip: "text",
-          WebkitBackgroundClip: "text",
-          color: "transparent",
-        }}
-      >
-        {text}
-      </motion.p>
+      <p className="text-4xl md:text-5xl lg:text-6xl leading-tight max-w-8xl">
+        {words.map((word, index) => (
+          <Word
+            key={index}
+            word={word}
+            index={index}
+            totalWords={words.length}
+            scrollYProgress={scrollYProgress}
+          />
+        ))}
+      </p>
     </div>
   );
 }

@@ -1,7 +1,7 @@
+import { Blog } from "@/app/(marketing)/_components/blog";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/app/_components/accordion";
 import { AnimatedButton } from "@/app/_components/animated-button";
 import { AnimatedCard } from "@/app/_components/animated-card";
-import { Blog } from "@/app/_components/blog";
 import { CallToAction } from "@/app/_components/call-to-action";
 import { Footer } from "@/app/_components/footer";
 import { Navigation } from "@/app/_components/navigation";
@@ -10,7 +10,7 @@ import { Statistics } from "@/app/_components/statistics";
 import { TestimonialCarousel } from "@/app/_components/testimonial-carousel";
 import Link from "next/link";
 
-export default function Home() {
+export default function Cloud() {
   return (
     <>
       <div className="flex flex-col bg-white text-black">

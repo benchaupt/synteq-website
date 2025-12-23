@@ -39,7 +39,7 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
     }, [emblaApi]);
     
     return (
-        <div className="relative flex flex-col gap-8">
+        <div className="relative flex flex-col gap-8 max-w-viewport w-full mx-auto px-5 py-32">
             <div className="absolute top-0 left-0 w-[200px] h-full bg-linear-to-r from-background to-transparent" style={{
                 zIndex: 999,
             }} />

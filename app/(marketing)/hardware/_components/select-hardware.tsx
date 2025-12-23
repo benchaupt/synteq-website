@@ -70,7 +70,7 @@ const hardware: Hardware[] = [
 
 ]
 
-export const SelectHardware = () => {
+export const SelectHardware = ({ hideOverview = false, className = "" }: { hideOverview?: boolean, className?: string }) => {
     const [emblaRef, emblaApi] = useEmblaCarousel({
         loop: true,
         dragFree: false,
@@ -98,7 +98,7 @@ export const SelectHardware = () => {
         <div>
             <div className="bg-dark max-w-viewport w-full mx-auto px-5">
                 {/* hw selector */}
-                <div className="py-16 sm:py-32 sm:pt-48 flex flex-col gap-8">
+                <div className={cn("py-16 sm:py-32 sm:pt-48 flex flex-col gap-8", className)}>
                     <div className="relative flex flex-col gap-8">
                         <div className="absolute top-0 left-0 w-[25px] sm:w-[200px] h-full bg-linear-to-r from-background to-transparent" style={{
                             zIndex: 999,
@@ -153,72 +153,74 @@ export const SelectHardware = () => {
                     </div>
                 </div>
             </div>
-            <div className="bg-dark max-w-viewport w-full mx-auto px-5">
-                <div className="py-16 sm:py-32 pb-32 sm:pb-48 flex flex-col gap-8">
-                    <div className="flex flex-col sm:flex-row gap-8 sm:gap-4 justify-between sm:items-center items-start">
-                        <h2 className="text-4xl sm:text-6xl">Nvidia H100</h2>
-                        <AnimatedButton background={"dark"}>Contact</AnimatedButton>
-                    </div>
-                    <div className="grid md:grid-cols-5 gap-8 w-full">
-                        <div className="col-span-3 flex flex-col justify-start gap-12 order-2 sm:order-1">
-                            <div className="flex items-center justify-start">
-                                <div className="grid grid-cols-2 sm:grid-cols-4 gap-12 sm:text-2xl text-sm">
-                                    <div className="flex flex-col pr-12">
-                                        <p className="text-white/50">vRAM</p>
-                                        <h2 className="text-2xl sm:text-3xl inline-flex items-center gap-0.5">128<span className="text-sm sm:text-xl">gb</span></h2>
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <p className="text-white/50">vRAM</p>
-                                        <h2 className="text-2xl sm:text-3xl inline-flex items-center gap-0.5">128<span className="text-sm sm:text-xl">gb</span></h2>
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <p className="text-white/50">vRAM</p>
-                                        <h2 className="text-2xl sm:text-3xl inline-flex items-center gap-0.5">128<span className="text-sm sm:text-xl">gb</span></h2>
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <p className="text-white/50">vRAM</p>
-                                        <h2 className="text-2xl sm:text-3xl inline-flex items-center gap-0.5">128<span className="text-sm sm:text-xl">gb</span></h2>
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <p className="text-white/50">vRAM</p>
-                                        <h2 className="text-2xl sm:text-3xl inline-flex items-center gap-0.5">128<span className="text-sm sm:text-xl">gb</span></h2>
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <p className="text-white/50">vRAM</p>
-                                        <h2 className="text-2xl sm:text-3xl inline-flex items-center gap-0.5">128<span className="text-sm sm:text-xl">gb</span></h2>
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <p className="text-white/50">vRAM</p>
-                                        <h2 className="text-2xl sm:text-3xl inline-flex items-center gap-0.5">128<span className="text-sm sm:text-xl">gb</span></h2>
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <p className="text-white/50">vRAM</p>
-                                        <h2 className="text-2xl sm:text-3xl inline-flex items-center gap-0.5">128<span className="text-sm sm:text-xl">gb</span></h2>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="flex-1" />
-                            <div className="grid sm:grid-cols-3 gap-12">
-                                <div className="flex flex-col sm:text-2xl text-sm">
-                                    <h2 className="text-white/50">Paragraph</h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae sapien at arcu volutpat interdum. Quisque nec justo nec neque efficitur tincidunt.</p>
-                                </div>
-                                <div className="flex flex-col sm:text-2xl text-sm">
-                                    <h2 className="text-white/50">Paragraph</h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae sapien at arcu volutpat interdum. Quisque nec justo nec neque efficitur tincidunt.</p>
-                                </div>
-                                <div className="flex flex-col sm:text-2xl text-sm">
-                                    <h2 className="text-white/50">Paragraph</h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae sapien at arcu volutpat interdum. Quisque nec justo nec neque efficitur tincidunt.</p>
-                                </div>
-                            </div>
+            {!hideOverview && (
+                <div className="max-w-viewport w-full mx-auto px-5">
+                    <div className="py-16 sm:py-32 pb-32 sm:pb-48 flex flex-col gap-8">
+                        <div className="flex flex-col sm:flex-row gap-8 sm:gap-4 justify-between sm:items-center items-start">
+                            <h2 className="text-4xl sm:text-6xl">Nvidia H100</h2>
+                            <AnimatedButton background={"dark"}>Contact</AnimatedButton>
                         </div>
-                        <div className="flex items-center justify-end col-span-2 order-1 sm:order-2">
-                            <img src="/assets/hardware/Group 20.png" className="object-contain" />
+                        <div className="grid md:grid-cols-5 gap-8 w-full">
+                            <div className="col-span-3 flex flex-col justify-start gap-12 order-2 sm:order-1">
+                                <div className="flex items-center justify-start">
+                                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-12 sm:text-2xl text-sm">
+                                        <div className="flex flex-col pr-12">
+                                            <p className="text-white/50">vRAM</p>
+                                            <h2 className="text-2xl sm:text-3xl inline-flex items-center gap-0.5">128<span className="text-sm sm:text-xl">gb</span></h2>
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <p className="text-white/50">vRAM</p>
+                                            <h2 className="text-2xl sm:text-3xl inline-flex items-center gap-0.5">128<span className="text-sm sm:text-xl">gb</span></h2>
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <p className="text-white/50">vRAM</p>
+                                            <h2 className="text-2xl sm:text-3xl inline-flex items-center gap-0.5">128<span className="text-sm sm:text-xl">gb</span></h2>
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <p className="text-white/50">vRAM</p>
+                                            <h2 className="text-2xl sm:text-3xl inline-flex items-center gap-0.5">128<span className="text-sm sm:text-xl">gb</span></h2>
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <p className="text-white/50">vRAM</p>
+                                            <h2 className="text-2xl sm:text-3xl inline-flex items-center gap-0.5">128<span className="text-sm sm:text-xl">gb</span></h2>
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <p className="text-white/50">vRAM</p>
+                                            <h2 className="text-2xl sm:text-3xl inline-flex items-center gap-0.5">128<span className="text-sm sm:text-xl">gb</span></h2>
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <p className="text-white/50">vRAM</p>
+                                            <h2 className="text-2xl sm:text-3xl inline-flex items-center gap-0.5">128<span className="text-sm sm:text-xl">gb</span></h2>
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <p className="text-white/50">vRAM</p>
+                                            <h2 className="text-2xl sm:text-3xl inline-flex items-center gap-0.5">128<span className="text-sm sm:text-xl">gb</span></h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex-1" />
+                                <div className="grid sm:grid-cols-3 gap-12">
+                                    <div className="flex flex-col sm:text-2xl text-sm">
+                                        <h2 className="text-white/50">Paragraph</h2>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae sapien at arcu volutpat interdum. Quisque nec justo nec neque efficitur tincidunt.</p>
+                                    </div>
+                                    <div className="flex flex-col sm:text-2xl text-sm">
+                                        <h2 className="text-white/50">Paragraph</h2>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae sapien at arcu volutpat interdum. Quisque nec justo nec neque efficitur tincidunt.</p>
+                                    </div>
+                                    <div className="flex flex-col sm:text-2xl text-sm">
+                                        <h2 className="text-white/50">Paragraph</h2>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae sapien at arcu volutpat interdum. Quisque nec justo nec neque efficitur tincidunt.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex items-center justify-end col-span-2 order-1 sm:order-2">
+                                <img src="/assets/hardware/Group 20.png" className="object-contain" />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            )}
         </div>
     )
 }
