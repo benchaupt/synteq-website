@@ -7,6 +7,7 @@ export const Navigation = () => {
     const [mobileNavbar, setMobileNavbar] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
     const [isScrolled, setIsScrolled] = useState(false);
+    const [mobileActiveDropdown, setMobileActiveDropdown] = useState<string | null>(null);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -16,6 +17,17 @@ export const Navigation = () => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    useEffect(() => {
+        if (mobileNavbar) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [mobileNavbar]);
     
     return (
         <nav className={`sticky top-0 z-50 bg-background backdrop-blur-xl transition-all duration-200 ${isScrolled ? 'border-b border-white/5' : ''}`}>
@@ -196,14 +208,222 @@ export const Navigation = () => {
 
                 {/* Mobile Menu Button */}
                 <button 
-                    className="lg:hidden text-white/80 hover:text-accent transition-colors"
+                    className="lg:hidden text-white/80 hover:text-accent transition-colors z-50 relative"
                     onClick={() => setMobileNavbar(!mobileNavbar)}
+                    aria-label="Toggle menu"
                 >
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                    </svg>
+                    {mobileNavbar ? (
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    ) : (
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        </svg>
+                    )}
                 </button>
             </div>
+
+            {/* Mobile Menu Overlay */}
+            {mobileNavbar && (
+                <div className="fixed inset-0 z-40 lg:hidden">
+                    <div className="fixed inset-0 bg-background/95 backdrop-blur-xl" onClick={() => setMobileNavbar(false)} />
+                    <div className="fixed inset-0 flex items-start justify-center pt-20 overflow-y-auto">
+                        <div className="relative w-full max-w-md px-5 pb-8">
+                            <nav className="flex flex-col gap-6">
+                                {/* Product Section */}
+                                <div className="border-b border-white/10 pb-6">
+                                    <button 
+                                        onClick={() => setMobileActiveDropdown(mobileActiveDropdown === 'product' ? null : 'product')}
+                                        className="flex items-center justify-between w-full text-xl text-white/90 hover:text-accent transition-colors"
+                                    >
+                                        <span>Product</span>
+                                        <svg 
+                                            className={`size-5 transition-transform ${mobileActiveDropdown === 'product' ? 'rotate-180' : ''}`} 
+                                            fill="none" 
+                                            viewBox="0 0 24 24" 
+                                            stroke="currentColor"
+                                        >
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </button>
+                                    {mobileActiveDropdown === 'product' && (
+                                        <div className="mt-4 ml-4 space-y-4">
+                                            <div className="space-y-3">
+                                                <p className="text-xs text-white/40 uppercase tracking-wider">Infrastructure</p>
+                                                <Link 
+                                                    href="/hardware" 
+                                                    className="flex items-start gap-3 py-2"
+                                                    onClick={() => setMobileNavbar(false)}
+                                                >
+                                                    <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0">
+                                                        <svg className="size-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+                                                        </svg>
+                                                    </div>
+                                                    <div>
+                                                        <div className="text-white font-medium">Hardware</div>
+                                                        <div className="text-sm text-white/40 mt-0.5">GPU clusters & dedicated servers</div>
+                                                    </div>
+                                                </Link>
+                                                <Link 
+                                                    href="/cloud" 
+                                                    className="flex items-start gap-3 py-2"
+                                                    onClick={() => setMobileNavbar(false)}
+                                                >
+                                                    <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0">
+                                                        <svg className="size-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+                                                        </svg>
+                                                    </div>
+                                                    <div>
+                                                        <div className="text-white font-medium">Cloud Platform</div>
+                                                        <div className="text-sm text-white/40 mt-0.5">Deploy in minutes</div>
+                                                    </div>
+                                                </Link>
+                                            </div>
+                                            <div className="space-y-3 pt-3">
+                                                <p className="text-xs text-white/40 uppercase tracking-wider">Platform</p>
+                                                <Link 
+                                                    href="#" 
+                                                    className="flex items-start gap-3 py-2"
+                                                    onClick={() => setMobileNavbar(false)}
+                                                >
+                                                    <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0">
+                                                        <svg className="size-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                                        </svg>
+                                                    </div>
+                                                    <div>
+                                                        <div className="text-white font-medium">Model Library</div>
+                                                        <div className="text-sm text-white/40 mt-0.5">255+ production models</div>
+                                                    </div>
+                                                </Link>
+                                                <Link 
+                                                    href="#" 
+                                                    className="flex items-start gap-3 py-2"
+                                                    onClick={() => setMobileNavbar(false)}
+                                                >
+                                                    <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0">
+                                                        <svg className="size-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                                                        </svg>
+                                                    </div>
+                                                    <div>
+                                                        <div className="text-white font-medium">API</div>
+                                                        <div className="text-sm text-white/40 mt-0.5">OpenAPI compatible</div>
+                                                    </div>
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Resources Section */}
+                                <div className="border-b border-white/10 pb-6">
+                                    <button 
+                                        onClick={() => setMobileActiveDropdown(mobileActiveDropdown === 'resources' ? null : 'resources')}
+                                        className="flex items-center justify-between w-full text-xl text-white/90 hover:text-accent transition-colors"
+                                    >
+                                        <span>Resources</span>
+                                        <svg 
+                                            className={`size-5 transition-transform ${mobileActiveDropdown === 'resources' ? 'rotate-180' : ''}`} 
+                                            fill="none" 
+                                            viewBox="0 0 24 24" 
+                                            stroke="currentColor"
+                                        >
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </button>
+                                    {mobileActiveDropdown === 'resources' && (
+                                        <div className="mt-4 ml-4 space-y-3">
+                                            <Link 
+                                                href="#" 
+                                                className="flex items-start gap-3 py-2"
+                                                onClick={() => setMobileNavbar(false)}
+                                            >
+                                                <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0">
+                                                    <svg className="size-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <div className="text-white font-medium">Documentation</div>
+                                                    <div className="text-sm text-white/40 mt-0.5">Complete guides & tutorials</div>
+                                                </div>
+                                            </Link>
+                                            <Link 
+                                                href="#" 
+                                                className="flex items-start gap-3 py-2"
+                                                onClick={() => setMobileNavbar(false)}
+                                            >
+                                                <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0">
+                                                    <svg className="size-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <div className="text-white font-medium">Case Studies</div>
+                                                    <div className="text-sm text-white/40 mt-0.5">Customer success stories</div>
+                                                </div>
+                                            </Link>
+                                            <Link 
+                                                href="#" 
+                                                className="flex items-start gap-3 py-2"
+                                                onClick={() => setMobileNavbar(false)}
+                                            >
+                                                <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0">
+                                                    <svg className="size-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <div className="text-white font-medium">Blog</div>
+                                                    <div className="text-sm text-white/40 mt-0.5">Latest updates & insights</div>
+                                                </div>
+                                            </Link>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Direct Links */}
+                                <Link 
+                                    href="#" 
+                                    className="text-xl text-white/90 hover:text-accent transition-colors border-b border-white/10 pb-6"
+                                    onClick={() => setMobileNavbar(false)}
+                                >
+                                    Pricing
+                                </Link>
+                                <Link 
+                                    href="#" 
+                                    className="text-xl text-white/90 hover:text-accent transition-colors border-b border-white/10 pb-6"
+                                    onClick={() => setMobileNavbar(false)}
+                                >
+                                    Customers
+                                </Link>
+
+                                {/* CTA Buttons */}
+                                <div className="flex flex-col gap-3 pt-4">
+                                    <Link 
+                                        href="#" 
+                                        className="text-center py-3 text-white/70 hover:text-white transition-colors"
+                                        onClick={() => setMobileNavbar(false)}
+                                    >
+                                        Sign in
+                                    </Link>
+                                    <AnimatedButton 
+                                        background="primary" 
+                                        className="hover:bg-background-secondary w-full"
+                                        onClick={() => setMobileNavbar(false)}
+                                    >
+                                        Get Started
+                                    </AnimatedButton>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            )}
         </nav>
     )
 }

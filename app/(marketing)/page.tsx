@@ -14,24 +14,24 @@ import Link from "next/link";
 export default function Landing() {
   return (
     <>
-      <div className="px-5 max-w-viewport w-full mx-auto flex flex-col gap-10">
-        <div className="pt-16 flex flex-col gap-10">
-          <div className="flex flex-col gap-12 items-start justify-center">
-            <h1 className="text-[92px] max-w-[17ch] leading-tight tracking-tight font-sequel-book">
+      <div className="px-5 max-w-viewport w-full mx-auto flex flex-col gap-6 md:gap-10">
+        <div className="pt-8 md:pt-16 flex flex-col gap-6 md:gap-10">
+          <div className="flex flex-col gap-6 md:gap-12 items-start justify-center">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[92px] max-w-[17ch] leading-tight tracking-tight font-sequel-book">
             Breakthrough AI inferences built to scale
             </h1>
           </div>
-          <div className="grid grid-cols-3 gap-12">
-            <div className="col-span-2">
-              <img src="/assets/landing/Mask group1.png" className="" alt="" />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-12">
+            <div className="lg:col-span-2">
+              <img src="/assets/landing/Mask group1.png" className="w-full" alt="" />
             </div>
-            <div className="flex flex-col gap-8 justify-end mb-2">
-              <p className="text-xl max-w-[32ch]">Launch, run, and scale AI models in minutes, without the cloud confusion, GPU expertise, or unpredictable costs. As easy as a single click. <br></br><br></br> Synteq AI gives teams a simple way to turn ideas into production AI in a weekend.</p>
-              <div className="flex flex-row gap-10">
-                <AnimatedButton background="primary" className="hover:bg-accent/50">
+            <div className="flex flex-col gap-6 md:gap-8 justify-end mb-2">
+              <p className="text-base md:text-lg lg:text-xl max-w-[32ch]">Launch, run, and scale AI models in minutes, without the cloud confusion, GPU expertise, or unpredictable costs. As easy as a single click. <br></br><br></br> Synteq AI gives teams a simple way to turn ideas into production AI in a weekend.</p>
+              <div className="flex flex-col sm:flex-row gap-4 md:gap-6 lg:gap-10">
+                <AnimatedButton background="primary" className="hover:bg-accent/50 w-full sm:w-auto">
                   Launch
                 </AnimatedButton>
-                <AnimatedButton background="dark" className="hover:bg-background-secondary">
+                <AnimatedButton background="dark" className="hover:bg-background-secondary w-full sm:w-auto">
                   Contact Sales
                 </AnimatedButton>
               </div>
@@ -39,10 +39,10 @@ export default function Landing() {
           </div>
         </div>
 
-        <div className="py-24 flex flex-col gap-12">
+        <div className="py-12 md:py-16 lg:py-24 flex flex-col gap-8 md:gap-12">
           <Marquee pauseOnHover className="[--duration:60s]">
             {[...Array(10)].map((_, index) => (
-              <svg className="h-7 mx-8" viewBox="0 0 200 37" fill="none" xmlns="http://www.w3.org/2000/svg" key={index}>
+              <svg className="h-5 md:h-7 mx-4 md:mx-8" viewBox="0 0 200 37" fill="none" xmlns="http://www.w3.org/2000/svg" key={index}>
                 <g clipPath="url(#clip0_383_1232)">
                   <path d="M151.155 29.299H113.764V3.21166C113.764 2.35987 113.426 1.54297 112.823 0.940672C112.221 0.338372 111.403 0 110.551 0C109.699 0 108.882 0.338372 108.279 0.940672C107.676 1.54297 107.338 2.35987 107.338 3.21166V32.3647C107.374 33.2441 107.74 34.0779 108.363 34.7C108.986 35.3222 109.82 35.6872 110.7 35.7223H151.155C151.577 35.7223 151.995 35.6393 152.385 35.4778C152.775 35.3164 153.129 35.0799 153.427 34.7817C153.726 34.4834 153.963 34.1294 154.123 33.7398C154.286 33.35 154.369 32.9324 154.369 32.5107C154.369 32.089 154.286 31.6714 154.123 31.2816C153.963 30.892 153.726 30.5379 153.427 30.2397C153.129 29.9415 152.775 29.7048 152.385 29.5435C151.995 29.3821 151.577 29.299 151.155 29.299Z" fill="white" />
                   <path d="M197.145 1.57875C196.821 1.30579 196.446 1.09947 196.042 0.971648C195.64 0.843824 195.214 0.797018 194.793 0.833919C194.371 0.870819 193.96 0.990699 193.584 1.18667C193.209 1.38264 192.877 1.65083 192.605 1.97583L171.377 27.2487L150.152 1.96414C149.879 1.63871 149.546 1.37041 149.169 1.17472C148.792 0.97902 148.381 0.859812 147.958 0.82398C147.535 0.788147 147.109 0.836399 146.705 0.965945C146.301 1.09549 145.926 1.30376 145.603 1.57875C145.279 1.8499 145.01 2.18263 144.814 2.55778C144.617 2.93294 144.498 3.34314 144.462 3.76479C144.424 4.18643 144.471 4.61122 144.599 5.01472C144.727 5.41821 144.933 5.79245 145.207 6.11593L168.751 34.1624C169.085 34.5235 169.491 34.8116 169.941 35.0086C170.392 35.2056 170.879 35.3074 171.371 35.3074C171.864 35.3074 172.35 35.2056 172.801 35.0086C173.252 34.8116 173.658 34.5235 173.991 34.1624L197.536 6.11593C197.809 5.79281 198.016 5.41887 198.145 5.01558C198.272 4.61231 198.32 4.18764 198.284 3.76601C198.248 3.34438 198.128 2.93409 197.933 2.55872C197.737 2.18335 197.469 1.85031 197.145 1.57875Z" fill="white" />
@@ -59,20 +59,20 @@ export default function Landing() {
               </svg>
             ))}
           </Marquee>
-          <div className="flex items-center justify-center">
-            <p className="uppercase font-mono text-sm">SYNTEQ AI POWERS THE BEST AI TEAMS. <Link href="#" className="uppercase text-accent underline-offset-4 underline hover:underline-offset-2 duration-150">Meet our customers ↘</Link>.</p>
+          <div className="flex items-center justify-center px-4">
+            <p className="uppercase font-mono text-xs md:text-sm text-center">SYNTEQ AI POWERS THE BEST AI TEAMS. <Link href="#" className="uppercase text-accent underline-offset-4 underline hover:underline-offset-2 duration-150">Meet our customers ↘</Link>.</p>
           </div>
         </div>
 
         {/* open model foundary */}
         <div className="flex flex-col">
-          <div className="flex flex-row gap-10 pb-10 items-center justify-between">
-            <div className="flex flex-col gap-4 items-start justify-center shrink-0">
+          <div className="flex flex-col lg:flex-row gap-6 md:gap-10 pb-6 md:pb-10 items-start lg:items-center justify-between">
+            <div className="flex flex-col gap-3 md:gap-4 items-start justify-center shrink-0">
               <div className="relative">
-                <p className="font-mono text-sm text-accent uppercase tracking-tight">Build with open models</p>
-                <h2 className="text-6xl max-w-[10ch] tracking-tight leading-tight">Our Model Foundry</h2>
+                <p className="font-mono text-xs md:text-sm text-accent uppercase tracking-tight">Build with open models</p>
+                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl max-w-[10ch] tracking-tight leading-tight">Our Model Foundry</h2>
               </div>
-              <p className="text-xl max-w-xl text-dark-foreground">Launch, run, and scale AI models in minutes, without the cloud confusion, GPU expertise. Easy as a single click.</p>
+              <p className="text-base md:text-lg lg:text-xl max-w-xl text-dark-foreground">Launch, run, and scale AI models in minutes, without the cloud confusion, GPU expertise. Easy as a single click.</p>
             </div>
 
             <div className="grid gap-4 w-full">
@@ -101,11 +101,11 @@ export default function Landing() {
         </div>
       </div>
 
-      <div className="max-w-viewport w-full mx-auto px-5 py-32 flex flex-col">
-        <div className="grid grid-cols-3 gap-16">
-          <AnimatedCard className="flex flex-col gap-16">
-            <img src="/assets/landing/icon-cost.svg" alt="" className="size-11" />
-            <p className="text-4xl leading-tight tracking-tight font-normal">
+      <div className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24 lg:py-32 flex flex-col">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-12 lg:gap-16">
+          <AnimatedCard className="flex flex-col gap-8 md:gap-12 lg:gap-16">
+            <img src="/assets/landing/icon-cost.svg" alt="" className="size-8 md:size-10 lg:size-11" />
+            <p className="text-2xl md:text-3xl lg:text-4xl leading-tight tracking-tight font-normal">
               <span>
                 <span className="text-accent">Half the cost </span>
                 <span className="text-white/75">of both the public cloud and traditional on-prem</span>
@@ -113,9 +113,9 @@ export default function Landing() {
             </p>
           </AnimatedCard>
 
-          <AnimatedCard className="flex flex-col gap-16">
-            <img src="/assets/landing/icon-scalability.svg" alt="" className="size-11" />
-            <p className="text-4xl leading-tight tracking-tight font-normal">
+          <AnimatedCard className="flex flex-col gap-8 md:gap-12 lg:gap-16">
+            <img src="/assets/landing/icon-scalability.svg" alt="" className="size-8 md:size-10 lg:size-11" />
+            <p className="text-2xl md:text-3xl lg:text-4xl leading-tight tracking-tight font-normal">
               <span>
                 <span className="text-accent">Easy scalability </span>
                 <span className="text-white/75">to meet growing business demands</span>
@@ -123,9 +123,9 @@ export default function Landing() {
             </p>
           </AnimatedCard>
 
-          <AnimatedCard className="flex flex-col gap-16">
-            <img src="/assets/landing/icon-security.svg" alt="" className="size-11" />
-            <p className="text-4xl leading-tight tracking-tight font-normal">
+          <AnimatedCard className="flex flex-col gap-8 md:gap-12 lg:gap-16">
+            <img src="/assets/landing/icon-security.svg" alt="" className="size-8 md:size-10 lg:size-11" />
+            <p className="text-2xl md:text-3xl lg:text-4xl leading-tight tracking-tight font-normal">
               <span>
                 <span className="text-white/75">Enhanced security features with</span>
                 <span className="text-accent"> end-to-end encryption</span>
@@ -138,7 +138,7 @@ export default function Landing() {
       <div className="max-w-viewport w-full mx-auto px-5 flex items-center justify-center">
         <ScrollRevealText
           text={`Synteq AI gives you production-ready AI environments without forcing you to become an infrastructure expert. No cloud gymnastics. No GPU babysitting. No "DevOps first, product later" workflow.`}
-          className="py-48 text-center"
+          className="py-24 md:py-32 lg:py-48 text-center"
           textClassName="font-sequel-book"
         />
 
@@ -276,9 +276,9 @@ export default function Landing() {
         ]}
       />
       <div>
-        <div className="max-w-viewport w-full mx-auto px-5 flex flex-row items-end justify-between">
-          <h2 className="text-6xl max-w-3xl font-sequal-sans">Only the best AI hardware.</h2>
-          <AnimatedButton background="dark" className="hover:bg-background-secondary">
+        <div className="max-w-viewport w-full mx-auto px-5 flex flex-col md:flex-row gap-6 md:gap-8 items-start md:items-end justify-between">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl max-w-3xl font-sequal-sans">Only the best AI hardware.</h2>
+          <AnimatedButton background="dark" className="hover:bg-background-secondary shrink-0">
             Talk To Sales
           </AnimatedButton>
         </div>
