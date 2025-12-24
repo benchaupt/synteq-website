@@ -175,7 +175,7 @@ export const Navigation = () => {
                     <Link href="#" className="px-4 py-2 text-sm text-white/70 hover:text-white transition-colors">
                         Sign in
                     </Link>
-                    <AnimatedButton background="primary" className="hover:bg-darker-accent text-sm">
+                    <AnimatedButton background="primary" className="hover:bg-background-secondary text-sm">
                         Get Started
                     </AnimatedButton>
                 </div>
