@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@plugin "@tailwindcss/typography";
+
 :root {
   --background: #0F1315;
   --foreground: #F7EEEE;

@@ -6,9 +6,7 @@ import { SelectHardware } from "@/app/(marketing)/hardware/_components/select-ha
 import { AnimatedButton } from "@/app/_components/animated-button";
 import { AnimatedCard } from "@/app/_components/animated-card";
 import CallToActionNew from "@/app/_components/call-to-action-new";
-import { Footer } from "@/app/_components/footer";
 import { Marquee } from "@/app/_components/marquee";
-import { Navigation } from "@/app/_components/navigation";
 import { ScrollRevealText } from "@/app/_components/scroll-reveal-text";
 import { TestimonialCarousel } from "@/app/_components/testimonial-carousel";
 import Link from "next/link";
@@ -16,7 +14,6 @@ import Link from "next/link";
 export default function Landing() {
   return (
     <>
-      <Navigation />
       <div className="px-5 max-w-viewport w-full mx-auto flex flex-col gap-10">
         <div className="pt-16 flex flex-col gap-10">
           <div className="flex flex-col gap-12 items-start justify-center">
@@ -282,7 +279,6 @@ export default function Landing() {
       </div>
       <Blog />
       <CallToActionNew />
-      <Footer />
     </>
   );
 }
