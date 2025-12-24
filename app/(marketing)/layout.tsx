@@ -12,14 +12,12 @@ export default async function MarketingLayout({
 
   return (
     <>
-      <header>
-        <AdminBar
-          adminBarProps={{
-            preview: isEnabled,
-          }}
-        />
-        <Navigation />
-      </header>
+      <AdminBar
+        adminBarProps={{
+          preview: isEnabled,
+        }}
+      />
+      <Navigation />
       <main>{children}</main>
       <Footer />
     </>
