@@ -26,8 +26,8 @@ export default function Landing() {
               <img src="/assets/landing/Mask group1.png" className="" alt="" />
             </div>
             <div className="flex flex-col gap-8 justify-end mb-2">
-              <p className="text-xl">Run production workloads on purpose-built cloud infrastructure optimized for low latency, predictable performance, and scalable demand.</p>
-              <div className="flex flex-row gap-12">
+              <p className="text-xl max-w-[32ch]">Launch, run, and scale AI models in minutes, without the cloud confusion, GPU expertise, or unpredictable costs. As easy as a single click. <br></br><br></br> Synteq AI gives teams a simple way to turn ideas into production AI in a weekend.</p>
+              <div className="flex flex-row gap-10">
                 <AnimatedButton background="primary" className="hover:bg-accent/50">
                   Launch
                 </AnimatedButton>
@@ -60,7 +60,7 @@ export default function Landing() {
             ))}
           </Marquee>
           <div className="flex items-center justify-center">
-            <p className="uppercase font-mono text-sm">SYNTEQ AI POWERS THE BEST AI TEAMS. <Link href="#" className="uppercase text-accent underline-offset-2 underline">Meet our customers</Link>.</p>
+            <p className="uppercase font-mono text-sm">SYNTEQ AI POWERS THE BEST AI TEAMS. <Link href="#" className="uppercase text-accent underline-offset-4 underline hover:underline-offset-2 duration-150">Meet our customers ↘</Link>.</p>
           </div>
         </div>
 
@@ -105,25 +105,31 @@ export default function Landing() {
         <div className="grid grid-cols-3 gap-16">
           <AnimatedCard className="flex flex-col gap-16">
             <img src="/assets/landing/icon-cost.svg" alt="" className="size-11" />
-            <p className="text-4xl leading-tight tracking-tight">
-              <span className="text-accent">Half the cost </span>
-              <span className="text-white/75">of both the public cloud and traditional on-prem</span>
+            <p className="text-4xl leading-tight tracking-tight font-normal">
+              <span>
+                <span className="text-accent">Half the cost </span>
+                <span className="text-white/75">of both the public cloud and traditional on-prem</span>
+              </span>
             </p>
           </AnimatedCard>
 
           <AnimatedCard className="flex flex-col gap-16">
             <img src="/assets/landing/icon-scalability.svg" alt="" className="size-11" />
-            <p className="text-4xl leading-tight tracking-tight">
-              <span className="text-accent">Easy scalability </span>
-              <span className="text-white/75">to meet growing business demands</span>
+            <p className="text-4xl leading-tight tracking-tight font-normal">
+              <span>
+                <span className="text-accent">Easy scalability </span>
+                <span className="text-white/75">to meet growing business demands</span>
+              </span>
             </p>
           </AnimatedCard>
 
           <AnimatedCard className="flex flex-col gap-16">
             <img src="/assets/landing/icon-security.svg" alt="" className="size-11" />
-            <p className="text-4xl leading-tight tracking-tight">
-              <span className="text-white/75">Enhanced security features with</span>
-              <span className="text-accent"> end-to-end encryption</span>
+            <p className="text-4xl leading-tight tracking-tight font-normal">
+              <span>
+                <span className="text-white/75">Enhanced security features with</span>
+                <span className="text-accent"> end-to-end encryption</span>
+              </span>
             </p>
           </AnimatedCard>
         </div>

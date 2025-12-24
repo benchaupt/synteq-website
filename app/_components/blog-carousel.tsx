@@ -65,7 +65,7 @@ export function BlogCarousel({ blogs }: BlogCarouselProps) {
                                         </p>
                                         <a
                                             href={blog.href}
-                                            className="font-mono text-accent text-sm leading-[1.1] tracking-[-0.45px] uppercase underline underline-offset-4 decoration-from-font pb-1"
+                                            className="font-mono text-accent text-sm leading-[1.1] tracking-[-0.45px] uppercase underline underline-offset-4 decoration-from-font pb-1 hover:underline-offset-2 duration-150"
                                         >
                                             LEARN MORE ↘
                                         </a>

@@ -19,9 +19,9 @@ export default function ResilienceSection() {
           </div>
           <Link
             href="#infrastructure"
-            className="font-mono text-sm uppercase text-darker-accent underline decoration-solid underline-offset-2"
+            className="font-mono text-sm uppercase text-darker-accent underline decoration-solid underline-offset-4 hover:underline-offset-2 duration-150"
           >
-            Understand our Infrastructure
+            Understand our Infrastructure ↘
           </Link>
         </div>
 
