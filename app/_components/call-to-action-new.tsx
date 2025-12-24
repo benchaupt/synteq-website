@@ -196,13 +196,11 @@ export default function CallToActionNew() {
 
         {/* Main content */}
         <div className="relative z-20 flex flex-col items-center text-center gap-6 max-w-3xl mx-auto py-24 px-8 flex-1 justify-center">
-          <h2 className="text-5xl font-bold text-background">
-            Build without boundaries
+          <h2 className="text-6xl font-bold text-background font-sequel-book">
+            Built for AI at scale
           </h2>
-          <p className="text-lg text-background/80 max-w-2xl">
-            Join thousands of developers who've eliminated infrastructure
-            complexity and deployed globally with Synteq AI. Start building for
-            free — no credit card required.
+          <p className="text-lg text-background/80 max-w-xl">
+            From first experiment to multi-node training runs, choose the right mix of shared cloud, dedicated nodes, and bare metal for your workload.
           </p>
 
           {/* CTA Buttons */}
