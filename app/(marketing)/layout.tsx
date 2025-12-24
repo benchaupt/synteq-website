@@ -21,9 +21,7 @@ export default async function MarketingLayout({
         <Navigation />
       </header>
       <main>{children}</main>
-      <footer>
-        <Footer />
-      </footer>
+      <Footer />
     </>
   );
 }
