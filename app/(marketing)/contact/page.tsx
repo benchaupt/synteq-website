@@ -178,7 +178,7 @@ export default function Contact() {
                     <div className="flex flex-col gap-6">
                         {/* Name Fields */}
                         <div className="grid grid-cols-2 gap-4">
-                            <div className="flex items-center gap-3 bg-[#161c1f] border border-white/10 px-4 py-3">
+                            <div className="flex items-center gap-3 bg-background-secondary border border-white/10 px-4 py-3">
                                 <PersonIcon />
                                 <input
                                     type="text"
@@ -186,7 +186,7 @@ export default function Contact() {
                                     className="bg-transparent w-full text-white placeholder:text-white/50 outline-none"
                                 />
                             </div>
-                            <div className="flex items-center gap-3 bg-[#161c1f] border border-white/10 px-4 py-3">
+                            <div className="flex items-center gap-3 bg-background-secondary border border-white/10 px-4 py-3">
                                 <PersonIcon />
                                 <input
                                     type="text"
@@ -198,7 +198,7 @@ export default function Contact() {
 
                         {/* Company & Email Fields */}
                         <div className="grid grid-cols-2 gap-4">
-                            <div className="flex items-center gap-3 bg-[#161c1f] border border-white/10 px-4 py-3">
+                            <div className="flex items-center gap-3 bg-background-secondary border border-white/10 px-4 py-3">
                                 <BuildingIcon />
                                 <input
                                     type="text"
@@ -206,7 +206,7 @@ export default function Contact() {
                                     className="bg-transparent w-full text-white placeholder:text-white/50 outline-none"
                                 />
                             </div>
-                            <div className="flex items-center gap-3 bg-[#161c1f] border border-white/10 px-4 py-3">
+                            <div className="flex items-center gap-3 bg-background-secondary border border-white/10 px-4 py-3">
                                 <MailIcon />
                                 <input
                                     type="email"
@@ -228,7 +228,7 @@ export default function Contact() {
                                             "px-4 py-2 text-sm font-mono uppercase tracking-tight transition-all",
                                             selectedProducts.includes(product)
                                                 ? "bg-accent text-background"
-                                                : "bg-[#161c1f] text-white/70 border border-white/10 hover:border-white/25"
+                                                : "bg-background-secondary text-white/70 border border-white/10 hover:border-white/25"
                                         )}
                                     >
                                         {product.replace("_", " ")}
@@ -241,7 +241,7 @@ export default function Contact() {
                         <div className="grid grid-cols-2 gap-4">
                             {/* Project Budget Select */}
                             <Select.Root>
-                                <Select.Trigger className="flex items-center justify-between gap-3 bg-[#161c1f] border border-white/10 px-4 py-3 outline-none data-placeholder:text-white/50 text-white cursor-pointer group">
+                                <Select.Trigger className="flex items-center justify-between gap-3 bg-background-secondary border border-white/10 px-4 py-3 outline-none data-placeholder:text-white/50 text-white cursor-pointer group">
                                     <div className="flex items-center gap-3">
                                         <DollarIcon />
                                         <Select.Value placeholder="Project Budget" />
@@ -252,7 +252,7 @@ export default function Contact() {
                                 </Select.Trigger>
                                 <Select.Portal>
                                     <Select.Content
-                                        className="bg-[#161c1f] border border-white/10 overflow-hidden z-50"
+                                        className="bg-background-secondary border border-white/10 overflow-hidden z-50"
                                         position="popper"
                                         sideOffset={4}
                                     >
@@ -278,7 +278,7 @@ export default function Contact() {
 
                             {/* Team Size Select */}
                             <Select.Root>
-                                <Select.Trigger className="flex items-center justify-between gap-3 bg-[#161c1f] border border-white/10 px-4 py-3 outline-none data-placeholder:text-white/50 text-white cursor-pointer group">
+                                <Select.Trigger className="flex items-center justify-between gap-3 bg-background-secondary border border-white/10 px-4 py-3 outline-none data-placeholder:text-white/50 text-white cursor-pointer group">
                                     <div className="flex items-center gap-3">
                                         <UsersIcon />
                                         <Select.Value placeholder="Team Size" />
@@ -289,7 +289,7 @@ export default function Contact() {
                                 </Select.Trigger>
                                 <Select.Portal>
                                     <Select.Content
-                                        className="bg-[#161c1f] border border-white/10 overflow-hidden z-50"
+                                        className="bg-background-secondary border border-white/10 overflow-hidden z-50"
                                         position="popper"
                                         sideOffset={4}
                                     >
@@ -319,7 +319,7 @@ export default function Contact() {
                             <textarea
                                 placeholder="Tell us what you're working on"
                                 rows={5}
-                                className="bg-[#161c1f] border border-white/10 px-4 py-3 text-white placeholder:text-white/50 outline-none resize-none"
+                                className="bg-background-secondary border border-white/10 px-4 py-3 text-white placeholder:text-white/50 outline-none resize-none"
                             />
                         </div>
 

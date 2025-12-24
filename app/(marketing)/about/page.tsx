@@ -130,7 +130,7 @@ export default function About() {
                     </div>
 
                     {/* Cloud flexibility card */}
-                    <AnimatedCard className="bg-[#161c1f] p-0 px-0 md:p-0 md:px-0 flex flex-col" disableScale>
+                    <AnimatedCard className="bg-background-secondary p-0 px-0 md:p-0 md:px-0 flex flex-col" disableScale>
                         <div className="flex flex-col gap-4 p-8">
                             <div className="size-11">
                                 <img src="/assets/about/frame6.svg" alt="" className="w-full h-full" />

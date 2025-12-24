@@ -22,7 +22,7 @@ export default function ServicesSection() {
         {/* Cards */}
         <div className="grid grid-cols-3 gap-9 min-h-[630px] w-full">
           {/* Inference Cloud */}
-          <div className="bg-[#161c1f] border border-white/10 flex flex-col justify-between overflow-hidden relative">
+          <div className="bg-background-secondary border border-white/10 flex flex-col justify-between overflow-hidden relative">
             <div className="px-9 pt-9 z-10">
               <h3 className="text-4xl tracking-tight text-white mb-4">
                 Inference Cloud
@@ -281,7 +281,7 @@ export default function ServicesSection() {
           </div>
 
           {/* GPU Cloud Servers */}
-          <div className="bg-[#161c1f] border border-white/10 flex flex-col justify-between overflow-hidden relative">
+          <div className="bg-background-secondary border border-white/10 flex flex-col justify-between overflow-hidden relative">
             <div className="px-9 pt-9 z-10">
               <h3 className="text-4xl tracking-tight text-white mb-4">
                 GPU Cloud Servers
@@ -375,7 +375,7 @@ export default function ServicesSection() {
           </div>
 
           {/* Bare Metal Clusters */}
-          <div className="bg-[#161c1f] border border-white/10 flex flex-col justify-between overflow-hidden relative">
+          <div className="bg-background-secondary border border-white/10 flex flex-col justify-between overflow-hidden relative">
             <div className="px-9 pt-9 z-10">
               <h3 className="text-4xl tracking-tight text-white mb-4">
                 Bare Metal Clusters

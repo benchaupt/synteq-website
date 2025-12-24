@@ -16,7 +16,7 @@ export function BlogFilters({
   return (
     <div className="flex flex-wrap items-center gap-3">
       {/* Settings/Filter Icon Button */}
-      <button className="relative size-[25px] bg-[#161c1f] border border-white/10 shadow-[0px_0px_0px_1px_#0b0e0f] flex items-center justify-center">
+      <button className="relative size-[25px] bg-background-secondary border border-white/10 shadow-[0px_0px_0px_1px_#0b0e0f] flex items-center justify-center">
         <svg
           className="size-4 rotate-[30deg] text-white"
           viewBox="0 0 18 18"
@@ -39,7 +39,7 @@ export function BlogFilters({
             "relative font-mono text-sm leading-none tracking-tight px-1 py-1 transition-colors",
             activeCategory === category
               ? "bg-darker-accent text-background border-darker-accent"
-              : "bg-[#161c1f] text-[#ccc] border border-white/10 hover:text-white"
+              : "bg-background-secondary text-[#ccc] border border-white/10 hover:text-white"
           )}
         >
           <span className="relative z-10 uppercase">{category}</span>
