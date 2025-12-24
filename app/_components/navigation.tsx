@@ -39,7 +39,7 @@ export const Navigation = () => {
                 </button>
             </div>
             <div className="lg:block hidden">
-                <AnimatedButton onClick={() => console.log('clicked')} background="dark">
+                <AnimatedButton onClick={() => console.log('clicked')} background="dark" className="hover:bg-background-secondary">
                     Contact
                 </AnimatedButton>
             </div>

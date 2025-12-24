@@ -1,38 +1,71 @@
+"use client";
+
+import Link from "next/link";
 
 export default function ServicesSection() {
+  const products = [
+    {
+      title: "Inference Cloud",
+      description: "Deploy AI models instantly with auto-scaling inference endpoints. Pay only for what you use.",
+      href: "/cloud",
+      visual: "inference"
+    },
+    {
+      title: "GPU Cloud Servers",
+      description: "High-performance GPU instances for training and fine-tuning. Scale from single to multi-node clusters.",
+      href: "/cloud",
+      visual: "cloud"
+    },
+    {
+      title: "Bare Metal Clusters",
+      description: "Dedicated GPU infrastructure with full hardware control. Maximum performance for large-scale workloads.",
+      href: "/hardware",
+      visual: "metal"
+    }
+  ];
+
   return (
     <section className="max-w-viewport w-full mx-auto px-5 py-32 flex flex-col">
-      <div className="flex flex-col gap-10 w-full">
+      <div className="flex flex-col gap-16 w-full">
         {/* Header */}
         <div className="flex gap-52 items-end w-full">
           <div className="flex flex-col gap-3 flex-1">
-            <p className="font-mono text-sm uppercase tracking-tight text-darker-accent">
-              Our Services
+            <p className="font-mono text-sm uppercase tracking-wide text-accent">
+              Our Products
             </p>
-            <h2 className="text-6xl leading-tight tracking-tighter text-foreground">
-              Purpose-built products<br />
-              delivered to your workloads
+            <h2 className="text-6xl leading-tight tracking-tight text-foreground font-sequel-book">
+              Purpose-built<br />
+              for AI at scale
             </h2>
           </div>
-          <p className="text-xl text-dark-foreground flex-1 leading-normal tracking-tight max-w-lg">
-            From first experiment to multi-node training runs, Synteq and Crunchbits give you a clear path to the right mix of shared cloud, dedicated nodes, and bare metal.
+          <p className="text-xl text-dark-foreground flex-1 leading-relaxed max-w-lg">
+            From first experiment to multi-node training runs, choose the right mix of shared cloud, dedicated nodes, and bare metal for your workload.
           </p>
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-3 gap-9 min-h-[630px] w-full">
+        <div className="grid grid-cols-3 gap-6 w-full">
           {/* Inference Cloud */}
-          <div className="bg-background-secondary border border-white/10 flex flex-col justify-between overflow-hidden relative">
-            <div className="px-9 pt-9 z-10">
-              <h3 className="text-4xl tracking-tight text-white mb-4">
-                Inference Cloud
+          <Link 
+            href={products[0].href}
+            className="group bg-background-secondary border border-white/10 hover:border-accent/50 flex flex-col justify-between overflow-hidden relative transition-all duration-300 hover:scale-[1.01] hover:shadow-2xl hover:shadow-accent/10 cursor-pointer min-h-[580px]"
+          >
+            <div className="px-9 pt-9 pb-6 z-10 flex flex-col gap-4">
+              <h3 className="text-4xl tracking-tight text-white group-hover:text-accent transition-colors duration-300">
+                {products[0].title}
               </h3>
-              <p className="text-lg text-dark-foreground tracking-tight leading-normal max-w-md">
-                Exercitation reprehenderit esse officia. Consectetur aliqua in irure pariatur et sint consequat occaecat.
+              <p className="text-lg text-dark-foreground group-hover:text-foreground/80 leading-relaxed transition-colors duration-300">
+                {products[0].description}
               </p>
+              <div className="flex items-center gap-2 text-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-2">
+                <span className="text-sm font-medium">Explore product</span>
+                <svg className="size-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
             </div>
-            <div className="w-full flex items-end justify-center">
-              <svg viewBox="0 0 529 355" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div className="w-full flex items-end justify-center opacity-70 group-hover:opacity-100 transition-opacity duration-300">
+              <svg viewBox="0 0 529 355" fill="none" xmlns="http://www.w3.org/2000/svg" className="group-hover:scale-105 transition-transform duration-500">
                 <g clip-path="url(#clip0_558_1445)">
                   <path d="M211.601 0H105.801V105.8H211.601V0Z" fill="url(#paint0_linear_558_1445)" />
                   <path d="M132.251 79.35V26.45L105.801 0V105.8L132.251 79.35Z" fill="url(#paint1_linear_558_1445)" />
@@ -278,20 +311,29 @@ export default function ServicesSection() {
               </svg>
 
             </div>
-          </div>
+          </Link>
 
           {/* GPU Cloud Servers */}
-          <div className="bg-background-secondary border border-white/10 flex flex-col justify-between overflow-hidden relative">
-            <div className="px-9 pt-9 z-10">
-              <h3 className="text-4xl tracking-tight text-white mb-4">
-                GPU Cloud Servers
+          <Link 
+            href={products[1].href}
+            className="group bg-background-secondary border border-white/10 hover:border-accent/50 flex flex-col justify-between overflow-hidden relative transition-all duration-300 hover:scale-[1.01] hover:shadow-2xl hover:shadow-accent/10 cursor-pointer min-h-[580px]"
+          >
+            <div className="px-9 pt-9 pb-6 z-10 flex flex-col gap-4">
+              <h3 className="text-4xl tracking-tight text-white group-hover:text-accent transition-colors duration-300">
+                {products[1].title}
               </h3>
-              <p className="text-lg text-dark-foreground tracking-tight leading-normal max-w-md">
-                Exercitation reprehenderit esse officia. Consectetur aliqua in irure pariatur et sint consequat occaecat.
+              <p className="text-lg text-dark-foreground group-hover:text-foreground/80 leading-relaxed transition-colors duration-300">
+                {products[1].description}
               </p>
+              <div className="flex items-center gap-2 text-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-2">
+                <span className="text-sm font-medium">Explore product</span>
+                <svg className="size-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
             </div>
-            <div className="w-full flex items-end justify-center">
-              <svg width="529" height="348" viewBox="0 0 529 348" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div className="w-full flex items-end justify-center opacity-70 group-hover:opacity-100 transition-opacity duration-300">
+              <svg width="529" height="348" viewBox="0 0 529 348" fill="none" xmlns="http://www.w3.org/2000/svg" className="group-hover:scale-105 transition-transform duration-500">
                 <path d="M251.5 1C330.769 1 402.485 17.0675 454.346 42.998C506.267 68.9585 538 104.637 538 143.75C538 182.863 506.267 218.541 454.346 244.502C402.485 270.432 330.769 286.5 251.5 286.5C172.231 286.5 100.515 270.432 48.6543 244.502C-3.26667 218.541 -35 182.863 -35 143.75C-35 104.637 -3.26667 68.9585 48.6543 42.998C100.515 17.0675 172.231 1 251.5 1Z" stroke="url(#paint0_linear_558_1177)" stroke-width="2" />
                 <path d="M251.5 16.9727C330.769 16.9727 402.485 33.0402 454.346 58.9707C506.267 84.9312 538 120.61 538 159.723C538 198.835 506.267 234.514 454.346 260.475C402.485 286.405 330.769 302.473 251.5 302.473C172.231 302.473 100.515 286.405 48.6543 260.475C-3.26667 234.514 -35 198.835 -35 159.723C-35 120.61 -3.26667 84.9312 48.6543 58.9707C100.515 33.0402 172.231 16.9727 251.5 16.9727Z" stroke="url(#paint1_linear_558_1177)" stroke-width="2" />
                 <path d="M251.5 32.9443C330.769 32.9443 402.485 49.0118 454.346 74.9424C506.267 100.903 538 136.582 538 175.694C538 214.807 506.267 250.486 454.346 276.446C402.485 302.377 330.769 318.444 251.5 318.444C172.231 318.444 100.515 302.377 48.6543 276.446C-3.26667 250.486 -35 214.807 -35 175.694C-35 136.582 -3.26667 100.903 48.6543 74.9424C100.515 49.0118 172.231 32.9443 251.5 32.9443Z" stroke="url(#paint2_linear_558_1177)" stroke-width="2" />
@@ -372,21 +414,30 @@ export default function ServicesSection() {
               </svg>
 
             </div>
-          </div>
+          </Link>
 
           {/* Bare Metal Clusters */}
-          <div className="bg-background-secondary border border-white/10 flex flex-col justify-between overflow-hidden relative">
-            <div className="px-9 pt-9 z-10">
-              <h3 className="text-4xl tracking-tight text-white mb-4">
-                Bare Metal Clusters
+          <Link 
+            href={products[2].href}
+            className="group bg-background-secondary border border-white/10 hover:border-accent/50 flex flex-col justify-between overflow-hidden relative transition-all duration-300 hover:scale-[1.01] hover:shadow-2xl hover:shadow-accent/10 cursor-pointer min-h-[580px]"
+          >
+            <div className="px-9 pt-9 pb-6 z-10 flex flex-col gap-4">
+              <h3 className="text-4xl tracking-tight text-white group-hover:text-accent transition-colors duration-300">
+                {products[2].title}
               </h3>
-              <p className="text-lg text-dark-foreground tracking-tight leading-normal max-w-md">
-                Exercitation reprehenderit esse officia. Consectetur aliqua in irure pariatur et sint consequat occaecat.
+              <p className="text-lg text-dark-foreground group-hover:text-foreground/80 leading-relaxed transition-colors duration-300">
+                {products[2].description}
               </p>
+              <div className="flex items-center gap-2 text-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-2">
+                <span className="text-sm font-medium">Explore product</span>
+                <svg className="size-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
             </div>
-            <div className="w-full flex items-end justify-start">
+            <div className="w-full flex items-end justify-start opacity-70 group-hover:opacity-100 transition-opacity duration-300">
               <div className="w-full min-h-[350px] relative">
-                <svg width="531" height="348" viewBox="0 0 531 348" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="531" height="348" viewBox="0 0 531 348" fill="none" xmlns="http://www.w3.org/2000/svg" className="group-hover:scale-105 transition-transform duration-500">
                   <mask id="mask0_558_1196" style={{maskType: 'alpha'}} maskUnits="userSpaceOnUse" x="0" y="0" width="531" height="348">
                     <rect width="530.333" height="347.073" rx="5" fill="white" />
                   </mask>
@@ -437,7 +488,7 @@ export default function ServicesSection() {
                 </svg>
               </div>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
     </section>

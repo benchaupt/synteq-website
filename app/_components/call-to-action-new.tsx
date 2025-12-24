@@ -3,6 +3,7 @@
 import { FlickeringGrid } from "@/app/_components/flickering-grid"
 import { Marquee } from "@/app/_components/marquee"
 import { motion } from "motion/react"
+import { AnimatedButton } from "./animated-button"
 
 // Floating icon card component
 const FloatingIconCard = ({
@@ -200,18 +201,18 @@ export default function CallToActionNew() {
           </h2>
           <p className="text-lg text-background/80 max-w-2xl">
             Join thousands of developers who've eliminated infrastructure
-            complexity and deployed globally with Cloudflare. Start building for
+            complexity and deployed globally with Synteq AI. Start building for
             free — no credit card required.
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex items-center gap-4 mt-4">
-            <button className="px-6 py-3 bg-background text-accent font-medium rounded-lg hover:bg-background/90 transition-colors">
+          <div className="flex items-center gap-6 mt-4">
+            <AnimatedButton className="px-6 py-3 bg-background text-accent font-medium hover:bg-background/90 transition-colors">
               Start building for free
-            </button>
-            <button className="px-6 py-3 text-background/80 font-medium hover:text-background transition-colors">
+            </AnimatedButton>
+            <AnimatedButton className="px-6 py-3 text-background/80 font-medium hover:text-background transition-colors">
               View docs
-            </button>
+            </AnimatedButton>
           </div>
         </div>
 

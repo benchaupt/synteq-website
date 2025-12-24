@@ -41,7 +41,7 @@ export function BlogCarousel({ blogs }: BlogCarouselProps) {
     return (
         <div className="relative flex flex-col gap-8">
             <div
-                className='flex w-full flex-row items-center justify-center gap-4 overflow-hidden py-8'
+                className='flex w-full flex-row items-center justify-center gap-4 overflow-hidden pt-0 pb-8'
                 ref={carouselRef}
             >
 
@@ -49,23 +49,23 @@ export function BlogCarousel({ blogs }: BlogCarouselProps) {
                     <div className='embla__container'>
                         {blogs.map((blog, index) => (
                             <div key={index} className="min-w-1/3 px-[25px]">
-                                <div className="flex flex-col gap-6">
+                                <div className="flex flex-col gap-6 group">
                                     <div className="border border-white/25 aspect-video w-full overflow-hidden">
-                                        <img src={blog.image} alt={blog.title} className="size-full object-cover" />
+                                        <img src={blog.image} alt={blog.title} className="size-full object-cover transition-transform duration-300 group-hover:scale-105" />
                                     </div>
                                     <div className="flex flex-col gap-3">
-                                        <p className="font-['JetBrains_Mono',monospace] text-accent text-[15px] leading-[1.1] tracking-[-0.45px] uppercase">
+                                        <p className="font-mono text-accent text-[15px] leading-[1.1] tracking-[-0.45px] uppercase">
                                             {blog.category}
                                         </p>
-                                        <h3 className="text-2xl text-white leading-[1.25] tracking-[-0.72px]">
+                                        <h3 className="text-2xl text-white leading-tight tracking-[-0.72px]">
                                             {blog.title}
                                         </h3>
-                                        <p className="text-lg text-[#ccc] leading-[1.5] tracking-[-0.45px]">
+                                        <p className="text-lg text-[#ccc] leading-normal tracking-[-0.45px]">
                                             {blog.description}
                                         </p>
                                         <a
                                             href={blog.href}
-                                            className="font-['JetBrains_Mono',monospace] text-accent text-[15px] leading-[1.1] tracking-[-0.45px] uppercase underline decoration-from-font"
+                                            className="font-mono text-accent text-sm leading-[1.1] tracking-[-0.45px] uppercase underline underline-offset-4 decoration-from-font pb-1"
                                         >
                                             LEARN MORE ↘
                                         </a>
@@ -84,9 +84,9 @@ export function BlogCarousel({ blogs }: BlogCarouselProps) {
                         <path d="M15.2927 7.36992C15.2927 6.87117 14.8881 6.46651 14.3889 6.46612L4.94015 6.46613C4.18743 6.46613 3.81031 5.55582 4.34272 5.02341L7.81181 1.55432C8.16484 1.20129 8.16484 0.6291 7.81181 0.276071L7.79881 0.263067C7.44616 -0.0888145 6.87435 -0.0891969 6.52132 0.263832L0.415415 6.36974C-0.137269 6.92243 -0.137269 7.81819 0.415414 8.37088L6.52132 14.4768C6.87435 14.8298 7.44654 14.8298 7.79957 14.4768L7.81257 14.4638C8.1656 14.1107 8.1656 13.5386 7.81257 13.1855L4.3431 9.71606C3.81069 9.18364 4.18781 8.27334 4.94053 8.27334L14.3889 8.27372C14.8877 8.27372 15.2924 7.86906 15.2924 7.37031L15.2927 7.36992Z" fill="white" />
                     </svg>
                 </button>
-                <div className="px-5 flex flex-row items-center gap-1">
+                <div className="px-5 flex flex-row items-center gap-1.5">
                     {Array.from({ length: itemCount }).map((_, index) => (
-                        <button key={index} className={cn("h-1 rounded-full transition-all duration-400", index === currentIndex ? "bg-accent w-[15px]" : "bg-white/25 w-1")} onClick={() => {
+                        <button key={index} className={cn("h-1.5 rounded-full transition-all duration-400", index === currentIndex ? "bg-accent w-[18px]" : "bg-white/20 w-1.5")} onClick={() => {
                             if (emblaApi) emblaApi.scrollTo(index);
                         }} />
                     ))}

@@ -7,7 +7,7 @@ export default function ResilienceSection() {
         {/* Left Content */}
         <div className="flex h-full shrink-0 flex-col justify-between">
           <div className="flex w-full flex-col gap-8">
-            <h2 className="text-6xl leading-9 text-foreground">
+            <h2 className="text-6xl leading-9 text-foreground font-sequel-book">
               Built for resilience.
             </h2>
             <p className="text-2xl leading-9 text-foreground/65 max-w-2xl">

@@ -55,7 +55,7 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
                     <div className='embla__container'>
                         {testimonials.map((testimonial, index) => (
                             <div key={index}>
-                                <AnimatedCard className="min-w-[650px] m-5 mx-8" disableScale disableTextColor>
+                                <AnimatedCard className="min-w-[650px] m-5 mx-8 hover:bg-background-secondary" disableScale disableTextColor>
                                     <div className="flex flex-col gap-10">
                                         <div className="flex flex-row gap-6 items-center">
                                             {testimonial.logo}
@@ -64,7 +64,7 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
                                                 <p className="text-white/50">{testimonial.title}, {testimonial.company}</p>
                                             </div>
                                         </div>
-                                        <p className="text-dark-foreground text-xl">{testimonial.text}</p>
+                                        <p className="text-dark-foreground text-lg font-normal">{testimonial.text}</p>
                                     </div>
                                 </AnimatedCard>
                             </div>
