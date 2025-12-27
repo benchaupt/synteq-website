@@ -5,12 +5,12 @@ import React from 'react'
 import type { Post } from '@/payload-types'
 
 import { Card } from '@/payload/components/Card'
-import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
+import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 
 export type RelatedPostsProps = {
   className?: string
   docs?: Post[]
-  introContent?: SerializedEditorState
+  introContent?: DefaultTypedEditorState
 }
 
 export const RelatedPosts: React.FC<RelatedPostsProps> = (props) => {

@@ -1,4 +1,4 @@
-import type { Page, Post } from '@/payload-types'
+import type { Post } from '@/payload-types'
 import type React from 'react'
 
 import { getCachedDocument } from '@/payload/utilities/getDocument'
@@ -27,12 +27,13 @@ export const PayloadRedirects: React.FC<Props> = async ({ disableNotFound, url }
       const collection = redirectItem.to?.reference?.relationTo
       const id = redirectItem.to?.reference?.value
 
-      const document = (await getCachedDocument(collection, id)()) as Page | Post
-      redirectUrl = `${redirectItem.to?.reference?.relationTo !== 'pages' ? `/${redirectItem.to?.reference?.relationTo}` : ''}/${
-        document?.slug
-      }`
+      const document = (await getCachedDocument(collection, id)()) as Post
+      const collectionPath = collection === 'posts' ? '/blogs' : `/${collection}`
+      redirectUrl = `${collectionPath}/${document?.slug}`
     } else {
-      redirectUrl = `${redirectItem.to?.reference?.relationTo !== 'pages' ? `/${redirectItem.to?.reference?.relationTo}` : ''}/${
+      const collection = redirectItem.to?.reference?.relationTo
+      const collectionPath = collection === 'posts' ? '/blogs' : `/${collection}`
+      redirectUrl = `${collectionPath}/${
         typeof redirectItem.to?.reference?.value === 'object'
           ? redirectItem.to?.reference?.value?.slug
           : ''

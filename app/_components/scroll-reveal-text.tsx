@@ -33,7 +33,7 @@ function Word({ word, index, totalWords, scrollYProgress }: WordProps) {
   );
 }
 
-export function ScrollRevealText({ text, className, textClassName, fontFamily }: ScrollRevealTextProps) {
+export function ScrollRevealText({ text, className, textClassName }: ScrollRevealTextProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
