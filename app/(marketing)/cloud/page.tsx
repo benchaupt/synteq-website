@@ -3,8 +3,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { AnimatedButton } from "@/app/_components/animated-button";
 import { AnimatedCard } from "@/app/_components/animated-card";
 import { CallToAction } from "@/app/_components/call-to-action";
-import { Footer } from "@/app/_components/footer";
-import { Navigation } from "@/app/_components/navigation";
 import { ScrollRevealText } from "@/app/_components/scroll-reveal-text";
 import { Statistics } from "@/app/_components/statistics";
 import { TestimonialCarousel } from "@/app/_components/testimonial-carousel";
@@ -14,7 +12,6 @@ export default function Cloud() {
   return (
     <>
       <div className="flex flex-col bg-white text-black">
-        <Navigation />
         <div className="px-5 max-w-viewport w-full mx-auto flex flex-col gap-10">
           <div className="pt-32 grid grid-cols-2 gap-10">
             <div className="flex flex-col gap-12 items-center justify-center">
@@ -324,7 +321,6 @@ export default function Cloud() {
       </div>
       <Blog />
       <CallToAction />
-      <Footer />
     </>
   );
 }

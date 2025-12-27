@@ -7,7 +7,7 @@ const buttonVariants = cva(
     {
         variants: {
             size: {
-                default: "px-6 py-2",
+                default: "px-6 py-3",
                 wide: "px-8 py-2.5",
                 // small: "text-sm",
                 // medium: "text-base",

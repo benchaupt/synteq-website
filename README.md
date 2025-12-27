@@ -29,6 +29,17 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Known Issues
+
+### Payload CMS + Next.js Version Conflict
+
+This project uses **Next.js 16.1.0** with **Payload CMS 3.69.0**. There is a peer dependency mismatch:
+
+- `@payloadcms/next@3.69.0` expects `next@^15.4.10`
+- `@payloadcms/ui@3.69.0` expects `next@^15.2.8 || ^15.3.8 || ^15.4.10 || ^15.5.9`
+
+**Tracking:** Next.js 16 support is being addressed in [payloadcms/payload#14456](https://github.com/payloadcms/payload/pull/14456)
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.

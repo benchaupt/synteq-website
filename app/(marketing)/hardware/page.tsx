@@ -2,14 +2,11 @@ import { SelectHardware } from "@/app/(marketing)/hardware/_components/select-ha
 import { AnimatedButton } from "@/app/_components/animated-button";
 import { AnimatedCard } from "@/app/_components/animated-card";
 import { CallToAction } from "@/app/_components/call-to-action";
-import { Footer } from "@/app/_components/footer";
-import { Navigation } from "@/app/_components/navigation";
 import { Statistics } from "@/app/_components/statistics";
 
 export default function Hardware() {
   return (
     <>
-      <Navigation />
       <div className="px-5 pb-32 max-w-viewport w-full mx-auto flex flex-col gap-10">
         <div className="pt-32 flex lg:flex-row flex-col gap-10">
           <div className="flex flex-col gap-12 items-start justify-center flex-1 min-w-0">
@@ -175,7 +172,6 @@ export default function Hardware() {
 
       </div>
       <CallToAction />
-      <Footer />
     </>
   );
 }

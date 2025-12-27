@@ -3,6 +3,7 @@
 import { FlickeringGrid } from "@/app/_components/flickering-grid"
 import { Marquee } from "@/app/_components/marquee"
 import { motion } from "motion/react"
+import { AnimatedButton } from "./animated-button"
 
 // Floating icon card component
 const FloatingIconCard = ({
@@ -58,9 +59,9 @@ export default function CallToActionNew() {
   ]
 
   return (
-    <section className="max-w-viewport w-full mx-auto px-5 py-32 flex flex-col">
+    <section className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24 lg:py-32 flex flex-col">
       {/* Rounded container with teal background and flickering grid */}
-      <div className="relative rounded-3xl bg-accent overflow-hidden min-h-[600px] flex flex-col">
+      <div className="relative rounded-2xl md:rounded-3xl bg-accent overflow-hidden min-h-[450px] md:min-h-[550px] lg:min-h-[600px] flex flex-col">
         {/* FlickeringGrid background */}
         <div className="absolute inset-0 z-0">
           <FlickeringGrid
@@ -73,9 +74,9 @@ export default function CallToActionNew() {
           />
         </div>
 
-        {/* Floating background icons */}
+        {/* Floating background icons - Hidden on mobile */}
       <FloatingIconCard
-        position="top-20 left-20"
+        position="top-20 left-20 hidden lg:flex"
         delay={0}
         icon={
           <svg
@@ -92,7 +93,7 @@ export default function CallToActionNew() {
         }
       />
       <FloatingIconCard
-        position="top-32 right-24"
+        position="top-32 right-24 hidden lg:flex"
         delay={1}
         icon={
           <svg
@@ -110,7 +111,7 @@ export default function CallToActionNew() {
         }
       />
       <FloatingIconCard
-        position="top-48 left-32"
+        position="top-48 left-32 hidden xl:flex"
         delay={2}
         icon={
           <svg
@@ -131,7 +132,7 @@ export default function CallToActionNew() {
         }
       />
       <FloatingIconCard
-        position="bottom-48 left-40"
+        position="bottom-48 left-40 hidden xl:flex"
         delay={0.5}
         icon={
           <svg
@@ -150,7 +151,7 @@ export default function CallToActionNew() {
         }
       />
       <FloatingIconCard
-        position="bottom-32 right-32"
+        position="bottom-32 right-32 hidden lg:flex"
         delay={1.5}
         icon={
           <svg
@@ -169,7 +170,7 @@ export default function CallToActionNew() {
         }
       />
       <FloatingIconCard
-        position="top-40 right-48"
+        position="top-40 right-48 hidden xl:flex"
         delay={2.5}
         icon={
           <svg
@@ -194,24 +195,22 @@ export default function CallToActionNew() {
       />
 
         {/* Main content */}
-        <div className="relative z-20 flex flex-col items-center text-center gap-6 max-w-3xl mx-auto py-24 px-8 flex-1 justify-center">
-          <h2 className="text-5xl font-bold text-background">
-            Build without boundaries
+        <div className="relative z-20 flex flex-col items-center text-center gap-4 md:gap-6 max-w-3xl mx-auto py-12 md:py-16 lg:py-24 px-5 md:px-8 flex-1 justify-center">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-background font-sequel-book">
+            Built for AI at scale
           </h2>
-          <p className="text-lg text-background/80 max-w-2xl">
-            Join thousands of developers who've eliminated infrastructure
-            complexity and deployed globally with Cloudflare. Start building for
-            free — no credit card required.
+          <p className="text-base md:text-lg text-background/80 max-w-xl">
+            From first experiment to multi-node training runs, choose the right mix of shared cloud, dedicated nodes, and bare metal for your workload.
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex items-center gap-4 mt-4">
-            <button className="px-6 py-3 bg-background text-accent font-medium rounded-lg hover:bg-background/90 transition-colors">
+          <div className="flex flex-col sm:flex-row items-center gap-3 md:gap-4 lg:gap-6 mt-2 md:mt-4 w-full sm:w-auto">
+            <AnimatedButton className="px-5 md:px-6 py-2.5 md:py-3 bg-background text-accent font-medium hover:bg-background/90 transition-colors text-sm md:text-base w-full sm:w-auto">
               Start building for free
-            </button>
-            <button className="px-6 py-3 text-background/80 font-medium hover:text-background transition-colors">
+            </AnimatedButton>
+            <AnimatedButton className="px-5 md:px-6 py-2.5 md:py-3 text-background/80 font-medium hover:text-background transition-colors text-sm md:text-base w-full sm:w-auto">
               View docs
-            </button>
+            </AnimatedButton>
           </div>
         </div>
 

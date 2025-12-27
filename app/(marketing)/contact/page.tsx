@@ -1,9 +1,7 @@
 "use client";
-/* eslint-disable @next/next/no-img-element */
+ 
 
 import { AnimatedButton } from "@/app/_components/animated-button";
-import { Footer } from "@/app/_components/footer";
-import { Navigation } from "@/app/_components/navigation";
 import { TestimonialCarousel } from "@/app/_components/testimonial-carousel";
 import { cn } from "@/lib/utils";
 import * as Select from "@radix-ui/react-select";
@@ -135,7 +133,6 @@ export default function Contact() {
 
     return (
         <>
-            <Navigation />
 
             {/* Hero + Form Section */}
             <section className="max-w-viewport w-full mx-auto px-5 py-24 flex flex-col">
@@ -336,7 +333,6 @@ export default function Contact() {
             {/* Testimonial Carousel */}
             <TestimonialCarousel testimonials={testimonials} />
 
-            <Footer />
         </>
     );
 }
