@@ -3,16 +3,12 @@
 import { Blog } from "@/app/(marketing)/_components/blog";
 import { AnimatedCard } from "@/app/_components/animated-card";
 import CallToActionNew from "@/app/_components/call-to-action-new";
-import { Footer } from "@/app/_components/footer";
 import { Marquee } from "@/app/_components/marquee";
-import { Navigation } from "@/app/_components/navigation";
 import { ScrollRevealText } from "@/app/_components/scroll-reveal-text";
 
 export default function About() {
     return (
         <>
-            <Navigation />
-
             {/* Hero Section */}
             <section className="max-w-viewport w-full mx-auto px-5 py-32 flex flex-col">
                 <div className="flex flex-col items-center text-center gap-6">
@@ -212,7 +208,6 @@ export default function About() {
 
             <Blog />
             <CallToActionNew />
-            <Footer />
         </>
     );
 }

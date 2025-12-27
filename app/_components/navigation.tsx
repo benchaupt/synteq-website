@@ -31,7 +31,7 @@ export const Navigation = () => {
     }, [mobileNavbar]);
 
     return (
-        <nav className={`sticky top-0 z-50 bg-background backdrop-blur-xl transition-all duration-200 ${isScrolled ? 'border-b border-white/5' : ''}`}>
+        <nav className={cn(`sticky top-0 z-50 bg-background backdrop-blur-xl transition-all duration-200 border-b`, isScrolled ? 'border-white/5' : 'border-transparent')}>
             <div className="flex flex-row items-center justify-between py-5 px-5 max-w-viewport w-full mx-auto">
                 {/* Logo */}
                 <Link href="/" className="flex items-center">
