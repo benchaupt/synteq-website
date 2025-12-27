@@ -17,6 +17,7 @@ export const revalidatePost: CollectionAfterChangeHook<Post> = ({
 
       revalidatePath(path)
       revalidateTag('posts-sitemap')
+      revalidateTag('posts') // Invalidate cached blog posts on homepage
     }
 
     // If the post was previously published, we need to revalidate the old path
@@ -27,17 +28,21 @@ export const revalidatePost: CollectionAfterChangeHook<Post> = ({
 
       revalidatePath(oldPath)
       revalidateTag('posts-sitemap')
+      revalidateTag('posts') // Invalidate cached blog posts on homepage
     }
   }
   return doc
 }
 
-export const revalidateDelete: CollectionAfterDeleteHook<Post> = ({ doc, req: { context } }) => {
+export const revalidateDelete: CollectionAfterDeleteHook<Post> = ({ doc, req: { payload, context } }) => {
   if (!context.disableRevalidate) {
     const path = `/blogs/${doc?.slug}`
 
+    payload.logger.info(`Revalidating deleted post at path: ${path}`)
+
     revalidatePath(path)
     revalidateTag('posts-sitemap')
+    revalidateTag('posts') // Invalidate cached blog posts on homepage
   }
 
   return doc

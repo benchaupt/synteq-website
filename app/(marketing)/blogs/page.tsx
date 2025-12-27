@@ -1,11 +1,11 @@
+import { Category, Media } from "@/payload-types";
 import configPromise from "@payload-config";
 import { getPayload } from "payload";
-import { Category, Media } from "@/payload-types";
 import { BlogContent, BlogPost } from "./_components/blog-content";
 import { BlogHero } from "./_components/blog-hero";
 
 export const dynamic = "force-static";
-export const revalidate = 600;
+export const revalidate = 60;
 
 // Helper to extract URL from a media field that could be an ID or populated object
 function getMediaUrl(media: number | Media | null | undefined): string {

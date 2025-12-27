@@ -4,6 +4,7 @@ import type { Category, Media, Post } from "@/payload-types";
 import configPromise from "@payload-config";
 import Link from "next/link";
 import { getPayload } from "payload";
+import { unstable_cache } from "next/cache";
 
 // Helper to safely extract image URL from a Payload media relation
 function getImageUrl(media: number | null | Media | undefined): string {
@@ -19,22 +20,31 @@ function getCategoryTitle(categories: (number | Category)[] | null | undefined):
     return firstCategory.title;
 }
 
-export const Blog = async () => {
-    const payload = await getPayload({ config: configPromise });
-
-    // Fetch posts with proper depth to populate relationships
-    const postsResult = await payload.find({
-        collection: "posts",
-        depth: 2,
-        limit: 6,
-        overrideAccess: false,
-        sort: "-publishedAt",
-        where: {
-            _status: {
-                equals: "published",
+// Cache the blog posts fetch with a 60-second TTL
+// This ensures fresh data across Cloudflare Workers edge regions
+const getCachedPosts = unstable_cache(
+    async () => {
+        const payload = await getPayload({ config: configPromise });
+        return payload.find({
+            collection: "posts",
+            depth: 2,
+            limit: 6,
+            overrideAccess: false,
+            sort: "-publishedAt",
+            where: {
+                _status: {
+                    equals: "published",
+                },
             },
-        },
-    });
+        });
+    },
+    ["blog-posts"], // Cache key
+    { revalidate: 60, tags: ["posts"] } // Revalidate every 60 seconds
+);
+
+export const Blog = async () => {
+    // Use cached fetch with 60s TTL
+    const postsResult = await getCachedPosts();
 
     // Map Payload posts to BlogCarousel format
     const blogs = postsResult.docs.map((post: Post) => ({

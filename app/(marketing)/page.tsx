@@ -11,6 +11,9 @@ import { ScrollRevealText } from "@/app/_components/scroll-reveal-text";
 import { TestimonialCarousel } from "@/app/_components/testimonial-carousel";
 import Link from "next/link";
 
+// Enable ISR: revalidate every 60 seconds to keep blog data fresh
+// export const revalidate = 60;
+
 export default function Landing() {
   return (
     <>

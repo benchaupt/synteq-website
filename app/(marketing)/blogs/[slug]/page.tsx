@@ -15,6 +15,9 @@ import { formatDateTime } from '@/payload/utilities/formatDateTime'
 import { generateMeta } from '@/payload/utilities/generateMeta'
 import React from 'react'
 
+// Enable ISR: revalidate every 60 seconds
+export const revalidate = 60;
+
 export async function generateStaticParams() {
     const payload = await getPayload({ config: configPromise })
     const posts = await payload.find({
