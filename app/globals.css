@@ -28,6 +28,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-background-secondary: #161C1F;
+  --color-background-dropdown: #0A0E10;
   --color-foreground: var(--foreground);
   --font-sans: var(--font-dm-sans);
   --font-mono: var(--font-jetbrains-mono);
