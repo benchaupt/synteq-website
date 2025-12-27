@@ -44,3 +44,11 @@ next-env.d.ts
 /public/media/*
 !/public/media/.gitkeep
 payload-types.ts
+
+
+# Workers
+.dev.vars
+
+# open-next
+.open-next
+.wrangler

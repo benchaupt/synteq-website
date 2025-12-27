@@ -1,9 +1,9 @@
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { redirectsPlugin } from "@payloadcms/plugin-redirects";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import path from "path";
 import { buildConfig } from "payload";
-import sharp from "sharp";
 import { fileURLToPath } from "url";
 
 import { Post } from "@/payload-types";
@@ -11,7 +11,7 @@ import { revalidateRedirects } from "@/payload/hooks/revalidateRedirects";
 import { getServerSideURL } from "@/payload/utilities/getURL";
 import { seoPlugin } from "@payloadcms/plugin-seo";
 import { GenerateTitle, GenerateURL } from "@payloadcms/plugin-seo/types";
-import { s3Storage } from "@payloadcms/storage-s3";
+import { r2Storage } from "@payloadcms/storage-r2";
 import { Categories } from "./payload/collections/Categories";
 import { Media } from "./payload/collections/Media";
 import { Posts } from "./payload/collections/Posts";
@@ -28,6 +28,8 @@ const generateURL: GenerateURL<Post> = ({ doc }) => {
   console.log(doc);
   return doc?.slug ? `${url}/${doc.slug}` : url;
 };
+
+const cloudflare = await getCloudflareContext({ async: true });
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -37,10 +39,11 @@ export default buildConfig({
   },
   editor: lexicalEditor(),
   collections: [Users, Media, Categories, Posts],
-  secret: process.env.PAYLOAD_SECRET || "",
+  secret: process.env.PAYLOAD_SECRET || "my-im-crunchbits-ell-ell-cee-secure",
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URL || "",
+      connectionString: cloudflare.env.HYPERDRIVE.connectionString,
+      maxUses: 1,
     },
   }),
   plugins: [
@@ -71,31 +74,32 @@ export default buildConfig({
       generateTitle,
       generateURL,
     }),
-    s3Storage({
-      collections: {
-        media: true,
-      },
-      bucket: process.env.S3_BUCKET || "",
-      config: {
-        credentials: {
-          accessKeyId: process.env.S3_ACCESS_KEY_ID || "",
-          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || "",
-        },
-        region: process.env.S3_REGION || "",
-        endpoint: process.env.S3_ENDPOINT || "",
-        // ... Other S3 configuration
-      },
-    }),
-    // TODO: use this when we setup open-next / workers
-    // r2Storage({
+    // s3Storage({
     //   collections: {
     //     media: true,
     //   },
-    //   bucket: cloudflare.env.R2,
+    //   bucket: process.env.S3_BUCKET || "",
+    //   config: {
+    //     credentials: {
+    //       accessKeyId: process.env.S3_ACCESS_KEY_ID || "",
+    //       secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || "",
+    //     },
+    //     region: process.env.S3_REGION || "",
+    //     endpoint: process.env.S3_ENDPOINT || "",
+    //     // ... Other S3 configuration
+    //   },
     // }),
+    // TODO: use this when we setup open-next / workers
+    r2Storage({
+      collections: {
+        media: true,
+      },
+      bucket: cloudflare.env.MEDIA_R2_BUCKET,
+    }),
   ],
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),
   },
-  sharp,
+  // sharp is disabled for Cloudflare Workers compatibility
+  // Image processing is handled by Cloudflare Images instead
 });

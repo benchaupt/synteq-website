@@ -1,30 +1,26 @@
-import { withPayload } from "@payloadcms/next/withPayload";
+import { withPayload } from '@payloadcms/next/withPayload'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     // Your Next.js config here
-    images: {
-        remotePatterns: [{
-                protocol: "https",
-                hostname: "synteq.ai",
-            },
-            {
-                // protocol: "https",
-                hostname: process.env.NEXT_PUBLIC_SERVER_URL.replace("https://", "").replace("http://", "").replace("://", "").replace(":", "").replace("/", ""),
-                // port: "3000",
-            },
-            {
-                protocol: "http",
-                hostname: "100.125.39.124",
-                port: "3000",
-            },
-        ],
-        localPatterns: [{
-            pathname: "/api/media/**",
-        }],
-    },
-};
+    webpack: (webpackConfig) => {
+        webpackConfig.resolve.extensionAlias = {
+            '.cjs': ['.cts', '.cjs'],
+            '.js': ['.ts', '.tsx', '.js', '.jsx'],
+            '.mjs': ['.mts', '.mjs'],
+        }
 
-// Make sure you wrap your `nextConfig`
-// with the `withPayload` plugin
-export default withPayload(nextConfig);
+        return webpackConfig
+    },
+    experimental: {
+        serverActions: {
+            bodySizeLimit: '15mb',
+        },
+    },
+    serverExternalPackages: ['pg-cloudflare'],
+}
+
+export default withPayload(nextConfig, { devBundleServerPackages: false })
+
+import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare'
+initOpenNextCloudflareForDev()
