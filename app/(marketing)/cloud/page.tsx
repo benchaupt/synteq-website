@@ -79,11 +79,11 @@ const features = [
 const faqs = [
   {
     question: "How does Synteq AI differ from other cloud providers?",
-    answer: "We're built specifically for AI workloads. Unlike generic cloud providers, every feature is optimized for model training and inference—from our GPU-optimized infrastructure to our per-token pricing model. No cloud expertise required."
+    answer: "We're built specifically for AI workloads. Unlike generic cloud providers, every feature is optimized for model training and inference, from our GPU-optimized infrastructure to our per-token pricing model. No cloud expertise required."
   },
   {
     question: "What models can I deploy?",
-    answer: "We support 255+ production-ready models including GPT-4, Claude, Llama, Mistral, and more. You can also bring your own models—we support any HuggingFace model, custom architectures, and fine-tuned variants."
+    answer: "We support 255+ production-ready models including GPT-4, Claude, Llama, Mistral, and more. You can also bring your own models + we support any HuggingFace model, custom architectures, and fine-tuned variants."
   },
   {
     question: "How is pricing calculated?",
@@ -268,12 +268,14 @@ export default function Cloud() {
               Frequently Asked Questions
             </h2>
             <p className="text-base text-white/60 leading-relaxed">
-              Can&apos;t find what you&apos;re looking for? Reach out to our support team—we&apos;re here to help.
+              Can&apos;t find what you&apos;re looking for? Reach out to our support team. We&apos;re here to help.
             </p>
             <div className="pt-4">
-              <AnimatedButton background="dark" className="hover:bg-background-secondary">
-                Contact Support
-              </AnimatedButton>
+              <Link href="/contact">
+                <AnimatedButton background="dark" className="hover:bg-background-secondary">
+                  Contact Support
+                </AnimatedButton>
+              </Link>
             </div>
           </div>
           

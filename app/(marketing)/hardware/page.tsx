@@ -1,10 +1,12 @@
 "use client";
 
 import { SelectHardware } from "@/app/(marketing)/hardware/_components/select-hardware";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/app/_components/accordion";
 import { AnimatedButton } from "@/app/_components/animated-button";
 import { AnimatedCard } from "@/app/_components/animated-card";
 import CallToActionNew from "@/app/_components/call-to-action-new";
 import { motion, useInView } from "motion/react";
+import Link from "next/link";
 import { useRef, useEffect, useState } from "react";
 
 // Animated counter component
@@ -44,6 +46,33 @@ function AnimatedCounter({ value }: { value: string }) {
   );
 }
 
+const faqs = [
+  {
+    question: "How does Synteq AI differ from other cloud providers?",
+    answer: "We're built specifically for AI workloads. Unlike generic cloud providers, every feature is optimized for model training and inference, from our GPU-optimized infrastructure to our per-token pricing model. No cloud expertise required."
+  },
+  {
+    question: "What models can I deploy?",
+    answer: "We support 255+ production-ready models including GPT-4, Claude, Llama, Mistral, and more. You can also bring your own models + we support any HuggingFace model, custom architectures, and fine-tuned variants."
+  },
+  {
+    question: "How is pricing calculated?",
+    answer: "Simple per-token pricing with no hidden fees. Input tokens are charged at $X per million, output tokens at $Y per million. Volume discounts apply automatically. Enterprise plans include reserved capacity and custom pricing."
+  },
+  {
+    question: "What about data privacy and security?",
+    answer: "Your data never trains our models. We're SOC 2 Type II certified, GDPR compliant, and offer private VPC deployments. All data is encrypted in transit and at rest. We support SSO, audit logs, and custom data retention policies."
+  },
+  {
+    question: "Can I scale from prototype to production?",
+    answer: "Absolutely. Start with our free tier, scale to millions of requests per day without any infrastructure changes. Auto-scaling is built-in, and we handle everything from load balancing to failover automatically."
+  },
+  {
+    question: "Do you offer support and SLAs?",
+    answer: "Free tier includes community support. Paid plans include email support with 24-hour response times. Enterprise plans get dedicated Slack channels, phone support, and 99.99% uptime SLAs with financial credits."
+  },
+];
+
 export default function Hardware() {
   return (
     <>
@@ -67,9 +96,11 @@ export default function Hardware() {
                 <AnimatedButton background="primary">
                   Launch
                 </AnimatedButton>
-                <AnimatedButton background="dark" className="hover:bg-background-secondary">
-                  Contact Sales
-                </AnimatedButton>
+                <Link href="/contact">
+                  <AnimatedButton background="dark" className="hover:bg-background-secondary">
+                    Contact Sales
+                  </AnimatedButton>
+                </Link>
               </div>
             </div>
             <div className="flex flex-col gap-4 items-center justify-center w-full lg:w-auto">
@@ -140,9 +171,11 @@ export default function Hardware() {
                 Compare Products
               </h2>
             </div>
-            <AnimatedButton background="dark" className="hover:bg-background-secondary">
-              Talk To Sales
-            </AnimatedButton>
+            <Link href="/contact">
+              <AnimatedButton background="dark" className="hover:bg-background-secondary">
+                Talk To Sales
+              </AnimatedButton>
+            </Link>
           </div>
 
           {/* Product Cards */}
@@ -245,6 +278,47 @@ export default function Hardware() {
           </div>
         </div>
       </div>
+
+      <div className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24">
+        <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
+          <div className="lg:col-span-2 flex flex-col gap-4">
+            <p className="font-mono text-xs text-accent uppercase tracking-wider">Support</p>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl tracking-tight leading-tight font-sequel-book">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-base text-white/60 leading-relaxed">
+              Can&apos;t find what you&apos;re looking for? Reach out to our support team. We&apos;re here to help.
+            </p>
+            <div className="pt-4">
+              <Link href="/contact">
+                <AnimatedButton background="dark" className="hover:bg-background-secondary">
+                  Contact Support
+                </AnimatedButton>
+              </Link>
+            </div>
+          </div>
+          
+          <div className="lg:col-span-3">
+            <Accordion
+              type="single"
+              collapsible
+              className="w-full"
+              defaultValue="item-0"
+            >
+              {faqs.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`} className="border-white/5">
+                  <AccordionTrigger className="text-left text-base md:text-lg hover:text-accent transition-colors">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-sm md:text-base text-white/60 leading-relaxed">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </div>
+      </div> 
 
       <CallToActionNew />
     </>

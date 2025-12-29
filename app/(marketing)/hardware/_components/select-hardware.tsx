@@ -7,6 +7,7 @@ import { AnimatedButton } from "@/app/_components/animated-button";
 import { AnimatedCard } from "@/app/_components/animated-card";
 import { cn } from "@/lib/utils";
 import useEmblaCarousel from "embla-carousel-react";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 interface Hardware {
@@ -148,7 +149,9 @@ export const SelectHardware = ({ hideOverview = false, className = "" }: { hideO
                                 <p className="font-mono text-xs text-accent uppercase tracking-wider">Specifications</p>
                                 <h2 className="text-4xl md:text-5xl lg:text-6xl font-sequel-book">Nvidia H100</h2>
                             </div>
-                            <AnimatedButton background={"dark"} className="hover:bg-background-secondary">Contact Sales</AnimatedButton>
+                            <Link href="/contact">
+                              <AnimatedButton background={"dark"} className="hover:bg-background-secondary">Contact Sales</AnimatedButton>
+                            </Link>
                         </div>
                         <div className="grid lg:grid-cols-5 gap-12 w-full">
                             <div className="lg:col-span-3 flex flex-col gap-12 order-2 lg:order-1">

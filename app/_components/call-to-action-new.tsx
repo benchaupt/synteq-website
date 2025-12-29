@@ -3,6 +3,7 @@
 import { FlickeringGrid } from "@/app/_components/flickering-grid"
 import { Marquee } from "@/app/_components/marquee"
 import { motion } from "motion/react"
+import Link from "next/link"
 import { AnimatedButton } from "./animated-button"
 
 // Floating icon card component
@@ -205,12 +206,16 @@ export default function CallToActionNew() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center gap-3 md:gap-4 lg:gap-6 mt-2 md:mt-4 w-full sm:w-auto">
-            <AnimatedButton className="px-5 md:px-6 py-2.5 md:py-3 bg-background text-accent font-medium hover:bg-background/90 transition-colors text-sm md:text-base w-full sm:w-auto">
-              Start building for free
-            </AnimatedButton>
-            <AnimatedButton className="px-5 md:px-6 py-2.5 md:py-3 text-background/80 font-medium hover:text-background transition-colors text-sm md:text-base w-full sm:w-auto">
-              View docs
-            </AnimatedButton>
+            <Link href="/cloud">
+              <AnimatedButton className="px-5 md:px-6 py-2.5 md:py-3 bg-background text-accent font-medium hover:bg-background/90 transition-colors text-sm md:text-base w-full sm:w-auto">
+                Start building with AI
+              </AnimatedButton>
+            </Link>
+            <Link href="/contact">
+              <AnimatedButton className="px-5 md:px-6 py-2.5 md:py-3 text-background/80 font-medium hover:text-background transition-colors text-sm md:text-base w-full sm:w-auto">
+                Chat with Sales
+              </AnimatedButton>
+            </Link>
           </div>
         </div>
 

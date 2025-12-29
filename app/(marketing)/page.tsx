@@ -31,12 +31,16 @@ export default function Landing() {
             <div className="flex flex-col gap-6 md:gap-8 justify-end mb-2">
               <p className="text-base md:text-lg lg:text-xl max-w-[32ch]">Launch, run, and scale AI models in minutes, without the cloud confusion, GPU expertise, or unpredictable costs. As easy as a single click. <br></br><br></br> Synteq AI gives teams a simple way to turn ideas into production AI in a weekend.</p>
               <div className="flex flex-col sm:flex-row gap-4 md:gap-6 lg:gap-10">
-                <AnimatedButton background="primary" className="hover:bg-accent/50 w-full sm:w-auto">
-                  Launch
-                </AnimatedButton>
-                <AnimatedButton background="dark" className="hover:bg-background-secondary w-full sm:w-auto">
-                  Contact Sales
-                </AnimatedButton>
+                <Link href="/cloud">
+                  <AnimatedButton background="primary" className="hover:bg-accent/50 w-full sm:w-auto">
+                    Launch
+                  </AnimatedButton>
+                </Link>
+                <Link href="/contact">
+                  <AnimatedButton background="dark" className="hover:bg-background-secondary w-full sm:w-auto">
+                    Contact Sales
+                  </AnimatedButton>
+                </Link>
               </div>
             </div>
           </div>
