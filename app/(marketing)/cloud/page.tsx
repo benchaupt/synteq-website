@@ -268,7 +268,7 @@ export default function Cloud() {
               Frequently Asked Questions
             </h2>
             <p className="text-base text-white/60 leading-relaxed">
-              Can't find what you're looking for? Reach out to our support team—we're here to help.
+              Can&apos;t find what you&apos;re looking for? Reach out to our support team—we&apos;re here to help.
             </p>
             <div className="pt-4">
               <AnimatedButton background="dark" className="hover:bg-background-secondary">

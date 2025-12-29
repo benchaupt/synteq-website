@@ -8,7 +8,7 @@ import { motion, useInView } from "motion/react";
 import { useRef, useEffect, useState } from "react";
 
 // Animated counter component
-function AnimatedCounter({ value, suffix = "" }: { value: string; suffix?: string }) {
+function AnimatedCounter({ value }: { value: string }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
   const [count, setCount] = useState(0);
