@@ -2,6 +2,7 @@
 import { Blog } from "@/app/(marketing)/_components/blog";
 import ResilienceSection from "@/app/(marketing)/_components/resilience-section";
 import ServicesSection from "@/app/(marketing)/_components/services-section";
+import { LanderDynamic } from "@/app/(marketing)/animations/lander-dynamic";
 import { SelectHardware } from "@/app/(marketing)/hardware/_components/select-hardware";
 import { AnimatedButton } from "@/app/_components/animated-button";
 import { AnimatedCard } from "@/app/_components/animated-card";
@@ -10,9 +11,9 @@ import { Marquee } from "@/app/_components/marquee";
 import { ScrollRevealText } from "@/app/_components/scroll-reveal-text";
 import { TestimonialCarousel } from "@/app/_components/testimonial-carousel";
 import Link from "next/link";
-
 // Enable ISR: revalidate every 60 seconds to keep blog data fresh
 // export const revalidate = 60;
+
 
 export default function Landing() {
   return (
@@ -26,7 +27,7 @@ export default function Landing() {
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-12">
             <div className="lg:col-span-2">
-              <img src="/assets/landing/Mask group1.png" className="w-full" alt="" />
+              <LanderDynamic className="w-full" />
             </div>
             <div className="flex flex-col gap-6 md:gap-8 justify-end mb-2">
               <p className="text-base md:text-lg lg:text-xl max-w-[32ch]">Launch, run, and scale AI models in minutes, without the cloud confusion, GPU expertise, or unpredictable costs. As easy as a single click. <br></br><br></br> Synteq AI gives teams a simple way to turn ideas into production AI in a weekend.</p>
