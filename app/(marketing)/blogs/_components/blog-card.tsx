@@ -17,34 +17,28 @@ export function BlogCard({
   href,
 }: BlogCardProps) {
   return (
-    <article className="flex flex-col gap-6">
-      <Link
-        href={href}
-        className="group relative border border-white/25 aspect-video w-full overflow-hidden"
-      >
+    <Link href={href} className="group flex flex-col gap-6">
+      <div className="relative border border-white/25 aspect-video w-full overflow-hidden bg-gradient-to-br from-accent/20 to-background">
         <img
           src={image}
           alt={title}
           className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
-      </Link>
+      </div>
       <div className="flex flex-col gap-3">
         <span className="font-mono text-sm leading-none tracking-tight text-darker-accent uppercase">
           {category}
         </span>
-        <h3 className="text-2xl text-white leading-tight tracking-tight">
+        <h3 className="text-2xl text-white leading-tight tracking-tight group-hover:text-accent transition-colors">
           {title}
         </h3>
         <p className="text-lg text-[#ccc] leading-normal tracking-tight">
           {description}
         </p>
-        <Link
-          href={href}
-          className="font-mono text-sm leading-none tracking-tight text-darker-accent uppercase underline decoration-from-font hover:text-accent transition-colors"
-        >
+        <span className="font-mono text-sm leading-none tracking-tight text-darker-accent uppercase underline decoration-from-font group-hover:text-accent transition-colors">
           LEARN MORE ↘
-        </Link>
+        </span>
       </div>
-    </article>
+    </Link>
   );
 }

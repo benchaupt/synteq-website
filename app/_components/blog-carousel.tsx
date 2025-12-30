@@ -2,6 +2,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import useEmblaCarousel from "embla-carousel-react";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 interface BlogCarouselProps {
@@ -49,28 +50,25 @@ export function BlogCarousel({ blogs }: BlogCarouselProps) {
                     <div className='embla__container'>
                         {blogs.map((blog, index) => (
                             <div key={index} className="min-w-full md:min-w-1/2 lg:min-w-1/3 px-4 md:px-6 lg:px-[25px]">
-                                <div className="flex flex-col gap-4 md:gap-6 group">
-                                    <div className="border border-white/25 aspect-video w-full overflow-hidden">
+                                <Link href={blog.href} className="flex flex-col gap-4 md:gap-6 group">
+                                    <div className="border border-white/25 aspect-video w-full overflow-hidden bg-gradient-to-br from-accent/20 to-background">
                                         <img src={blog.image} alt={blog.title} className="size-full object-cover transition-transform duration-300 group-hover:scale-105" />
                                     </div>
                                     <div className="flex flex-col gap-2 md:gap-3">
                                         <p className="font-mono text-accent text-xs md:text-sm lg:text-[15px] leading-[1.1] tracking-tight md:tracking-[-0.45px] uppercase">
                                             {blog.category}
                                         </p>
-                                        <h3 className="text-lg md:text-xl lg:text-2xl text-white leading-tight tracking-tight md:tracking-[-0.72px]">
+                                        <h3 className="text-lg md:text-xl lg:text-2xl text-white leading-tight tracking-tight md:tracking-[-0.72px] group-hover:text-accent transition-colors">
                                             {blog.title}
                                         </h3>
                                         <p className="text-base md:text-lg text-[#ccc] leading-normal tracking-tight md:tracking-[-0.45px]">
                                             {blog.description}
                                         </p>
-                                        <a
-                                            href={blog.href}
-                                            className="font-mono text-accent text-xs md:text-sm leading-[1.1] tracking-tight md:tracking-[-0.45px] uppercase underline underline-offset-4 decoration-from-font pb-1 hover:underline-offset-2 duration-150"
-                                        >
+                                        <span className="font-mono text-accent text-xs md:text-sm leading-[1.1] tracking-tight md:tracking-[-0.45px] uppercase underline underline-offset-4 decoration-from-font pb-1 group-hover:underline-offset-2 duration-150">
                                             LEARN MORE ↘
-                                        </a>
+                                        </span>
                                     </div>
-                                </div>
+                                </Link>
                             </div>
                         ))}
                     </div>
