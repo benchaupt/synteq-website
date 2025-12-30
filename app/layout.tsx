@@ -26,6 +26,7 @@ const sequalSansBook = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://synteqai.berrybyte.workers.dev"),
   title: "Synteq AI",
   description: "Build the fastest, modern platform to power AI",
   openGraph: {
