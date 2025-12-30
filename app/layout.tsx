@@ -28,6 +28,25 @@ const sequalSansBook = localFont({
 export const metadata: Metadata = {
   title: "Synteq AI",
   description: "Build the fastest, modern platform to power AI",
+  openGraph: {
+    title: "Synteq AI",
+    description: "Build the fastest, modern platform to power AI",
+    images: [
+      {
+        url: "/assets/synteq-banner.png",
+        width: 1200,
+        height: 630,
+        alt: "Synteq AI - The AI Cloud",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Synteq AI",
+    description: "Build the fastest, modern platform to power AI",
+    images: ["/assets/synteq-banner.png"],
+  },
 };
 
 export default function RootLayout({

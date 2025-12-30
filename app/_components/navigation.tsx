@@ -199,8 +199,8 @@ export const Navigation = () => {
                         {/* Regular Links */}
                         <NavigationMenu.Item>
                             <NavigationMenu.Link asChild>
-                                <Link href="#" className="px-4 py-2 text-white/80 hover:text-accent transition-colors duration-200 text-sm">
-                                    Pricing
+                                <Link href="/about" className="px-4 py-2 text-white/80 hover:text-accent transition-colors duration-200 text-sm">
+                                    About Us
                                 </Link>
                             </NavigationMenu.Link>
                         </NavigationMenu.Item>
@@ -423,11 +423,11 @@ export const Navigation = () => {
 
                                 {/* Direct Links */}
                                 <Link
-                                    href="#"
+                                    href="/about"
                                     className="text-xl text-white/90 hover:text-accent transition-colors border-b border-white/10 pb-6"
                                     onClick={() => setMobileNavbar(false)}
                                 >
-                                    Pricing
+                                    About Us
                                 </Link>
                                 <Link
                                     href="#"
