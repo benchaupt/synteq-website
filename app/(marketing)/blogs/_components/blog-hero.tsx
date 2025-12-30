@@ -18,22 +18,24 @@ export function BlogHero({
 }: BlogHeroProps) {
   return (
     <Link href={href} className="group relative w-full">
-      <div className="min-h-[800px] aspect-video p-5" style={{
-        backgroundImage: `url(${image})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-      }}>
-        <div className="flex flex-col gap-3 max-w-2xl items-start justify-end h-full">
-          <span className="font-mono text-lg text-darker-accent tracking-tight uppercase">
-            {category}
-          </span>
-          <h1 className="text-4xl text-foreground leading-tight tracking-tight">
-            {title}
-          </h1>
-          <p className="text-xl text-[#bfbfbf] tracking-tight">
-            {description}
-          </p>
+      <div className="bg-gradient-to-br from-accent/20 to-background">
+        <div className="relative min-h-[800px] aspect-video p-5" style={{
+          backgroundImage: `url(${image})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}>
+          <div className="flex flex-col gap-3 max-w-2xl items-start justify-end h-full">
+            <span className="font-mono text-lg text-darker-accent tracking-tight uppercase">
+              {category}
+            </span>
+            <h1 className="text-4xl text-foreground leading-tight tracking-tight">
+              {title}
+            </h1>
+            <p className="text-xl text-[#bfbfbf] tracking-tight">
+              {description}
+            </p>
+          </div>
         </div>
       </div>
       {/* <img
