@@ -1,12 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { AnimatedButton } from "@/app/_components/animated-button";
 import CallToActionNew from "@/app/_components/call-to-action-new";
-import { motion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
-import useEmblaCarousel from "embla-carousel-react";
 import { cn } from "@/lib/utils";
+import useEmblaCarousel from "embla-carousel-react";
+import { motion } from "motion/react";
+import { useEffect, useState } from "react";
 
 const timeline = [
     {
@@ -81,12 +80,9 @@ const leadership = [
 export default function About() {
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" });
     const [selectedIndex, setSelectedIndex] = useState(0);
-    const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
     useEffect(() => {
         if (!emblaApi) return;
-
-        setScrollSnaps(emblaApi.scrollSnapList());
 
         const onSelect = () => {
             setSelectedIndex(emblaApi.selectedScrollSnap());
@@ -336,7 +332,7 @@ export default function About() {
 
                     {/* Carousel Dots */}
                     <div className="flex justify-center gap-2 mt-6">
-                        {scrollSnaps.map((_, index) => (
+                        {leadership.map((_, index) => (
                             <button
                                 key={index}
                                 onClick={() => scrollTo(index)}
