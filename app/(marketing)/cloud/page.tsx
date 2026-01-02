@@ -117,7 +117,7 @@ export default function Cloud() {
               <div className="max-w-4xl">
                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl max-w-2xl text-foreground leading-tight tracking-tight font-sequel-book">
                   Production AI without the complexity
-                </h1>
+              </h1>
               </div>
               <p className="text-lg md:text-xl text-white/60 max-w-2xl leading-relaxed">
                 Deploy, scale, and manage AI models in minutes. No DevOps required. No surprise bills. Just production-ready infrastructure that works.
@@ -147,7 +147,7 @@ export default function Cloud() {
             >
               <div className="text-4xl md:text-5xl lg:text-6xl font-sequel-book text-accent">
                 255+
-              </div>
+          </div>
               <p className="font-mono text-xs text-white/40 uppercase tracking-wider">Production models</p>
             </motion.div>
             <motion.div 
@@ -210,8 +210,8 @@ export default function Cloud() {
                     <span className="inline-flex items-center px-2 py-1 rounded-md bg-accent/10 border border-accent/20 text-xs font-mono text-accent">
                       {model.category}
                     </span>
-                  </div>
-                </AnimatedCard>
+                </div>
+              </AnimatedCard>
               </motion.div>
             ))}
           </div>
@@ -232,7 +232,7 @@ export default function Cloud() {
             <h2 className="text-4xl md:text-5xl lg:text-6xl max-w-3xl tracking-tight leading-tight font-sequel-book">
               Everything you need to ship AI
             </h2>
-          </div>
+        </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => (
@@ -247,17 +247,17 @@ export default function Cloud() {
                 <div className="flex items-center gap-3">
                   <div className="size-10 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center text-accent shrink-0">
                     {feature.icon}
-                  </div>
+              </div>
                   <h3 className="text-xl md:text-2xl font-sequel-book">{feature.title}</h3>
-                </div>
+            </div>
                 <p className="text-sm md:text-base text-white/60 leading-relaxed">
                   {feature.description}
                 </p>
               </motion.div>
-            ))}
+          ))}
           </div>
         </div>
-      </div>
+        </div>
 
       {/* FAQ Section */}
       <div className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24">
@@ -277,15 +277,15 @@ export default function Cloud() {
                 </AnimatedButton>
               </Link>
             </div>
-          </div>
-          
+        </div>
+
           <div className="lg:col-span-3">
-            <Accordion
-              type="single"
-              collapsible
-              className="w-full"
+          <Accordion
+            type="single"
+            collapsible
+            className="w-full"
               defaultValue="item-0"
-            >
+          >
               {faqs.map((faq, index) => (
                 <AccordionItem key={index} value={`item-${index}`} className="border-white/5">
                   <AccordionTrigger className="text-left text-base md:text-lg hover:text-accent transition-colors">
@@ -293,10 +293,10 @@ export default function Cloud() {
                   </AccordionTrigger>
                   <AccordionContent className="text-sm md:text-base text-white/60 leading-relaxed">
                     {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
+              </AccordionContent>
+            </AccordionItem>
               ))}
-            </Accordion>
+          </Accordion>
           </div>
         </div>
       </div>

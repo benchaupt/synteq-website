@@ -163,48 +163,48 @@ export const SelectHardware = ({ hideOverview = false, className = "" }: { hideO
                                             <span className="font-sequel-book">80</span>
                                             <span className="text-base text-accent">GB</span>
                                         </h3>
-                                    </div>
+                                        </div>
                                     <div className="flex flex-col gap-2 p-4 rounded-lg border border-white/5 bg-background-secondary/50">
                                         <p className="font-mono text-xs text-white/40 uppercase tracking-wider">Bandwidth</p>
                                         <h3 className="text-2xl md:text-3xl inline-flex items-baseline gap-1">
                                             <span className="font-sequel-book">3.35</span>
                                             <span className="text-base text-accent">TB/s</span>
                                         </h3>
-                                    </div>
+                                        </div>
                                     <div className="flex flex-col gap-2 p-4 rounded-lg border border-white/5 bg-background-secondary/50">
                                         <p className="font-mono text-xs text-white/40 uppercase tracking-wider">FP16</p>
                                         <h3 className="text-2xl md:text-3xl inline-flex items-baseline gap-1">
                                             <span className="font-sequel-book">989</span>
                                             <span className="text-base text-accent">TF</span>
                                         </h3>
-                                    </div>
+                                        </div>
                                     <div className="flex flex-col gap-2 p-4 rounded-lg border border-white/5 bg-background-secondary/50">
                                         <p className="font-mono text-xs text-white/40 uppercase tracking-wider">FP8</p>
                                         <h3 className="text-2xl md:text-3xl inline-flex items-baseline gap-1">
                                             <span className="font-sequel-book">1979</span>
                                             <span className="text-base text-accent">TF</span>
                                         </h3>
-                                    </div>
+                                        </div>
                                     <div className="flex flex-col gap-2 p-4 rounded-lg border border-white/5 bg-background-secondary/50">
                                         <p className="font-mono text-xs text-white/40 uppercase tracking-wider">TDP</p>
                                         <h3 className="text-2xl md:text-3xl inline-flex items-baseline gap-1">
                                             <span className="font-sequel-book">700</span>
                                             <span className="text-base text-accent">W</span>
                                         </h3>
-                                    </div>
+                                        </div>
                                     <div className="flex flex-col gap-2 p-4 rounded-lg border border-white/5 bg-background-secondary/50">
                                         <p className="font-mono text-xs text-white/40 uppercase tracking-wider">NVLink</p>
                                         <h3 className="text-2xl md:text-3xl inline-flex items-baseline gap-1">
                                             <span className="font-sequel-book">900</span>
                                             <span className="text-base text-accent">GB/s</span>
                                         </h3>
-                                    </div>
+                                        </div>
                                     <div className="flex flex-col gap-2 p-4 rounded-lg border border-white/5 bg-background-secondary/50">
                                         <p className="font-mono text-xs text-white/40 uppercase tracking-wider">Process</p>
                                         <h3 className="text-2xl md:text-3xl">
                                             <span className="font-sequel-book text-accent">4nm</span>
                                         </h3>
-                                    </div>
+                                        </div>
                                     <div className="flex flex-col gap-2 p-4 rounded-lg border border-white/5 bg-background-secondary/50">
                                         <p className="font-mono text-xs text-white/40 uppercase tracking-wider">Form</p>
                                         <h3 className="text-2xl md:text-3xl">

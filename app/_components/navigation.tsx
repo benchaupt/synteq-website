@@ -31,8 +31,8 @@ export const Navigation = () => {
     }, [mobileNavbar]);
 
     return (
-        <nav className={cn(`sticky top-0 z-1999 bg-background backdrop-blur-xl transition-all duration-200 border-b`, isScrolled ? 'border-white/5' : 'border-transparent')}>
-            <div className="flex flex-row items-center justify-between py-5 px-5 max-w-viewport w-full mx-auto">
+        <nav className={cn(`sticky top-0 z-50 bg-background backdrop-blur-xl transition-all duration-200 border-b`, isScrolled ? 'border-white/5' : 'border-transparent')}>
+            <div className="flex flex-row items-center justify-between py-5 px-5 max-w-viewport w-full mx-auto relative z-[70]">
                 {/* Logo */}
                 <Link href="/" className="flex items-center group/logo">
                     <svg viewBox="0 0 159 50" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-8 w-auto text-white transition-colors duration-200 group-hover/logo:text-accent">
@@ -177,7 +177,7 @@ export const Navigation = () => {
 
                 {/* Mobile Menu Button */}
                 <button
-                    className="lg:hidden text-white/80 hover:text-accent transition-colors z-50 relative"
+                    className="lg:hidden text-white/80 hover:text-accent transition-colors relative z-[70]"
                     onClick={() => setMobileNavbar(!mobileNavbar)}
                     aria-label="Toggle menu"
                 >
@@ -195,15 +195,22 @@ export const Navigation = () => {
 
             {/* Mobile Menu Overlay */}
             {mobileNavbar && (
-                <div className="fixed inset-0 z-40 lg:hidden">
-                    <div className="fixed inset-0 bg-background/95 backdrop-blur-xl" onClick={() => setMobileNavbar(false)} />
-                    <div className="fixed inset-0 flex items-start justify-center pt-20 overflow-y-auto">
-                        <div className="relative w-full max-w-md px-5 pb-8">
-                            <nav className="flex flex-col gap-6">
+                <div className="fixed inset-0 z-[60] lg:hidden">
+                    {/* Background overlay */}
+                    <div 
+                        className="fixed inset-0 bg-background/95 backdrop-blur-xl" 
+                        onClick={() => setMobileNavbar(false)} 
+                        aria-hidden="true"
+                    />
+                    
+                    {/* Menu content */}
+                    <div className="fixed inset-x-0 top-0 pt-20 pb-8 overflow-y-auto max-h-screen">
+                        <div className="relative w-full max-w-md mx-auto px-5">
+                            <nav className="flex flex-col gap-1 bg-background-secondary rounded-2xl p-4 shadow-xl border border-white/5">
                                 {/* Hardware Link */}
                                 <Link
                                     href="/hardware"
-                                    className="text-xl text-white/90 hover:text-accent transition-colors border-b border-white/10 pb-6"
+                                    className="text-lg text-white/90 hover:text-accent hover:bg-white/5 transition-all rounded-lg px-4 py-4 border-b border-white/5"
                                     onClick={() => setMobileNavbar(false)}
                                 >
                                     Hardware
@@ -212,21 +219,24 @@ export const Navigation = () => {
                                 {/* Cloud Link */}
                                 <Link
                                     href="/cloud"
-                                    className="text-xl text-white/90 hover:text-accent transition-colors border-b border-white/10 pb-6"
+                                    className="text-lg text-white/90 hover:text-accent hover:bg-white/5 transition-all rounded-lg px-4 py-4 border-b border-white/5"
                                     onClick={() => setMobileNavbar(false)}
                                 >
                                     Cloud
                                 </Link>
 
                                 {/* Resources Section */}
-                                <div className="border-b border-white/10 pb-6">
+                                <div className="border-b border-white/5">
                                     <button
                                         onClick={() => setMobileActiveDropdown(mobileActiveDropdown === 'resources' ? null : 'resources')}
-                                        className="flex items-center justify-between w-full text-xl text-white/90 hover:text-accent transition-colors"
+                                        className="flex items-center justify-between w-full text-lg text-white/90 hover:text-accent hover:bg-white/5 transition-all rounded-lg px-4 py-4"
                                     >
                                         <span>Resources</span>
                                         <svg
-                                            className={`size-5 transition-transform ${mobileActiveDropdown === 'resources' ? 'rotate-180' : ''}`}
+                                            className={cn(
+                                                "size-5 transition-transform duration-200",
+                                                mobileActiveDropdown === 'resources' && 'rotate-180'
+                                            )}
                                             fill="none"
                                             viewBox="0 0 24 24"
                                             stroke="currentColor"
@@ -235,10 +245,10 @@ export const Navigation = () => {
                                         </svg>
                                     </button>
                                     {mobileActiveDropdown === 'resources' && (
-                                        <div className="mt-4 ml-4 space-y-3">
+                                        <div className="pb-2 px-4 space-y-1">
                                             <Link
                                                 href="#"
-                                                className="flex items-start gap-3 py-2"
+                                                className="flex items-center gap-3 py-3 px-3 rounded-lg hover:bg-white/5 transition-colors"
                                                 onClick={() => setMobileNavbar(false)}
                                             >
                                                 <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0">
@@ -246,14 +256,14 @@ export const Navigation = () => {
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                                                     </svg>
                                                 </div>
-                                                <div>
-                                                    <div className="text-white font-medium">API</div>
-                                                    <div className="text-sm text-white/40 mt-0.5">OpenAPI compatible</div>
+                                                <div className="flex-1 min-w-0">
+                                                    <div className="text-white text-sm font-medium">API</div>
+                                                    <div className="text-xs text-white/40">OpenAPI compatible</div>
                                                 </div>
                                             </Link>
                                             <Link
                                                 href="#"
-                                                className="flex items-start gap-3 py-2"
+                                                className="flex items-center gap-3 py-3 px-3 rounded-lg hover:bg-white/5 transition-colors"
                                                 onClick={() => setMobileNavbar(false)}
                                             >
                                                 <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0">
@@ -261,14 +271,14 @@ export const Navigation = () => {
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                                                     </svg>
                                                 </div>
-                                                <div>
-                                                    <div className="text-white font-medium">Model Library</div>
-                                                    <div className="text-sm text-white/40 mt-0.5">255+ production models</div>
+                                                <div className="flex-1 min-w-0">
+                                                    <div className="text-white text-sm font-medium">Model Library</div>
+                                                    <div className="text-xs text-white/40">255+ production models</div>
                                                 </div>
                                             </Link>
                                             <Link
                                                 href="#"
-                                                className="flex items-start gap-3 py-2"
+                                                className="flex items-center gap-3 py-3 px-3 rounded-lg hover:bg-white/5 transition-colors"
                                                 onClick={() => setMobileNavbar(false)}
                                             >
                                                 <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0">
@@ -276,29 +286,29 @@ export const Navigation = () => {
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                                                     </svg>
                                                 </div>
-                                                <div>
-                                                    <div className="text-white font-medium">Blog</div>
-                                                    <div className="text-sm text-white/40 mt-0.5">Latest updates & insights</div>
+                                                <div className="flex-1 min-w-0">
+                                                    <div className="text-white text-sm font-medium">Blog</div>
+                                                    <div className="text-xs text-white/40">Latest updates & insights</div>
                                                 </div>
                                             </Link>
                                         </div>
                                     )}
                                 </div>
 
-                                {/* Direct Links */}
+                                {/* About Us Link */}
                                 <Link
                                     href="/about"
-                                    className="text-xl text-white/90 hover:text-accent transition-colors border-b border-white/10 pb-6"
+                                    className="text-lg text-white/90 hover:text-accent hover:bg-white/5 transition-all rounded-lg px-4 py-4 border-b border-white/5"
                                     onClick={() => setMobileNavbar(false)}
                                 >
                                     About Us
                                 </Link>
 
                                 {/* CTA Buttons */}
-                                <div className="flex flex-col gap-3 pt-4">
+                                <div className="flex flex-col gap-3 pt-6">
                                     <Link
                                         href="#"
-                                        className="text-center py-3 text-white/70 hover:text-white transition-colors"
+                                        className="text-center py-3 px-4 text-white/70 hover:text-white hover:bg-white/5 transition-all rounded-lg"
                                         onClick={() => setMobileNavbar(false)}
                                     >
                                         Sign in
@@ -306,7 +316,7 @@ export const Navigation = () => {
                                     <Link href="/contact" onClick={() => setMobileNavbar(false)}>
                                         <AnimatedButton
                                             background="primary"
-                                            className="hover:bg-background-secondary w-full"
+                                            className="w-full justify-center"
                                         >
                                             Contact Sales
                                         </AnimatedButton>

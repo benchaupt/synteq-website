@@ -87,8 +87,8 @@ export default function Hardware() {
               <div className="max-w-4xl">
                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl max-w-2xl text-foreground leading-tight tracking-tight font-sequel-book">
                   Powerful hardware ready for AI workloads
-                </h1>
-              </div>
+              </h1>
+            </div>
               <p className="text-lg md:text-xl text-white/60 max-w-2xl leading-relaxed">
                 Launch, run, and scale AI models in minutes, without the cloud confusion, GPU expertise, or unpredictable costs. As easy as a single click.
               </p>
@@ -99,9 +99,9 @@ export default function Hardware() {
                 <Link href="/contact">
                   <AnimatedButton background="dark" className="hover:bg-background-secondary">
                     Contact Sales
-                  </AnimatedButton>
+            </AnimatedButton>
                 </Link>
-              </div>
+          </div>
             </div>
             <div className="flex flex-col gap-4 items-center justify-center w-full lg:w-auto">
               <img src="/assets/landing/Mask group1.png" alt="AI Infrastructure" className="w-full max-w-md lg:max-w-lg xl:max-w-xl" />
@@ -131,7 +131,7 @@ export default function Hardware() {
             >
               <div className="text-4xl md:text-5xl lg:text-6xl font-sequel-book text-accent">
                 <AnimatedCounter value="2x" />
-              </div>
+          </div>
               <p className="font-mono text-xs text-white/40 uppercase tracking-wider">More predictable performance</p>
             </motion.div>
             <motion.div 
@@ -143,12 +143,12 @@ export default function Hardware() {
             >
               <div className="text-4xl md:text-5xl lg:text-6xl font-sequel-book text-accent">
                 <AnimatedCounter value="99.99%" />
-              </div>
+          </div>
               <p className="font-mono text-xs text-white/40 uppercase tracking-wider">Uptime SLA availability</p>
             </motion.div>
           </div>
         </div>
-      </div>
+          </div>
 
       {/* Section Divider */}
       <div className="max-w-viewport w-full mx-auto px-5 py-12 md:py-16 md:pb-8">
@@ -170,7 +170,7 @@ export default function Hardware() {
               <h2 className="text-4xl md:text-5xl lg:text-6xl tracking-tight leading-tight font-sequel-book">
                 Compare Products
               </h2>
-            </div>
+          </div>
             <Link href="/contact">
               <AnimatedButton background="dark" className="hover:bg-background-secondary">
                 Talk To Sales
@@ -184,30 +184,30 @@ export default function Hardware() {
               <div className="flex flex-col gap-4 items-center">
                 <div className="size-24 flex items-center justify-center">
                   <img src="/assets/hardware/Group 20.png" className="object-contain" alt="Nvidia H100" />
-                </div>
+          </div>
                 <h3 className="text-xl font-medium">Nvidia H100</h3>
                 <p className="text-sm text-white/50 text-center">High-performance GPU cluster for large-scale AI training and inference</p>
-              </div>
+          </div>
             </AnimatedCard>
 
             <AnimatedCard className="flex flex-col gap-6 p-8">
               <div className="flex flex-col gap-4 items-center">
                 <div className="size-24 flex items-center justify-center">
                   <img src="/assets/hardware/Group 20.png" className="object-contain" alt="Nvidia H200" />
-                </div>
+        </div>
                 <h3 className="text-xl font-medium">Nvidia H200</h3>
                 <p className="text-sm text-white/50 text-center">Next-gen architecture with enhanced memory for complex workloads</p>
-              </div>
+          </div>
             </AnimatedCard>
 
             <AnimatedCard className="flex flex-col gap-6 p-8">
               <div className="flex flex-col gap-4 items-center">
                 <div className="size-24 flex items-center justify-center">
                   <img src="/assets/hardware/Group 20.png" className="object-contain" alt="Nvidia A100" />
-                </div>
+          </div>
                 <h3 className="text-xl font-medium">Nvidia A100</h3>
                 <p className="text-sm text-white/50 text-center">Versatile compute platform for training and deployment at scale</p>
-              </div>
+          </div>
             </AnimatedCard>
           </div>
 
@@ -215,7 +215,7 @@ export default function Hardware() {
           <div className="border border-white/5 rounded-xl overflow-hidden">
             <div className="bg-background-secondary p-6 border-b border-white/5">
               <h3 className="font-mono text-xs text-accent uppercase tracking-wider">Technical Specifications</h3>
-            </div>
+        </div>
             
             {/* Spec Rows */}
             <div className="divide-y divide-white/5">
@@ -224,60 +224,60 @@ export default function Hardware() {
                 <div className="text-sm">H100</div>
                 <div className="text-sm">H200</div>
                 <div className="text-sm">A100</div>
-              </div>
+          </div>
 
               <div className="grid grid-cols-4 gap-4 p-6 hover:bg-white/2 transition-colors">
                 <div className="font-mono text-xs text-white/40 uppercase tracking-wider">GPUs/Server</div>
                 <div className="text-sm">8</div>
                 <div className="text-sm">8</div>
                 <div className="text-sm">8</div>
-              </div>
+          </div>
 
               <div className="grid grid-cols-4 gap-4 p-6 hover:bg-white/2 transition-colors">
                 <div className="font-mono text-xs text-white/40 uppercase tracking-wider">vCPUs</div>
                 <div className="text-sm">2x Intel Xeon Platinum 6960P</div>
                 <div className="text-sm">2x Intel Xeon Platinum 6960P</div>
                 <div className="text-sm">2x Intel Xeon Platinum 6960P</div>
-              </div>
+          </div>
 
               <div className="grid grid-cols-4 gap-4 p-6 hover:bg-white/2 transition-colors">
                 <div className="font-mono text-xs text-white/40 uppercase tracking-wider">vRAM</div>
                 <div className="text-sm">80GB HBM3</div>
                 <div className="text-sm">141GB HBM3</div>
                 <div className="text-sm">80GB HBM2e</div>
-              </div>
+          </div>
 
               <div className="grid grid-cols-4 gap-4 p-6 hover:bg-white/2 transition-colors">
                 <div className="font-mono text-xs text-white/40 uppercase tracking-wider">RAM</div>
                 <div className="text-sm">2TB</div>
                 <div className="text-sm">2TB</div>
                 <div className="text-sm">2TB</div>
-              </div>
+        </div>
 
               <div className="grid grid-cols-4 gap-4 p-6 hover:bg-white/2 transition-colors">
                 <div className="font-mono text-xs text-white/40 uppercase tracking-wider">Storage</div>
                 <div className="text-sm">3.84TB NVMe</div>
                 <div className="text-sm">3.84TB NVMe</div>
                 <div className="text-sm">3.84TB NVMe</div>
-              </div>
+          </div>
 
               <div className="grid grid-cols-4 gap-4 p-6 hover:bg-white/2 transition-colors">
                 <div className="font-mono text-xs text-white/40 uppercase tracking-wider">Bandwidth</div>
                 <div className="text-sm">900GB/s</div>
                 <div className="text-sm">900GB/s</div>
                 <div className="text-sm">600GB/s</div>
-              </div>
+          </div>
 
               <div className="grid grid-cols-4 gap-4 p-6 hover:bg-white/2 transition-colors">
                 <div className="font-mono text-xs text-white/40 uppercase tracking-wider">Network</div>
                 <div className="text-sm">8x 200Gbps InfiniBand</div>
                 <div className="text-sm">8x 200Gbps InfiniBand</div>
                 <div className="text-sm">8x 200Gbps InfiniBand</div>
-              </div>
-            </div>
           </div>
         </div>
-      </div>
+          </div>
+        </div>
+          </div>
 
       <div className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24">
         <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
@@ -295,7 +295,7 @@ export default function Hardware() {
                   Contact Support
                 </AnimatedButton>
               </Link>
-            </div>
+          </div>
           </div>
           
           <div className="lg:col-span-3">
@@ -318,7 +318,7 @@ export default function Hardware() {
             </Accordion>
           </div>
         </div>
-      </div> 
+      </div>
 
       <CallToActionNew />
     </>
