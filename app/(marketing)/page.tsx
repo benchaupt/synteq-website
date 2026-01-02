@@ -68,7 +68,7 @@ export default function Landing() {
             ))}
           </Marquee>
           <div className="flex items-center justify-center px-4">
-            <p className="uppercase font-mono text-xs md:text-sm text-center">SYNTEQ AI POWERS THE BEST AI TEAMS. <Link href="#" className="uppercase text-accent underline-offset-4 underline hover:underline-offset-2 duration-150">Meet our customers ↘</Link>.</p>
+            <p className="uppercase font-mono text-xs md:text-sm text-center">SYNTEQ AI POWERS THE BEST AI TEAMS. <Link href="#" className="uppercase text-accent underline-offset-4 underline hover:underline-offset-6 duration-150">Meet our customers ↘</Link>.</p>
           </div>
         </div>
 

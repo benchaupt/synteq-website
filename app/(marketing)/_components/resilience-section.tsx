@@ -8,20 +8,20 @@ export default function ResilienceSection() {
         <div className="flex h-full shrink-0 flex-col justify-between gap-8 md:gap-10">
           <div className="flex w-full flex-col gap-6 md:gap-8">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight md:leading-9 text-foreground font-sequel-book">
-              Built for resilience.
+              Engineering for AI
             </h2>
             <p className="text-base md:text-lg lg:text-2xl leading-relaxed md:leading-9 text-foreground/65 max-w-2xl">
-              <span className="text-foreground">Modern SLAs</span>
-              {` should be enforced, monitored, and optimized in real time. By leveraging AI, service level agreements evolve from `}
-              <span className="text-foreground">{`static promises into living `}</span>
-              systems that predict risk, detect anomalies, and adapt before breaches happen.
+              <span className="text-foreground">Purpose-built hardware</span>
+              {` meets cloud-native design. Every component from GPU clusters to network fabri is optimized for AI workloads. `}
+              <span className="text-foreground">{`Research-grade infrastructure `}</span>
+              that delivers production reliability, designed for the next generation of AI products.
             </p>
           </div>
           <Link
             href="#infrastructure"
-            className="font-mono text-xs md:text-sm uppercase text-darker-accent underline decoration-solid underline-offset-4 hover:underline-offset-2 duration-150"
+            className="font-mono text-xs md:text-sm uppercase text-darker-accent underline decoration-solid underline-offset-4 hover:underline-offset-6 duration-150"
           >
-            Understand our Infrastructure ↘
+            Explore our Infrastructure ↘
           </Link>
         </div>
 
@@ -33,49 +33,49 @@ export default function ResilienceSection() {
               Uptime
             </p>
             <p className="text-3xl md:text-4xl lg:text-5xl text-transparent bg-linear-to-l from-white to-[#cbf1ea] bg-clip-text">
-              99.95% SLA
+              99.99% SLA
             </p>
             <p className="text-base md:text-lg lg:text-2xl text-white/65">
-              they should be enforced, and optimized in real time.
+              Enterprise-grade reliability with redundant systems and automated failover.
             </p>
           </div>
 
-          {/* Up to 95% Card - Top Right */}
+          {/* Latency Card - Top Right */}
           <div className="flex flex-col gap-3 md:gap-4 justify-self-start sm:justify-self-end">
             <p className="text-lg md:text-xl lg:text-2xl text-white/65">
-              Up to
+              Latency
             </p>
             <p className="text-3xl md:text-4xl lg:text-5xl text-transparent bg-linear-to-l from-white from-[73.558%] to-[#cbf1ea] bg-clip-text">
-              95%
+              &lt;50ms
             </p>
             <p className="text-base md:text-lg lg:text-2xl text-white/65">
-              they should be enforced, and optimized in real time.
+              Sub-50ms response times for real-time AI inference workloads.
             </p>
           </div>
 
-          {/* AI Training Card 1 - Bottom Left */}
+          {/* Hardware Card - Bottom Left */}
           <div className="flex flex-col gap-3 md:gap-4 justify-self-start">
             <p className="text-lg md:text-xl lg:text-2xl text-white/65">
-              Designed For
+              Hardware
             </p>
             <p className="text-3xl md:text-4xl lg:text-5xl text-transparent bg-linear-to-l from-white to-[#cbf1ea] bg-clip-text">
-              AI Training
+              H100 & A100
             </p>
             <p className="text-base md:text-lg lg:text-2xl text-white/65">
-              they should be enforced, and optimized in real time.
+              Latest-generation GPUs optimized for training and inference.
             </p>
           </div>
 
-          {/* AI Training Card 2 - Bottom Right */}
+          {/* Design Card - Bottom Right */}
           <div className="flex flex-col gap-3 md:gap-4 justify-self-start sm:justify-self-end">
             <p className="text-lg md:text-xl lg:text-2xl text-white/65">
-              Designed For
+              Design
             </p>
             <p className="text-3xl md:text-4xl lg:text-5xl text-transparent bg-linear-to-l from-white from-[26.923%] via-[#cbf1ea] via-[50.962%] to-white to-[70.192%] bg-clip-text">
-              AI Training
+              AI-Native
             </p>
             <p className="text-base md:text-lg lg:text-2xl text-white/65">
-              they should be enforced, and optimized in real time.
+              Infrastructure architected from the ground up for AI workloads.
             </p>
           </div>
         </div>

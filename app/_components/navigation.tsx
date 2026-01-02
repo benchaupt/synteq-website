@@ -168,9 +168,11 @@ export const Navigation = () => {
                     <Link href="#" className="px-4 py-2 text-sm text-white/70 hover:text-white transition-colors">
                         Sign in
                     </Link>
-                    <AnimatedButton background="primary" className="hover:bg-background-secondary text-sm">
-                        Get Started
-                    </AnimatedButton>
+                    <Link href="/contact">
+                        <AnimatedButton background="primary" className="hover:bg-background-secondary text-sm">
+                            Contact Sales
+                        </AnimatedButton>
+                    </Link>
                 </div>
 
                 {/* Mobile Menu Button */}
@@ -301,13 +303,14 @@ export const Navigation = () => {
                                     >
                                         Sign in
                                     </Link>
-                                    <AnimatedButton
-                                        background="primary"
-                                        className="hover:bg-background-secondary w-full"
-                                        onClick={() => setMobileNavbar(false)}
-                                    >
-                                        Get Started
-                                    </AnimatedButton>
+                                    <Link href="/contact" onClick={() => setMobileNavbar(false)}>
+                                        <AnimatedButton
+                                            background="primary"
+                                            className="hover:bg-background-secondary w-full"
+                                        >
+                                            Contact Sales
+                                        </AnimatedButton>
+                                    </Link>
                                 </div>
                             </nav>
                         </div>

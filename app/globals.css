@@ -90,6 +90,17 @@ body {
   line-height: 1.1;
 }
 
+/* Text selection styling */
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-background);
+}
+
+::-moz-selection {
+  background-color: var(--color-accent);
+  color: var(--color-background);
+}
+
 h1, h2, h3, h4, h5, h6, p {
   font-family: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
   letter-spacing: -0.015em;

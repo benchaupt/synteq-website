@@ -64,7 +64,7 @@ export function BlogCarousel({ blogs }: BlogCarouselProps) {
                                         <p className="text-base md:text-lg text-[#ccc] leading-normal tracking-tight md:tracking-[-0.45px]">
                                             {blog.description}
                                         </p>
-                                        <span className="font-mono text-accent text-xs md:text-sm leading-[1.1] tracking-tight md:tracking-[-0.45px] uppercase underline underline-offset-4 decoration-from-font pb-1 group-hover:underline-offset-2 duration-150">
+                                        <span className="font-mono text-accent text-xs md:text-sm leading-[1.1] tracking-tight md:tracking-[-0.45px] uppercase underline underline-offset-4 decoration-from-font pb-1 group-hover:underline-offset-6 duration-150">
                                             LEARN MORE ↘
                                         </span>
                                     </div>

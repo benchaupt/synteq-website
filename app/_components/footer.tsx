@@ -139,7 +139,7 @@ export const Footer = () => {
                 {/* Bottom Section */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pt-8 border-t border-white/5">
                     <p className="font-mono text-xs text-white/40">
-                        © 2025 Synteq AI — All rights reserved
+                        © 2025 Synteq Digital. All rights reserved
                     </p>
                     
                     {/* Social Links */}

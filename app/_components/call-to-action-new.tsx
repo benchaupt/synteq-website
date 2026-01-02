@@ -53,10 +53,13 @@ const FeatureItem = ({ text }: { text: string }) => (
 
 export default function CallToActionNew() {
   const features = [
-    "Deploy to 330+ cities instantly",
-    "Predictable pricing without surprises",
-    "Battle-tested infrastructure powering millions",
-    "No cold starts or region complexity",
+    "99.99% uptime SLA",
+    "H100 & A100 GPUs",
+    "Sub-50ms inference latency",
+    "Research-grade infrastructure",
+    "AI-native architecture",
+    "Enterprise hardware",
+    "Purpose-built for AI workloads",
   ]
 
   return (
