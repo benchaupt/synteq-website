@@ -7,7 +7,7 @@ export default function ResilienceSection() {
         {/* Left Content */}
         <div className="flex h-full shrink-0 flex-col justify-between gap-8 md:gap-10">
           <div className="flex w-full flex-col gap-6 md:gap-8">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight md:leading-9 text-foreground font-sequel-book">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight md:leading-9 text-transparent bg-linear-to-l from-white to-[#cbf1ea] bg-clip-text font-sequel-book">
               Engineering for AI
             </h2>
             <p className="text-base md:text-lg lg:text-2xl leading-relaxed md:leading-9 text-foreground/65 max-w-2xl">
