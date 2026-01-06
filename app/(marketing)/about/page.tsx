@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import AsciiArt from "@/app/_components/ascii-art";
 import CallToActionNew from "@/app/_components/call-to-action-new";
 import { cn } from "@/lib/utils";
 import useEmblaCarousel from "embla-carousel-react";
@@ -78,7 +79,7 @@ const leadership = [
 ];
 
 export default function About() {
-    const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" });
+    const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: "start" });
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     useEffect(() => {
@@ -170,19 +171,15 @@ export default function About() {
             <section className="max-w-viewport w-full mx-auto px-5 py-24">
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-                    {/* Image on Left */}
+                    {/* ASCII Art on Left */}
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
-                        className="relative aspect-square rounded-lg overflow-hidden"
+                        className="relative aspect-square rounded-lg overflow-hidden bg-background-secondary border border-white/5 flex items-center justify-center p-4"
                     >
-                        <img
-                            src="/assets/about/image1320.png"
-                            alt="AI Infrastructure"
-                            className="w-full h-full object-cover"
-                        />
+                        <AsciiArt type="gpu" className="w-full h-full flex items-center justify-center" />
                     </motion.div>
 
                     {/* Values List on Right */}
@@ -230,37 +227,64 @@ export default function About() {
 
             {/* Leadership Team */}
             <section className="max-w-viewport w-full mx-auto px-5 py-24 flex flex-col gap-16">
-                <div className="flex flex-col gap-4">
-                    <p className="font-mono text-accent text-xs uppercase tracking-widest">
-                        Leadership
-                    </p>
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-sequel-book">
-                        Meet the team
-                    </h2>
+                <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+                    <div className="flex flex-col gap-4">
+                        <p className="font-mono text-accent text-xs uppercase tracking-widest">
+                            Leadership
+                        </p>
+                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-sequel-book">
+                            Meet the team
+                        </h2>
+                    </div>
+                    {/* Desktop Navigation Arrows */}
+                    <div className="hidden md:flex gap-2">
+                        <button 
+                            onClick={() => emblaApi?.scrollPrev()}
+                            className="size-10 relative flex items-center justify-center hover:bg-white/5 rounded-lg transition-colors group"
+                            aria-label="Previous team member"
+                        >
+                            <span className="absolute top-0 left-0 w-2 h-2 border-l border-t border-white/30 group-hover:border-accent transition-colors" />
+                            <span className="absolute top-0 right-0 w-2 h-2 border-r border-t border-white/30 group-hover:border-accent transition-colors" />
+                            <span className="absolute bottom-0 left-0 w-2 h-2 border-l border-b border-white/30 group-hover:border-accent transition-colors" />
+                            <span className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-white/30 group-hover:border-accent transition-colors" />
+                            <svg className="size-4" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15.2927 7.36992C15.2927 6.87117 14.8881 6.46651 14.3889 6.46612L4.94015 6.46613C4.18743 6.46613 3.81031 5.55582 4.34272 5.02341L7.81181 1.55432C8.16484 1.20129 8.16484 0.6291 7.81181 0.276071L7.79881 0.263067C7.44616 -0.0888145 6.87435 -0.0891969 6.52132 0.263832L0.415415 6.36974C-0.137269 6.92243 -0.137269 7.81819 0.415414 8.37088L6.52132 14.4768C6.87435 14.8298 7.44654 14.8298 7.79957 14.4768L7.81257 14.4638C8.1656 14.1107 8.1656 13.5386 7.81257 13.1855L4.3431 9.71606C3.81069 9.18364 4.18781 8.27334 4.94053 8.27334L14.3889 8.27372C14.8877 8.27372 15.2924 7.86906 15.2924 7.37031L15.2927 7.36992Z" fill="white" />
+                            </svg>
+                        </button>
+                        <button 
+                            onClick={() => emblaApi?.scrollNext()}
+                            className="size-10 relative flex items-center justify-center hover:bg-white/5 rounded-lg transition-colors group"
+                            aria-label="Next team member"
+                        >
+                            <span className="absolute top-0 left-0 w-2 h-2 border-l border-t border-white/30 group-hover:border-accent transition-colors" />
+                            <span className="absolute top-0 right-0 w-2 h-2 border-r border-t border-white/30 group-hover:border-accent transition-colors" />
+                            <span className="absolute bottom-0 left-0 w-2 h-2 border-l border-b border-white/30 group-hover:border-accent transition-colors" />
+                            <span className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-white/30 group-hover:border-accent transition-colors" />
+                            <svg className="size-4" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0.000235885 7.36992C0.000235485 6.87117 0.404899 6.46651 0.904036 6.46612L10.3528 6.46613C11.1055 6.46613 11.4827 5.55582 10.9503 5.02341L7.48116 1.55432C7.12813 1.20129 7.12813 0.6291 7.48116 0.276071L7.49416 0.263067C7.84681 -0.0888145 8.41862 -0.0891969 8.77164 0.263832L14.8776 6.36974C15.4302 6.92243 15.4302 7.81819 14.8776 8.37088L8.77165 14.4768C8.41862 14.8298 7.84643 14.8298 7.4934 14.4768L7.4804 14.4638C7.12737 14.1107 7.12737 13.5386 7.48039 13.1855L10.9499 9.71606C11.4823 9.18364 11.1052 8.27334 10.3524 8.27334L0.904036 8.27372C0.405282 8.27372 0.000618115 7.86906 0.000618368 7.37031L0.000235885 7.36992Z" fill="white" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
 
-                {/* Desktop Grid */}
-                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-                    {leadership.map((person, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className="flex flex-col gap-4 group"
-                        >
-                            <div className="aspect-square w-full bg-background-secondary rounded-lg overflow-hidden border border-white/10 group-hover:border-accent/30 transition-all duration-300">
-                                <img
-                                    src={person.image}
-                                    alt={person.name}
-                                    className="w-full h-full object-cover"
-                                />
-                            </div>
-                            <div className="flex flex-col gap-2">
+                {/* Carousel for all screen sizes */}
+                <div className="overflow-hidden" ref={emblaRef}>
+                    <div className="flex gap-4 md:gap-6">
+                        {leadership.map((person, index) => (
+                            <div
+                                key={index}
+                                className="flex flex-col gap-4 min-w-0 shrink-0 basis-[85%] sm:basis-[45%] md:basis-[30%] lg:basis-[22%] group"
+                            >
+                                <div className="aspect-square w-full bg-background-secondary rounded-lg overflow-hidden border border-white/10 group-hover:border-accent/30 transition-all duration-300">
+                                    <img
+                                        src={person.image}
+                                        alt={person.name}
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
                                 <div className="flex items-start justify-between gap-2">
                                     <div className="flex flex-col gap-1">
-                                        <h3 className="text-xl font-sequel text-white group-hover:text-accent transition-colors">
+                                        <h3 className="text-lg font-sequel text-white group-hover:text-accent transition-colors">
                                             {person.name}
                                         </h3>
                                         <p className="font-mono text-xs text-accent uppercase tracking-wider">
@@ -277,75 +301,26 @@ export default function About() {
                                         </svg>
                                     </a>
                                 </div>
-                                <p className="text-sm text-white/60 leading-relaxed">
-                                    {person.bio}
-                                </p>
                             </div>
-                        </motion.div>
-                    ))}
-                </div>
-
-                {/* Mobile Carousel */}
-                <div className="md:hidden">
-                    <div className="overflow-hidden" ref={emblaRef}>
-                        <div className="flex gap-4">
-                            {leadership.map((person, index) => (
-                                <div
-                                    key={index}
-                                    className="flex flex-col gap-4 min-w-0 shrink-0 basis-[85%]"
-                                >
-                                    <div className="aspect-square w-full bg-background-secondary rounded-lg overflow-hidden border border-white/10">
-                                        <img
-                                            src={person.image}
-                                            alt={person.name}
-                                            className="w-full h-full object-cover"
-                                        />
-                                    </div>
-                                    <div className="flex flex-col gap-2">
-                                        <div className="flex items-start justify-between gap-2">
-                                            <div className="flex flex-col gap-1">
-                                                <h3 className="text-xl font-sequel text-white">
-                                                    {person.name}
-                                                </h3>
-                                                <p className="font-mono text-xs text-accent uppercase tracking-wider">
-                                                    {person.role}
-                                                </p>
-                                            </div>
-                                            <a
-                                                href="#"
-                                                className="shrink-0 size-8 flex items-center justify-center text-white/40 hover:text-accent transition-colors"
-                                                aria-label={`${person.name} LinkedIn`}
-                                            >
-                                                <svg className="size-5" fill="currentColor" viewBox="0 0 24 24">
-                                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                                                </svg>
-                                            </a>
-                                        </div>
-                                        <p className="text-sm text-white/60 leading-relaxed">
-                                            {person.bio}
-                                        </p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Carousel Dots */}
-                    <div className="flex justify-center gap-2 mt-6">
-                        {leadership.map((_, index) => (
-                            <button
-                                key={index}
-                                onClick={() => scrollTo(index)}
-                                className={cn(
-                                    "size-2 rounded-full transition-all duration-300",
-                                    selectedIndex === index
-                                        ? "bg-accent w-8"
-                                        : "bg-white/20 hover:bg-white/40"
-                                )}
-                                aria-label={`Go to slide ${index + 1}`}
-                            />
                         ))}
                     </div>
+                </div>
+
+                {/* Mobile Dots */}
+                <div className="flex justify-center gap-1.5 md:hidden">
+                    {leadership.map((_, index) => (
+                        <button
+                            key={index}
+                            onClick={() => scrollTo(index)}
+                            className={cn(
+                                "h-1.5 rounded-full transition-all duration-300",
+                                selectedIndex === index
+                                    ? "bg-accent w-4"
+                                    : "bg-white/20 hover:bg-white/40 w-1.5"
+                            )}
+                            aria-label={`Go to slide ${index + 1}`}
+                        />
+                    ))}
                 </div>
             </section>
 
