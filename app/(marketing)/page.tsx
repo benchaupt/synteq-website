@@ -78,13 +78,13 @@ export default function Landing() {
             <div className="flex flex-col gap-3 md:gap-4 items-start justify-center shrink-0">
               <div className="relative">
                 <p className="font-mono text-xs md:text-sm text-accent uppercase tracking-tight">Build with open models</p>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl max-w-[10ch] tracking-tight leading-tight">Our Model Foundry</h2>
+                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl max-w-[10ch] tracking-tight leading-none">Our Model Foundry</h2>
               </div>
               <p className="text-base md:text-lg lg:text-xl max-w-xl text-dark-foreground">Launch, run, and scale AI models in minutes, without the cloud confusion, GPU expertise. Easy as a single click.</p>
             </div>
 
             <div className="grid gap-4 w-full">
-              <Marquee pauseOnHover className="[--duration:45s]">
+              <Marquee pauseOnHover className="[--duration:30s]">
                 {[
                   { name: "Kimi-K2-Thinking", logo: <svg className="h-10 w-12" viewBox="0 0 47 41" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M31.5852 5.59068L27.6501 14.3371C27.3086 15.0964 26.8132 15.7777 26.1953 16.3385C25.5774 16.8992 24.8497 17.3276 24.058 17.5966H27.3438V17.6118C28.8514 17.7213 30.2613 18.3942 31.2905 19.495C32.3197 20.5959 32.8917 22.0433 32.8915 23.5463V36.5789H26.9076V20.8556C26.532 21.6592 25.9333 22.3395 25.1819 22.8161C24.4305 23.2928 23.5575 23.5463 22.6662 23.5463H12.1148V36.5789H6.13086V5.64321H12.1131V17.5979H19.6001L24.8959 5.59068H31.5852Z" fill="currentColor" /><path d="M37.0945 4.3152C37.8321 4.24602 38.556 4.32146 39.2271 4.67814C40.1084 5.14704 40.6219 5.86183 40.7888 6.84879C40.9218 7.63588 40.8969 8.40456 40.6728 9.16705C40.2754 10.5169 39.2996 11.2165 37.9621 11.3933C36.852 11.5409 35.7263 11.5593 34.6069 11.6347C34.5203 11.6408 34.4321 11.6347 34.3316 11.6347C34.5836 11.3134 34.8049 11.0199 35.0383 10.7356C35.1466 10.6018 35.137 10.4999 35.0319 10.36C34.0192 9.03641 33.9235 7.56678 34.5064 6.0756C34.9439 4.95337 35.9117 4.42748 37.0945 4.3152Z" fill="currentColor" /></svg> },
                   { name: "Qwen3 235B A22B Instruct 2507", logo: <svg className="h-10 w-12" viewBox="0 0 47 41" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M31.5852 5.59068L27.6501 14.3371C27.3086 15.0964 26.8132 15.7777 26.1953 16.3385C25.5774 16.8992 24.8497 17.3276 24.058 17.5966H27.3438V17.6118C28.8514 17.7213 30.2613 18.3942 31.2905 19.495C32.3197 20.5959 32.8917 22.0433 32.8915 23.5463V36.5789H26.9076V20.8556C26.532 21.6592 25.9333 22.3395 25.1819 22.8161C24.4305 23.2928 23.5575 23.5463 22.6662 23.5463H12.1148V36.5789H6.13086V5.64321H12.1131V17.5979H19.6001L24.8959 5.59068H31.5852Z" fill="currentColor" /><path d="M37.0945 4.3152C37.8321 4.24602 38.556 4.32146 39.2271 4.67814C40.1084 5.14704 40.6219 5.86183 40.7888 6.84879C40.9218 7.63588 40.8969 8.40456 40.6728 9.16705C40.2754 10.5169 39.2996 11.2165 37.9621 11.3933C36.852 11.5409 35.7263 11.5593 34.6069 11.6347C34.5203 11.6408 34.4321 11.6347 34.3316 11.6347C34.5836 11.3134 34.8049 11.0199 35.0383 10.7356C35.1466 10.6018 35.137 10.4999 35.0319 10.36C34.0192 9.03641 33.9235 7.56678 34.5064 6.0756C34.9439 4.95337 35.9117 4.42748 37.0945 4.3152Z" fill="currentColor" /></svg> },
@@ -97,7 +97,7 @@ export default function Landing() {
                   </AnimatedCard>
                 ))}
               </Marquee>
-              <Marquee pauseOnHover className="[--duration:30s]">
+              <Marquee pauseOnHover className="[--duration:25s]">
                 {[...Array(3)].map((_, index) => (
                   <p key={index} className="font-mono text-sm text-accent uppercase tracking-tight mx-2">
                     Inference-first infrastructure ◦ 255+ production-ready models ◦ Transparent pricing
