@@ -192,7 +192,7 @@ export default function Cloud() {
           </div>
 
           {/* Model Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {models.map((model, index) => (
               <motion.div
                 key={index}
@@ -201,7 +201,7 @@ export default function Cloud() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
               >
-                <AnimatedCard className="flex flex-col gap-3 p-4 md:p-6 h-full">
+                <AnimatedCard className="flex flex-col gap-3 p-4 md:p-5 h-full hover:border-accent/30 cursor-pointer">
                   <div className="flex flex-col gap-2">
                     <h3 className="text-base md:text-lg font-medium">{model.name}</h3>
                     <p className="text-xs md:text-sm text-white/50">{model.provider}</p>
