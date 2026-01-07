@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { Blog } from "@/app/(marketing)/_components/blog";
+import EffortlessSection from "@/app/(marketing)/_components/effortless-section";
 import ResilienceSection from "@/app/(marketing)/_components/resilience-section";
 import ServicesSection from "@/app/(marketing)/_components/services-section";
 import { LanderDynamic } from "@/app/(marketing)/animations/lander-dynamic";
@@ -18,35 +19,10 @@ import Link from "next/link";
 export default function Landing() {
   return (
     <>
-      <div className="px-5 max-w-viewport w-full mx-auto flex flex-col gap-6 md:gap-10">
-        <div className="pt-8 md:pt-16 flex flex-col gap-6 md:gap-10">
-          <div className="flex flex-col gap-6 md:gap-12 items-start justify-center">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[92px] max-w-[17ch] leading-tight tracking-tight font-sequel-book">
-            Breakthrough AI inferences built to scale
-            </h1>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-12">
-            <div className="lg:col-span-2">
-              <LanderDynamic className="w-full" />
-            </div>
-            <div className="flex flex-col gap-6 md:gap-8 justify-end mb-2">
-              <p className="text-base md:text-lg lg:text-xl max-w-[32ch]">Launch, run, and scale AI models in minutes, without the cloud confusion, GPU expertise, or unpredictable costs. As easy as a single click. <br></br><br></br> Synteq AI gives teams a simple way to turn ideas into production AI in a weekend.</p>
-              <div className="flex flex-col sm:flex-row gap-4 md:gap-6 lg:gap-10">
-                <Link href="/cloud">
-                  <AnimatedButton background="primary" className="hover:bg-accent/50 w-full sm:w-auto">
-                    Launch
-                  </AnimatedButton>
-                </Link>
-                <Link href="/contact">
-                  <AnimatedButton background="dark" className="hover:bg-background-secondary w-full sm:w-auto">
-                    Contact Sales
-                  </AnimatedButton>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* Hero Section - ASCII Art */}
+      <EffortlessSection />
 
+      <div className="px-5 max-w-viewport w-full mx-auto flex flex-col gap-6 md:gap-10">
         <div className="py-12 md:py-16 lg:py-24 flex flex-col gap-8 md:gap-12">
           <Marquee pauseOnHover className="[--duration:60s]">
             {[...Array(10)].map((_, index) => (
@@ -149,8 +125,8 @@ export default function Landing() {
           className="py-24 md:py-32 lg:py-48 text-center"
           textClassName="font-sequel-book"
         />
-
       </div>
+
       <ServicesSection />
       <ResilienceSection />
       <TestimonialCarousel
