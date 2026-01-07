@@ -86,7 +86,7 @@ export default function Hardware() {
             <div className="flex flex-col gap-8 items-start justify-center flex-1 min-w-0">
               <p className="font-mono text-xs text-accent uppercase tracking-wider">Infrastructure</p>
               <div className="max-w-4xl">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl max-w-2xl text-foreground leading-tight tracking-tight font-sequel-book">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl max-w-3xl text-foreground leading-tight tracking-tight font-sequel-book">
                   Powerful hardware ready for AI workloads
               </h1>
             </div>

@@ -32,8 +32,8 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-dm-sans);
   --font-mono: var(--font-jetbrains-mono);
-  --font-sequal: var(--font-sequal-sans);
-  --font-sequal-book: var(--font-sequal-sans-book);
+  --font-sequal: var(--font-dm-sans);
+  --font-sequal-book: var(--font-dm-sans);
   --color-dark: #0F1215;
   --color-light: #F8F2F2;
   --color-accent: #4BDEB7;
@@ -111,13 +111,13 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .font-sequel {
-  font-family: var(--font-sequal-sans), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
   letter-spacing: -0.015em;
   line-height: 1.1;
 }
 
 .font-sequel-book {
-  font-family: var(--font-sequal-sans-book), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
   letter-spacing: -0.015em;
   line-height: 1.1;
 }

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { DM_Sans, JetBrains_Mono } from "next/font/google";
-import localFont from "next/font/local";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -11,18 +10,6 @@ const dmSans = DM_Sans({
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
-});
-
-const sequalSans = localFont({
-  src: "../public/fonts/sequel-sans-roman-disp.ttf",
-  variable: "--font-sequal-sans",
-  display: "swap",
-});
-
-const sequalSansBook = localFont({
-  src: "../public/fonts/sequel-sans-book-disp.otf",
-  variable: "--font-sequal-sans-book",
-  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -58,7 +45,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${dmSans.variable} ${jetbrainsMono.variable} ${sequalSans.variable} ${sequalSansBook.variable} antialiased`}
+        className={`${dmSans.variable} ${jetbrainsMono.variable} antialiased`}
       >
         {children}
       </body>

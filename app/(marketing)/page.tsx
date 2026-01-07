@@ -258,7 +258,7 @@ export default function Landing() {
       />
       <div>
         <div className="max-w-viewport w-full mx-auto px-5 flex flex-col md:flex-row gap-6 md:gap-8 items-start md:items-end justify-between">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl max-w-3xl font-sequal-sans">Only the best AI hardware.</h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl max-w-3xl font-sequel-book">Only the best AI hardware</h2>
           <AnimatedButton background="dark" className="hover:bg-background-secondary shrink-0">
             Talk To Sales
           </AnimatedButton>

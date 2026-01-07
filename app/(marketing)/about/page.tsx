@@ -106,7 +106,7 @@ export default function About() {
                     <p className="font-mono text-accent text-xs uppercase tracking-widest">
                         About Us
                     </p>
-                    <h1 className="text-5xl md:text-6xl lg:text-7xl max-w-3xl mx-auto font-sequel-book leading-tight">
+                    <h1 className="text-5xl md:text-6xl lg:text-7xl max-w-4xl mx-auto font-sequel-book leading-tight">
                         Synteq is building the future of AI infrastructure
                     </h1>
                     <p className="text-lg md:text-xl text-white/60 leading-relaxed max-w-2xl mx-auto">
