@@ -64,13 +64,13 @@ export const Footer = () => {
                         <Link href="/cloud" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
                             Cloud Platform
                         </Link>
-                        <Link href="#" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
+                        <Link href="/cloud" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
                             Model Library
                         </Link>
-                        <Link href="#" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
+                        <Link href="/cloud" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
                             API
                         </Link>
-                        <Link href="#" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
+                        <Link href="/cloud" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
                             Pricing
                         </Link>
                     </div>
@@ -78,22 +78,22 @@ export const Footer = () => {
                     {/* Resources */}
                     <div className="flex flex-col gap-4">
                         <h3 className="font-mono text-xs text-accent uppercase tracking-wider mb-2">Resources</h3>
-                        <Link href="#" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
+                        <Link href="/cloud" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
                             Documentation
                         </Link>
-                        <Link href="#" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
+                        <Link href="/cloud" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
                             API Reference
                         </Link>
-                        <Link href="#" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
+                        <Link href="/cloud" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
                             Guides
                         </Link>
-                        <Link href="#" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
+                        <Link href="/about" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
                             Case Studies
                         </Link>
-                        <Link href="#" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
+                        <Link href="/blogs" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
                             Blog
                         </Link>
-                        <Link href="#" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
+                        <Link href="/blogs" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
                             Research
                         </Link>
                     </div>
@@ -101,19 +101,19 @@ export const Footer = () => {
                     {/* Company */}
                     <div className="flex flex-col gap-4">
                         <h3 className="font-mono text-xs text-accent uppercase tracking-wider mb-2">Company</h3>
-                        <Link href="#" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
+                        <Link href="/about" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
                             About
                         </Link>
-                        <Link href="#" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
+                        <Link href="/about" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
                             Customers
                         </Link>
-                        <Link href="#" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
+                        <Link href="/about" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
                             Careers
                         </Link>
-                        <Link href="#" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
+                        <Link href="/contact" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
                             Contact Sales
                         </Link>
-                        <Link href="#" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
+                        <Link href="/about" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
                             Partners
                         </Link>
                     </div>

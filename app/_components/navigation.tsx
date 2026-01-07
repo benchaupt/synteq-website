@@ -55,7 +55,7 @@ export const Navigation = () => {
                 </Link>
 
                 {/* Desktop Navigation */}
-                <NavigationMenu.Root className="hidden lg:block relative z-10 overflow-visible">
+                <NavigationMenu.Root className="hidden lg:flex absolute left-1/2 -translate-x-1/2 z-10 overflow-visible">
                     <NavigationMenu.List className="flex flex-row items-center gap-1">
                         {/* Hardware Link */}
                         <NavigationMenu.Item>
@@ -89,10 +89,10 @@ export const Navigation = () => {
                                 </svg>
                             </NavigationMenu.Trigger>
                             <NavigationMenu.Content className="absolute left-0 top-0 w-full sm:w-auto data-[motion=from-start]:animate-in data-[motion=from-start]:fade-in data-[motion=from-start]:slide-in-from-left-12 data-[motion=from-end]:animate-in data-[motion=from-end]:fade-in data-[motion=from-end]:slide-in-from-right-12 data-[motion=to-start]:animate-out data-[motion=to-start]:fade-out data-[motion=to-start]:slide-out-to-left-12 data-[motion=to-end]:animate-out data-[motion=to-end]:fade-out data-[motion=to-end]:slide-out-to-right-12 duration-200">
-                                <div className="pt-2 p-4 sm:w-[320px]">
+                                <div className="p-4 sm:w-[320px]">
                                     <div className="space-y-1">
                                         <NavigationMenu.Link asChild>
-                                            <Link href="#" className="group/item flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-white/5 transition-all duration-200">
+                                            <Link href="/cloud" className="group/item flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-white/5 transition-all duration-200">
                                                 <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0 group-hover/item:bg-accent/10 transition-colors">
                                                     <svg className="size-4 text-white/60 group-hover/item:text-accent transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
@@ -105,7 +105,7 @@ export const Navigation = () => {
                                             </Link>
                                         </NavigationMenu.Link>
                                         <NavigationMenu.Link asChild>
-                                            <Link href="#" className="group/item flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-white/5 transition-all duration-200">
+                                            <Link href="/cloud" className="group/item flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-white/5 transition-all duration-200">
                                                 <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0 group-hover/item:bg-accent/10 transition-colors">
                                                     <svg className="size-4 text-white/60 group-hover/item:text-accent transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
@@ -118,7 +118,7 @@ export const Navigation = () => {
                                             </Link>
                                         </NavigationMenu.Link>
                                         <NavigationMenu.Link asChild>
-                                            <Link href="#" className="group/item flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-white/5 transition-all duration-200">
+                                            <Link href="/blogs" className="group/item flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-white/5 transition-all duration-200">
                                                 <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0 group-hover/item:bg-accent/10 transition-colors">
                                                     <svg className="size-4 text-white/60 group-hover/item:text-accent transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
@@ -164,12 +164,12 @@ export const Navigation = () => {
                 </NavigationMenu.Root>
 
                 {/* CTA Buttons */}
-                <div className="hidden lg:flex items-center gap-3">
-                    <Link href="#" className="px-4 py-2 text-sm text-white/70 hover:text-white transition-colors">
+                <div className="hidden lg:flex items-center gap-2">
+                    <Link href="#" className="px-3 py-1.5 text-sm text-white/70 hover:text-white transition-colors">
                         Sign in
                     </Link>
                     <Link href="/contact">
-                        <AnimatedButton background="primary" className="hover:bg-background-secondary text-sm">
+                        <AnimatedButton background="primary" className="hover:bg-background-secondary text-sm px-4 py-1.5">
                             Contact Sales
                         </AnimatedButton>
                     </Link>
@@ -247,7 +247,7 @@ export const Navigation = () => {
                                     {mobileActiveDropdown === 'resources' && (
                                         <div className="pb-2 px-4 space-y-1">
                                             <Link
-                                                href="#"
+                                                href="/cloud"
                                                 className="flex items-center gap-3 py-3 px-3 rounded-lg hover:bg-white/5 transition-colors"
                                                 onClick={() => setMobileNavbar(false)}
                                             >
@@ -262,7 +262,7 @@ export const Navigation = () => {
                                                 </div>
                                             </Link>
                                             <Link
-                                                href="#"
+                                                href="/cloud"
                                                 className="flex items-center gap-3 py-3 px-3 rounded-lg hover:bg-white/5 transition-colors"
                                                 onClick={() => setMobileNavbar(false)}
                                             >
@@ -277,7 +277,7 @@ export const Navigation = () => {
                                                 </div>
                                             </Link>
                                             <Link
-                                                href="#"
+                                                href="/blogs"
                                                 className="flex items-center gap-3 py-3 px-3 rounded-lg hover:bg-white/5 transition-colors"
                                                 onClick={() => setMobileNavbar(false)}
                                             >
