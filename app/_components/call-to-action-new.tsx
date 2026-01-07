@@ -1,7 +1,6 @@
 "use client"
 
 import { FlickeringGrid } from "@/app/_components/flickering-grid"
-import { Marquee } from "@/app/_components/marquee"
 import { motion } from "motion/react"
 import Link from "next/link"
 import { AnimatedButton } from "./animated-button"
@@ -35,32 +34,7 @@ const FloatingIconCard = ({
   )
 }
 
-// Feature item for marquee
-const FeatureItem = ({ text }: { text: string }) => (
-  <div className="flex items-center gap-2 text-sm text-background/70">
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      fill="none"
-      className="shrink-0"
-    >
-      <circle cx="8" cy="8" r="2" fill="currentColor" />
-    </svg>
-    <span className="whitespace-nowrap">{text}</span>
-  </div>
-)
-
 export default function CallToActionNew() {
-  const features = [
-    "99.99% uptime SLA",
-    "H100 & A100 GPUs",
-    "Sub-50ms inference latency",
-    "Research-grade infrastructure",
-    "AI-native architecture",
-    "Enterprise hardware",
-    "Purpose-built for AI workloads",
-  ]
 
   return (
     <section className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24 lg:py-32 flex flex-col">
@@ -222,14 +196,6 @@ export default function CallToActionNew() {
           </div>
         </div>
 
-        {/* Bottom marquee */}
-        <div className="relative z-20 mt-auto">
-          <Marquee className="py-4 border-t border-background/20" pauseOnHover disableGradient>
-            {features.map((feature, i) => (
-              <FeatureItem key={i} text={feature} />
-            ))}
-          </Marquee>
-        </div>
       </div>
     </section>
   )
