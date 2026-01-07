@@ -77,7 +77,7 @@ export default async function BlogPage() {
     <main className="flex flex-col bg-background">
       {/* Hero Section */}
       {featuredPost && (
-        <section className="max-w-viewport w-full mx-auto px-5 pt-4">
+        <section className="max-w-viewport w-full mx-auto px-5 pt-16 pb-8">
           <BlogHero
             image={featuredPost.image}
             category={featuredPost.category}

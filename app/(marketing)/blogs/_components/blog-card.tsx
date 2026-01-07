@@ -35,7 +35,7 @@ export function BlogCard({
         <p className="text-lg text-[#ccc] leading-normal tracking-tight">
           {description}
         </p>
-        <span className="font-mono text-sm leading-none tracking-tight text-darker-accent uppercase underline decoration-from-font group-hover:text-accent transition-colors">
+        <span className="font-mono text-sm leading-none tracking-tight text-darker-accent uppercase underline underline-offset-4 hover:underline-offset-6 duration-200 decoration-from-font group-hover:text-accent transition-colors">
           LEARN MORE ↘
         </span>
       </div>

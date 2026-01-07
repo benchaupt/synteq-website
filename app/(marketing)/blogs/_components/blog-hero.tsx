@@ -17,22 +17,22 @@ export function BlogHero({
   href,
 }: BlogHeroProps) {
   return (
-    <Link href={href} className="group relative w-full">
-      <div className="bg-gradient-to-br from-accent/20 to-background">
-        <div className="relative min-h-[800px] aspect-video p-5" style={{
+    <Link href={href} className="group relative w-full block">
+      <div className="bg-gradient-to-br from-accent/20 to-background rounded-lg overflow-hidden">
+        <div className="relative h-[400px] md:h-[450px] lg:h-[500px] w-full p-6 md:p-8" style={{
           backgroundImage: `url(${image})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
         }}>
-          <div className="flex flex-col gap-3 max-w-2xl items-start justify-end h-full">
-            <span className="font-mono text-lg text-darker-accent tracking-tight uppercase">
+          <div className="flex flex-col gap-2 md:gap-3 max-w-2xl items-start justify-end h-full">
+            <span className="font-mono text-xs md:text-sm text-darker-accent tracking-tight uppercase">
               {category}
             </span>
-            <h1 className="text-4xl text-foreground leading-tight tracking-tight">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl text-foreground leading-tight tracking-tight">
               {title}
             </h1>
-            <p className="text-xl text-[#bfbfbf] tracking-tight">
+            <p className="text-base md:text-lg lg:text-xl text-[#bfbfbf] tracking-tight line-clamp-2">
               {description}
             </p>
           </div>
