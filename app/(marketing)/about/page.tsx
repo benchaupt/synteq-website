@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import AsciiArt from "@/app/_components/ascii-art";
 import CallToActionNew from "@/app/_components/call-to-action-new";
 import { cn } from "@/lib/utils";
 import useEmblaCarousel from "embla-carousel-react";
@@ -169,59 +168,36 @@ export default function About() {
 
             {/* Core Values */}
             <section className="max-w-viewport w-full mx-auto px-5 py-24">
+                <div className="flex flex-col gap-8 max-w-5xl mx-auto text-center">
+                    <div className="flex flex-col gap-3">
+                        <p className="font-mono text-accent text-xs uppercase tracking-widest">
+                            Core Values
+                        </p>
+                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-sequel-book">
+                            What drives us forward
+                        </h2>
+                    </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-                    {/* ASCII Art on Left */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                        className="relative aspect-square rounded-lg overflow-hidden bg-background-secondary border border-white/5 flex items-center justify-center p-4"
-                    >
-                        <AsciiArt type="gpu" className="w-full h-full flex items-center justify-center" />
-                    </motion.div>
-
-                    {/* Values List on Right */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                        className="flex flex-col gap-10"
-                    >
-                        <div className="flex flex-col gap-6">
-                            <p className="font-mono text-accent text-xs uppercase tracking-widest">
-                                AI SHOULD BE EFFORTLESS
-                            </p>
-                            <h2 className="text-3xl md:text-4xl font-sequel-book leading-tight text-white/75">
-                                Too many teams spend months wrestling with infrastructure, cloud configs, and unexpected costs before they ever ship. {" "}
-                                <span className="text-accent">
-                                    We&apos;re here to change that.
+                    {/* Values Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {coreValues.map((item, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                                className="border border-white/10 rounded-lg p-4 flex flex-col gap-2 hover:border-accent/30 transition-all duration-300 bg-background-secondary/30"
+                            >
+                                <span className="font-mono text-accent text-xs">
+                                    {item.number}
                                 </span>
-                            </h2>
-                        </div>
-
-                        <div className="flex flex-col gap-4">
-                            {coreValues.map((item, index) => (
-                                <motion.div
-                                    key={index}
-                                    initial={{ opacity: 0, y: 10 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                                    className="flex gap-2 items-start"
-                                >
-                                    <span className="font-mono text-accent text-sm shrink-0 mt-1">
-                                        {item.number}
-                                    </span>
-                                    <p className="text-2xl text-white/70">
-                                        {item.value}
-                                    </p>
-                                </motion.div>
-                            ))}
-                        </div>
-                    </motion.div>
+                                <p className="text-lg text-white/80 text-left leading-snug">
+                                    {item.value}
+                                </p>
+                            </motion.div>
+                        ))}
+                    </div>
                 </div>
             </section>
 
