@@ -1,34 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 // ASCII characters from dark to light for dithering effect
 const ASCII_CHARS = " .:-=+*#%@";
 
-// Grid patterns representing AI/infrastructure concepts
-const PATTERNS = [
-    // Neural network / circuit pattern
-    `
-    ┌────────────────────────────────────────┐
-    │  ◉───────◉───────◉───────◉───────◉    │
-    │  │ ╲   ╱ │ ╲   ╱ │ ╲   ╱ │ ╲   ╱ │    │
-    │  │  ╲ ╱  │  ╲ ╱  │  ╲ ╱  │  ╲ ╱  │    │
-    │  ◉───◉───◉───◉───◉───◉───◉───◉───◉    │
-    │  │ ╱ ╲   │ ╱ ╲   │ ╱ ╲   │ ╱ ╲   │    │
-    │  │╱   ╲  │╱   ╲  │╱   ╲  │╱   ╲  │    │
-    │  ◉───────◉───────◉───────◉───────◉    │
-    │  │ ╲   ╱ │ ╲   ╱ │ ╲   ╱ │ ╲   ╱ │    │
-    │  │  ╲ ╱  │  ╲ ╱  │  ╲ ╱  │  ╲ ╱  │    │
-    │  ◉───◉───◉───◉───◉───◉───◉───◉───◉    │
-    │  │ ╱ ╲   │ ╱ ╲   │ ╱ ╲   │ ╱ ╲   │    │
-    │  │╱   ╲  │╱   ╲  │╱   ╲  │╱   ╲  │    │
-    │  ◉───────◉───────◉───────◉───────◉    │
-    └────────────────────────────────────────┘
-    `,
-];
-
 // Generate matrix-style data stream
-function generateDataStream(width: number, height: number, frame: number): string[] {
+function generateDataStream(frame: number): string[] {
+    const width = 42;
+    const height = 16;
     const chars = "01";
     const lines: string[] = [];
     
@@ -159,7 +139,6 @@ interface AsciiArtProps {
 
 export default function AsciiArt({ type = "gpu", className = "" }: AsciiArtProps) {
     const [frame, setFrame] = useState(0);
-    const [lines, setLines] = useState<string[]>([]);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -169,22 +148,18 @@ export default function AsciiArt({ type = "gpu", className = "" }: AsciiArtProps
         return () => clearInterval(interval);
     }, []);
 
-    useEffect(() => {
+    const lines = useMemo(() => {
         switch (type) {
             case "gpu":
-                setLines(generateGPUCluster(frame));
-                break;
+                return generateGPUCluster(frame);
             case "rack":
-                setLines(generateServerRack(frame));
-                break;
+                return generateServerRack(frame);
             case "neural":
-                setLines(generateNeuralFlow(frame));
-                break;
+                return generateNeuralFlow(frame);
             case "data":
-                setLines(generateDataStream(42, 16, frame));
-                break;
+                return generateDataStream(frame);
             default:
-                setLines(generateGPUCluster(frame));
+                return generateGPUCluster(frame);
         }
     }, [frame, type]);
 

@@ -3,7 +3,6 @@ import { Blog } from "@/app/(marketing)/_components/blog";
 import EffortlessSection from "@/app/(marketing)/_components/effortless-section";
 import ResilienceSection from "@/app/(marketing)/_components/resilience-section";
 import ServicesSection from "@/app/(marketing)/_components/services-section";
-import { LanderDynamic } from "@/app/(marketing)/animations/lander-dynamic";
 import { SelectHardware } from "@/app/(marketing)/hardware/_components/select-hardware";
 import { AnimatedButton } from "@/app/_components/animated-button";
 import { AnimatedCard } from "@/app/_components/animated-card";
