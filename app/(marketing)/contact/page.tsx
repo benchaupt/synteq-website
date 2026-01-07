@@ -148,15 +148,15 @@ export default function Contact() {
                             </h1>
                         </div>
 
-                        <p className="text-xl text-[#bfbfbf] max-w-lg leading-relaxed">
+                        <p className="text-base text-[#bfbfbf] max-w-lg leading-relaxed">
                             Launch, run, and scale AI models in minutes, without the cloud confusion, GPU expertise, or unpredictable costs. As easy as a single click.
                         </p>
 
                         <div className="flex flex-col gap-2 mt-8">
-                            <p className="text-xl text-white/50">
+                            <p className="text-base text-white/50">
                                 Prefer to start the conversation over email?
                             </p>
-                            <a href="mailto:hello@synteq.ai" className="text-3xl text-white hover:text-accent transition-colors">
+                            <a href="mailto:hello@synteq.ai" className="text-2xl text-white hover:text-accent transition-colors">
                                 hello@synteq.ai
                             </a>
                         </div>
@@ -216,13 +216,13 @@ export default function Contact() {
                         {/* Product Stack Selection */}
                         <div className="flex flex-col gap-3">
                             <p className="text-white text-sm">What product stack are you interested in?</p>
-                            <div className="flex gap-2">
+                            <div className="flex gap-2 min-h-[40px] items-start">
                                 {(["GPU_CLOUD", "GPU_METAL", "UNSURE"] as const).map((product) => (
                                     <button
                                         key={product}
                                         onClick={() => toggleProduct(product)}
                                         className={cn(
-                                            "px-4 py-2 text-sm font-mono uppercase tracking-tight transition-all",
+                                            "px-4 py-2 text-sm font-mono uppercase tracking-tight transition-colors",
                                             selectedProducts.includes(product)
                                                 ? "bg-accent text-background"
                                                 : "bg-background-secondary text-white/70 border border-white/10 hover:border-white/25"
