@@ -5,6 +5,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { AnimatedButton } from "@/app/_components/animated-button";
 import { AnimatedCard } from "@/app/_components/animated-card";
 import CallToActionNew from "@/app/_components/call-to-action-new";
+import { LanderDynamic } from "@/app/(marketing)/animations/lander-dynamic";
 import { motion, useInView } from "motion/react";
 import Link from "next/link";
 import { useRef, useEffect, useState } from "react";
@@ -104,7 +105,7 @@ export default function Hardware() {
           </div>
             </div>
             <div className="flex flex-col gap-4 items-center justify-center w-full lg:w-auto">
-              <img src="/assets/landing/Mask group1.png" alt="AI Infrastructure" className="w-full max-w-md lg:max-w-lg xl:max-w-xl" />
+              <LanderDynamic className="w-full max-w-md lg:max-w-lg xl:max-w-xl" />
             </div>
           </div>
 
