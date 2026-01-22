@@ -92,7 +92,7 @@ export function AboutStatsSection({
 }: AboutStatsSectionProps) {
   return (
     <section className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24">
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-12 py-8 border-white/10">
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between items-center md:items-start gap-12 py-8 border-white/10">
         {/* Leader text */}
         <motion.h2
           initial={{ opacity: 0, y: 20 }}

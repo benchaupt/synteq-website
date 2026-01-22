@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import useEmblaCarousel from "embla-carousel-react";
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 interface HardwareSpec {
@@ -282,14 +283,35 @@ const hardware: Hardware[] = [
     },
 ]
 
-export const SelectHardware = ({ hideOverview = false, className = "" }: { hideOverview?: boolean, className?: string }) => {
+const toSlug = (name: string) => name.toLowerCase().replace(/\s+/g, "-");
+
+export const SelectHardware = ({ hideOverview = false, className = "", navigateOnClick = false }: { hideOverview?: boolean, className?: string, navigateOnClick?: boolean }) => {
+    const router = useRouter();
+    const searchParams = useSearchParams();
     const [emblaRef, emblaApi] = useEmblaCarousel({
         loop: true,
         dragFree: false,
     });
     const carouselRef = useRef<HTMLDivElement>(null);
+    const specsRef = useRef<HTMLDivElement>(null);
     const [currentIndex, setCurrentIndex] = useState(0);
     const itemCount = hardware.length;
+
+    // Read URL param and scroll to that hardware on mount
+    useEffect(() => {
+        if (!emblaApi) return;
+        const productSlug = searchParams.get("product");
+        if (productSlug) {
+            const index = hardware.findIndex((h) => toSlug(h.name) === productSlug);
+            if (index !== -1) {
+                emblaApi.scrollTo(index, true);
+                // Scroll to specs section after a short delay
+                setTimeout(() => {
+                    specsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+                }, 100);
+            }
+        }
+    }, [emblaApi, searchParams]);
 
     useEffect(() => {
         if (!emblaApi) return;
@@ -320,14 +342,18 @@ export const SelectHardware = ({ hideOverview = false, className = "" }: { hideO
                         >
                             <div className='embla__viewport' ref={emblaRef}>
                                 <div className='embla__container'>
-                                    {hardware.map((hardware, index) => (
+                                    {hardware.map((item, index) => (
                                         <div key={index} onClick={() => {
-                                            if (emblaApi) emblaApi.scrollTo(index);
+                                            if (navigateOnClick) {
+                                                router.push(`/hardware?product=${toSlug(item.name)}`);
+                                            } else if (emblaApi) {
+                                                emblaApi.scrollTo(index);
+                                            }
                                         }}>
-                                            <AnimatedCard className="sm:min-w-[300px] min-w-[150px] m-5 mx-4 sm:mx-8" disableScale disableTextColor isActive={index === currentIndex}>
+                                            <AnimatedCard className="sm:min-w-[300px] min-w-[250px] m-5 mx-4 sm:mx-8" disableScale disableTextColor isActive={!navigateOnClick && index === currentIndex}>
                                                 <div className="flex flex-col gap-2 sm:gap-10 items-center justify-center">
-                                                    <img src={hardware.image} className="object-contain" />
-                                                    <h3 className={cn("font-mono text-md md:text-md lg:text-md transition-all duration-400", index === currentIndex ? "text-accent" : "text-white")}>{hardware.name}</h3>
+                                                    <img src={item.image} className="object-contain" />
+                                                    <h3 className={cn("font-mono text-md md:text-md lg:text-md text-center transition-all duration-400", !navigateOnClick && index === currentIndex ? "text-accent" : "text-white")}>{item.name}</h3>
                                                 </div>
                                             </AnimatedCard>
                                         </div>
@@ -378,11 +404,11 @@ export const SelectHardware = ({ hideOverview = false, className = "" }: { hideO
                 </div>
             </div>
             {!hideOverview && (
-                <div className="max-w-viewport w-full mx-auto px-5 overflow-hidden">
+                <div ref={specsRef} className="max-w-viewport w-full mx-auto px-5 overflow-hidden">
                     <div className="py-12 md:py-16 flex flex-col gap-6">
-                        <div className="flex flex-col sm:flex-row gap-6 justify-between sm:items-center items-start">
+                        <div className="flex flex-col sm:flex-row gap-6 justify-between sm:items-center items-center md:items-start">
                             <div className="flex flex-col gap-3">
-                                <p className="font-mono text-xs text-accent uppercase tracking-wider">Specifications</p>
+                                <p className="font-mono text-xs text-accent uppercase tracking-wider text-center md:text-left">Specifications</p>
                                 <AnimatePresence mode="wait">
                                     <motion.h2
                                         key={currentIndex}

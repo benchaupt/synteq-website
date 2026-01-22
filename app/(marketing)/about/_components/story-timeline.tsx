@@ -18,8 +18,16 @@ interface StoryTimelineProps {
 export function StoryTimeline({ items, className }: StoryTimelineProps) {
     const [activeIndex, setActiveIndex] = useState(0);
     const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+    const [isMobile, setIsMobile] = useState(false);
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
     const activeItem = items[activeIndex];
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
 
     useEffect(() => {
         if (isAutoPlaying) {
@@ -43,13 +51,13 @@ export function StoryTimeline({ items, className }: StoryTimelineProps) {
     return (
         <section className={cn("max-w-viewport w-full mx-auto px-5 py-24 flex flex-col gap-12", className)}>
             {/* Header Row - Our Story left, Buttons right */}
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div className="flex flex-col md:flex-row md:items-center items-center md:items-start md:justify-between gap-6">
                 <h2 className="heading">
                     Our Story
                 </h2>
 
                 {/* Stage Buttons */}
-                <div className="flex flex-wrap gap-4 md:gap-8">
+                <div className="flex flex-wrap gap-4 md:gap-8 justify-center md:justify-start">
                     {items.map((item, index) => (
                         <button
                             key={index}
@@ -71,21 +79,31 @@ export function StoryTimeline({ items, className }: StoryTimelineProps) {
             <AnimatePresence mode="wait">
                 <motion.div
                     key={activeIndex}
-                    initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                    exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
-                    transition={{ duration: 0.4, ease: "easeOut" }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
                     className="grid grid-cols-1 md:grid-cols-[minmax(140px,200px)_1fr] gap-4 md:gap-12"
                 >
                     {/* Date */}
-                    <p className="text-lg md:text-xl text-white">
+                    <motion.p
+                        initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+                        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                        transition={{ duration: 0.4, ease: "easeOut", delay: isMobile ? 0.15 : 0 }}
+                        className="text-lg md:text-xl text-white text-center md:text-left order-2 md:order-1"
+                    >
                         {activeItem.date}
-                    </p>
+                    </motion.p>
 
                     {/* Description */}
-                    <p className="text-base md:text-lg text-white/80 leading-relaxed max-w-3xl">
+                    <motion.p
+                        initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+                        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                        transition={{ duration: 0.4, ease: "easeOut", delay: isMobile ? 0 : 0.15 }}
+                        className="text-base md:text-lg text-white/80 leading-relaxed max-w-3xl text-center md:text-left order-1 md:order-2"
+                    >
                         {activeItem.description}
-                    </p>
+                    </motion.p>
                 </motion.div>
             </AnimatePresence>
         </section>

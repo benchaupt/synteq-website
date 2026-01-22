@@ -52,7 +52,7 @@ export function StorageSection() {
 
         {/* Stats */}
         <motion.div
-          className="flex flex-wrap justify-between gap-y-8"
+          className="grid grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-4"
           initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
           animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
           transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
@@ -69,16 +69,6 @@ export function StorageSection() {
           ))}
         </motion.div>
 
-        {/* Talk to Sales */}
-        <motion.div
-          initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
-          animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
-          transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
-        >
-          <AnimatedButton background="dark" size="default">
-            Talk To Sales
-          </AnimatedButton>
-        </motion.div>
       </div>
     </section>
   );

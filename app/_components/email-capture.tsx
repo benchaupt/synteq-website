@@ -29,10 +29,7 @@ export function EmailCapture({
       )}
       <div
         className={cn(
-          "flex gap-3",
-          layout === "vertical"
-            ? "flex-col sm:flex-row"
-            : "flex-row"
+          "flex gap-3 flex-col sm:flex-row"
         )}
       >
         <div className="flex-1 flex items-center gap-3 bg-background-secondary border border-white/10 rounded px-4 py-3 min-w-0">

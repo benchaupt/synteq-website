@@ -209,9 +209,9 @@ export default function Infrastructure() {
 
             <StorageSection />
 
-            <TestimonialCarousel testimonials={testimonials} />
-
             <CallToActionNew />
+
+            <TestimonialCarousel testimonials={testimonials} />
         </>
     );
 }

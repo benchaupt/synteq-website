@@ -54,7 +54,7 @@ export default function Hardware() {
         <div className="relative px-5 py-12 md:py-16 max-w-viewport w-full mx-auto flex flex-col gap-12">
           <div className="flex lg:flex-row flex-col gap-12 lg:gap-16 items-center">
             <div className="flex flex-col gap-2 items-start flex-1 min-w-0">
-              <p className="subheading">Infrastructure</p>
+              <p className="subheading">Hardware</p>
               <div className="max-w-4xl">
                 <h1 className="title max-w-2xl">
                   Powerful hardware ready for AI workloads
@@ -98,9 +98,9 @@ export default function Hardware() {
       {/* Product Comparison */}
       <div className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24">
         <div className="flex flex-col gap-6">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="flex flex-col md:flex-row items-center md:items-center justify-between gap-6">
             <div className="flex flex-col gap-3">
-              <p className="subheading">Hardware Specs</p>
+              <p className="subheading text-center md:text-left">Hardware Specs</p>
               <h2 className="heading">
                 Compare Products
               </h2>
@@ -153,56 +153,56 @@ export default function Hardware() {
             
             {/* Spec Rows */}
             <div className="divide-y divide-white/5">
-              <div className="grid grid-cols-4 gap-4 p-6 hover:bg-white/2 transition-colors">
+              <div className="grid grid-cols-4 gap-4 p-6 transition-colors">
                 <div className="font-mono text-xs text-white/40 uppercase tracking-wider">GPU</div>
                 <div className="text-sm">H100</div>
                 <div className="text-sm">H200</div>
                 <div className="text-sm">A100</div>
           </div>
 
-              <div className="grid grid-cols-4 gap-4 p-6 hover:bg-white/2 transition-colors">
+              <div className="grid grid-cols-4 gap-4 p-6 transition-colors">
                 <div className="font-mono text-xs text-white/40 uppercase tracking-wider">GPUs/Server</div>
                 <div className="text-sm">8</div>
                 <div className="text-sm">8</div>
                 <div className="text-sm">8</div>
           </div>
 
-              <div className="grid grid-cols-4 gap-4 p-6 hover:bg-white/2 transition-colors">
+              <div className="grid grid-cols-4 gap-4 p-6 transition-colors">
                 <div className="font-mono text-xs text-white/40 uppercase tracking-wider">vCPUs</div>
                 <div className="text-sm">2x Intel Xeon Platinum 6960P</div>
                 <div className="text-sm">2x Intel Xeon Platinum 6960P</div>
                 <div className="text-sm">2x Intel Xeon Platinum 6960P</div>
           </div>
 
-              <div className="grid grid-cols-4 gap-4 p-6 hover:bg-white/2 transition-colors">
+              <div className="grid grid-cols-4 gap-4 p-6 transition-colors">
                 <div className="font-mono text-xs text-white/40 uppercase tracking-wider">vRAM</div>
                 <div className="text-sm">80GB HBM3</div>
                 <div className="text-sm">141GB HBM3</div>
                 <div className="text-sm">80GB HBM2e</div>
           </div>
 
-              <div className="grid grid-cols-4 gap-4 p-6 hover:bg-white/2 transition-colors">
+              <div className="grid grid-cols-4 gap-4 p-6 transition-colors">
                 <div className="font-mono text-xs text-white/40 uppercase tracking-wider">RAM</div>
                 <div className="text-sm">2TB</div>
                 <div className="text-sm">2TB</div>
                 <div className="text-sm">2TB</div>
         </div>
 
-              <div className="grid grid-cols-4 gap-4 p-6 hover:bg-white/2 transition-colors">
+              <div className="grid grid-cols-4 gap-4 p-6 transition-colors">
                 <div className="font-mono text-xs text-white/40 uppercase tracking-wider">Storage</div>
                 <div className="text-sm">3.84TB NVMe</div>
                 <div className="text-sm">3.84TB NVMe</div>
                 <div className="text-sm">3.84TB NVMe</div>
           </div>
 
-              <div className="grid grid-cols-4 gap-4 p-6 hover:bg-white/2 transition-colors">
+              <div className="grid grid-cols-4 gap-4 p-6 transition-colors">
                 <div className="font-mono text-xs text-white/40 uppercase tracking-wider">Bandwidth</div>
                 <div className="text-sm">900GB/s</div>
                 <div className="text-sm">900GB/s</div>
                 <div className="text-sm">600GB/s</div>
           </div>
 
-              <div className="grid grid-cols-4 gap-4 p-6 hover:bg-white/2 transition-colors">
+              <div className="grid grid-cols-4 gap-4 p-6 transition-colors">
                 <div className="font-mono text-xs text-white/40 uppercase tracking-wider">Network</div>
                 <div className="text-sm">8x 200Gbps InfiniBand</div>
                 <div className="text-sm">8x 200Gbps InfiniBand</div>

@@ -6,8 +6,14 @@ import { AnimatedCard } from "@/app/_components/animated-card";
 import CallToActionNew from "@/app/_components/call-to-action-new";
 import { StatsSection } from "@/app/_components/stats-section";
 import TensorVisualization from "@/app/_components/tensor-visualization";
+import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useRef } from "react";
+
+const toSlug = (name: string, provider: string) =>
+  `${name.toLowerCase().replace(/\s+/g, "-")}-${provider.toLowerCase().replace(/\s+/g, "-")}`;
 
 const stats = [
   { value: "255+", label: "Production models" },
@@ -117,6 +123,18 @@ const faqs = [
 ];
 
 export default function Cloud() {
+  const searchParams = useSearchParams();
+  const modelsRef = useRef<HTMLDivElement>(null);
+  const selectedModel = searchParams.get("model");
+
+  useEffect(() => {
+    if (selectedModel) {
+      setTimeout(() => {
+        modelsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
+    }
+  }, [selectedModel]);
+
   return (
     <>
       {/* Hero Section */}
@@ -162,7 +180,7 @@ export default function Cloud() {
       </div>
 
       {/* Supported Models */}
-      <div className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24">
+      <div ref={modelsRef} className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24">
         <div className="flex flex-col gap-12">
           <div className="flex flex-col gap-4 items-center text-center">
             <p className="subheading">Model Library</p>
@@ -176,7 +194,9 @@ export default function Cloud() {
 
           {/* Model Grid */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
-            {models.map((model, index) => (
+            {models.map((model, index) => {
+              const isActive = selectedModel === toSlug(model.name, model.provider);
+              return (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
@@ -185,9 +205,9 @@ export default function Cloud() {
                 transition={{ duration: 0.4, delay: index * 0.05 }}
                 className={index >= 4 ? "hidden md:block" : ""}
               >
-                <AnimatedCard className="flex flex-col gap-3 p-4 md:p-5 h-full hover:border-accent/30 cursor-pointer">
+                <AnimatedCard className={cn("flex flex-col gap-3 p-4 md:p-5 h-full cursor-pointer", isActive && "border-accent/30")} isActive={isActive}>
                   <div className="flex flex-col gap-2">
-                    <h3 className="text-base md:text-lg font-medium">{model.name}</h3>
+                    <h3 className={cn("text-base md:text-lg font-medium", isActive && "text-accent")}>{model.name}</h3>
                     <p className="text-xs md:text-sm text-white/50">{model.provider}</p>
                   </div>
                   <div className="mt-auto">
@@ -197,7 +217,8 @@ export default function Cloud() {
                   </div>
                 </AnimatedCard>
               </motion.div>
-            ))}
+            );
+            })}
           </div>
 
           <div className="flex items-center justify-center pt-4">

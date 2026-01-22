@@ -142,7 +142,7 @@ export function ComputeSection() {
         {/* Stats */}
         
         <motion.div
-          className="flex flex-wrap justify-between gap-y-8"
+          className="grid grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-4"
           initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
           animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
           transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}

@@ -40,7 +40,7 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
     }, [emblaApi]);
     
     return (
-        <div className="relative flex flex-col gap-8 max-w-viewport w-full mx-auto px-5 py-16 md:py-24 lg:py-32">
+        <div className="relative flex flex-col gap-8 max-w-viewport w-full mx-auto px-5 pt-8 md:pt-12 lg:pt-16 pb-16 md:pb-24 lg:pb-32">
             {/* Left gradient fade - hidden on mobile */}
             <div className="hidden md:block absolute top-0 left-0 w-32 lg:w-[200px] h-full bg-linear-to-r from-background to-transparent pointer-events-none z-10" />
             {/* Right gradient fade - hidden on mobile */}
@@ -48,21 +48,21 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
             
             <div className='w-full overflow-hidden py-4 md:py-8'>
                 <div className='overflow-hidden' ref={emblaRef}>
-                    <div className='flex'>
+                    <div className='flex gap-4 md:gap-0'>
                         {testimonials.map((testimonial, index) => (
                             <div
                                 key={index}
-                                className="flex-[0_0_100%] md:flex-[0_0_auto] min-w-0 pl-4 pr-4 cursor-pointer"
+                                className="flex-[0_0_100%] md:flex-[0_0_auto] min-w-0 md:px-4 cursor-pointer"
                                 onClick={() => {
                                     if (emblaApi) emblaApi.scrollTo(index);
                                 }}
                             >
                                 <CornerCard
-                                    className="w-full max-w-[calc(100vw-2.5rem)] md:w-[500px] lg:w-[580px] hover:bg-background-secondary"
+                                    className="w-full md:w-[500px] lg:w-[580px] hover:bg-background-secondary transition-all duration-300"
                                 >
                                     <div className="flex flex-col gap-6 md:gap-10">
                                         <div className="flex flex-row gap-4 md:gap-6 items-center">
-                                            <div className="shrink-0">
+                                            <div className="shrink-0 [&_svg]:w-22 [&_svg]:md:w-auto [&_img]:w-16 [&_img]:md:w-auto">
                                                 {testimonial.logo}
                                             </div>
                                             <div className="flex flex-col min-w-0">
@@ -82,7 +82,7 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
             {/* Navigation controls */}
             <div className="flex flex-row gap-3 md:gap-4 items-center justify-center">
                 <button 
-                    className="size-10 relative flex items-center justify-center hover:bg-white/5 rounded-lg transition-colors group" 
+                    className="size-10 relative flex items-center justify-center hover:bg-white/5 rounded-lg transition-colors group duration-300" 
                     onClick={() => {
                         if (emblaApi) emblaApi.scrollPrev();
                     }}

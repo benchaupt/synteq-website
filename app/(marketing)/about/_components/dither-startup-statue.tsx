@@ -30,8 +30,8 @@ export function DitherStartupStatue({
     externalMousePos,
     isHovering = false,
     color = "rgb(75, 222, 183)",
-    autoPanRange = 35,
-    autoPanSpeed = 0.5,
+    autoPanRange = 10,
+    autoPanSpeed = 0.15,
 }: DitherStartupStatueProps) {
     const pointsUrl = "/assets/cards/startup-statue-points.json";
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -233,13 +233,14 @@ export function DitherStartupStatue({
 
             if (isHovering && externalMousePos) {
                 targetRotationRef.current = {
-                    x: -(externalMousePos.y - 0.5) * panRangeRad * 0.5,
-                    y: (externalMousePos.x - 0.5) * panRangeRad * 2,
+                    x: -(externalMousePos.y - 0.5) * panRangeRad * 0.25,
+                    y: (externalMousePos.x - 0.5) * panRangeRad * 0.5,
                 };
                 rotationRef.current.x += (targetRotationRef.current.x - rotationRef.current.x) * 0.08;
                 rotationRef.current.y += (targetRotationRef.current.y - rotationRef.current.y) * 0.08;
             } else {
-                const targetY = Math.sin(timeRef.current * autoPanSpeed) * panRangeRad;
+                const baseOffset = (15 * Math.PI) / 180; // +10° base rotation
+                const targetY = baseOffset + Math.sin(timeRef.current * autoPanSpeed) * panRangeRad;
                 rotationRef.current.y += (targetY - rotationRef.current.y) * 0.05;
                 rotationRef.current.x += (0 - rotationRef.current.x) * 0.05;
             }

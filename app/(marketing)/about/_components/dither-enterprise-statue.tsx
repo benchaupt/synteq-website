@@ -30,8 +30,8 @@ export function DitherEnterpriseStatue({
     externalMousePos,
     isHovering = false,
     color = "rgb(75, 222, 183)",
-    autoPanRange = 35,
-    autoPanSpeed = 0.5,
+    autoPanRange = 15,
+    autoPanSpeed = 0.15,
 }: DitherEnterpriseStatueProps) {
     const pointsUrl = "/assets/cards/enterprise-statue-points.json";
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -235,14 +235,15 @@ export function DitherEnterpriseStatue({
             if (isHovering && externalMousePos) {
                 // Mouse controls pan when hovering (centered around 180°)
                 targetRotationRef.current = {
-                    x: -(externalMousePos.y - 0.5) * panRangeRad * 0.5,
-                    y: Math.PI + (externalMousePos.x - 0.5) * panRangeRad * 2,
+                    x: -(externalMousePos.y - 0.5) * panRangeRad * 0.25,
+                    y: Math.PI + (externalMousePos.x - 0.5) * panRangeRad * 0.5,
                 };
                 rotationRef.current.x += (targetRotationRef.current.x - rotationRef.current.x) * 0.08;
                 rotationRef.current.y += (targetRotationRef.current.y - rotationRef.current.y) * 0.08;
             } else {
                 // Auto-pan oscillation: sin wave around 180° (facing opposite direction)
-                const targetY = Math.PI + Math.sin(timeRef.current * autoPanSpeed) * panRangeRad;
+                // Phase offset (Math.PI/2) so it doesn't sync with startup statue
+                const targetY = Math.PI + Math.sin(timeRef.current * autoPanSpeed + Math.PI / 2) * panRangeRad;
                 rotationRef.current.y += (targetY - rotationRef.current.y) * 0.05;
                 rotationRef.current.x += (0 - rotationRef.current.x) * 0.05;
             }
