@@ -15,7 +15,7 @@ for (let i = 0; i <= OPACITY_BUCKETS; i++) {
     const opacity = 0.5 + (i / OPACITY_BUCKETS) * 0.5;
     OPACITY_COLORS.push(`rgba(75, 222, 183, ${opacity})`);
 }
-const BASE_COLOR = "rgba(75, 222, 183, 0.5)";
+const BASE_COLOR = "rgba(75, 222, 183, 1)";
 
 export function DitherSphere({
     className = "",
@@ -26,14 +26,16 @@ export function DitherSphere({
     const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
     const rotationRef = useRef({ x: 0, y: 0 });
     const targetRotationRef = useRef({ x: 0, y: 0 });
+    const hoverBaseRotationRef = useRef({ x: 0, y: 0 }); // Captured rotation when hover starts
+    const wasHoveringRef = useRef(false);
     const animationRef = useRef<number | null>(null);
     const lastTimeRef = useRef<number>(0);
     const pointsRef = useRef<Float32Array | null>(null); // [nx, ny, nz, threshold] x N
     const sizeRef = useRef({ width: 0, height: 0, dpr: 1 });
 
     const gridSize = 60;
-    const minDensity = 0.1;
-    const maxDensity = 0.98;
+    const minDensity = 0.4;  // Higher = more points at edges
+    const maxDensity = 0.85; // Lower = fewer points at center
     const densityRange = maxDensity - minDensity;
 
     // Initialize points once using Float32Array for better performance
@@ -63,13 +65,20 @@ export function DitherSphere({
         pointsRef.current = new Float32Array(tempPoints);
     }, []);
 
-    // Update target rotation when hovering
+    // Capture base rotation when hover starts, update target relative to base
     useEffect(() => {
+        if (isHovering && !wasHoveringRef.current) {
+            // Just started hovering - capture current rotation as base
+            hoverBaseRotationRef.current = { ...rotationRef.current };
+        }
+        wasHoveringRef.current = isHovering;
+
         if (!isHovering || !externalMousePos) return;
 
+        // Target is base rotation + mouse offset
         targetRotationRef.current = {
-            x: -(externalMousePos.y - 0.5) * Math.PI * 0.25,
-            y: (externalMousePos.x - 0.5) * Math.PI * 0.25,
+            x: hoverBaseRotationRef.current.x + (-(externalMousePos.y - 0.5) * Math.PI * 0.25),
+            y: hoverBaseRotationRef.current.y + ((externalMousePos.x - 0.5) * Math.PI * 0.25),
         };
     }, [isHovering, externalMousePos]);
 
@@ -248,7 +257,7 @@ export function DitherSphere({
         <div className={`aspect-square w-full flex items-center justify-center ${className}`}>
             <canvas
                 ref={canvasRef}
-                className="w-full h-full"
+                className={`w-full h-full transition-opacity duration-300 ${isHovering ? "opacity-100" : "opacity-50"}`}
             />
         </div>
     );

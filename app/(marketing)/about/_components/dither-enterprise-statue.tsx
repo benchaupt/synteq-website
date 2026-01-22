@@ -205,8 +205,8 @@ export function DitherEnterpriseStatue({
             }
             ctx.globalAlpha = 1;
         } else {
-            // Single pass with constant opacity
-            ctx.globalAlpha = 0.5;
+            // Single pass - CSS handles opacity
+            ctx.globalAlpha = 1;
             for (let gy = 0; gy < gridHeight; gy++) {
                 const rowOffset = gy * gridWidth;
                 for (let gx = 0; gx < gridWidth; gx++) {

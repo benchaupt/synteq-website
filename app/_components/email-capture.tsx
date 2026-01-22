@@ -9,6 +9,7 @@ interface EmailCaptureProps {
   placeholder?: string;
   className?: string;
   layout?: "vertical" | "horizontal";
+  icon?: string;
 }
 
 export function EmailCapture({
@@ -18,6 +19,7 @@ export function EmailCapture({
   placeholder = "your@email.com",
   className,
   layout = "vertical",
+  icon,
 }: EmailCaptureProps) {
   return (
     <div className={cn("flex flex-col gap-4", className)}>
@@ -33,11 +35,16 @@ export function EmailCapture({
             : "flex-row"
         )}
       >
-        <input
-          type="email"
-          placeholder={placeholder}
-          className="flex-1 bg-background-secondary border border-white/10 rounded px-4 py-3 text-sm focus:outline-none focus:border-accent/50 transition-colors placeholder:text-white/30"
-        />
+        <div className="flex-1 flex items-center gap-3 bg-background-secondary border border-white/10 rounded px-4 py-3 min-w-0">
+          {icon && (
+            <img src={icon} alt="" className="h-3.5 w-auto brightness-0 invert shrink-0" />
+          )}
+          <input
+            type="email"
+            placeholder={placeholder}
+            className="flex-1 bg-transparent text-sm focus:outline-none placeholder:text-white/30 min-w-0"
+          />
+        </div>
         <button className="bg-accent hover:bg-darker-accent text-background font-medium px-6 py-3 rounded transition-colors duration-200 text-sm whitespace-nowrap">
           {buttonText}
         </button>

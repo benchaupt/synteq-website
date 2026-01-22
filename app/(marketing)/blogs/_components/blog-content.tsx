@@ -54,7 +54,8 @@ export function BlogContent({ posts, categories }: BlogContentProps) {
           <EmailCapture
             buttonText="Join waitlist"
             layout="horizontal"
-            className="lg:max-w-sm"
+            className="w-lg"
+            icon="/assets/icons/email.svg"
           />
         </div>
       </section>

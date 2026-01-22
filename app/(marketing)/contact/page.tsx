@@ -7,45 +7,9 @@ import { TestimonialCarousel } from "@/app/_components/testimonial-carousel";
 import * as Select from "@radix-ui/react-select";
 import { useState } from "react";
 
-// Icons for form inputs
-const PersonIcon = () => (
-    <svg className="size-5 text-white/50" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M10 10C12.0711 10 13.75 8.32107 13.75 6.25C13.75 4.17893 12.0711 2.5 10 2.5C7.92893 2.5 6.25 4.17893 6.25 6.25C6.25 8.32107 7.92893 10 10 10Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M3.75 17.5C3.75 14.0482 6.54822 11.25 10 11.25C13.4518 11.25 16.25 14.0482 16.25 17.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-);
-
-const BuildingIcon = () => (
-    <svg className="size-5 text-white/50" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M2.5 17.5H17.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M3.75 17.5V5C3.75 4.30964 4.30964 3.75 5 3.75H10C10.6904 3.75 11.25 4.30964 11.25 5V17.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M11.25 17.5V8.75C11.25 8.05964 11.8096 7.5 12.5 7.5H15C15.6904 7.5 16.25 8.05964 16.25 8.75V17.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M6.25 7.5H8.75" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M7.5 11.25V13.75" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-);
-
-const MailIcon = () => (
-    <svg className="size-5 text-white/50" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M2.5 6.25L10 11.25L17.5 6.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M3.75 5H16.25C17.0784 5 17.75 5.67157 17.5 6.25V15C17.5 15.6904 16.9404 16.25 16.25 16.25H3.75C3.05964 16.25 2.5 15.6904 2.5 15V6.25C2.5 5.55964 3.05964 5 3.75 5Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-);
-
-const DollarIcon = () => (
-    <svg className="size-5 text-white/50" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M10 2.5V17.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M13.75 5H8.125C7.42881 5 6.76113 5.27656 6.26884 5.76884C5.77656 6.26113 5.5 6.92881 5.5 7.625C5.5 8.32119 5.77656 8.98887 6.26884 9.48116C6.76113 9.97344 7.42881 10.25 8.125 10.25H11.875C12.5712 10.25 13.2389 10.5266 13.7312 11.0188C14.2234 11.5111 14.5 12.1788 14.5 12.875C14.5 13.5712 14.2234 14.2389 13.7312 14.7312C13.2389 15.2234 12.5712 15.5 11.875 15.5H5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-);
-
-const UsersIcon = () => (
-    <svg className="size-5 text-white/50" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M7.5 9.16667C9.34095 9.16667 10.8333 7.67428 10.8333 5.83333C10.8333 3.99238 9.34095 2.5 7.5 2.5C5.65905 2.5 4.16667 3.99238 4.16667 5.83333C4.16667 7.67428 5.65905 9.16667 7.5 9.16667Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M2.5 17.5V15.8333C2.5 14.9493 2.85119 14.1014 3.47631 13.4763C4.10143 12.8512 4.94928 12.5 5.83333 12.5H9.16667C10.0507 12.5 10.8986 12.8512 11.5237 13.4763C12.1488 14.1014 12.5 14.9493 12.5 15.8333V17.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M13.3333 2.60833C14.0503 2.79192 14.6859 3.20892 15.1397 3.79359C15.5935 4.37827 15.8399 5.09736 15.8399 5.8375C15.8399 6.57764 15.5935 7.29673 15.1397 7.88141C14.6859 8.46608 14.0503 8.88308 13.3333 9.06667" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M17.5 17.5V15.8333C17.4958 15.0976 17.2479 14.3839 16.7953 13.8036C16.3426 13.2233 15.7108 12.8089 15 12.625" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+// Icon component that uses SVG files
+const FormIcon = ({ src, size = "h-4" }: { src: string; size?: string }) => (
+    <img src={src} alt="" className={`${size} w-auto brightness-0 invert`} />
 );
 
 const ChevronDownIcon = () => (
@@ -181,7 +145,7 @@ export default function Contact() {
                             {/* Name Fields */}
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="flex items-center gap-3 bg-background rounded-md px-4 py-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.8),inset_0_0_0_2px_rgba(255,255,255,0.05)]">
-                                    <PersonIcon />
+                                    <FormIcon src="/assets/icons/person.svg" />
                                     <input
                                         type="text"
                                         placeholder="First Name"
@@ -189,7 +153,7 @@ export default function Contact() {
                                     />
                                 </div>
                                 <div className="flex items-center gap-3 bg-background rounded-md px-4 py-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.8),inset_0_0_0_2px_rgba(255,255,255,0.05)]">
-                                    <PersonIcon />
+                                    <FormIcon src="/assets/icons/person.svg" />
                                     <input
                                         type="text"
                                         placeholder="Last Name"
@@ -201,7 +165,7 @@ export default function Contact() {
                             {/* Company & Email Fields */}
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="flex items-center gap-3 bg-background rounded-md px-4 py-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.8),inset_0_0_0_2px_rgba(255,255,255,0.05)]">
-                                    <BuildingIcon />
+                                    <FormIcon src="/assets/icons/company.svg" size="h-3.5" />
                                     <input
                                         type="text"
                                         placeholder="Company"
@@ -209,7 +173,7 @@ export default function Contact() {
                                     />
                                 </div>
                                 <div className="flex items-center gap-3 bg-background rounded-md px-4 py-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.8),inset_0_0_0_2px_rgba(255,255,255,0.05)]">
-                                    <MailIcon />
+                                    <FormIcon src="/assets/icons/email.svg" size="h-3" />
                                     <input
                                         type="email"
                                         placeholder="Email Address"
@@ -234,7 +198,7 @@ export default function Contact() {
                                 <Select.Root>
                                     <Select.Trigger className="flex items-center justify-between gap-3 bg-background rounded-md px-4 py-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.8),inset_0_0_0_2px_rgba(255,255,255,0.05)] outline-none data-placeholder:text-white/50 text-white cursor-pointer group">
                                         <div className="flex items-center gap-3">
-                                            <DollarIcon />
+                                            <FormIcon src="/assets/icons/budget.svg" />
                                             <Select.Value placeholder="Project Budget" />
                                         </div>
                                         <Select.Icon className="transition-transform duration-200 group-data-[state=open]:rotate-180">
@@ -271,7 +235,7 @@ export default function Contact() {
                                 <Select.Root>
                                     <Select.Trigger className="flex items-center justify-between gap-3 bg-background rounded-md px-4 py-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.8),inset_0_0_0_2px_rgba(255,255,255,0.05)] outline-none data-placeholder:text-white/50 text-white cursor-pointer group">
                                         <div className="flex items-center gap-3">
-                                            <UsersIcon />
+                                            <FormIcon src="/assets/icons/team.svg" size="h-3.5" />
                                             <Select.Value placeholder="Team Size" />
                                         </div>
                                         <Select.Icon className="transition-transform duration-200 group-data-[state=open]:rotate-180">
