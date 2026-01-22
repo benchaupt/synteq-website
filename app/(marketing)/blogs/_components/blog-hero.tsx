@@ -19,7 +19,7 @@ export function BlogHero({
   return (
     <Link href={href} className="group relative w-full block">
       <div className="bg-gradient-to-br from-accent/20 to-background rounded-lg overflow-hidden">
-        <div className="relative h-[400px] md:h-[450px] lg:h-[500px] w-full p-6 md:p-8" style={{
+        <div className="relative aspect-[4/3] md:aspect-[2/1] lg:aspect-[2/1] w-full p-6 md:p-8" style={{
           backgroundImage: `url(${image})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',

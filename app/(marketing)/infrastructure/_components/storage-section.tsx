@@ -1,0 +1,85 @@
+"use client";
+
+import { AnimatedButton } from "@/app/_components/animated-button";
+import { motion, useInView } from "motion/react";
+import { useRef } from "react";
+
+const stats = [
+  { value: "~40%", label: "Lower inference costs" },
+  { value: "~40%", label: "Lower inference costs" },
+  { value: "2x+", label: "More predictable performance" },
+  { value: "99.99%", label: "Uptime SLA availability" },
+];
+
+export function StorageSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+
+  return (
+    <section
+      id="storage"
+      ref={sectionRef}
+      className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24 lg:py-32 flex flex-col"
+    >
+      <div className="flex flex-col gap-12 lg:gap-8 w-full">
+        {/* Header */}
+        <div className="flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-52 items-start lg:items-end w-full">
+          <motion.div
+            className="flex flex-col gap-3 flex-1"
+            initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+            animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          >
+            <p className="subheading">Storage</p>
+            <h2 className="heading">
+              Revolutioning Storage and
+              <br />
+              more Storage with Storage
+            </h2>
+          </motion.div>
+          <motion.p
+            className="text-base text-dark-foreground flex-1 leading-relaxed max-w-2xl"
+            initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+            animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+            transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
+          >
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+            porttitor, ex vitae vehicula sodales, urna sapien interdum orci, sed
+            accumsan erat magna eget enim. Integer quis libero in turpis sodales
+            blandit.
+          </motion.p>
+        </div>
+
+        {/* Stats */}
+        <motion.div
+          className="flex flex-wrap justify-between gap-y-8"
+          initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+          animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+          transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+        >
+          {stats.map((stat, index) => (
+            <div key={index} className="flex flex-col gap-2">
+              <div className="heading2 text-accent">
+                {stat.value}
+              </div>
+              <p className="font-mono text-xs text-white/40 uppercase tracking-wider">
+                {stat.label}
+              </p>
+            </div>
+          ))}
+        </motion.div>
+
+        {/* Talk to Sales */}
+        <motion.div
+          initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
+          animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+          transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
+        >
+          <AnimatedButton background="dark" size="default">
+            Talk To Sales
+          </AnimatedButton>
+        </motion.div>
+      </div>
+    </section>
+  );
+}

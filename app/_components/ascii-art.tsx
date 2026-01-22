@@ -166,26 +166,13 @@ export default function AsciiArt({ type = "gpu", className = "" }: AsciiArtProps
     return (
         <div className={`relative overflow-hidden ${className}`}>
             <pre 
-                className="font-mono text-[10px] sm:text-xs md:text-sm leading-tight text-accent whitespace-pre select-none"
+                className="font-mono text-[8px] sm:text-[10px] md:text-xs lg:text-sm xl:text-base leading-tight text-accent whitespace-pre select-none"
                 style={{ 
                     textShadow: "0 0 10px rgba(75, 222, 183, 0.3)",
                 }}
             >
                 {lines.join("\n")}
             </pre>
-            {/* Scan line effect */}
-            <div 
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                    background: `repeating-linear-gradient(
-                        0deg,
-                        transparent,
-                        transparent 2px,
-                        rgba(75, 222, 183, 0.03) 2px,
-                        rgba(75, 222, 183, 0.03) 4px
-                    )`,
-                }}
-            />
             {/* Glow effect */}
             <div 
                 className="absolute inset-0 pointer-events-none opacity-30"

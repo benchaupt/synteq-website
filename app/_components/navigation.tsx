@@ -75,8 +75,17 @@ export const Navigation = () => {
                             </NavigationMenu.Link>
                         </NavigationMenu.Item>
 
-                        {/* Resources Dropdown */}
+                        {/* Infrastructure Link */}
                         <NavigationMenu.Item>
+                            <NavigationMenu.Link asChild>
+                                <Link href="/infrastructure" className="px-4 py-2 text-white/80 hover:text-accent transition-colors duration-200 text-sm">
+                                    Infrastructure
+                                </Link>
+                            </NavigationMenu.Link>
+                        </NavigationMenu.Item>
+
+                        {/* Resources Dropdown */}
+                        <NavigationMenu.Item className="relative">
                             <NavigationMenu.Trigger className="group px-4 py-2 text-sm flex items-center gap-1 text-white/80 hover:text-accent data-[state=open]:text-accent transition-colors duration-200">
                                 Resources
                                 <svg
@@ -88,35 +97,33 @@ export const Navigation = () => {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                 </svg>
                             </NavigationMenu.Trigger>
-                            <NavigationMenu.Content className="absolute left-0 top-0 w-full sm:w-auto data-[motion=from-start]:animate-in data-[motion=from-start]:fade-in data-[motion=from-start]:slide-in-from-left-12 data-[motion=from-end]:animate-in data-[motion=from-end]:fade-in data-[motion=from-end]:slide-in-from-right-12 data-[motion=to-start]:animate-out data-[motion=to-start]:fade-out data-[motion=to-start]:slide-out-to-left-12 data-[motion=to-end]:animate-out data-[motion=to-end]:fade-out data-[motion=to-end]:slide-out-to-right-12 duration-200">
+                            <NavigationMenu.Content className="absolute left-1/2 -translate-x-1/2 top-full mt-2.5 w-auto rounded-xl border border-white/5 bg-background-dropdown shadow-2xl data-[state=open]:animate-in data-[state=open]:fade-in data-[state=open]:zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=closed]:zoom-out-95 duration-200">
                                 <div className="p-4 sm:w-[320px]">
                                     <div className="space-y-1">
-                                        <NavigationMenu.Link asChild>
-                                            <Link href="/cloud" className="group/item flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-white/5 transition-all duration-200">
-                                                <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0 group-hover/item:bg-accent/10 transition-colors">
-                                                    <svg className="size-4 text-white/60 group-hover/item:text-accent transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                                                    </svg>
-                                                </div>
-                                                <div className="flex-1 min-w-0">
-                                                    <div className="font-medium text-sm text-white group-hover/item:text-accent transition-colors">API</div>
-                                                    <div className="text-xs text-white/40 mt-0.5">OpenAPI compatible</div>
-                                                </div>
-                                            </Link>
-                                        </NavigationMenu.Link>
-                                        <NavigationMenu.Link asChild>
-                                            <Link href="/cloud" className="group/item flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-white/5 transition-all duration-200">
-                                                <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0 group-hover/item:bg-accent/10 transition-colors">
-                                                    <svg className="size-4 text-white/60 group-hover/item:text-accent transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                                                    </svg>
-                                                </div>
-                                                <div className="flex-1 min-w-0">
-                                                    <div className="font-medium text-sm text-white group-hover/item:text-accent transition-colors">Model Library</div>
-                                                    <div className="text-xs text-white/40 mt-0.5">255+ production models</div>
-                                                </div>
-                                            </Link>
-                                        </NavigationMenu.Link>
+                                        {/* Disabled - API */}
+                                        <div className="flex items-center gap-3 px-3 py-3 rounded-lg opacity-50 cursor-not-allowed">
+                                            <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0">
+                                                <svg className="size-4 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                                                </svg>
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <div className="font-medium text-sm text-white">API</div>
+                                                <div className="text-xs text-white/40 mt-0.5">OpenAPI compatible</div>
+                                            </div>
+                                        </div>
+                                        {/* Disabled - Model Library */}
+                                        <div className="flex items-center gap-3 px-3 py-3 rounded-lg opacity-50 cursor-not-allowed">
+                                            <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0">
+                                                <svg className="size-4 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                                </svg>
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <div className="font-medium text-sm text-white">Model Library</div>
+                                                <div className="text-xs text-white/40 mt-0.5">255+ production models</div>
+                                            </div>
+                                        </div>
                                         <NavigationMenu.Link asChild>
                                             <Link href="/blogs" className="group/item flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-white/5 transition-all duration-200">
                                                 <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0 group-hover/item:bg-accent/10 transition-colors">
@@ -144,32 +151,13 @@ export const Navigation = () => {
                             </NavigationMenu.Link>
                         </NavigationMenu.Item>
 
-                        <NavigationMenu.Indicator className="top-full z-10 flex h-2.5 items-end justify-center overflow-hidden transition-[width,transform_250ms_ease] data-[state=visible]:animate-in data-[state=visible]:fade-in data-[state=hidden]:animate-out data-[state=hidden]:fade-out">
-                            <div className="relative top-[70%] size-2.5 rotate-45 rounded-tl-sm bg-background-dropdown border-l border-t border-white/5" />
-                        </NavigationMenu.Indicator>
                     </NavigationMenu.List>
-
-                    {/* Viewport - This is where the morph magic happens */}
-                    <div className="perspective-[2000px] absolute left-0 top-full flex justify-start">
-                        <NavigationMenu.Viewport
-                            className={cn(
-                                "relative mt-2.5 origin-top-left overflow-hidden rounded-xl border border-white/5 bg-background-dropdown shadow-2xl",
-                                "h-(--radix-navigation-menu-viewport-height) w-(--radix-navigation-menu-viewport-width)",
-                                "transition-[width,height] duration-300",
-                                "data-[state=open]:animate-in data-[state=open]:fade-in data-[state=open]:zoom-in-95",
-                                "data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=closed]:zoom-out-95"
-                            )}
-                        />
-                    </div>
                 </NavigationMenu.Root>
 
                 {/* CTA Buttons */}
                 <div className="hidden lg:flex items-center gap-2">
-                    <Link href="#" className="px-3 py-1.5 text-sm text-white/70 hover:text-white transition-colors">
-                        Sign in
-                    </Link>
                     <Link href="/contact">
-                        <AnimatedButton background="primary" className="hover:bg-background-secondary text-sm px-4 py-1.5">
+                        <AnimatedButton background="primary" className="hover:bg-background-secondary px-4 py-2.5">
                             Contact Sales
                         </AnimatedButton>
                     </Link>
@@ -225,6 +213,15 @@ export const Navigation = () => {
                                     Cloud
                                 </Link>
 
+                                {/* Infrastructure Link */}
+                                <Link
+                                    href="/infrastructure"
+                                    className="text-lg text-white/90 hover:text-accent hover:bg-white/5 transition-all rounded-lg px-4 py-4 border-b border-white/5"
+                                    onClick={() => setMobileNavbar(false)}
+                                >
+                                    Infrastructure
+                                </Link>
+
                                 {/* Resources Section */}
                                 <div className="border-b border-white/5">
                                     <button
@@ -246,13 +243,10 @@ export const Navigation = () => {
                                     </button>
                                     {mobileActiveDropdown === 'resources' && (
                                         <div className="pb-2 px-4 space-y-1">
-                                            <Link
-                                                href="/cloud"
-                                                className="flex items-center gap-3 py-3 px-3 rounded-lg hover:bg-white/5 transition-colors"
-                                                onClick={() => setMobileNavbar(false)}
-                                            >
+                                            {/* Disabled - API */}
+                                            <div className="flex items-center gap-3 py-3 px-3 rounded-lg opacity-50 cursor-not-allowed">
                                                 <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0">
-                                                    <svg className="size-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <svg className="size-4 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                                                     </svg>
                                                 </div>
@@ -260,14 +254,11 @@ export const Navigation = () => {
                                                     <div className="text-white text-sm font-medium">API</div>
                                                     <div className="text-xs text-white/40">OpenAPI compatible</div>
                                                 </div>
-                                            </Link>
-                                            <Link
-                                                href="/cloud"
-                                                className="flex items-center gap-3 py-3 px-3 rounded-lg hover:bg-white/5 transition-colors"
-                                                onClick={() => setMobileNavbar(false)}
-                                            >
+                                            </div>
+                                            {/* Disabled - Model Library */}
+                                            <div className="flex items-center gap-3 py-3 px-3 rounded-lg opacity-50 cursor-not-allowed">
                                                 <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0">
-                                                    <svg className="size-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <svg className="size-4 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                                                     </svg>
                                                 </div>
@@ -275,7 +266,7 @@ export const Navigation = () => {
                                                     <div className="text-white text-sm font-medium">Model Library</div>
                                                     <div className="text-xs text-white/40">255+ production models</div>
                                                 </div>
-                                            </Link>
+                                            </div>
                                             <Link
                                                 href="/blogs"
                                                 className="flex items-center gap-3 py-3 px-3 rounded-lg hover:bg-white/5 transition-colors"
@@ -306,13 +297,6 @@ export const Navigation = () => {
 
                                 {/* CTA Buttons */}
                                 <div className="flex flex-col gap-3 pt-6">
-                                    <Link
-                                        href="#"
-                                        className="text-center py-3 px-4 text-white/70 hover:text-white hover:bg-white/5 transition-all rounded-lg"
-                                        onClick={() => setMobileNavbar(false)}
-                                    >
-                                        Sign in
-                                    </Link>
                                     <Link href="/contact" onClick={() => setMobileNavbar(false)}>
                                         <AnimatedButton
                                             background="primary"

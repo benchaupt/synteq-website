@@ -4,8 +4,17 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { AnimatedButton } from "@/app/_components/animated-button";
 import { AnimatedCard } from "@/app/_components/animated-card";
 import CallToActionNew from "@/app/_components/call-to-action-new";
+import { StatsSection } from "@/app/_components/stats-section";
+import TensorVisualization from "@/app/_components/tensor-visualization";
 import { motion } from "motion/react";
 import Link from "next/link";
+
+const stats = [
+  { value: "255+", label: "Production models" },
+  { value: "50ms", label: "Global latency" },
+  { value: "99.99%", label: "Uptime SLA" },
+  { value: "30+", label: "Global regions" },
+];
 
 const models = [
   { name: "GPT-4o", provider: "OpenAI", category: "Multimodal" },
@@ -16,6 +25,10 @@ const models = [
   { name: "Qwen 2.5", provider: "Alibaba", category: "Multilingual" },
   { name: "Mistral Large", provider: "Mistral AI", category: "Enterprise" },
   { name: "Command R+", provider: "Cohere", category: "RAG-Optimized" },
+  { name: "Claude 3 Opus", provider: "Anthropic", category: "Advanced" },
+  { name: "Mixtral 8x22B", provider: "Mistral AI", category: "Open Source" },
+  { name: "Grok-2", provider: "xAI", category: "Reasoning" },
+  { name: "Phi-3", provider: "Microsoft", category: "Efficient" },
 ];
 
 const features = [
@@ -110,19 +123,19 @@ export default function Cloud() {
       <div className="relative overflow-hidden bg-background">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5" />
         
-        <div className="relative px-5 py-16 md:py-24 max-w-viewport w-full mx-auto flex flex-col gap-12">
+        <div className="relative px-5 py-12 md:py-16 max-w-viewport w-full mx-auto flex flex-col gap-12">
           <div className="flex lg:flex-row flex-col gap-12 lg:gap-16 items-center">
-            <div className="flex flex-col gap-8 items-start justify-center flex-1 min-w-0">
-              <p className="font-mono text-xs text-accent uppercase tracking-wider">AI Cloud Platform</p>
+            <div className="flex flex-col gap-2 items-start justify-center flex-1 min-w-0">
+              <p className="subheading">AI Cloud Platform</p>
               <div className="max-w-4xl">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl max-w-2xl text-foreground leading-tight tracking-tight font-sequel-book">
+                <h1 className="title max-w-2xl">
                   Production AI without the complexity
               </h1>
               </div>
-              <p className="text-lg md:text-xl text-white/60 max-w-2xl leading-relaxed">
+              <p className="text-base md:text-base lg:text-base text-white/60 max-w-lg pt-4">
                 Deploy, scale, and manage AI models in minutes. No DevOps required. No surprise bills. Just production-ready infrastructure that works.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <div className="flex flex-col sm:flex-row gap-6 pt-12">
                 <AnimatedButton background="primary">
                   Start Free
                 </AnimatedButton>
@@ -131,50 +144,20 @@ export default function Cloud() {
                 </AnimatedButton>
               </div>
             </div>
-            <div className="flex flex-col gap-4 items-center justify-center w-full lg:w-auto">
-              <img src="/assets/cloud/Isolation_Mode.png" alt="Cloud Platform" className="w-full max-w-md lg:max-w-lg xl:max-w-xl" />
+            <div className="flex flex-col gap-4 items-center justify-center w-full lg:w-auto lg:flex-1">
+              <div className="w-full max-w-lg lg:max-w-2xl aspect-square">
+                <TensorVisualization
+                  size={3}
+                  spacing={1.5}
+                  cameraDistance={6}
+                  labelSize={10}
+                />
+              </div>
             </div>
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 pt-8 border-t border-white/5">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="flex flex-col gap-2"
-            >
-              <div className="text-4xl md:text-5xl lg:text-6xl font-sequel-book text-accent">
-                255+
-          </div>
-              <p className="font-mono text-xs text-white/40 uppercase tracking-wider">Production models</p>
-            </motion.div>
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="flex flex-col gap-2"
-            >
-              <div className="text-4xl md:text-5xl lg:text-6xl font-sequel-book text-accent">
-                50ms
-              </div>
-              <p className="font-mono text-xs text-white/40 uppercase tracking-wider">Global latency</p>
-            </motion.div>
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="flex flex-col gap-2"
-            >
-              <div className="text-4xl md:text-5xl lg:text-6xl font-sequel-book text-accent">
-                99.99%
-              </div>
-              <p className="font-mono text-xs text-white/40 uppercase tracking-wider">Uptime SLA</p>
-            </motion.div>
-          </div>
+          <StatsSection stats={stats} />
         </div>
       </div>
 
@@ -182,17 +165,17 @@ export default function Cloud() {
       <div className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24">
         <div className="flex flex-col gap-12">
           <div className="flex flex-col gap-4 items-center text-center">
-            <p className="font-mono text-xs text-accent uppercase tracking-wider">Model Library</p>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl max-w-3xl tracking-tight leading-tight font-sequel-book">
+            <p className="subheading">Model Library</p>
+            <h2 className="heading max-w-3xl">
               Deploy any model, instantly
             </h2>
-            <p className="text-lg text-white/60 max-w-2xl">
+            <p className="text-base text-white/60 max-w-2xl">
               From GPT-4 to open-source giants. One API, 255+ models, zero infrastructure hassle.
             </p>
           </div>
 
           {/* Model Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
             {models.map((model, index) => (
               <motion.div
                 key={index}
@@ -200,6 +183,7 @@ export default function Cloud() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
+                className={index >= 4 ? "hidden md:block" : ""}
               >
                 <AnimatedCard className="flex flex-col gap-3 p-4 md:p-5 h-full hover:border-accent/30 cursor-pointer">
                   <div className="flex flex-col gap-2">
@@ -210,16 +194,16 @@ export default function Cloud() {
                     <span className="inline-flex items-center px-2 py-1 rounded-md bg-accent/10 border border-accent/20 text-xs font-mono text-accent">
                       {model.category}
                     </span>
-                </div>
-              </AnimatedCard>
+                  </div>
+                </AnimatedCard>
               </motion.div>
             ))}
           </div>
 
           <div className="flex items-center justify-center pt-4">
-            <Link href="#" className="font-mono text-sm text-accent hover:text-accent/80 transition-colors uppercase tracking-wider">
-              View all 255+ models →
-            </Link>
+            <p className="font-mono text-sm text-accent uppercase tracking-wider">
+              + thousands more
+            </p>
           </div>
         </div>
       </div>
@@ -228,13 +212,13 @@ export default function Cloud() {
       <div className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24">
         <div className="flex flex-col gap-12">
           <div className="flex flex-col gap-4 items-center text-center">
-            <p className="font-mono text-xs text-accent uppercase tracking-wider">Platform Features</p>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl max-w-3xl tracking-tight leading-tight font-sequel-book">
+            <p className="subheading">Platform Features</p>
+            <h2 className="heading max-w-3xl">
               Everything you need to ship AI
             </h2>
         </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
             {features.map((feature, index) => (
               <motion.div
                 key={index}
@@ -242,14 +226,14 @@ export default function Cloud() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="flex flex-col gap-4"
+                className="flex flex-col gap-2"
               >
-                <div className="flex items-center gap-3">
-                  <div className="size-10 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center text-accent shrink-0">
+                <div className="flex items-center gap-1">
+                  <div className="size-10 rounded-lg flex items-center justify-center text-accent shrink-0">
                     {feature.icon}
-              </div>
-                  <h3 className="text-xl md:text-2xl font-sequel-book">{feature.title}</h3>
-            </div>
+                  </div>
+                  <h3 className="text-lg md:text-xl">{feature.title}</h3>
+                </div>
                 <p className="text-sm md:text-base text-white/60 leading-relaxed">
                   {feature.description}
                 </p>
@@ -263,11 +247,11 @@ export default function Cloud() {
       <div className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24">
         <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
           <div className="lg:col-span-2 flex flex-col gap-4">
-            <p className="font-mono text-xs text-accent uppercase tracking-wider">Support</p>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl tracking-tight leading-tight font-sequel-book">
+            <p className="subheading">Support</p>
+            <h2 className="heading">
               Frequently Asked Questions
             </h2>
-            <p className="text-base text-white/60 leading-relaxed">
+            <p className="text-base text-white/60 leading-relaxed max-w-sm">
               Can&apos;t find what you&apos;re looking for? Reach out to our support team. We&apos;re here to help.
             </p>
             <div className="pt-4">

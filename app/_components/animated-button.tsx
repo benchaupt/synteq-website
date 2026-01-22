@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import React, { type ReactNode } from 'react';
 
 const buttonVariants = cva(
-    "relative px-6 py-2 border-2 bg-transparent text-black font-medium group",
+    "relative px-6 py-2 border-2 bg-transparent text-black font-medium font-mono text-sm group",
     {
         variants: {
             size: {

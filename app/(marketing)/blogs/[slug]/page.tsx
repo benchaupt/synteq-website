@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
 import { RelatedPosts } from '@/payload/blocks/RelatedPosts/Component'
 import { PayloadRedirects } from '@/payload/components/PayloadRedirects'
@@ -8,15 +9,31 @@ import { draftMode } from 'next/headers'
 import { getPayload } from 'payload'
 import { cache } from 'react'
 
-
+import { AnimatedButton } from '@/app/_components/animated-button'
+import { BlogCarousel } from '@/app/_components/blog-carousel'
 import { ShareArticle } from '@/app/(marketing)/blogs/[slug]/_components/share-article'
 import { LivePreviewListener } from '@/payload/components/LivePreviewListener'
 import { formatDateTime } from '@/payload/utilities/formatDateTime'
 import { generateMeta } from '@/payload/utilities/generateMeta'
+import type { Category, Media } from '@/payload-types'
 import React from 'react'
 
 // Enable ISR: revalidate every 60 seconds
 export const revalidate = 60;
+
+// Helper to extract URL from a media field
+function getMediaUrl(media: number | Media | null | undefined): string {
+    if (!media) return "";
+    if (typeof media === "number") return "";
+    return media.url || "";
+}
+
+// Helper to extract category title
+function getCategoryTitle(category: number | Category | null | undefined): string {
+    if (!category) return "";
+    if (typeof category === "number") return "";
+    return category.title || "";
+}
 
 export async function generateStaticParams() {
     const payload = await getPayload({ config: configPromise })
@@ -52,6 +69,28 @@ export default async function Post({ params: paramsPromise }: Args) {
 
     if (!post) return <PayloadRedirects url={url} />
 
+    // Fetch recent posts for "Read more" carousel (excluding current post)
+    const payload = await getPayload({ config: configPromise })
+    const recentPostsResult = await payload.find({
+        collection: 'posts',
+        depth: 2,
+        limit: 6,
+        overrideAccess: false,
+        sort: '-publishedAt',
+        where: {
+            _status: { equals: 'published' },
+            slug: { not_equals: slug },
+        },
+    })
+
+    const recentPosts = recentPostsResult.docs.map((p) => ({
+        image: getMediaUrl(p.heroImage) || getMediaUrl(p.meta?.image),
+        category: getCategoryTitle(p.categories?.[0]),
+        title: p.title || '',
+        description: p.meta?.description || '',
+        href: `/blogs/${p.slug}`,
+    }))
+
     return (
         <article className="pt-16 pb-16">
 
@@ -63,23 +102,10 @@ export default async function Post({ params: paramsPromise }: Args) {
 
 
 
-            {/* Header Image - Above title */}
-            {post.meta?.image && typeof post.meta.image === 'object' && post.meta.image.url && (
-                <section className="max-w-viewport w-full mx-auto px-5 pt-24 pb-6">
-                    <div className="max-w-3xl mx-auto aspect-[16/9] rounded-lg overflow-hidden">
-                        <img 
-                            src={post.meta.image.url} 
-                            alt={post.meta.image.alt || post.title} 
-                            className="w-full h-full object-cover"
-                        />
-                    </div>
-                </section>
-            )}
-
-            <section className={`max-w-viewport w-full mx-auto px-5 ${post.meta?.image ? 'pt-8' : 'pt-24'} pb-8`}>
+            <section className="max-w-viewport w-full mx-auto px-5 pt-24 pb-8">
                 <div className="flex flex-col items-center gap-4">
                     {/* Category & Read Time */}
-                    <span className="font-mono text-xs text-darker-accent tracking-tight uppercase text-center">
+                    <span className="subheading text-center">
                         {post.categories?.map((category, index) => {
                             if (typeof category === 'object' && category !== null) {
                                 const { title: categoryTitle } = category
@@ -101,7 +127,7 @@ export default async function Post({ params: paramsPromise }: Args) {
                     </span>
 
                     {/* Title */}
-                    <h1 className="text-3xl md:text-4xl text-foreground leading-tight tracking-tight text-center max-w-2xl">
+                    <h1 className="heading text-center max-w-2xl">
                         {post.title}
                     </h1>
 
@@ -111,12 +137,13 @@ export default async function Post({ params: paramsPromise }: Args) {
                     </p>
 
                     {/* Date & Share */}
-                    <div className="flex items-center gap-6 flex-wrap justify-center mt-2">
+                    <div className="flex items-center gap-8 flex-wrap justify-center mt-4">
                         {post.publishedAt && (
                             <span className="font-mono text-xs text-darker-accent tracking-tight uppercase">
                                 <time dateTime={post.publishedAt}>{formatDateTime(post.publishedAt)}</time>
                             </span>
                         )}
+                        <span className="w-px h-4 bg-foreground/20" />
                         <ShareArticle />
                     </div>
                 </div>
@@ -126,9 +153,27 @@ export default async function Post({ params: paramsPromise }: Args) {
 
 
 
-            {/* <PostHero post={post} /> */}
+            {/* Header Image - Below header, above content */}
+            {(() => {
+                const heroImage = post.heroImage && typeof post.heroImage === 'object' ? post.heroImage : null;
+                const metaImage = post.meta?.image && typeof post.meta.image === 'object' ? post.meta.image : null;
+                const image = heroImage || metaImage;
 
-
+                if (image && image.url) {
+                    return (
+                        <section className="max-w-viewport w-full mx-auto px-5 pb-8">
+                            <div className="w-full aspect-[4/3] md:aspect-[5/2] lg:aspect-[5/2] rounded-lg overflow-hidden">
+                                <img
+                                    src={image.url}
+                                    alt={image.alt || post.title}
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                        </section>
+                    );
+                }
+                return null;
+            })()}
 
             <div className="max-w-viewport w-full mx-auto px-5 pt-8">
                 <div className="flex gap-12 lg:gap-16 relative">
@@ -147,7 +192,7 @@ export default async function Post({ params: paramsPromise }: Args) {
 
                     {/* Main Content */}
                     <div className="flex-1 min-w-0">
-                        <RichText className="max-w-[48rem]" data={post.content} enableGutter={false} />
+                        <RichText className="max-w-[60rem]" data={post.content} enableGutter={false} />
                         {post.relatedPosts && post.relatedPosts.length > 0 && (
                             <RelatedPosts
                                 className="mt-12 max-w-[52rem]"
@@ -157,6 +202,21 @@ export default async function Post({ params: paramsPromise }: Args) {
                     </div>
                 </div>
             </div>
+
+            {/* Read More Carousel */}
+            {recentPosts.length > 0 && (
+                <section className="max-w-viewport w-full mx-auto px-5 pt-48 pb-24">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 md:gap-8 lg:gap-12 mb-6 md:mb-8 lg:mb-12 px-4 md:px-6 lg:px-[25px]">
+                        <h2 className="heading">Read more</h2>
+                        <Link href="/blogs">
+                            <AnimatedButton background="dark" size="default">
+                                View all
+                            </AnimatedButton>
+                        </Link>
+                    </div>
+                    <BlogCarousel blogs={recentPosts} />
+                </section>
+            )}
         </article>
     )
 }

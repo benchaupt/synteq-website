@@ -12,14 +12,19 @@ export default async function MarketingLayout({
 
   return (
     <>
-        <AdminBar
-          adminBarProps={{
-            preview: isEnabled,
-          }}
-        />
-        <Navigation />
-      <main>{children}</main>
-        <Footer />
+      {/* Grid background with content frame */}
+      <div className="fixed inset-0 pointer-events-none px-5 z-0">
+        <div className="h-full w-full max-w-viewport mx-auto bg-grid bg-grid-frame" />
+      </div>
+
+      <AdminBar
+        adminBarProps={{
+          preview: isEnabled,
+        }}
+      />
+      <Navigation />
+      <main className="relative z-10">{children}</main>
+      <Footer />
     </>
   );
 }

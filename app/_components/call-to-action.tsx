@@ -10,7 +10,7 @@ export const CallToAction = () => {
                 backgroundRepeat: "no-repeat",
             }}>
                 <div className="max-w-viewport min-h-[700px] w-full mx-auto px-5 py-64 flex flex-col gap-12 items-center justify-center">
-                    <h2 className="text-4xl sm:text-5xl md:text-6xl max-w-4xl text-center">Lorem ipsum dolor sit adipiscing amet, consectetur elit?</h2>
+                    <h2 className="heading max-w-4xl text-center">Lorem ipsum dolor sit adipiscing amet, consectetur elit?</h2>
                     <AnimatedButton size={"wide"}>View All</AnimatedButton>
                 </div>
 

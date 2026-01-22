@@ -3,17 +3,18 @@ import Link from "next/link";
 export default function ResilienceSection() {
   return (
     <section className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24 lg:py-32 flex flex-col">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-20">
         {/* Left Content */}
         <div className="flex h-full shrink-0 flex-col justify-between gap-8 md:gap-10">
           <div className="flex w-full flex-col gap-6 md:gap-8">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight md:leading-9 text-transparent bg-linear-to-l from-white to-[#cbf1ea] bg-clip-text font-sequel-book">
-              Engineering for AI
+            <h2 className="heading leading-tight md:leading-9 font-sequel-book relative">
+              <span className="text-white">Engineering for AI</span>
+              <span className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,transparent_35%,#4BDEB700_40%,#4BDEB7_50%,#4BDEB700_60%,transparent_65%,transparent_100%)] bg-[length:200%_100%] bg-clip-text text-transparent animate-shimmer pointer-events-none" aria-hidden="true">Engineering for AI</span>
             </h2>
-            <p className="text-base md:text-lg lg:text-2xl leading-relaxed md:leading-9 text-foreground/65 max-w-2xl">
-              <span className="text-foreground">Purpose-built hardware</span>
+            <p className="text-base md:text-base lg:text-base text-foreground/65 max-w-lg">
+              <span className="text-foreground text-base md:text-base lg:text-base">Purpose-built hardware</span>
               {` meets cloud-native design. Every component from GPU clusters to network fabri is optimized for AI workloads. `}
-              <span className="text-foreground">{`Research-grade infrastructure `}</span>
+              <span className="text-foreground text-base md:text-base lg:text-base">{`Research-grade infrastructure `}</span>
               that delivers production reliability, designed for the next generation of AI products.
             </p>
           </div>
@@ -29,52 +30,52 @@ export default function ResilienceSection() {
         <div className="grid shrink-0 grid-cols-1 sm:grid-cols-2 gap-8 md:gap-12 lg:gap-16 h-full">
           {/* Uptime Card - Top Left */}
           <div className="flex flex-col gap-3 md:gap-4 justify-self-start">
-            <p className="text-lg md:text-xl lg:text-2xl text-white/65">
+            <p className="font-mono text-md md:text-md lg:text-md text-white/65">
               Uptime
             </p>
-            <p className="text-3xl md:text-4xl lg:text-5xl text-transparent bg-linear-to-l from-white to-[#cbf1ea] bg-clip-text">
+            <p className="heading2 text-white">
               99.99% SLA
             </p>
-            <p className="text-base md:text-lg lg:text-2xl text-white/65">
+            <p className="text-base md:text-base lg:text-base text-white/65">
               Enterprise-grade reliability with redundant systems and automated failover.
             </p>
           </div>
 
           {/* Latency Card - Top Right */}
           <div className="flex flex-col gap-3 md:gap-4 justify-self-start sm:justify-self-end">
-            <p className="text-lg md:text-xl lg:text-2xl text-white/65">
+            <p className="font-mono text-md md:text-md lg:text-md text-white/65">
               Latency
             </p>
-            <p className="text-3xl md:text-4xl lg:text-5xl text-transparent bg-linear-to-l from-white from-[73.558%] to-[#cbf1ea] bg-clip-text">
+            <p className="heading2 text-white">
               &lt;50ms
             </p>
-            <p className="text-base md:text-lg lg:text-2xl text-white/65">
+            <p className="text-base md:text-base lg:text-base text-white/65">
               Sub-50ms response times for real-time AI inference workloads.
             </p>
           </div>
 
           {/* Hardware Card - Bottom Left */}
           <div className="flex flex-col gap-3 md:gap-4 justify-self-start">
-            <p className="text-lg md:text-xl lg:text-2xl text-white/65">
+            <p className="font-mono text-md md:text-md lg:text-md text-white/65">
               Hardware
             </p>
-            <p className="text-3xl md:text-4xl lg:text-5xl text-transparent bg-linear-to-l from-white to-[#cbf1ea] bg-clip-text">
+            <p className="heading2 text-white">
               H100 & A100
             </p>
-            <p className="text-base md:text-lg lg:text-2xl text-white/65">
+            <p className="text-base md:text-base lg:text-base text-white/65">
               Latest-generation GPUs optimized for training and inference.
             </p>
           </div>
 
           {/* Design Card - Bottom Right */}
           <div className="flex flex-col gap-3 md:gap-4 justify-self-start sm:justify-self-end">
-            <p className="text-lg md:text-xl lg:text-2xl text-white/65">
+            <p className="font-mono text-md md:text-md lg:text-md text-white/65">
               Design
             </p>
-            <p className="text-3xl md:text-4xl lg:text-5xl text-transparent bg-linear-to-l from-white from-[26.923%] via-[#cbf1ea] via-[50.962%] to-white to-[70.192%] bg-clip-text">
+            <p className="heading2 text-white">
               AI-Native
             </p>
-            <p className="text-base md:text-lg lg:text-2xl text-white/65">
+            <p className="text-base md:text-base lg:text-base text-white/65">
               Infrastructure architected from the ground up for AI workloads.
             </p>
           </div>

@@ -26,6 +26,9 @@
 }
 
 @theme inline {
+  --text-base: 1.1rem;
+  --text-base--line-height: 1.25rem;
+
   --color-background: var(--background);
   --color-background-secondary: #161C1F;
   --color-background-dropdown: #0A0E10;
@@ -46,6 +49,7 @@
 
   --animate-marquee: marquee var(--duration) infinite linear;
   --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+  --animate-shimmer: shimmer 4s linear infinite;
  
   @keyframes marquee {
     from {
@@ -61,6 +65,15 @@
     }
     to {
       transform: translateY(calc(-100% - var(--gap)));
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
     }
   }
 
@@ -86,8 +99,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
-  letter-spacing: -0.015em;
-  line-height: 1.1;
+  line-height: normal;
 }
 
 /* Text selection styling */
@@ -103,7 +115,7 @@ body {
 
 h1, h2, h3, h4, h5, h6, p {
   font-family: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
-  letter-spacing: -0.015em;
+  line-height: normal;
 }
 
 .font-mono {
@@ -112,14 +124,10 @@ h1, h2, h3, h4, h5, h6, p {
 
 .font-sequel {
   font-family: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
-  letter-spacing: -0.015em;
-  line-height: 1.1;
 }
 
 .font-sequel-book {
   font-family: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
-  letter-spacing: -0.015em;
-  line-height: 1.1;
 }
 
 /* Marquee pause on hover for individual items */
@@ -199,4 +207,34 @@ h1, h2, h3, h4, h5, h6, p {
 .embla__button__svg {
   width: 35%;
   height: 35%;
+}
+
+/* Typography utility classes */
+.title {
+  @apply text-4xl sm:text-5xl md:text-5xl lg:text-6xl tracking-tight leading-tight text-white;
+}
+
+.heading {
+  @apply text-3xl sm:text-4xl md:text-4xl lg:text-5xl tracking-tight leading-tight text-white;
+}
+
+.heading2 {
+  @apply text-2xl sm:text-3xl md:text-3xl lg:text-4xl tracking-tight leading-tight text-white;
+}
+
+.subheading {
+  @apply font-mono text-xs md:text-sm text-accent uppercase tracking-tight;
+}
+
+/* Grid background pattern */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 400px 400px;
+}
+
+.bg-grid-frame {
+  border-left: 1px solid rgba(255, 255, 255, 0.03);
+  border-right: 1px solid rgba(255, 255, 255, 0.03);
 }

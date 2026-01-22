@@ -1,5 +1,6 @@
 "use client";
 import { AnimatedCard } from "@/app/_components/animated-card";
+import { CornerCard } from "@/app/_components/corner-card";
 import { cn } from "@/lib/utils";
 import useEmblaCarousel from "embla-carousel-react";
 import { useEffect, useState } from "react";
@@ -49,8 +50,14 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
                 <div className='overflow-hidden' ref={emblaRef}>
                     <div className='flex'>
                         {testimonials.map((testimonial, index) => (
-                            <div key={index} className="flex-[0_0_100%] md:flex-[0_0_auto] min-w-0 pl-4 pr-4">
-                                <AnimatedCard 
+                            <div
+                                key={index}
+                                className="flex-[0_0_100%] md:flex-[0_0_auto] min-w-0 pl-4 pr-4 cursor-pointer"
+                                onClick={() => {
+                                    if (emblaApi) emblaApi.scrollTo(index);
+                                }}
+                            >
+                                <CornerCard
                                     className="w-full max-w-[calc(100vw-2.5rem)] md:w-[500px] lg:w-[580px] hover:bg-background-secondary"
                                 >
                                     <div className="flex flex-col gap-6 md:gap-10">
@@ -59,13 +66,13 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
                                                 {testimonial.logo}
                                             </div>
                                             <div className="flex flex-col min-w-0">
-                                                <h3 className="text-lg md:text-xl">{testimonial.name}</h3>
-                                                <p className="text-white/50 text-sm md:text-base truncate">{testimonial.title}, {testimonial.company}</p>
+                                                <h3 className="text-lg md:text-md">{testimonial.name}</h3>
+                                                <p className="text-white/50 font-mono text-sm md:text-sm lg:text-sm truncate">{testimonial.title}, {testimonial.company}</p>
                                             </div>
                                         </div>
-                                        <p className="text-dark-foreground text-base md:text-lg font-normal leading-relaxed">{testimonial.text}</p>
+                                        <p className="text-dark-foreground text-base md:text-base font-normal leading-relaxed">{testimonial.text}</p>
                                     </div>
-                                </AnimatedCard>
+                                </CornerCard>
                             </div>
                         ))}
                     </div>

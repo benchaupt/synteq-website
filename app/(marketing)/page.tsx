@@ -6,6 +6,7 @@ import ServicesSection from "@/app/(marketing)/_components/services-section";
 import { SelectHardware } from "@/app/(marketing)/hardware/_components/select-hardware";
 import { AnimatedButton } from "@/app/_components/animated-button";
 import { AnimatedCard } from "@/app/_components/animated-card";
+import { CornerCard } from "@/app/_components/corner-card";
 import CallToActionNew from "@/app/_components/call-to-action-new";
 import { Marquee } from "@/app/_components/marquee";
 import { ScrollRevealText } from "@/app/_components/scroll-reveal-text";
@@ -22,7 +23,7 @@ export default function Landing() {
       <EffortlessSection />
 
       <div className="px-5 max-w-viewport w-full mx-auto flex flex-col gap-6 md:gap-10">
-        <div className="py-12 md:py-16 lg:py-24 flex flex-col gap-8 md:gap-12">
+        <div className="py-12 md:py-16 lg:py-24 flex flex-col gap-8 md:gap-8">
           <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 lg:gap-16">
             {[...Array(5)].map((_, index) => (
               <svg className="h-5 md:h-7" viewBox="0 0 200 37" fill="none" xmlns="http://www.w3.org/2000/svg" key={index}>
@@ -43,38 +44,37 @@ export default function Landing() {
             ))}
           </div>
           <div className="flex items-center justify-center px-4">
-            <p className="uppercase font-mono text-xs md:text-sm text-center">SYNTEQ AI POWERS THE BEST AI TEAMS. <Link href="#" className="uppercase text-accent underline-offset-4 underline hover:underline-offset-6 duration-150">Meet our customers ↘</Link>.</p>
+            <p className="subheading text-center">SYNTEQ AI POWERS THE BEST AI TEAMS. <Link href="#" className="subheading underline-offset-4 underline hover:underline-offset-6 duration-150">Meet our customers ↘</Link>.</p>
           </div>
         </div>
 
-        {/* open model foundary */}
         <div className="flex flex-col">
           <div className="flex flex-col lg:flex-row gap-6 md:gap-10 pb-6 md:pb-10 items-start lg:items-center justify-between">
             <div className="flex flex-col gap-3 md:gap-4 items-start justify-center shrink-0">
               <div className="relative">
-                <p className="font-mono text-xs md:text-sm text-accent uppercase tracking-tight">Build with open models</p>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl max-w-[10ch] tracking-tight leading-none">Our Model Foundry</h2>
+                <h2 className="heading max-w-[10ch]">Our Model Foundry</h2>
               </div>
-              <p className="text-base md:text-lg lg:text-xl max-w-xl text-dark-foreground">Launch, run, and scale AI models in minutes, without the cloud confusion, GPU expertise. Easy as a single click.</p>
             </div>
 
-            <div className="grid gap-4 w-full">
-              <Marquee pauseOnHover className="[--duration:30s]">
+            <div className="relative grid gap-4 w-full">
+              <div className="absolute top-0 left-0 w-[25px] sm:w-[200px] h-full bg-linear-to-r from-background to-transparent pointer-events-none z-10" />
+              <div className="absolute top-0 right-0 w-[25px] sm:w-[200px] h-full bg-linear-to-l from-background to-transparent pointer-events-none z-10" />
+              <Marquee pauseOnHover disableGradient className="[--duration:30s]">
                 {[
                   { name: "Kimi-K2-Thinking", logo: <svg className="h-10 w-12" viewBox="0 0 47 41" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M31.5852 5.59068L27.6501 14.3371C27.3086 15.0964 26.8132 15.7777 26.1953 16.3385C25.5774 16.8992 24.8497 17.3276 24.058 17.5966H27.3438V17.6118C28.8514 17.7213 30.2613 18.3942 31.2905 19.495C32.3197 20.5959 32.8917 22.0433 32.8915 23.5463V36.5789H26.9076V20.8556C26.532 21.6592 25.9333 22.3395 25.1819 22.8161C24.4305 23.2928 23.5575 23.5463 22.6662 23.5463H12.1148V36.5789H6.13086V5.64321H12.1131V17.5979H19.6001L24.8959 5.59068H31.5852Z" fill="currentColor" /><path d="M37.0945 4.3152C37.8321 4.24602 38.556 4.32146 39.2271 4.67814C40.1084 5.14704 40.6219 5.86183 40.7888 6.84879C40.9218 7.63588 40.8969 8.40456 40.6728 9.16705C40.2754 10.5169 39.2996 11.2165 37.9621 11.3933C36.852 11.5409 35.7263 11.5593 34.6069 11.6347C34.5203 11.6408 34.4321 11.6347 34.3316 11.6347C34.5836 11.3134 34.8049 11.0199 35.0383 10.7356C35.1466 10.6018 35.137 10.4999 35.0319 10.36C34.0192 9.03641 33.9235 7.56678 34.5064 6.0756C34.9439 4.95337 35.9117 4.42748 37.0945 4.3152Z" fill="currentColor" /></svg> },
                   { name: "Qwen3 235B A22B Instruct 2507", logo: <svg className="h-10 w-12" viewBox="0 0 47 41" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M31.5852 5.59068L27.6501 14.3371C27.3086 15.0964 26.8132 15.7777 26.1953 16.3385C25.5774 16.8992 24.8497 17.3276 24.058 17.5966H27.3438V17.6118C28.8514 17.7213 30.2613 18.3942 31.2905 19.495C32.3197 20.5959 32.8917 22.0433 32.8915 23.5463V36.5789H26.9076V20.8556C26.532 21.6592 25.9333 22.3395 25.1819 22.8161C24.4305 23.2928 23.5575 23.5463 22.6662 23.5463H12.1148V36.5789H6.13086V5.64321H12.1131V17.5979H19.6001L24.8959 5.59068H31.5852Z" fill="currentColor" /><path d="M37.0945 4.3152C37.8321 4.24602 38.556 4.32146 39.2271 4.67814C40.1084 5.14704 40.6219 5.86183 40.7888 6.84879C40.9218 7.63588 40.8969 8.40456 40.6728 9.16705C40.2754 10.5169 39.2996 11.2165 37.9621 11.3933C36.852 11.5409 35.7263 11.5593 34.6069 11.6347C34.5203 11.6408 34.4321 11.6347 34.3316 11.6347C34.5836 11.3134 34.8049 11.0199 35.0383 10.7356C35.1466 10.6018 35.137 10.4999 35.0319 10.36C34.0192 9.03641 33.9235 7.56678 34.5064 6.0756C34.9439 4.95337 35.9117 4.42748 37.0945 4.3152Z" fill="currentColor" /></svg> },
                   { name: "DeepSeek R1 0528", logo: <svg className="h-10 w-12" viewBox="0 0 47 41" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M31.5852 5.59068L27.6501 14.3371C27.3086 15.0964 26.8132 15.7777 26.1953 16.3385C25.5774 16.8992 24.8497 17.3276 24.058 17.5966H27.3438V17.6118C28.8514 17.7213 30.2613 18.3942 31.2905 19.495C32.3197 20.5959 32.8917 22.0433 32.8915 23.5463V36.5789H26.9076V20.8556C26.532 21.6592 25.9333 22.3395 25.1819 22.8161C24.4305 23.2928 23.5575 23.5463 22.6662 23.5463H12.1148V36.5789H6.13086V5.64321H12.1131V17.5979H19.6001L24.8959 5.59068H31.5852Z" fill="currentColor" /><path d="M37.0945 4.3152C37.8321 4.24602 38.556 4.32146 39.2271 4.67814C40.1084 5.14704 40.6219 5.86183 40.7888 6.84879C40.9218 7.63588 40.8969 8.40456 40.6728 9.16705C40.2754 10.5169 39.2996 11.2165 37.9621 11.3933C36.852 11.5409 35.7263 11.5593 34.6069 11.6347C34.5203 11.6408 34.4321 11.6347 34.3316 11.6347C34.5836 11.3134 34.8049 11.0199 35.0383 10.7356C35.1466 10.6018 35.137 10.4999 35.0319 10.36C34.0192 9.03641 33.9235 7.56678 34.5064 6.0756C34.9439 4.95337 35.9117 4.42748 37.0945 4.3152Z" fill="currentColor" /></svg> },
                   { name: "gpt-oss-20b", logo: <svg className="h-10 w-12" viewBox="0 0 47 41" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M31.5852 5.59068L27.6501 14.3371C27.3086 15.0964 26.8132 15.7777 26.1953 16.3385C25.5774 16.8992 24.8497 17.3276 24.058 17.5966H27.3438V17.6118C28.8514 17.7213 30.2613 18.3942 31.2905 19.495C32.3197 20.5959 32.8917 22.0433 32.8915 23.5463V36.5789H26.9076V20.8556C26.532 21.6592 25.9333 22.3395 25.1819 22.8161C24.4305 23.2928 23.5575 23.5463 22.6662 23.5463H12.1148V36.5789H6.13086V5.64321H12.1131V17.5979H19.6001L24.8959 5.59068H31.5852Z" fill="currentColor" /><path d="M37.0945 4.3152C37.8321 4.24602 38.556 4.32146 39.2271 4.67814C40.1084 5.14704 40.6219 5.86183 40.7888 6.84879C40.9218 7.63588 40.8969 8.40456 40.6728 9.16705C40.2754 10.5169 39.2996 11.2165 37.9621 11.3933C36.852 11.5409 35.7263 11.5593 34.6069 11.6347C34.5203 11.6408 34.4321 11.6347 34.3316 11.6347C34.5836 11.3134 34.8049 11.0199 35.0383 10.7356C35.1466 10.6018 35.137 10.4999 35.0319 10.36C34.0192 9.03641 33.9235 7.56678 34.5064 6.0756C34.9439 4.95337 35.9117 4.42748 37.0945 4.3152Z" fill="currentColor" /></svg> },
                 ].map((model, index) => (
-                  <AnimatedCard key={index} className="mx-6 shrink-0 flex flex-row gap-4 items-center md:p-4 md:px-4 p-4 px-4">
+                  <AnimatedCard key={index} className="mx-6 shrink-0 flex flex-row gap-4 items-center md:p-4 md:px-6 p-4 px-4">
                     <div className="text-white">{model.logo}</div>
-                    <p className="text-2xl tracking-tight max-w-[15ch]">{model.name}</p>
+                    <p className="text-lg tracking-tight max-w-[15ch]">{model.name}</p>
                   </AnimatedCard>
                 ))}
               </Marquee>
               <div className="flex items-center justify-center">
                 <p className="font-mono text-sm text-accent uppercase tracking-tight text-center">
-                  Inference-first infrastructure ◦ 255+ production-ready models ◦ Transparent pricing
+                build, and scale AI models in minutes, without the cloud confusion, GPU expertise. Easy as a single click.
                 </p>
               </div>
             </div>
@@ -84,7 +84,7 @@ export default function Landing() {
 
       <div className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24 lg:py-32 flex flex-col">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-12 lg:gap-16">
-          <AnimatedCard className="flex flex-col gap-8 md:gap-12 lg:gap-16">
+          <CornerCard className="flex flex-col gap-8 md:gap-12 lg:gap-16">
             <img src="/assets/landing/icon-cost.svg" alt="" className="size-8 md:size-10 lg:size-11" />
             <p className="text-2xl md:text-3xl lg:text-4xl leading-tight tracking-tight font-normal">
               <span>
@@ -92,9 +92,9 @@ export default function Landing() {
                 <span className="text-white/75">of both the public cloud and traditional on-prem</span>
               </span>
             </p>
-          </AnimatedCard>
+          </CornerCard>
 
-          <AnimatedCard className="flex flex-col gap-8 md:gap-12 lg:gap-16">
+          <CornerCard className="flex flex-col gap-8 md:gap-12 lg:gap-16">
             <img src="/assets/landing/icon-scalability.svg" alt="" className="size-8 md:size-10 lg:size-11" />
             <p className="text-2xl md:text-3xl lg:text-4xl leading-tight tracking-tight font-normal">
               <span>
@@ -102,9 +102,9 @@ export default function Landing() {
                 <span className="text-white/75">to meet growing business demands</span>
               </span>
             </p>
-          </AnimatedCard>
+          </CornerCard>
 
-          <AnimatedCard className="flex flex-col gap-8 md:gap-12 lg:gap-16">
+          <CornerCard className="flex flex-col gap-8 md:gap-12 lg:gap-16">
             <img src="/assets/landing/icon-security.svg" alt="" className="size-8 md:size-10 lg:size-11" />
             <p className="text-2xl md:text-3xl lg:text-4xl leading-tight tracking-tight font-normal">
               <span>
@@ -112,17 +112,17 @@ export default function Landing() {
                 <span className="text-accent"> end-to-end encryption</span>
               </span>
             </p>
-          </AnimatedCard>
+          </CornerCard>
         </div>
       </div>
 
-      <div className="max-w-viewport w-full mx-auto px-5 flex items-center justify-center">
+      <section className="max-w-viewport w-[70%] mx-auto px-5 py-24 md:py-32 lg:py-48 flex flex-col items-center">
         <ScrollRevealText
-          text={`Synteq AI gives you production-ready AI environments without forcing you to become an infrastructure expert. No cloud gymnastics. No GPU babysitting. No "DevOps first, product later" workflow.`}
-          className="py-24 md:py-32 lg:py-48 text-center"
-          textClassName="font-sequel-book"
+          text="We build the infrastructure that powers the next generation of AI—reliable, scalable, and ready when you need it."
+          className="text-center"
+          textClassName=""
         />
-      </div>
+      </section>
 
       <ServicesSection />
       <ResilienceSection />
@@ -258,12 +258,12 @@ export default function Landing() {
       />
       <div>
         <div className="max-w-viewport w-full mx-auto px-5 flex flex-col md:flex-row gap-6 md:gap-8 items-start md:items-end justify-between">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl max-w-3xl font-sequel-book">Only the best AI hardware</h2>
+          <h2 className="heading">Only the best AI hardware</h2>
           <AnimatedButton background="dark" className="hover:bg-background-secondary shrink-0">
             Talk To Sales
           </AnimatedButton>
         </div>
-        <SelectHardware className="sm:py-16 sm:pt-16" hideOverview />
+        <SelectHardware className="sm:py-8 sm:pt-8" hideOverview />
       </div>
       <Blog />
       <CallToActionNew />

@@ -3,7 +3,7 @@
   "main": ".open-next/worker.js",
   "name": "synteqai",
   "compatibility_date": "2025-10-25",
-  "account_id": "f16ad8d62a3f9e3d012bd675c51a615f", // BerryByte Limited
+  "account_id": "23a32db33bd1c2709edcdddbe1c00ef7", // BerryByte Limited
   "compatibility_flags": [
     // Enable Node.js API
     // see https://developers.cloudflare.com/workers/configuration/compatibility-flags/#nodejs-compatibility-flag
@@ -26,8 +26,8 @@
   "hyperdrive": [
     {
       "binding": "HYPERDRIVE",
-      "id": "38a667abff98469d8d82aa8e42ee201b"
-      // USE: CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE environment variable
+      "id": "743851ac32b7469595c45e932a295a0e",
+      "localConnectionString": "postgresql://neondb_owner:npg_CU8GS3fVtvnF@ep-misty-meadow-ah38yb0o-pooler.c-3.us-east-1.aws.neon.tech/neondb?sslmode=require"
     }
   ],
   "r2_buckets": [

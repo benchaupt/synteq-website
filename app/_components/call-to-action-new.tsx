@@ -177,19 +177,19 @@ export default function CallToActionNew() {
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-background font-sequel-book">
             Built for AI at scale
           </h2>
-          <p className="text-base md:text-lg text-background/80 max-w-xl">
+          <p className="text-base md:text-base lg:text-base text-background/80 max-w-xl">
             From first experiment to multi-node training runs, choose the right mix of shared cloud, dedicated nodes, and bare metal for your workload.
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center gap-3 md:gap-4 lg:gap-6 mt-2 md:mt-4 w-full sm:w-auto">
             <Link href="/cloud">
-              <AnimatedButton className="px-5 md:px-6 py-2.5 md:py-3 bg-background text-accent font-medium hover:bg-background/90 transition-colors text-sm md:text-base w-full sm:w-auto">
+              <AnimatedButton className="px-5 md:px-6 py-2.5 md:py-3 bg-background text-accent font-medium hover:bg-background/90 transition-colors w-full sm:w-auto">
                 Start building with AI
               </AnimatedButton>
             </Link>
             <Link href="/contact">
-              <AnimatedButton className="px-5 md:px-6 py-2.5 md:py-3 text-background/80 font-medium hover:text-background transition-colors text-sm md:text-base w-full sm:w-auto">
+              <AnimatedButton className="px-5 md:px-6 py-2.5 md:py-3 text-background/80 font-medium hover:text-background transition-colors text-sm w-full sm:w-auto">
                 Chat with Sales
               </AnimatedButton>
             </Link>

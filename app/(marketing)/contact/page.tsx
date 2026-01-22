@@ -2,8 +2,8 @@
  
 
 import { AnimatedButton } from "@/app/_components/animated-button";
+import { SliderTabs } from "@/app/_components/slider-tabs";
 import { TestimonialCarousel } from "@/app/_components/testimonial-carousel";
-import { cn } from "@/lib/utils";
 import * as Select from "@radix-ui/react-select";
 import { useState } from "react";
 
@@ -56,15 +56,24 @@ const ChevronDownIcon = () => (
 
 // LinkedIn Icon
 const LinkedInIcon = () => (
-    <svg className="size-8" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M25.8333 3.875H5.16667C4.45312 3.875 3.875 4.45312 3.875 5.16667V25.8333C3.875 26.5469 4.45312 27.125 5.16667 27.125H25.8333C26.5469 27.125 27.125 26.5469 27.125 25.8333V5.16667C27.125 4.45312 26.5469 3.875 25.8333 3.875ZM11.2917 23.25H7.75V12.5417H11.2917V23.25ZM9.52083 10.9167C8.38021 10.9167 7.45833 9.99479 7.45833 8.85417C7.45833 7.71354 8.38021 6.79167 9.52083 6.79167C10.6615 6.79167 11.5833 7.71354 11.5833 8.85417C11.5833 9.99479 10.6615 10.9167 9.52083 10.9167ZM23.5417 23.25H20V18.0417C20 16.7083 19.9792 15.0208 18.1667 15.0208C16.3333 15.0208 16.0417 16.4479 16.0417 17.9375V23.25H12.5V12.5417H15.8958V14.0833H15.9375C16.4062 13.2083 17.5417 12.2708 19.2292 12.2708C22.8125 12.2708 23.5417 14.6354 23.5417 17.7083V23.25Z" fill="white" />
+    <svg className="size-6" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3.83398 16.458H0.291992V5.75H3.83398V16.458Z" fill="currentColor"/>
+        <path d="M11.7715 5.47852C15.3544 5.47864 16.0839 7.84334 16.084 10.916V16.458H12.542V11.25C12.542 9.91667 12.5212 8.2287 10.709 8.22852C8.87558 8.22852 8.58398 9.65591 8.58398 11.1455V16.458H5.04199V5.75H8.4375V7.29102H8.47949C8.94827 6.41608 10.0841 5.47852 11.7715 5.47852Z" fill="currentColor"/>
+        <path d="M2.0625 0C3.20317 0 4.125 0.92187 4.125 2.0625C4.12483 3.20297 3.20306 4.125 2.0625 4.125C0.922136 4.12483 0.000173621 3.20286 0 2.0625C0 0.921977 0.922029 0.000173689 2.0625 0Z" fill="currentColor"/>
     </svg>
 );
 
 // X (Twitter) Icon
 const XIcon = () => (
-    <svg className="size-8" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M18.9014 14.3251L28.3464 3.875H26.0914L17.9264 12.9501L11.4264 3.875H3.875L13.7964 17.5551L3.875 28.5625H6.13L14.7714 18.9301L21.6364 28.5625H29.1875L18.9014 14.3251ZM15.8764 17.6801L14.8914 16.3151L6.91641 5.46H10.3714L16.7514 14.2501L17.7364 15.6151L26.0914 27.0375H22.6364L15.8764 17.6801Z" fill="white" />
+    <svg className="size-6" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18.9014 14.3251L28.3464 3.875H26.0914L17.9264 12.9501L11.4264 3.875H3.875L13.7964 17.5551L3.875 28.5625H6.13L14.7714 18.9301L21.6364 28.5625H29.1875L18.9014 14.3251ZM15.8764 17.6801L14.8914 16.3151L6.91641 5.46H10.3714L16.7514 14.2501L17.7364 15.6151L26.0914 27.0375H22.6364L15.8764 17.6801Z" fill="currentColor" />
+    </svg>
+);
+
+// Discord Icon
+const DiscordIcon = () => (
+    <svg className="size-6" viewBox="0 0 259 187" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M94.2275 0.00195312L96.4453 2.66895C56.5374 14.2176 38.1348 31.7695 38.1348 31.7695C38.1606 31.7554 43.0333 29.0937 51.2139 25.3271C74.9378 14.8856 93.7848 11.9987 101.545 11.332C102.874 11.1088 103.984 10.8877 105.314 10.8877C120.172 8.94842 135.209 8.79962 150.102 10.4443C171.163 12.8877 193.779 19.1078 216.836 31.7695C216.836 31.7695 199.321 15.1093 161.629 3.55762L164.733 0.00390625C164.856 0.00130452 195.172 -0.615507 227.034 23.3291C227.097 23.443 258.963 81.3779 258.963 152.838C258.928 152.898 240.07 185.05 191.117 186.604V186.604C191.089 186.571 183.124 177.036 176.483 168.609C205.469 160.406 216.569 142.249 216.614 142.175C207.524 148.173 198.877 152.395 191.117 155.28C180.032 159.947 169.389 163.055 158.969 164.833C137.683 168.831 118.173 167.721 101.545 164.611C88.9062 162.166 78.0423 158.613 68.9531 155.06C63.8531 153.06 58.3107 150.616 52.7666 147.506C52.1028 147.061 51.4368 146.839 50.7715 146.395C50.3291 146.173 50.106 145.951 49.8848 145.729C45.9056 143.514 43.6893 141.962 43.6768 141.953C43.7042 141.999 54.3559 159.736 82.4766 168.165C75.8261 176.608 67.6221 186.604 67.6221 186.604C18.6733 185.05 0.0388291 152.905 0 152.838C3.56765e-05 81.3584 31.8814 23.4095 31.9268 23.3271C63.8145 -0.635227 94.1539 0.000374108 94.2275 0.00195312ZM88.0195 82.8623C75.3823 82.8624 65.4063 93.9695 65.4062 107.52C65.4063 121.071 75.6036 132.178 88.0195 132.178C100.658 132.178 110.635 121.071 110.635 107.52C110.858 93.9694 100.657 82.8623 88.0195 82.8623ZM168.946 82.8623C156.308 82.8624 146.33 93.9695 146.33 107.52C146.33 121.071 156.53 132.178 168.946 132.178C181.584 132.178 191.56 121.071 191.56 107.52C191.56 93.9694 181.584 82.8623 168.946 82.8623Z" fill="currentColor"/>
     </svg>
 );
 
@@ -87,18 +96,10 @@ const DelvLogo = () => (
     </svg>
 );
 
-type ProductStack = "GPU_CLOUD" | "GPU_METAL" | "UNSURE";
+const productOptions = ["GPU Cloud", "GPU Metal", "Unsure"];
 
 export default function Contact() {
-    const [selectedProducts, setSelectedProducts] = useState<ProductStack[]>([]);
-
-    const toggleProduct = (product: ProductStack) => {
-        setSelectedProducts((prev) =>
-            prev.includes(product)
-                ? prev.filter((p) => p !== product)
-                : [...prev, product]
-        );
-    };
+    const [selectedProduct, setSelectedProduct] = useState(productOptions[0]);
 
     const testimonials = [
         {
@@ -140,20 +141,20 @@ export default function Contact() {
                     {/* Left - Hero Content */}
                     <div className="flex flex-col gap-8">
                         <div className="flex flex-col gap-4">
-                            <p className="font-mono text-accent text-sm tracking-tight uppercase">
-                                CONTACT SALES
+                            <p className="subheading">
+                                Contact Sales
                             </p>
-                            <h1 className="text-5xl lg:text-6xl leading-none tracking-tight max-w-md">
+                            <h1 className="title max-w-lg">
                                 Ready to build? Chat with us.
                             </h1>
                         </div>
 
-                        <p className="text-base text-[#bfbfbf] max-w-lg leading-relaxed">
+                        <p className="text-base text-[#bfbfbf] max-w-xl leading-relaxed">
                             Launch, run, and scale AI models in minutes, without the cloud confusion, GPU expertise, or unpredictable costs. As easy as a single click.
                         </p>
 
                         <div className="flex flex-col gap-2 mt-8">
-                            <p className="text-base text-white/50">
+                            <p className="font-mono text-sm md:text-sm lg:text-sm text-white/50">
                                 Prefer to start the conversation over email?
                             </p>
                             <a href="mailto:hello@synteq.ai" className="text-2xl text-white hover:text-accent transition-colors">
@@ -168,163 +169,157 @@ export default function Contact() {
                             <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-accent transition-colors">
                                 <XIcon />
                             </a>
+                            <a href="https://discord.gg" target="_blank" rel="noopener noreferrer" className="text-white hover:text-accent transition-colors">
+                                <DiscordIcon />
+                            </a>
                         </div>
                     </div>
 
                     {/* Right - Contact Form */}
-                    <div className="flex flex-col gap-6">
-                        {/* Name Fields */}
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="flex items-center gap-3 bg-background-secondary border border-white/10 px-4 py-3">
-                                <PersonIcon />
-                                <input
-                                    type="text"
-                                    placeholder="First Name"
-                                    className="bg-transparent w-full text-white placeholder:text-white/50 outline-none"
+                    <div className="bg-background-secondary rounded-lg p-8">
+                        <div className="flex flex-col gap-6">
+                            {/* Name Fields */}
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="flex items-center gap-3 bg-background rounded-md px-4 py-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.8),inset_0_0_0_2px_rgba(255,255,255,0.05)]">
+                                    <PersonIcon />
+                                    <input
+                                        type="text"
+                                        placeholder="First Name"
+                                        className="bg-transparent w-full text-white placeholder:text-white/50 outline-none"
+                                    />
+                                </div>
+                                <div className="flex items-center gap-3 bg-background rounded-md px-4 py-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.8),inset_0_0_0_2px_rgba(255,255,255,0.05)]">
+                                    <PersonIcon />
+                                    <input
+                                        type="text"
+                                        placeholder="Last Name"
+                                        className="bg-transparent w-full text-white placeholder:text-white/50 outline-none"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Company & Email Fields */}
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="flex items-center gap-3 bg-background rounded-md px-4 py-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.8),inset_0_0_0_2px_rgba(255,255,255,0.05)]">
+                                    <BuildingIcon />
+                                    <input
+                                        type="text"
+                                        placeholder="Company"
+                                        className="bg-transparent w-full text-white placeholder:text-white/50 outline-none"
+                                    />
+                                </div>
+                                <div className="flex items-center gap-3 bg-background rounded-md px-4 py-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.8),inset_0_0_0_2px_rgba(255,255,255,0.05)]">
+                                    <MailIcon />
+                                    <input
+                                        type="email"
+                                        placeholder="Email Address"
+                                        className="bg-transparent w-full text-white placeholder:text-white/50 outline-none"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Product Stack Selection */}
+                            <div className="flex flex-col gap-3">
+                                <p className="text-white text-sm">What product stack are you interested in?</p>
+                                <SliderTabs
+                                    items={productOptions}
+                                    activeItem={selectedProduct}
+                                    onItemChange={setSelectedProduct}
                                 />
                             </div>
-                            <div className="flex items-center gap-3 bg-background-secondary border border-white/10 px-4 py-3">
-                                <PersonIcon />
-                                <input
-                                    type="text"
-                                    placeholder="Last Name"
-                                    className="bg-transparent w-full text-white placeholder:text-white/50 outline-none"
+
+                            {/* Dropdowns */}
+                            <div className="grid grid-cols-2 gap-4">
+                                {/* Project Budget Select */}
+                                <Select.Root>
+                                    <Select.Trigger className="flex items-center justify-between gap-3 bg-background rounded-md px-4 py-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.8),inset_0_0_0_2px_rgba(255,255,255,0.05)] outline-none data-placeholder:text-white/50 text-white cursor-pointer group">
+                                        <div className="flex items-center gap-3">
+                                            <DollarIcon />
+                                            <Select.Value placeholder="Project Budget" />
+                                        </div>
+                                        <Select.Icon className="transition-transform duration-200 group-data-[state=open]:rotate-180">
+                                            <ChevronDownIcon />
+                                        </Select.Icon>
+                                    </Select.Trigger>
+                                    <Select.Portal>
+                                        <Select.Content
+                                            className="bg-background-secondary rounded-md overflow-hidden z-50 shadow-[0_0_0_1px_rgba(0,0,0,0.8),0_0_0_2px_rgba(255,255,255,0.05)]"
+                                            position="popper"
+                                            sideOffset={4}
+                                        >
+                                            <Select.Viewport className="p-1">
+                                                {[
+                                                    { value: "<10k", label: "<$10k" },
+                                                    { value: "10k-50k", label: "$10k - $50k" },
+                                                    { value: "50k-100k", label: "$50k - $100k" },
+                                                    { value: "100k+", label: "$100k+" },
+                                                ].map((option) => (
+                                                    <Select.Item
+                                                        key={option.value}
+                                                        value={option.value}
+                                                        className="px-4 py-2 text-white/70 rounded outline-none cursor-pointer hover:bg-white/10 hover:text-white data-highlighted:bg-white/10 data-highlighted:text-white transition-colors"
+                                                    >
+                                                        <Select.ItemText>{option.label}</Select.ItemText>
+                                                    </Select.Item>
+                                                ))}
+                                            </Select.Viewport>
+                                        </Select.Content>
+                                    </Select.Portal>
+                                </Select.Root>
+
+                                {/* Team Size Select */}
+                                <Select.Root>
+                                    <Select.Trigger className="flex items-center justify-between gap-3 bg-background rounded-md px-4 py-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.8),inset_0_0_0_2px_rgba(255,255,255,0.05)] outline-none data-placeholder:text-white/50 text-white cursor-pointer group">
+                                        <div className="flex items-center gap-3">
+                                            <UsersIcon />
+                                            <Select.Value placeholder="Team Size" />
+                                        </div>
+                                        <Select.Icon className="transition-transform duration-200 group-data-[state=open]:rotate-180">
+                                            <ChevronDownIcon />
+                                        </Select.Icon>
+                                    </Select.Trigger>
+                                    <Select.Portal>
+                                        <Select.Content
+                                            className="bg-background-secondary rounded-md overflow-hidden z-50 shadow-[0_0_0_1px_rgba(0,0,0,0.8),0_0_0_2px_rgba(255,255,255,0.05)]"
+                                            position="popper"
+                                            sideOffset={4}
+                                        >
+                                            <Select.Viewport className="p-1">
+                                                {[
+                                                    { value: "1-10", label: "1-10" },
+                                                    { value: "11-50", label: "11-50" },
+                                                    { value: "51-200", label: "51-200" },
+                                                    { value: "200+", label: "200+" },
+                                                ].map((option) => (
+                                                    <Select.Item
+                                                        key={option.value}
+                                                        value={option.value}
+                                                        className="px-4 py-2 text-white/70 rounded outline-none cursor-pointer hover:bg-white/10 hover:text-white data-highlighted:bg-white/10 data-highlighted:text-white transition-colors"
+                                                    >
+                                                        <Select.ItemText>{option.label}</Select.ItemText>
+                                                    </Select.Item>
+                                                ))}
+                                            </Select.Viewport>
+                                        </Select.Content>
+                                    </Select.Portal>
+                                </Select.Root>
+                            </div>
+
+                            {/* Textarea */}
+                            <div className="flex flex-col gap-2">
+                                <textarea
+                                    placeholder="Tell us what you're working on"
+                                    rows={5}
+                                    className="bg-background rounded-md px-4 py-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.8),inset_0_0_0_2px_rgba(255,255,255,0.05)] text-white placeholder:text-white/50 outline-none resize-none"
                                 />
                             </div>
-                        </div>
 
-                        {/* Company & Email Fields */}
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="flex items-center gap-3 bg-background-secondary border border-white/10 px-4 py-3">
-                                <BuildingIcon />
-                                <input
-                                    type="text"
-                                    placeholder="Company"
-                                    className="bg-transparent w-full text-white placeholder:text-white/50 outline-none"
-                                />
+                            {/* Submit Button */}
+                            <div className="flex justify-end">
+                                <AnimatedButton background="dark" size="wide">
+                                    Submit
+                                </AnimatedButton>
                             </div>
-                            <div className="flex items-center gap-3 bg-background-secondary border border-white/10 px-4 py-3">
-                                <MailIcon />
-                                <input
-                                    type="email"
-                                    placeholder="Email Address"
-                                    className="bg-transparent w-full text-white placeholder:text-white/50 outline-none"
-                                />
-                            </div>
-                        </div>
-
-                        {/* Product Stack Selection */}
-                        <div className="flex flex-col gap-3">
-                            <p className="text-white text-sm">What product stack are you interested in?</p>
-                            <div className="flex gap-2 min-h-[40px] items-start">
-                                {(["GPU_CLOUD", "GPU_METAL", "UNSURE"] as const).map((product) => (
-                                    <button
-                                        key={product}
-                                        onClick={() => toggleProduct(product)}
-                                        className={cn(
-                                            "px-4 py-2 text-sm font-mono uppercase tracking-tight transition-colors",
-                                            selectedProducts.includes(product)
-                                                ? "bg-accent text-background"
-                                                : "bg-background-secondary text-white/70 border border-white/10 hover:border-white/25"
-                                        )}
-                                    >
-                                        {product.replace("_", " ")}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Dropdowns */}
-                        <div className="grid grid-cols-2 gap-4">
-                            {/* Project Budget Select */}
-                            <Select.Root>
-                                <Select.Trigger className="flex items-center justify-between gap-3 bg-background-secondary border border-white/10 px-4 py-3 outline-none data-placeholder:text-white/50 text-white cursor-pointer group">
-                                    <div className="flex items-center gap-3">
-                                        <DollarIcon />
-                                        <Select.Value placeholder="Project Budget" />
-                                    </div>
-                                    <Select.Icon className="transition-transform duration-200 group-data-[state=open]:rotate-180">
-                                        <ChevronDownIcon />
-                                    </Select.Icon>
-                                </Select.Trigger>
-                                <Select.Portal>
-                                    <Select.Content
-                                        className="bg-background-secondary border border-white/10 overflow-hidden z-50"
-                                        position="popper"
-                                        sideOffset={4}
-                                    >
-                                        <Select.Viewport className="p-1">
-                                            {[
-                                                { value: "<10k", label: "<$10k" },
-                                                { value: "10k-50k", label: "$10k - $50k" },
-                                                { value: "50k-100k", label: "$50k - $100k" },
-                                                { value: "100k+", label: "$100k+" },
-                                            ].map((option) => (
-                                                <Select.Item
-                                                    key={option.value}
-                                                    value={option.value}
-                                                    className="px-4 py-2 text-white/70 outline-none cursor-pointer hover:bg-white/10 hover:text-white data-highlighted:bg-white/10 data-highlighted:text-white transition-colors"
-                                                >
-                                                    <Select.ItemText>{option.label}</Select.ItemText>
-                                                </Select.Item>
-                                            ))}
-                                        </Select.Viewport>
-                                    </Select.Content>
-                                </Select.Portal>
-                            </Select.Root>
-
-                            {/* Team Size Select */}
-                            <Select.Root>
-                                <Select.Trigger className="flex items-center justify-between gap-3 bg-background-secondary border border-white/10 px-4 py-3 outline-none data-placeholder:text-white/50 text-white cursor-pointer group">
-                                    <div className="flex items-center gap-3">
-                                        <UsersIcon />
-                                        <Select.Value placeholder="Team Size" />
-                                    </div>
-                                    <Select.Icon className="transition-transform duration-200 group-data-[state=open]:rotate-180">
-                                        <ChevronDownIcon />
-                                    </Select.Icon>
-                                </Select.Trigger>
-                                <Select.Portal>
-                                    <Select.Content
-                                        className="bg-background-secondary border border-white/10 overflow-hidden z-50"
-                                        position="popper"
-                                        sideOffset={4}
-                                    >
-                                        <Select.Viewport className="p-1">
-                                            {[
-                                                { value: "1-10", label: "1-10" },
-                                                { value: "11-50", label: "11-50" },
-                                                { value: "51-200", label: "51-200" },
-                                                { value: "200+", label: "200+" },
-                                            ].map((option) => (
-                                                <Select.Item
-                                                    key={option.value}
-                                                    value={option.value}
-                                                    className="px-4 py-2 text-white/70 outline-none cursor-pointer hover:bg-white/10 hover:text-white data-highlighted:bg-white/10 data-highlighted:text-white transition-colors"
-                                                >
-                                                    <Select.ItemText>{option.label}</Select.ItemText>
-                                                </Select.Item>
-                                            ))}
-                                        </Select.Viewport>
-                                    </Select.Content>
-                                </Select.Portal>
-                            </Select.Root>
-                        </div>
-
-                        {/* Textarea */}
-                        <div className="flex flex-col gap-2">
-                            <textarea
-                                placeholder="Tell us what you're working on"
-                                rows={5}
-                                className="bg-background-secondary border border-white/10 px-4 py-3 text-white placeholder:text-white/50 outline-none resize-none"
-                            />
-                        </div>
-
-                        {/* Submit Button */}
-                        <div className="flex justify-end">
-                            <AnimatedButton background="dark" size="wide">
-                                Submit
-                            </AnimatedButton>
                         </div>
                     </div>
                 </div>

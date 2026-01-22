@@ -1,41 +1,61 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { AboutStatsSection } from "@/app/(marketing)/about/_components/about-stats-section";
+import { StoryTimeline } from "@/app/(marketing)/about/_components/story-timeline";
+import { UseCasesSection } from "@/app/(marketing)/about/_components/use-cases-section";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/app/_components/accordion";
 import CallToActionNew from "@/app/_components/call-to-action-new";
+import { ScrollRevealText } from "@/app/_components/scroll-reveal-text";
 import { cn } from "@/lib/utils";
 import useEmblaCarousel from "embla-carousel-react";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 
-const timeline = [
+const storyItems = [
     {
-        year: "JANUARY 2025",
         title: "Foundation",
+        date: "2025",
         description: "Synteq AI emerged from Synteq Digital, a company formed by the union of two leading firms in the digital infrastructure space."
     },
     {
-        year: "FEBRUARY 2025",
         title: "Infrastructure Acquisition",
+        date: "Q2 2025",
         description: "Synteq Digital acquires Crunchbits, an established infrastructure provider, strengthening its HPC capabilities and accelerating growth across large-scale compute."
     },
     {
-        year: "MARCH 2025",
         title: "HPC Expansion",
+        date: "Q3 2025",
         description: "Synteq expanded into high-performance computing, delivering scalable GPU and enterprise-grade infrastructure built for modern workloads."
     },
     {
-        year: "APRIL 2025",
         title: "AI Expansion",
+        date: "Q4 2025",
         description: "With infrastructure at its core, Synteq entered the AI space, transforming proven compute foundations into AI-native products designed for real-world deployment."
     }
 ];
 
 const coreValues = [
-    { number: "01", value: "Customer-first approach" },
-    { number: "02", value: "Execution over promises" },
-    { number: "03", value: "Infrastructure-first thinking" },
-    { number: "04", value: "AI-native design" },
-    { number: "05", value: "Forward-thinking approach" }
+    {
+        title: "Trust First",
+        summary: "Built on reliability, transparency, and long-term partnership.",
+        content: "We believe trust is earned through consistent action. Every decision we make prioritizes our clients' success, from transparent pricing to reliable infrastructure that performs when it matters most."
+    },
+    {
+        title: "Execution Over Promises",
+        summary: "Results matter more than rhetoric.",
+        content: "Technology evolves quickly, and we design with that reality in mind. We continuously adapt, invest, and innovate so our clients stay ahead as workloads and demands change."
+    },
+    {
+        title: "Infrastructure-Led Thinking",
+        summary: "Strong systems enable everything that follows.",
+        content: "We start with infrastructure because everything else depends on it. By getting the foundation right, we enable our clients to build faster, scale easier, and operate with confidence."
+    },
+    {
+        title: "Forward by Design",
+        summary: "Built for what's next, not just what's now.",
+        content: "We architect our systems with tomorrow in mind. Our infrastructure anticipates the needs of next-generation AI workloads, ensuring our clients are always ready for what comes next."
+    }
 ];
 
 const leadership = [
@@ -78,7 +98,7 @@ const leadership = [
 ];
 
 export default function About() {
-    const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: "start" });
+    const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "center" });
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     useEffect(() => {
@@ -101,104 +121,116 @@ export default function About() {
     return (
         <>
             {/* Hero Section */}
-            <section className="max-w-viewport w-full mx-auto px-5 py-24 flex flex-col items-center text-center">
-                <div className="flex flex-col gap-6 max-w-4xl">
-                    <p className="font-mono text-accent text-xs uppercase tracking-widest">
-                        About Us
-                    </p>
-                    <h1 className="text-5xl md:text-6xl lg:text-7xl max-w-4xl mx-auto font-sequel-book leading-tight">
-                        Synteq is building the future of AI infrastructure
-                    </h1>
-                    <p className="text-lg md:text-xl text-white/60 leading-relaxed max-w-2xl mx-auto">
-                        We&apos;re on a mission to make AI development easy. From hardware to cloud, we provide the infrastructure that powers the next wave of AI products.
-                    </p>
+            <section className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24 flex flex-col">
+                <div className="flex lg:flex-row flex-col gap-12 lg:gap-16 items-center">
+                    {/* Left - Text Content */}
+                    <div className="flex flex-col gap-2 flex-1 min-w-0">
+                        <p className="subheading">
+                            About Us
+                        </p>
+                        <h1 className="title max-w-2xl">
+                            We&apos;re building the future of AI infrastructure
+                        </h1>
+                        <p className="text-sm md:text-base text-white/60 leading-relaxed max-w-2xl pt-4">
+                            We&apos;re on a mission to make AI development easy. From hardware to cloud, we provide the infrastructure that powers the next wave of AI products.
+                        </p>
+                    </div>
+                    {/* Right - Dither Placeholder */}
+                    <div className="w-full lg:w-auto lg:flex-1 flex items-center justify-center">
+                        <div className="w-full max-w-lg lg:max-w-xl aspect-square bg-background-secondary rounded-lg border border-white/10 flex items-center justify-center">
+                            <span className="font-mono text-xs text-white/30 uppercase tracking-wider">Dither Placeholder</span>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            {/* Timeline Section */}
-            <section className="max-w-viewport w-full mx-auto px-5 py-24 flex flex-col gap-16">
-                <div className="flex flex-col gap-4">
-                    <p className="font-mono text-accent text-xs uppercase tracking-widest">
-                        Our Story
-                    </p>
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-sequel-book">
-                        The journey so far
-                    </h2>
-                </div>
+            {/* Our Story Section */}
+            <StoryTimeline items={storyItems} />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-                    {timeline.map((item, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className="flex flex-col gap-4 border-l-2 border-accent/20 pl-6 relative group"
-                        >
-                            <div className="absolute left-0 top-0 size-2 -translate-x-1/2 bg-accent rounded-full transition-all duration-300 group-hover:scale-150" />
-                            <div className="font-mono text-accent text-sm tracking-wider">
-                                {item.year}
-                            </div>
-                            <h3 className="text-2xl font-sequel text-white group-hover:text-accent transition-colors">
-                                {item.title}
-                            </h3>
-                            <p className="text-base text-white/60 leading-relaxed">
-                                {item.description}
-                            </p>
-                        </motion.div>
-                    ))}
-                </div>
-            </section>
+
+            {/* Stats Section */}
+            <AboutStatsSection />
 
             {/* Mission Statement */}
-            <section className="max-w-viewport w-full mx-auto px-5 py-24 flex flex-col gap-12">
-                <div className="flex flex-col gap-6 max-w-5xl mx-auto text-center">
-                    <p className="font-mono text-accent text-xs uppercase tracking-widest">
-                        Our Mission
-                    </p>
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-sequel-book leading-tight">
-                        To deliver the speed and elasticity you expect from the cloud, inside a controlled, purpose-built AI environment
-                    </h2>
-                    <p className="text-lg text-white/60 leading-relaxed max-w-3xl mx-auto">
-                        We believe AI development should be effortless. That&apos;s why we&apos;re building infrastructure that gets out of your way, so you can focus on what matters: <span className="text-white">shipping great products</span>.
-                    </p>
-                </div>
+            <section className="max-w-viewport w-full mx-auto px-5 py-24 flex flex-col gap-8">
+                <p className="subheading text-center">
+                    Our Mission
+                </p>
+                <ScrollRevealText
+                    text="Our mission is to deliver dependable digital infrastructure and AI systems that turn complex compute into real-world outcomes."
+                    className="max-w-5xl mx-auto"
+                    textClassName="text-center"
+                />
             </section>
 
-            {/* Core Values */}
-            <section className="max-w-viewport w-full mx-auto px-5 py-24">
-                <div className="flex flex-col gap-8 max-w-5xl mx-auto text-center">
-                    <div className="flex flex-col gap-3">
-                        <p className="font-mono text-accent text-xs uppercase tracking-widest">
-                            Core Values
-                        </p>
-                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-sequel-book">
-                            What drives us forward
-                        </h2>
-                    </div>
 
-                    {/* Values Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {coreValues.map((item, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.5, delay: index * 0.1 }}
-                                className="border border-white/10 rounded-lg p-4 flex flex-col gap-2 hover:border-accent/30 transition-all duration-300 bg-background-secondary/30"
-                            >
-                                <span className="font-mono text-accent text-xs">
-                                    {item.number}
-                                </span>
-                                <p className="text-lg text-white/80 text-left leading-snug">
-                                    {item.value}
-                                </p>
-                            </motion.div>
-                        ))}
-                    </div>
+            {/* Core Values */}
+            <section className="max-w-viewport w-full mx-auto px-5 py-24 flex flex-col gap-12">
+                {/* Header */}
+                <div className="flex flex-col lg:flex-row justify-between lg:items-end">
+                    <h2 className="heading shrink-0">
+                        Grounded in our core values
+                    </h2>
+                    <p className="text-base text-white/60 leading-relaxed max-w-2xl">
+                        From first experiment to multi-node training runs, Synteq and Crunchbits give you a clear path to the right mix of shared cloud, dedicated nodes, and bare metal.
+                    </p>
                 </div>
+
+                <Accordion
+                    type="single"
+                    collapsible
+                    className="w-full"
+                    defaultValue="item-1"
+                >
+                    {coreValues.map((value, index) => (
+                        <AccordionItem
+                            key={index}
+                            value={`item-${index}`}
+                            // className="border-b border-white/10"
+                        >
+                            <AccordionTrigger className="py-6 group text-base [&>svg]:hidden">
+                                {/* Desktop Layout */}
+                                <div className="hidden md:grid md:grid-cols-[minmax(200px,1fr)_2fr_auto] w-full gap-8 items-center text-left">
+                                    <span className="text-lg md:text-xl text-white group-hover:text-accent transition-colors">
+                                        {value.title}
+                                    </span>
+                                    <span className="font-mono text-sm md:text-sm text-white/50 group-hover:text-white/70 transition-colors">
+                                        {value.summary}
+                                    </span>
+                                    <div className="size-6 flex items-center justify-center text-white/50 group-hover:text-accent transition-all duration-200 group-data-[state=open]:rotate-45">
+                                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M7 0V14M0 7H14" stroke="currentColor" strokeWidth="1.5" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                {/* Mobile Layout */}
+                                <div className="flex md:hidden flex-col gap-3 w-full text-left">
+                                    <div className="flex items-center justify-between gap-4">
+                                        <span className="text-lg text-white group-hover:text-accent transition-colors">
+                                            {value.title}
+                                        </span>
+                                        <div className="size-6 flex items-center justify-center text-white/50 group-hover:text-accent transition-all duration-200 shrink-0 group-data-[state=open]:rotate-45">
+                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7 0V14M0 7H14" stroke="currentColor" strokeWidth="1.5" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <span className="text-sm text-white/50">
+                                        {value.summary}
+                                    </span>
+                                </div>
+                            </AccordionTrigger>
+                            <AccordionContent className="!text-base text-white/60 leading-relaxed !pb-6">
+                                <div className="hidden md:grid md:grid-cols-[minmax(200px,1fr)_2fr_auto] w-full gap-8">
+                                    <div />
+                                    <p className="max-w-2xl">{value.content}</p>
+                                    <div className="size-6" />
+                                </div>
+                                <p className="md:hidden max-w-2xl">{value.content}</p>
+                            </AccordionContent>
+                        </AccordionItem>
+                    ))}
+                </Accordion>
             </section>
 
             {/* Leadership Team */}
@@ -208,11 +240,10 @@ export default function About() {
                         <p className="font-mono text-accent text-xs uppercase tracking-widest">
                             Leadership
                         </p>
-                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-sequel-book">
+                        <h2 className="heading">
                             Meet the team
                         </h2>
                     </div>
-                    {/* Desktop Navigation Arrows */}
                     <div className="hidden md:flex gap-2">
                         <button 
                             onClick={() => emblaApi?.scrollPrev()}
@@ -244,41 +275,51 @@ export default function About() {
                 </div>
 
                 {/* Carousel for all screen sizes */}
-                <div className="overflow-hidden" ref={emblaRef}>
-                    <div className="flex gap-4 md:gap-6">
-                        {leadership.map((person, index) => (
-                            <div
-                                key={index}
-                                className="flex flex-col gap-4 min-w-0 shrink-0 basis-[85%] sm:basis-[45%] md:basis-[30%] lg:basis-[22%] group"
-                            >
-                                <div className="aspect-square w-full bg-background-secondary rounded-lg overflow-hidden border border-white/10 group-hover:border-accent/30 transition-all duration-300">
-                                    <img
-                                        src={person.image}
-                                        alt={person.name}
-                                        className="w-full h-full object-cover"
-                                    />
-                                </div>
-                                <div className="flex items-start justify-between gap-2">
-                                    <div className="flex flex-col gap-1">
-                                        <h3 className="text-lg font-sequel text-white group-hover:text-accent transition-colors">
-                                            {person.name}
-                                        </h3>
-                                        <p className="font-mono text-xs text-accent uppercase tracking-wider">
-                                            {person.role}
-                                        </p>
+                <div className="relative">
+                    {/* Left gradient fade */}
+                    <div className="hidden md:block absolute top-0 left-0 w-32 lg:w-[200px] h-full bg-linear-to-r from-background to-transparent pointer-events-none z-10" />
+                    {/* Right gradient fade */}
+                    <div className="hidden md:block absolute top-0 right-0 w-32 lg:w-[200px] h-full bg-linear-to-l from-background to-transparent pointer-events-none z-10" />
+
+                    <div className="overflow-hidden" ref={emblaRef}>
+                        <div className="flex">
+                            {leadership.map((person, index) => (
+                                <div
+                                    key={index}
+                                    className="flex flex-col gap-4 min-w-0 shrink-0 basis-[85%] sm:basis-[45%] md:basis-[30%] lg:basis-[22%] group pl-4 md:pl-6 cursor-pointer"
+                                    onClick={() => {
+                                        if (emblaApi) emblaApi.scrollTo(index);
+                                    }}
+                                >
+                                    <div className="aspect-[4/5] w-full bg-background-secondary rounded-lg overflow-hidden transition-all duration-300">
+                                        <img
+                                            src={person.image}
+                                            alt={person.name}
+                                            className="w-full h-full object-cover"
+                                        />
                                     </div>
-                                    <a
-                                        href="#"
-                                        className="shrink-0 size-8 flex items-center justify-center text-white/40 hover:text-accent transition-colors"
-                                        aria-label={`${person.name} LinkedIn`}
-                                    >
-                                        <svg className="size-5" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                                        </svg>
-                                    </a>
+                                    <div className="flex items-start justify-between gap-2">
+                                        <div className="flex flex-col gap-1">
+                                            <h3 className="text-lg font-sequel text-white transition-colors">
+                                                {person.name}
+                                            </h3>
+                                            <p className="font-mono text-xs text-white uppercase tracking-wider">
+                                                {person.role}
+                                            </p>
+                                        </div>
+                                        <a
+                                            href="#"
+                                            className="shrink-0 size-8 flex items-center justify-center text-white/40 hover:text-accent transition-colors"
+                                            aria-label={`${person.name} LinkedIn`}
+                                        >
+                                            <svg className="size-5" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                            </svg>
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
                 </div>
 
@@ -301,18 +342,9 @@ export default function About() {
             </section>
 
             {/* Use Cases Section */}
-            <section className="max-w-viewport w-full mx-auto px-5 py-24 flex flex-col gap-16">
-                <div className="flex flex-col gap-4 text-center">
-                    <p className="font-mono text-accent text-xs uppercase tracking-widest">
-                        Endless Use Cases
-                    </p>
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-sequel-book">
-                        Built for real-world AI
-                    </h2>
-                </div>
+            <UseCasesSection />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-                    {/* AI Applications */}
+            {/* LEGACY_SECTION_START - hidden, will be removed
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}

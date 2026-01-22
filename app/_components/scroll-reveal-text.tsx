@@ -45,7 +45,7 @@ export function ScrollRevealText({ text, className, textClassName }: ScrollRevea
 
   return (
     <div ref={containerRef} className={className}>
-      <p className={cn("text-4xl md:text-5xl lg:text-6xl leading-tight max-w-8xl", textClassName)}>
+      <p className={cn("heading max-w-8xl", textClassName)}>
         {words.map((word, index) => (
           <Word
             key={index}
