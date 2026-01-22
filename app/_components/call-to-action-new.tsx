@@ -37,7 +37,7 @@ const FloatingIconCard = ({
 export default function CallToActionNew() {
 
   return (
-    <section className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24 lg:py-32 flex flex-col">
+    <section className="max-w-viewport w-full mx-auto px-5 pt-8 md:pt-12 lg:pt-16 pb-16 md:pb-24 lg:pb-32 flex flex-col">
       {/* Rounded container with teal background and flickering grid */}
       <div className="relative rounded-2xl md:rounded-3xl bg-accent overflow-hidden min-h-[450px] md:min-h-[550px] lg:min-h-[600px] flex flex-col">
         {/* FlickeringGrid background */}

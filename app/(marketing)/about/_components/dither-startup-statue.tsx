@@ -7,9 +7,7 @@ interface DitherStartupStatueProps {
     externalMousePos?: { x: number; y: number } | null;
     isHovering?: boolean;
     color?: string;
-    /** Auto-pan oscillation range in degrees (e.g., 35 means -35° to +35°) */
     autoPanRange?: number;
-    /** Speed of auto-pan oscillation */
     autoPanSpeed?: number;
 }
 
@@ -17,7 +15,14 @@ interface Point {
     x: number;
     y: number;
     z: number;
-    t: number; // threshold for dithering
+    t: number;
+}
+
+// Pre-compute opacity values for batching
+const OPACITY_BUCKETS = 10;
+const OPACITY_VALUES: number[] = [];
+for (let i = 0; i <= OPACITY_BUCKETS; i++) {
+    OPACITY_VALUES.push(0.3 + (i / OPACITY_BUCKETS) * 0.7);
 }
 
 export function DitherStartupStatue({
@@ -30,6 +35,7 @@ export function DitherStartupStatue({
 }: DitherStartupStatueProps) {
     const pointsUrl = "/assets/cards/startup-statue-points.json";
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
     const rotationRef = useRef({ x: 0, y: 0 });
     const targetRotationRef = useRef({ x: 0, y: 0 });
     const animationRef = useRef<number | null>(null);
@@ -37,7 +43,11 @@ export function DitherStartupStatue({
     const pointsRef = useRef<Point[]>([]);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    // Convert degrees to radians
+    // Cached buffers - reused each frame
+    const sizeRef = useRef({ width: 0, height: 0, dpr: 1, gridWidth: 0, gridHeight: 0 });
+    const depthBufferRef = useRef<Float32Array | null>(null);
+    const thresholdsRef = useRef<Float32Array | null>(null);
+
     const panRangeRad = (autoPanRange * Math.PI) / 180;
 
     // Load points from JSON
@@ -51,24 +61,63 @@ export function DitherStartupStatue({
             .catch((err) => console.error("Failed to load statue points:", err));
     }, [pointsUrl]);
 
-    const render = useCallback(() => {
+    // Handle canvas resize and buffer allocation
+    useEffect(() => {
         const canvas = canvasRef.current;
-        if (!canvas || pointsRef.current.length === 0) return;
+        if (!canvas) return;
 
-        const ctx = canvas.getContext("2d");
-        if (!ctx) return;
+        const updateSize = () => {
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.getBoundingClientRect();
+            const width = rect.width;
+            const height = rect.height;
 
-        const dpr = window.devicePixelRatio || 1;
-        const rect = canvas.getBoundingClientRect();
-        const width = rect.width;
-        const height = rect.height;
+            if (sizeRef.current.width !== width || sizeRef.current.height !== height || sizeRef.current.dpr !== dpr) {
+                const gridWidth = Math.ceil(width);
+                const gridHeight = Math.ceil(height);
+                const bufferSize = gridWidth * gridHeight;
 
-        // Set canvas size if needed
-        if (canvas.width !== width * dpr || canvas.height !== height * dpr) {
-            canvas.width = width * dpr;
-            canvas.height = height * dpr;
-            ctx.scale(dpr, dpr);
-        }
+                sizeRef.current = { width, height, dpr, gridWidth, gridHeight };
+                canvas.width = width * dpr;
+                canvas.height = height * dpr;
+
+                // Allocate/reallocate buffers
+                depthBufferRef.current = new Float32Array(bufferSize);
+                thresholdsRef.current = new Float32Array(bufferSize);
+
+                // Pre-compute thresholds (deterministic, only changes on resize)
+                const thresholds = thresholdsRef.current;
+                for (let i = 0; i < bufferSize; i++) {
+                    const hash = Math.sin(i * 9999 + 127) * 10000;
+                    thresholds[i] = hash - Math.floor(hash);
+                }
+
+                // Re-acquire context
+                const ctx = canvas.getContext("2d", { alpha: true });
+                if (ctx) {
+                    ctx.scale(dpr, dpr);
+                    ctxRef.current = ctx;
+                }
+            }
+        };
+
+        updateSize();
+
+        const observer = new ResizeObserver(updateSize);
+        observer.observe(canvas);
+
+        return () => observer.disconnect();
+    }, []);
+
+    const render = useCallback(() => {
+        const ctx = ctxRef.current;
+        const points = pointsRef.current;
+        const depthBuffer = depthBufferRef.current;
+        const thresholds = thresholdsRef.current;
+        if (!ctx || points.length === 0 || !depthBuffer || !thresholds) return;
+
+        const { width, height, gridWidth, gridHeight } = sizeRef.current;
+        if (width === 0) return;
 
         // Clear
         ctx.clearRect(0, 0, width, height);
@@ -79,97 +128,99 @@ export function DitherStartupStatue({
         const cosY = Math.cos(rotation.y);
         const sinY = Math.sin(rotation.y);
 
-        // Grid-based rendering with square dots (no overlap)
-        const cellSize = 1; // Grid cell size
-        const dotSize = 1.5; // Dot size matches cell (no overlap)
-        const gridWidth = Math.ceil(width / cellSize);
-        const gridHeight = Math.ceil(height / cellSize);
-
-        // Create depth buffer and threshold for each grid cell
-        const depthBuffer: (number | null)[] = new Array(gridWidth * gridHeight).fill(null);
-
-        // Pre-compute random thresholds for each cell (screen-space, consistent)
-        const thresholds: number[] = new Array(gridWidth * gridHeight);
-        for (let i = 0; i < thresholds.length; i++) {
-            const hash = Math.sin(i * 9999 + 127) * 10000;
-            thresholds[i] = hash - Math.floor(hash);
-        }
-
-        const scale = Math.min(width, height) * 0.555; // Scale up the model
+        const dotSize = 1.5;
+        const scale = Math.min(width, height) * 0.555;
         const centerX = width / 2;
         const centerY = height / 2;
 
+        // Reset depth buffer (use -1 as "empty" marker)
+        depthBuffer.fill(-1);
+
         // Project all points and fill depth buffer
-        for (const point of pointsRef.current) {
-            // Convert from Blender Z-up to screen Y-up
+        for (let i = 0; i < points.length; i++) {
+            const point = points[i];
             const px = point.x;
             const py = point.z;
             const pz = -point.y;
 
-            // Rotate around Y axis (left/right pan)
             const rx = px * cosY - pz * sinY;
             const rz1 = px * sinY + pz * cosY;
-
-            // Rotate around X axis (up/down tilt)
             const ry = py * cosX - rz1 * sinX;
             const rz = py * sinX + rz1 * cosX;
 
-            // Only render front-facing points
             if (rz < -0.05) continue;
 
-            // Project to screen
             const screenX = centerX + rx * scale;
             const screenY = centerY - ry * scale;
 
-            // Convert to grid coordinates
-            const gridX = Math.floor(screenX / cellSize);
-            const gridY = Math.floor(screenY / cellSize);
+            const gridX = screenX | 0; // Fast floor
+            const gridY = screenY | 0;
 
             if (gridX < 0 || gridX >= gridWidth || gridY < 0 || gridY >= gridHeight) continue;
 
             const idx = gridY * gridWidth + gridX;
-            const normalizedDepth = (rz + 1) / 2; // 0 to 1
+            const normalizedDepth = (rz + 1) * 0.5;
 
-            // Keep the frontmost point (highest depth value = closest to camera)
-            if (depthBuffer[idx] === null || normalizedDepth > depthBuffer[idx]!) {
+            if (depthBuffer[idx] < normalizedDepth) {
                 depthBuffer[idx] = normalizedDepth;
             }
         }
 
-        // Render dots with random threshold dithering (like dither-grid)
+        // Render with batching by opacity when hovering
         ctx.fillStyle = color;
 
-        for (let gy = 0; gy < gridHeight; gy++) {
-            for (let gx = 0; gx < gridWidth; gx++) {
-                const idx = gy * gridWidth + gx;
-                const depth = depthBuffer[idx];
+        if (isHovering) {
+            // Batch by opacity bucket
+            const buckets: number[][] = [];
+            for (let i = 0; i <= OPACITY_BUCKETS; i++) {
+                buckets.push([]);
+            }
 
-                if (depth === null) continue;
+            for (let gy = 0; gy < gridHeight; gy++) {
+                const rowOffset = gy * gridWidth;
+                for (let gx = 0; gx < gridWidth; gx++) {
+                    const idx = rowOffset + gx;
+                    const depth = depthBuffer[idx];
 
-                // Random threshold for this cell
-                const threshold = thresholds[idx];
+                    if (depth < 0) continue;
 
-                // Depth determines density (closer = denser, amplified shading)
-                // Range: 0.05 (back) to 0.95 (front) for strong contrast
-                const density = 0.05 + depth * 0.9;
+                    const density = 0.05 + depth * 0.9;
+                    if (thresholds[idx] >= density) continue;
 
-                if (threshold < density) {
-                    // Opacity: 50% when not hovering, depth-based (30%-100%) when hovering
-                    if (isHovering) {
-                        ctx.globalAlpha = 0.3 + depth * 0.7; // 30% (back) to 100% (front)
-                    } else {
-                        ctx.globalAlpha = 0.5;
-                    }
-
-                    // Draw square dot
-                    ctx.fillRect(
-                        gx * cellSize,
-                        gy * cellSize,
-                        dotSize,
-                        dotSize
-                    );
+                    const bucketIdx = Math.min(OPACITY_BUCKETS, (depth * OPACITY_BUCKETS) | 0);
+                    buckets[bucketIdx].push(gx, gy);
                 }
             }
+
+            // Render each bucket
+            for (let b = 0; b <= OPACITY_BUCKETS; b++) {
+                const bucket = buckets[b];
+                if (bucket.length === 0) continue;
+
+                ctx.globalAlpha = OPACITY_VALUES[b];
+                for (let j = 0; j < bucket.length; j += 2) {
+                    ctx.fillRect(bucket[j], bucket[j + 1], dotSize, dotSize);
+                }
+            }
+            ctx.globalAlpha = 1;
+        } else {
+            // Single pass with constant opacity
+            ctx.globalAlpha = 0.5;
+            for (let gy = 0; gy < gridHeight; gy++) {
+                const rowOffset = gy * gridWidth;
+                for (let gx = 0; gx < gridWidth; gx++) {
+                    const idx = rowOffset + gx;
+                    const depth = depthBuffer[idx];
+
+                    if (depth < 0) continue;
+
+                    const density = 0.05 + depth * 0.9;
+                    if (thresholds[idx] >= density) continue;
+
+                    ctx.fillRect(gx, gy, dotSize, dotSize);
+                }
+            }
+            ctx.globalAlpha = 1;
         }
     }, [color, isHovering]);
 
@@ -178,24 +229,18 @@ export function DitherStartupStatue({
         if (!isLoaded) return;
 
         const animate = (time: number) => {
-            // Track elapsed time for oscillation
             timeRef.current = time / 1000;
 
             if (isHovering && externalMousePos) {
-                // Mouse controls pan when hovering
                 targetRotationRef.current = {
                     x: -(externalMousePos.y - 0.5) * panRangeRad * 0.5,
                     y: (externalMousePos.x - 0.5) * panRangeRad * 2,
                 };
-                // Ease toward target
                 rotationRef.current.x += (targetRotationRef.current.x - rotationRef.current.x) * 0.08;
                 rotationRef.current.y += (targetRotationRef.current.y - rotationRef.current.y) * 0.08;
             } else {
-                // Auto-pan oscillation: sin wave between -panRange and +panRange
                 const targetY = Math.sin(timeRef.current * autoPanSpeed) * panRangeRad;
-                // Ease toward oscillation target
                 rotationRef.current.y += (targetY - rotationRef.current.y) * 0.05;
-                // Ease X back to 0
                 rotationRef.current.x += (0 - rotationRef.current.x) * 0.05;
             }
 

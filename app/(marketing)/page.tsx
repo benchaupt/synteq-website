@@ -24,7 +24,7 @@ export default function Landing() {
       <EffortlessSection />
 
       <div className="px-5 max-w-viewport w-full mx-auto flex flex-col gap-6 md:gap-10">
-        <div className="py-12 md:py-16 lg:py-24 flex flex-col gap-8 md:gap-8">
+        <div className="pt-16 md:pt-24 lg:pt-32 pb-12 md:pb-16 lg:pb-24 flex flex-col gap-8 md:gap-8">
           <Marquee pauseOnHover className="[--duration:25s] [--gap:3rem] md:[--gap:4rem]">
             {[...Array(5)].map((_, index) => (
               <svg className="h-5 md:h-7 shrink-0 opacity-60" viewBox="0 0 200 37" fill="none" xmlns="http://www.w3.org/2000/svg" key={index}>

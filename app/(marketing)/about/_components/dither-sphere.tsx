@@ -8,25 +8,37 @@ interface DitherSphereProps {
     isHovering?: boolean;
 }
 
+// Pre-compute opacity buckets for batching (0.5 to 1.0 in 10 steps)
+const OPACITY_BUCKETS = 10;
+const OPACITY_COLORS: string[] = [];
+for (let i = 0; i <= OPACITY_BUCKETS; i++) {
+    const opacity = 0.5 + (i / OPACITY_BUCKETS) * 0.5;
+    OPACITY_COLORS.push(`rgba(75, 222, 183, ${opacity})`);
+}
+const BASE_COLOR = "rgba(75, 222, 183, 0.5)";
+
 export function DitherSphere({
     className = "",
     externalMousePos,
     isHovering = false,
 }: DitherSphereProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
     const rotationRef = useRef({ x: 0, y: 0 });
     const targetRotationRef = useRef({ x: 0, y: 0 });
     const animationRef = useRef<number | null>(null);
     const lastTimeRef = useRef<number>(0);
-    const pointsRef = useRef<{ nx: number; ny: number; nz: number; threshold: number }[]>([]);
+    const pointsRef = useRef<Float32Array | null>(null); // [nx, ny, nz, threshold] x N
+    const sizeRef = useRef({ width: 0, height: 0, dpr: 1 });
 
     const gridSize = 60;
     const minDensity = 0.1;
     const maxDensity = 0.98;
+    const densityRange = maxDensity - minDensity;
 
-    // Initialize points once
+    // Initialize points once using Float32Array for better performance
     useEffect(() => {
-        const points: typeof pointsRef.current = [];
+        const tempPoints: number[] = [];
 
         for (let row = 0; row < gridSize; row++) {
             for (let col = 0; col < gridSize; col++) {
@@ -40,21 +52,15 @@ export function DitherSphere({
 
                 // Front hemisphere
                 const hashFront = Math.sin(row * 9999 + col * 127 + 311) * 10000;
-                points.push({
-                    nx, ny, nz: sz,
-                    threshold: hashFront - Math.floor(hashFront),
-                });
+                tempPoints.push(nx, ny, sz, hashFront - Math.floor(hashFront));
 
                 // Back hemisphere
                 const hashBack = Math.sin(row * 7777 + col * 233 + 557) * 10000;
-                points.push({
-                    nx, ny, nz: -sz,
-                    threshold: hashBack - Math.floor(hashBack),
-                });
+                tempPoints.push(nx, ny, -sz, hashBack - Math.floor(hashBack));
             }
         }
 
-        pointsRef.current = points;
+        pointsRef.current = new Float32Array(tempPoints);
     }, []);
 
     // Update target rotation when hovering
@@ -67,23 +73,46 @@ export function DitherSphere({
         };
     }, [isHovering, externalMousePos]);
 
-    const render = useCallback(() => {
+    // Handle canvas resize
+    useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
 
-        const ctx = canvas.getContext("2d");
-        if (!ctx) return;
+        const updateSize = () => {
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.getBoundingClientRect();
+            const width = rect.width;
+            const height = rect.height;
 
-        const dpr = window.devicePixelRatio || 1;
-        const rect = canvas.getBoundingClientRect();
-        const size = rect.width;
+            if (sizeRef.current.width !== width || sizeRef.current.height !== height || sizeRef.current.dpr !== dpr) {
+                sizeRef.current = { width, height, dpr };
+                canvas.width = width * dpr;
+                canvas.height = height * dpr;
 
-        // Set canvas size if needed
-        if (canvas.width !== size * dpr || canvas.height !== size * dpr) {
-            canvas.width = size * dpr;
-            canvas.height = size * dpr;
-            ctx.scale(dpr, dpr);
-        }
+                // Re-acquire context after resize
+                const ctx = canvas.getContext("2d", { alpha: true });
+                if (ctx) {
+                    ctx.scale(dpr, dpr);
+                    ctxRef.current = ctx;
+                }
+            }
+        };
+
+        updateSize();
+
+        const observer = new ResizeObserver(updateSize);
+        observer.observe(canvas);
+
+        return () => observer.disconnect();
+    }, []);
+
+    const render = useCallback(() => {
+        const ctx = ctxRef.current;
+        const points = pointsRef.current;
+        if (!ctx || !points) return;
+
+        const { width: size } = sizeRef.current;
+        if (size === 0) return;
 
         // Clear
         ctx.clearRect(0, 0, size, size);
@@ -95,45 +124,92 @@ export function DitherSphere({
         const sinY = Math.sin(rotation.y);
 
         const dotSize = (size / gridSize) * 0.4;
-        const centerOffset = size * 0.125; // 75% centered means 12.5% offset each side
+        const halfDot = dotSize / 2;
+        const centerOffset = size * 0.125;
         const drawSize = size * 0.75;
+        const halfDrawSize = drawSize / 2;
 
-        for (const point of pointsRef.current) {
-            // Rotate around Y
-            const rx = point.nx * cosY - point.nz * sinY;
-            const rz1 = point.nx * sinY + point.nz * cosY;
+        if (isHovering) {
+            // When hovering, batch by opacity bucket
+            const buckets: { x: number; y: number }[][] = [];
+            for (let i = 0; i <= OPACITY_BUCKETS; i++) {
+                buckets.push([]);
+            }
 
-            // Rotate around X
-            const ry = point.ny * cosX - rz1 * sinX;
-            const rz = point.ny * sinX + rz1 * cosX;
+            for (let i = 0; i < points.length; i += 4) {
+                const nx = points[i];
+                const ny = points[i + 1];
+                const nz = points[i + 2];
+                const threshold = points[i + 3];
 
-            // Skip back face
-            if (rz < 0) continue;
+                // Rotate around Y
+                const rx = nx * cosY - nz * sinY;
+                const rz1 = nx * sinY + nz * cosY;
 
-            // Density based on depth
-            const density = minDensity + rz * (maxDensity - minDensity);
+                // Rotate around X
+                const ry = ny * cosX - rz1 * sinX;
+                const rz = ny * sinX + rz1 * cosX;
 
-            // Skip if not visible
-            if (point.threshold >= density) continue;
+                // Skip back face
+                if (rz < 0) continue;
 
-            // Opacity: 0.5 when idle, scales to 1.0 when hovering based on depth
-            const baseOpacity = 0.5;
-            const hoverOpacity = baseOpacity + rz * 0.5; // rz ranges 0-1, so max is 1.0
-            const opacity = isHovering ? hoverOpacity : baseOpacity;
-            ctx.fillStyle = `rgba(75, 222, 183, ${opacity})`;
+                // Density based on depth
+                const density = minDensity + rz * densityRange;
+                if (threshold >= density) continue;
 
-            // Project to screen
-            const screenX = centerOffset + ((rx + 1) / 2) * drawSize;
-            const screenY = centerOffset + ((ry + 1) / 2) * drawSize;
+                // Calculate bucket index (rz is 0-1, map to bucket)
+                const bucketIdx = Math.min(OPACITY_BUCKETS, Math.floor(rz * OPACITY_BUCKETS));
 
-            ctx.fillRect(
-                screenX - dotSize / 2,
-                screenY - dotSize / 2,
-                dotSize,
-                dotSize
-            );
+                // Project to screen
+                const screenX = centerOffset + (rx + 1) * halfDrawSize;
+                const screenY = centerOffset + (ry + 1) * halfDrawSize;
+
+                buckets[bucketIdx].push({ x: screenX - halfDot, y: screenY - halfDot });
+            }
+
+            // Render each bucket with its color
+            for (let b = 0; b <= OPACITY_BUCKETS; b++) {
+                const bucket = buckets[b];
+                if (bucket.length === 0) continue;
+
+                ctx.fillStyle = OPACITY_COLORS[b];
+                for (let j = 0; j < bucket.length; j++) {
+                    ctx.fillRect(bucket[j].x, bucket[j].y, dotSize, dotSize);
+                }
+            }
+        } else {
+            // When not hovering, all dots have same opacity - single fillStyle
+            ctx.fillStyle = BASE_COLOR;
+
+            for (let i = 0; i < points.length; i += 4) {
+                const nx = points[i];
+                const ny = points[i + 1];
+                const nz = points[i + 2];
+                const threshold = points[i + 3];
+
+                // Rotate around Y
+                const rx = nx * cosY - nz * sinY;
+                const rz1 = nx * sinY + nz * cosY;
+
+                // Rotate around X
+                const ry = ny * cosX - rz1 * sinX;
+                const rz = ny * sinX + rz1 * cosX;
+
+                // Skip back face
+                if (rz < 0) continue;
+
+                // Density based on depth
+                const density = minDensity + rz * densityRange;
+                if (threshold >= density) continue;
+
+                // Project to screen
+                const screenX = centerOffset + (rx + 1) * halfDrawSize;
+                const screenY = centerOffset + (ry + 1) * halfDrawSize;
+
+                ctx.fillRect(screenX - halfDot, screenY - halfDot, dotSize, dotSize);
+            }
         }
-    }, [isHovering]);
+    }, [isHovering, densityRange]);
 
     // Animation loop
     useEffect(() => {

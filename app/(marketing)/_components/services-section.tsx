@@ -50,11 +50,11 @@ export default function ServicesSection() {
             <Link
               key={index}
               href={product.href}
-              className="group bg-background-secondary border border-white/10 hover:border-accent/50 flex flex-col overflow-hidden relative transition-all duration-300 hover:scale-[1.01] hover:shadow-2xl hover:shadow-accent/10 cursor-pointer min-h-[400px] md:min-h-[500px] lg:min-h-[580px]"
+              className="group bg-background-secondary border border-transparent hover:border-white/10 flex flex-col overflow-hidden relative transition-all duration-300 hover:-translate-y-2 cursor-pointer min-h-[400px] md:min-h-[500px] lg:min-h-[580px]"
             >
               {/* Top content */}
               <div className="px-6 md:px-8 lg:px-9 pt-6 md:pt-8 lg:pt-9 z-10 flex flex-col">
-                <h3 className="heading2 tracking-tight text-white group-hover:text-accent transition-colors duration-300">
+                <h3 className="heading2 tracking-tight text-white transition-colors duration-300">
                   {product.title}
                 </h3>
                 <div className="flex items-center gap-2 text-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-3">

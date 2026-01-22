@@ -59,7 +59,7 @@ export const Blog = async () => {
     if (blogs.length === 0) return null;
 
     return (
-        <div className="max-w-viewport w-full mx-auto px-5 pt-4 pb-16 md:pb-24 lg:pb-32 flex flex-col">
+        <div className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24 lg:py-32 flex flex-col">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 md:gap-8 lg:gap-6 mb-6 md:mb-8 lg:mb-12 px-4 md:px-6 lg:px-[25px]">
                 <h2 className="heading">Read our blog</h2>
                 <Link href="/blogs" className="relative flex items-center shrink-0">
