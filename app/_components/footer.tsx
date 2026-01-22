@@ -53,7 +53,7 @@ export const Footer = () => {
                     {/* Paragraph */}
                     <div className="flex flex-col gap-4 max-w-4xl">
                         <p className="text-white/60 leading-relaxed">
-                            Production-ready AI infrastructure that scales with your ambitions. Deploy, run, and manage AI models without the complexity of traditional cloud providers. From bare-metal GPU clusters to fully managed inference endpoints, we handle the infrastructure so you can focus on building.
+                            Production-ready AI infrastructure that scales with your ambitions. Deploy, run, and manage AI models without the complexity of traditional cloud providers. From bare-metal GPU clusters to fully managed inference endpoints, we handle.
                         </p>
                     </div>
                 </div>

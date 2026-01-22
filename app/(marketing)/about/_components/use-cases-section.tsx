@@ -3,6 +3,9 @@
 import { motion, useInView } from "motion/react";
 import { useRef, useState, useCallback, ReactNode } from "react";
 import { DitherGrid } from "./dither-grid";
+import { DitherSphere } from "./dither-sphere";
+import { DitherStartupStatue } from "./dither-startup-statue";
+import { DitherEnterpriseStatue } from "./dither-enterprise-statue";
 
 interface UseCase {
     title: string;
@@ -10,6 +13,10 @@ interface UseCase {
     description: string;
     icon: ReactNode;
     useDitherGrid?: boolean;
+    useDitherSphere?: boolean;
+    useDitherStartupStatue?: boolean;
+    useDitherEnterpriseStatue?: boolean;
+    ditherImage?: string;
 }
 
 const useCases: UseCase[] = [
@@ -17,13 +24,8 @@ const useCases: UseCase[] = [
         title: "Research",
         highlight: "Explore new frontiers in AI.",
         description: "Purpose-built infrastructure for academic institutions, labs, and breakthrough experimentation.",
-        icon: (
-            <svg className="size-full" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 3H5C3.89543 3 3 3.89543 3 5V9M9 21H5C3.89543 21 3 20.1046 3 19V15M21 9V5C21 3.89543 20.1046 3 19 3H15M15 21H19C20.1046 21 21 20.1046 21 19V15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.5"/>
-                <path d="M12 9V6M12 18V15M15 12H18M6 12H9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-            </svg>
-        )
+        icon: null,
+        useDitherSphere: true,
     },
     {
         title: "Training",
@@ -36,22 +38,15 @@ const useCases: UseCase[] = [
         title: "Startups",
         highlight: "Ship faster, spend smarter.",
         description: "Flexible pricing and instant access to GPUs let you iterate quickly without overcommitting.",
-        icon: (
-            <svg className="size-full" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 3L4 9V21H9V14H15V21H20V9L12 3Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M12 3V7M8 6L12 3L16 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-        )
+        icon: null,
+        useDitherStartupStatue: true,
     },
     {
         title: "Enterprise",
         highlight: "Infrastructure that scales with you.",
         description: "Dedicated support, custom SLAs, and security compliance for mission-critical AI deployments.",
-        icon: (
-            <svg className="size-full" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 21H21M5 21V7L12 3L19 7V21M9 21V15H15V21M9 11H9.01M15 11H15.01M12 11H12.01" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-        )
+        icon: null,
+        useDitherEnterpriseStatue: true,
     }
 ];
 
@@ -66,19 +61,22 @@ function UseCaseCard({ useCase, index, isInView }: UseCaseCardProps) {
     const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
     const [isHovering, setIsHovering] = useState(false);
 
+    const hasDitherEffect = useCase.useDitherGrid || useCase.useDitherSphere || useCase.useDitherStartupStatue || useCase.useDitherEnterpriseStatue;
+
     const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-        if (!useCase.useDitherGrid || !cardRef.current) return;
+        if (!hasDitherEffect) return;
+        if (!cardRef.current) return;
         const rect = cardRef.current.getBoundingClientRect();
         const x = (e.clientX - rect.left) / rect.width;
         const y = (e.clientY - rect.top) / rect.height;
         setMousePos({ x, y });
-    }, [useCase.useDitherGrid]);
+    }, [hasDitherEffect]);
 
     const handleMouseEnter = useCallback(() => {
-        if (useCase.useDitherGrid) {
+        if (hasDitherEffect) {
             setIsHovering(true);
         }
-    }, [useCase.useDitherGrid]);
+    }, [hasDitherEffect]);
 
     const handleMouseLeave = useCallback(() => {
         setMousePos(null);
@@ -88,7 +86,7 @@ function UseCaseCard({ useCase, index, isInView }: UseCaseCardProps) {
     return (
         <motion.div
             ref={cardRef}
-            className="bg-background-secondary p-6 flex flex-col aspect-3/4 overflow-hidden transition-transform duration-300 ease-out hover:-translate-y-2"
+            className="group relative bg-background-secondary p-6 flex flex-col aspect-3/4 overflow-hidden transition-transform duration-300 ease-out hover:-translate-y-2 cursor-pointer"
             initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
             animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 + index * 0.1 }}
@@ -96,6 +94,14 @@ function UseCaseCard({ useCase, index, isInView }: UseCaseCardProps) {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
+            {/* Explore link - top right */}
+            <div className="absolute top-6 right-6 flex items-center gap-1 text-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <span className="text-sm font-medium">Explore</span>
+                <svg className="size-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+            </div>
+
             <div className="flex-1 flex items-start justify-start w-full">
                 {useCase.useDitherGrid ? (
                     <DitherGrid
@@ -103,6 +109,39 @@ function UseCaseCard({ useCase, index, isInView }: UseCaseCardProps) {
                         isHovering={isHovering}
                         className="max-w-full"
                     />
+                ) : useCase.useDitherSphere ? (
+                    <DitherSphere
+                        externalMousePos={mousePos}
+                        isHovering={isHovering}
+                        className="max-w-full"
+                    />
+                ) : useCase.useDitherStartupStatue ? (
+                    <div className="aspect-square w-full flex items-center justify-center">
+                        <DitherStartupStatue
+                            externalMousePos={mousePos}
+                            isHovering={isHovering}
+                            autoPanRange={35}
+                            autoPanSpeed={0.4}
+                        />
+                    </div>
+                ) : useCase.useDitherEnterpriseStatue ? (
+                    <div className="aspect-square w-full flex items-center justify-center">
+                        <DitherEnterpriseStatue
+                            externalMousePos={mousePos}
+                            isHovering={isHovering}
+                            autoPanRange={35}
+                            autoPanSpeed={0.4}
+                        />
+                    </div>
+                ) : useCase.ditherImage ? (
+                    <div className="aspect-square w-full flex items-center justify-center">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                            src={useCase.ditherImage}
+                            alt=""
+                            className="w-3/4 h-3/4 object-contain opacity-50"
+                        />
+                    </div>
                 ) : (
                     <div className="size-16 text-white/30">
                         {useCase.icon}
@@ -120,6 +159,28 @@ function UseCaseCard({ useCase, index, isInView }: UseCaseCardProps) {
     );
 }
 
+// Just the cards grid (for reuse on other pages)
+export function UseCasesCards() {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const isInView = useInView(containerRef, { once: true, margin: "-100px" });
+
+    return (
+        <div
+            ref={containerRef}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
+            {useCases.map((useCase, index) => (
+                <UseCaseCard
+                    key={useCase.title}
+                    useCase={useCase}
+                    index={index}
+                    isInView={isInView}
+                />
+            ))}
+        </div>
+    );
+}
+
 export function UseCasesSection() {
     const sectionRef = useRef<HTMLElement>(null);
     const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
@@ -129,7 +190,7 @@ export function UseCasesSection() {
             ref={sectionRef}
             className="max-w-viewport w-full mx-auto px-5 py-24 flex flex-col gap-12"
         >
-            <div className="flex flex-col gap-4 text-center">
+            <div className="flex flex-col items-center justify-center gap-4 text-center">
                 <motion.p
                     className="font-mono text-accent text-xs uppercase tracking-widest"
                     initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
@@ -139,12 +200,12 @@ export function UseCasesSection() {
                     Built for every stage of AI
                 </motion.p>
                 <motion.h2
-                    className="heading"
+                    className="heading max-w-5xl"
                     initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
                     animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
                     transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
                 >
-                    Built for every stage of AI
+                    We&apos;re here to support your workloads, whether they&apos;re research, training, or production.
                 </motion.h2>
             </div>
 

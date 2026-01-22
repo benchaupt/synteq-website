@@ -3,7 +3,7 @@
 
 import { AboutStatsSection } from "@/app/(marketing)/about/_components/about-stats-section";
 import { StoryTimeline } from "@/app/(marketing)/about/_components/story-timeline";
-import { UseCasesSection } from "@/app/(marketing)/about/_components/use-cases-section";
+// import { UseCasesSection } from "@/app/(marketing)/about/_components/use-cases-section";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/app/_components/accordion";
 import CallToActionNew from "@/app/_components/call-to-action-new";
 import { ScrollRevealText } from "@/app/_components/scroll-reveal-text";
@@ -144,10 +144,6 @@ export default function About() {
                 </div>
             </section>
 
-            {/* Our Story Section */}
-            <StoryTimeline items={storyItems} />
-
-
             {/* Stats Section */}
             <AboutStatsSection />
 
@@ -163,75 +159,8 @@ export default function About() {
                 />
             </section>
 
-
-            {/* Core Values */}
-            <section className="max-w-viewport w-full mx-auto px-5 py-24 flex flex-col gap-12">
-                {/* Header */}
-                <div className="flex flex-col lg:flex-row justify-between lg:items-end">
-                    <h2 className="heading shrink-0">
-                        Grounded in our core values
-                    </h2>
-                    <p className="text-base text-white/60 leading-relaxed max-w-2xl">
-                        From first experiment to multi-node training runs, Synteq and Crunchbits give you a clear path to the right mix of shared cloud, dedicated nodes, and bare metal.
-                    </p>
-                </div>
-
-                <Accordion
-                    type="single"
-                    collapsible
-                    className="w-full"
-                    defaultValue="item-1"
-                >
-                    {coreValues.map((value, index) => (
-                        <AccordionItem
-                            key={index}
-                            value={`item-${index}`}
-                            // className="border-b border-white/10"
-                        >
-                            <AccordionTrigger className="py-6 group text-base [&>svg]:hidden">
-                                {/* Desktop Layout */}
-                                <div className="hidden md:grid md:grid-cols-[minmax(200px,1fr)_2fr_auto] w-full gap-8 items-center text-left">
-                                    <span className="text-lg md:text-xl text-white group-hover:text-accent transition-colors">
-                                        {value.title}
-                                    </span>
-                                    <span className="font-mono text-sm md:text-sm text-white/50 group-hover:text-white/70 transition-colors">
-                                        {value.summary}
-                                    </span>
-                                    <div className="size-6 flex items-center justify-center text-white/50 group-hover:text-accent transition-all duration-200 group-data-[state=open]:rotate-45">
-                                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M7 0V14M0 7H14" stroke="currentColor" strokeWidth="1.5" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                {/* Mobile Layout */}
-                                <div className="flex md:hidden flex-col gap-3 w-full text-left">
-                                    <div className="flex items-center justify-between gap-4">
-                                        <span className="text-lg text-white group-hover:text-accent transition-colors">
-                                            {value.title}
-                                        </span>
-                                        <div className="size-6 flex items-center justify-center text-white/50 group-hover:text-accent transition-all duration-200 shrink-0 group-data-[state=open]:rotate-45">
-                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M7 0V14M0 7H14" stroke="currentColor" strokeWidth="1.5" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <span className="text-sm text-white/50">
-                                        {value.summary}
-                                    </span>
-                                </div>
-                            </AccordionTrigger>
-                            <AccordionContent className="!text-base text-white/60 leading-relaxed !pb-6">
-                                <div className="hidden md:grid md:grid-cols-[minmax(200px,1fr)_2fr_auto] w-full gap-8">
-                                    <div />
-                                    <p className="max-w-2xl">{value.content}</p>
-                                    <div className="size-6" />
-                                </div>
-                                <p className="md:hidden max-w-2xl">{value.content}</p>
-                            </AccordionContent>
-                        </AccordionItem>
-                    ))}
-                </Accordion>
-            </section>
+            {/* Our Story Section */}
+            <StoryTimeline items={storyItems} />
 
             {/* Leadership Team */}
             <section className="max-w-viewport w-full mx-auto px-5 py-24 flex flex-col gap-16">
@@ -341,8 +270,76 @@ export default function About() {
                 </div>
             </section>
 
-            {/* Use Cases Section */}
-            <UseCasesSection />
+            {/* Core Values */}
+            <section className="max-w-viewport w-full mx-auto px-5 py-24 flex flex-col gap-12">
+                {/* Header */}
+                <div className="flex flex-col lg:flex-row justify-between lg:items-end">
+                    <h2 className="heading shrink-0">
+                        Grounded in our core values
+                    </h2>
+                    <p className="text-base text-white/60 leading-relaxed max-w-2xl">
+                        From first experiment to multi-node training runs, Synteq and Crunchbits give you a clear path to the right mix of shared cloud, dedicated nodes, and bare metal.
+                    </p>
+                </div>
+
+                <Accordion
+                    type="single"
+                    collapsible
+                    className="w-full"
+                    defaultValue="item-1"
+                >
+                    {coreValues.map((value, index) => (
+                        <AccordionItem
+                            key={index}
+                            value={`item-${index}`}
+                        >
+                            <AccordionTrigger className="py-6 group text-base [&>svg]:hidden">
+                                {/* Desktop Layout */}
+                                <div className="hidden md:grid md:grid-cols-[minmax(200px,1fr)_2fr_auto] w-full gap-8 items-center text-left">
+                                    <span className="text-lg md:text-xl text-white group-hover:text-accent transition-colors">
+                                        {value.title}
+                                    </span>
+                                    <span className="font-mono text-sm md:text-sm text-white/50 group-hover:text-white/70 transition-colors">
+                                        {value.summary}
+                                    </span>
+                                    <div className="size-6 flex items-center justify-center text-white/50 group-hover:text-accent transition-all duration-200 group-data-[state=open]:rotate-45">
+                                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M7 0V14M0 7H14" stroke="currentColor" strokeWidth="1.5" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                {/* Mobile Layout */}
+                                <div className="flex md:hidden flex-col gap-3 w-full text-left">
+                                    <div className="flex items-center justify-between gap-4">
+                                        <span className="text-lg text-white group-hover:text-accent transition-colors">
+                                            {value.title}
+                                        </span>
+                                        <div className="size-6 flex items-center justify-center text-white/50 group-hover:text-accent transition-all duration-200 shrink-0 group-data-[state=open]:rotate-45">
+                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7 0V14M0 7H14" stroke="currentColor" strokeWidth="1.5" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <span className="text-sm text-white/50">
+                                        {value.summary}
+                                    </span>
+                                </div>
+                            </AccordionTrigger>
+                            <AccordionContent className="!text-base text-white/60 leading-relaxed !pb-6">
+                                <div className="hidden md:grid md:grid-cols-[minmax(200px,1fr)_2fr_auto] w-full gap-8">
+                                    <div />
+                                    <p className="max-w-2xl">{value.content}</p>
+                                    <div className="size-6" />
+                                </div>
+                                <p className="md:hidden max-w-2xl">{value.content}</p>
+                            </AccordionContent>
+                        </AccordionItem>
+                    ))}
+                </Accordion>
+            </section>
+
+            {/* Use Cases Section - Hidden */}
+            {/* <UseCasesSection /> */}
 
             <CallToActionNew />
         </>
