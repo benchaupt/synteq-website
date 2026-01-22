@@ -222,6 +222,10 @@ h1, h2, h3, h4, h5, h6, p {
   @apply text-2xl sm:text-3xl md:text-3xl lg:text-4xl tracking-tight leading-tight text-white;
 }
 
+.heading3 {
+  @apply text-xl sm:text-2xl md:text-2xl tracking-tight leading-tight text-white;
+}
+
 .subheading {
   @apply font-mono text-xs md:text-sm text-accent uppercase tracking-tight;
 }
