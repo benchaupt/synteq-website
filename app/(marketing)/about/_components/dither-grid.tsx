@@ -79,14 +79,14 @@ export function DitherGrid({
     // Throttle mouse position updates
     useEffect(() => {
         if (!externalMousePos) {
-            setThrottledMousePos(null);
+            queueMicrotask(() => setThrottledMousePos(null));
             return;
         }
 
         const now = Date.now();
         if (now - lastUpdateRef.current > 50) { // 50ms throttle (~20fps)
             lastUpdateRef.current = now;
-            setThrottledMousePos(externalMousePos);
+            queueMicrotask(() => setThrottledMousePos(externalMousePos));
         }
     }, [externalMousePos]);
 
@@ -101,7 +101,7 @@ export function DitherGrid({
         if (isHovering) {
             animationKeyRef.current += 1;
             clearAllTimeouts();
-            setCellStates(new Map());
+            queueMicrotask(() => setCellStates(new Map()));
         }
     }, [isHovering, clearAllTimeouts]);
 

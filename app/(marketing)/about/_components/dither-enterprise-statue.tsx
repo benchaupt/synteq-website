@@ -129,7 +129,7 @@ export function DitherEnterpriseStatue({
         const cosY = Math.cos(rotation.y);
         const sinY = Math.sin(rotation.y);
 
-        const dotSize = 1.5;
+        const dotSize = 1.6;
         const scale = Math.min(width, height) * 0.425;
         const centerX = width / 2;
         const centerY = height / 2;
@@ -185,7 +185,7 @@ export function DitherEnterpriseStatue({
 
                     if (depth < 0) continue;
 
-                    const density = 0.05 + depth * 0.9;
+                    const density = 0.1 + depth * 2;
                     if (thresholds[idx] >= density) continue;
 
                     const bucketIdx = Math.min(OPACITY_BUCKETS, (depth * OPACITY_BUCKETS) | 0);
@@ -215,7 +215,7 @@ export function DitherEnterpriseStatue({
 
                     if (depth < 0) continue;
 
-                    const density = 0.05 + depth * 0.9;
+                    const density = 0.1 + depth * 2;
                     if (thresholds[idx] >= density) continue;
 
                     ctx.fillRect(gx, gy, dotSize, dotSize);
@@ -264,7 +264,7 @@ export function DitherEnterpriseStatue({
         <div className={`w-full h-full ${className}`}>
             <canvas
                 ref={canvasRef}
-                className="w-full h-full"
+                className={`w-full h-full transition-opacity duration-300 ${isHovering ? "opacity-100" : "opacity-50"}`}
             />
         </div>
     );

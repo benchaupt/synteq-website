@@ -30,7 +30,7 @@ export default function ResilienceSection() {
         <div className="grid shrink-0 grid-cols-1 sm:grid-cols-2 gap-8 md:gap-12 lg:gap-16 h-full">
           {/* Uptime Card - Top Left */}
           <div className="flex flex-col gap-3 md:gap-4 justify-self-start">
-            <p className="font-mono text-md md:text-md lg:text-md text-white/65">
+            <p className="font-mono text-md md:text-md lg:text-md text-white/65 uppercase">
               Uptime
             </p>
             <p className="heading2 text-white">
@@ -43,7 +43,7 @@ export default function ResilienceSection() {
 
           {/* Latency Card - Top Right */}
           <div className="flex flex-col gap-3 md:gap-4 justify-self-start sm:justify-self-end">
-            <p className="font-mono text-md md:text-md lg:text-md text-white/65">
+            <p className="font-mono text-md md:text-md lg:text-md text-white/65 uppercase">
               Latency
             </p>
             <p className="heading2 text-white">
@@ -56,7 +56,7 @@ export default function ResilienceSection() {
 
           {/* Hardware Card - Bottom Left */}
           <div className="flex flex-col gap-3 md:gap-4 justify-self-start">
-            <p className="font-mono text-md md:text-md lg:text-md text-white/65">
+            <p className="font-mono text-md md:text-md lg:text-md text-white/65 uppercase">
               Hardware
             </p>
             <p className="heading2 text-white">
@@ -69,7 +69,7 @@ export default function ResilienceSection() {
 
           {/* Design Card - Bottom Right */}
           <div className="flex flex-col gap-3 md:gap-4 justify-self-start sm:justify-self-end">
-            <p className="font-mono text-md md:text-md lg:text-md text-white/65">
+            <p className="font-mono text-md md:text-md lg:text-md text-white/65 uppercase">
               Design
             </p>
             <p className="heading2 text-white">
