@@ -30,8 +30,9 @@ export function DitherEnterpriseStatue({
 }: DitherEnterpriseStatueProps) {
     const pointsUrl = "/assets/cards/enterprise-statue-points.json";
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const rotationRef = useRef({ x: 0, y: 0 });
-    const targetRotationRef = useRef({ x: 0, y: 0 });
+    // Start rotated 180° (facing the other way)
+    const rotationRef = useRef({ x: 0, y: Math.PI });
+    const targetRotationRef = useRef({ x: 0, y: Math.PI });
     const animationRef = useRef<number | null>(null);
     const timeRef = useRef<number>(0);
     const pointsRef = useRef<Point[]>([]);
@@ -79,9 +80,9 @@ export function DitherEnterpriseStatue({
         const cosY = Math.cos(rotation.y);
         const sinY = Math.sin(rotation.y);
 
-        // Grid-based rendering with circular dots (matching dither-grid style)
-        const cellSize = 1; // Spacing between dot centers
-        const dotRadius = 1; // Radius of each dot
+        // Grid-based rendering with square dots (no overlap)
+        const cellSize = 1; // Grid cell size
+        const dotSize = 1.5; // Dot size matches cell (no overlap)
         const gridWidth = Math.ceil(width / cellSize);
         const gridHeight = Math.ceil(height / cellSize);
 
@@ -95,7 +96,7 @@ export function DitherEnterpriseStatue({
             thresholds[i] = hash - Math.floor(hash);
         }
 
-        const scale = Math.min(width, height) * 0.45; // Scale up the model
+        const scale = Math.min(width, height) * 0.425; // Scale up the model
         const centerX = width / 2;
         const centerY = height / 2;
 
@@ -165,8 +166,8 @@ export function DitherEnterpriseStatue({
                     ctx.fillRect(
                         gx * cellSize,
                         gy * cellSize,
-                        dotRadius * 2,
-                        dotRadius * 2
+                        dotSize,
+                        dotSize
                     );
                 }
             }
@@ -182,17 +183,17 @@ export function DitherEnterpriseStatue({
             timeRef.current = time / 1000;
 
             if (isHovering && externalMousePos) {
-                // Mouse controls pan when hovering
+                // Mouse controls pan when hovering (centered around 180°)
                 targetRotationRef.current = {
                     x: -(externalMousePos.y - 0.5) * panRangeRad * 0.5,
-                    y: (externalMousePos.x - 0.5) * panRangeRad * 2,
+                    y: Math.PI + (externalMousePos.x - 0.5) * panRangeRad * 2,
                 };
                 // Ease toward target
                 rotationRef.current.x += (targetRotationRef.current.x - rotationRef.current.x) * 0.08;
                 rotationRef.current.y += (targetRotationRef.current.y - rotationRef.current.y) * 0.08;
             } else {
-                // Auto-pan oscillation: sin wave between -panRange and +panRange
-                const targetY = Math.sin(timeRef.current * autoPanSpeed) * panRangeRad;
+                // Auto-pan oscillation: sin wave around 180° (facing opposite direction)
+                const targetY = Math.PI + Math.sin(timeRef.current * autoPanSpeed) * panRangeRad;
                 // Ease toward oscillation target
                 rotationRef.current.y += (targetY - rotationRef.current.y) * 0.05;
                 // Ease X back to 0

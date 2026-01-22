@@ -80,8 +80,8 @@ export function DitherStartupStatue({
         const sinY = Math.sin(rotation.y);
 
         // Grid-based rendering with square dots (no overlap)
-        const cellSize = 2; // Grid cell size
-        const dotSize = 2; // Dot size matches cell (no overlap)
+        const cellSize = 1; // Grid cell size
+        const dotSize = 1.5; // Dot size matches cell (no overlap)
         const gridWidth = Math.ceil(width / cellSize);
         const gridHeight = Math.ceil(height / cellSize);
 
@@ -95,7 +95,7 @@ export function DitherStartupStatue({
             thresholds[i] = hash - Math.floor(hash);
         }
 
-        const scale = Math.min(width, height) * 0.45; // Scale up the model
+        const scale = Math.min(width, height) * 0.555; // Scale up the model
         const centerX = width / 2;
         const centerY = height / 2;
 
@@ -165,8 +165,8 @@ export function DitherStartupStatue({
                     ctx.fillRect(
                         gx * cellSize,
                         gy * cellSize,
-                        dotRadius * 2,
-                        dotRadius * 2
+                        dotSize,
+                        dotSize
                     );
                 }
             }

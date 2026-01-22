@@ -98,8 +98,6 @@ export function DitherSphere({
         const centerOffset = size * 0.125; // 75% centered means 12.5% offset each side
         const drawSize = size * 0.75;
 
-        ctx.fillStyle = "rgba(75, 222, 183, 0.5)";
-
         for (const point of pointsRef.current) {
             // Rotate around Y
             const rx = point.nx * cosY - point.nz * sinY;
@@ -118,6 +116,12 @@ export function DitherSphere({
             // Skip if not visible
             if (point.threshold >= density) continue;
 
+            // Opacity: 0.5 when idle, scales to 1.0 when hovering based on depth
+            const baseOpacity = 0.5;
+            const hoverOpacity = baseOpacity + rz * 0.5; // rz ranges 0-1, so max is 1.0
+            const opacity = isHovering ? hoverOpacity : baseOpacity;
+            ctx.fillStyle = `rgba(75, 222, 183, ${opacity})`;
+
             // Project to screen
             const screenX = centerOffset + ((rx + 1) / 2) * drawSize;
             const screenY = centerOffset + ((ry + 1) / 2) * drawSize;
@@ -129,7 +133,7 @@ export function DitherSphere({
                 dotSize
             );
         }
-    }, []);
+    }, [isHovering]);
 
     // Animation loop
     useEffect(() => {
