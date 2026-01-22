@@ -10,7 +10,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 
 interface HardwareSpec {
     label: string;
@@ -285,7 +285,7 @@ const hardware: Hardware[] = [
 
 const toSlug = (name: string) => name.toLowerCase().replace(/\s+/g, "-");
 
-export const SelectHardware = ({ hideOverview = false, className = "", navigateOnClick = false }: { hideOverview?: boolean, className?: string, navigateOnClick?: boolean }) => {
+const SelectHardwareInner = ({ hideOverview = false, className = "", navigateOnClick = false }: { hideOverview?: boolean, className?: string, navigateOnClick?: boolean }) => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -344,10 +344,11 @@ export const SelectHardware = ({ hideOverview = false, className = "", navigateO
                                 <div className='embla__container'>
                                     {hardware.map((item, index) => (
                                         <div key={index} onClick={() => {
+                                            if (emblaApi) {
+                                                emblaApi.scrollTo(index);
+                                            }
                                             if (navigateOnClick) {
                                                 router.push(`/hardware?product=${toSlug(item.name)}`);
-                                            } else if (emblaApi) {
-                                                emblaApi.scrollTo(index);
                                             }
                                         }}>
                                             <AnimatedCard className="sm:min-w-[300px] min-w-[250px] m-5 mx-4 sm:mx-8" disableScale disableTextColor isActive={!navigateOnClick && index === currentIndex}>
@@ -480,5 +481,13 @@ export const SelectHardware = ({ hideOverview = false, className = "", navigateO
                 </div>
             )}
         </div>
+    )
+}
+
+export const SelectHardware = (props: { hideOverview?: boolean, className?: string, navigateOnClick?: boolean }) => {
+    return (
+        <Suspense fallback={<div className="max-w-viewport w-full mx-auto px-5 py-6 md:py-8" />}>
+            <SelectHardwareInner {...props} />
+        </Suspense>
     )
 }

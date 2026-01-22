@@ -95,7 +95,7 @@ function UseCaseCard({ useCase, index, isInView }: UseCaseCardProps) {
             onMouseLeave={handleMouseLeave}
         >
             {/* Explore link - top right */}
-            <div className="absolute top-6 right-6 flex items-center gap-1 text-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="absolute top-6 right-6 flex items-center gap-1 text-accent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
                 <span className="text-sm font-medium">Explore</span>
                 <svg className="size-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

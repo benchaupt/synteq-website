@@ -48,10 +48,8 @@ export default function Hardware() {
   return (
     <>
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-background">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5" />
-        
-        <div className="relative px-5 py-12 md:py-16 max-w-viewport w-full mx-auto flex flex-col gap-12">
+      <div className="bg-background">
+        <div className="px-5 py-12 md:py-16 max-w-viewport w-full mx-auto flex flex-col gap-12">
           <div className="flex lg:flex-row flex-col gap-12 lg:gap-16 items-center">
             <div className="flex flex-col gap-2 items-start flex-1 min-w-0">
               <p className="subheading">Hardware</p>

@@ -50,15 +50,15 @@ export default function ServicesSection() {
             <Link
               key={index}
               href={product.href}
-              className="group bg-background-secondary border border-transparent hover:border-white/10 flex flex-col overflow-hidden relative transition-all duration-300 hover:-translate-y-2 cursor-pointer min-h-[400px] md:min-h-[500px] lg:min-h-[580px]"
+              className="group bg-background-secondary border border-transparent hover:border-white/10 flex flex-col overflow-hidden relative transition-all duration-300 hover:-translate-y-2 cursor-pointer aspect-3/4 md:aspect-auto md:min-h-[500px] lg:min-h-[580px]"
             >
               {/* Top content */}
               <div className="px-6 md:px-8 lg:px-9 pt-6 md:pt-8 lg:pt-9 z-10 flex flex-col">
                 <h3 className="heading2 tracking-tight text-white transition-colors duration-300">
                   {product.title}
                 </h3>
-                <div className="flex items-center gap-2 text-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-3">
-                  <span className="text-sm font-medium">Explore product</span>
+                <div className="flex items-center gap-2 text-accent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 mt-3">
+                  <span className="text-sm font-medium">Explore</span>
                   <svg className="size-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
