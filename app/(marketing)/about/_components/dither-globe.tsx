@@ -7,10 +7,15 @@ interface DitherGlobeProps {
     externalMousePos?: { x: number; y: number } | null;
     isHovering?: boolean;
     color?: string;
-    autoPanRange?: number;
+    dotSize?: number;
+    gridResolution?: number;
+    // Base rotation to set initial view (e.g., show NA)
+    baseRotationX?: number;
+    baseRotationY?: number;
+    baseRotationZ?: number;
+    // Auto-pan settings
     autoPanSpeed?: number;
-    dotSize?: number; // Dot radius in pixels
-    gridResolution?: number; // Grid resolution in degrees (smaller = denser grid)
+    autoPanRange?: number;
 }
 
 interface Point {
@@ -26,12 +31,10 @@ function snapToGrid(points: Point[], resolution: number): Point[] {
     const snappedPoints: Point[] = [];
 
     for (const point of points) {
-        // Convert cartesian to spherical (lat/lon)
         const r = Math.sqrt(point.x * point.x + point.y * point.y + point.z * point.z);
         const lat = Math.asin(point.y / r) * (180 / Math.PI);
         const lon = Math.atan2(point.z, point.x) * (180 / Math.PI);
 
-        // Snap to grid
         const snappedLat = Math.round(lat / resolution) * resolution;
         const snappedLon = Math.round(lon / resolution) * resolution;
 
@@ -39,7 +42,6 @@ function snapToGrid(points: Point[], resolution: number): Point[] {
         if (gridSet.has(key)) continue;
         gridSet.add(key);
 
-        // Convert back to cartesian
         const latRad = snappedLat * (Math.PI / 180);
         const lonRad = snappedLon * (Math.PI / 180);
 
@@ -57,24 +59,29 @@ export function DitherGlobe({
     className = "",
     externalMousePos,
     isHovering = false,
-    color = "75, 222, 183", // RGB values for opacity manipulation
-    autoPanRange = 15,
-    autoPanSpeed = 0.12,
-    dotSize = 2, // Dot radius in pixels
-    gridResolution = 1, // Grid resolution in degrees
+    color = "75, 222, 183",
+    dotSize = 2,
+    gridResolution = 1,
+    baseRotationX = -100,
+    baseRotationY = 10,
+    baseRotationZ = -50,
+    autoPanSpeed = 0.15,
+    autoPanRange = 12,
 }: DitherGlobeProps) {
     const pointsUrl = "/assets/about/globe-points.json";
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
-    const rotationRef = useRef({ x: 0, y: 0 });
-    const targetRotationRef = useRef({ x: 0, y: 0 });
     const animationRef = useRef<number | null>(null);
-    const timeRef = useRef<number>(0);
     const pointsRef = useRef<Point[]>([]);
     const [isLoaded, setIsLoaded] = useState(false);
 
     const sizeRef = useRef({ width: 0, height: 0, dpr: 1 });
     const projectedRef = useRef<{ x: number; y: number; z: number; opacity: number }[]>([]);
+
+    // Dynamic rotation state (on top of base)
+    const timeRef = useRef<number>(0);
+    const dynamicRotationRef = useRef({ x: 0, y: 0 });
+    const targetRotationRef = useRef({ x: 0, y: 0 });
 
     const panRangeRad = (autoPanRange * Math.PI) / 180;
 
@@ -121,7 +128,7 @@ export function DitherGlobe({
         return () => observer.disconnect();
     }, []);
 
-    const render = useCallback(() => {
+    const render = useCallback((dynamicX: number, dynamicY: number) => {
         const ctx = ctxRef.current;
         const points = pointsRef.current;
         if (!ctx || points.length === 0) return;
@@ -131,48 +138,54 @@ export function DitherGlobe({
 
         ctx.clearRect(0, 0, width, height);
 
-        const rotation = rotationRef.current;
-        const cosX = Math.cos(rotation.x);
-        const sinX = Math.sin(rotation.x);
-        const cosY = Math.cos(rotation.y);
-        const sinY = Math.sin(rotation.y);
+        // Base rotation (to position NA) + dynamic rotation (auto-pan or mouse)
+        const rotX = (baseRotationX * Math.PI) / 180 + dynamicX;
+        const rotY = (baseRotationY * Math.PI) / 180 + dynamicY;
+        const rotZ = (baseRotationZ * Math.PI) / 180;
+
+        const cosX = Math.cos(rotX);
+        const sinX = Math.sin(rotX);
+        const cosY = Math.cos(rotY);
+        const sinY = Math.sin(rotY);
+        const cosZ = Math.cos(rotZ);
+        const sinZ = Math.sin(rotZ);
 
         const dotRadius = dotSize;
         const scale = Math.min(width, height) * 0.48;
         const centerX = width / 2;
         const centerY = height / 2;
 
-        // Project and collect visible points
         const projected = projectedRef.current;
         projected.length = 0;
 
         for (let i = 0; i < points.length; i++) {
             const point = points[i];
-            const px = point.x;
-            const py = point.y;
-            const pz = point.z;
 
-            // Rotate around Y axis first
-            const rx = px * cosY - pz * sinY;
-            const rz1 = px * sinY + pz * cosY;
+            // Apply Z rotation (tilt)
+            const tx = point.x * cosZ - point.y * sinZ;
+            const ty = point.x * sinZ + point.y * cosZ;
+            const tz = point.z;
 
-            // Then rotate around X axis
-            const ry = py * cosX - rz1 * sinX;
-            const rz = py * sinX + rz1 * cosX;
+            // Rotate around Y axis
+            const rx = tx * cosY - tz * sinY;
+            const rz1 = tx * sinY + tz * cosY;
 
-            // Back-face culling - only show front hemisphere
+            // Rotate around X axis
+            const ry = ty * cosX - rz1 * sinX;
+            const rz = ty * sinX + rz1 * cosX;
+
+            // Back-face culling
             if (rz < 0) continue;
 
             const screenX = centerX + rx * scale;
             const screenY = centerY - ry * scale;
 
-            // Opacity based on depth: front (rz=1) = full opacity, edge (rz=0) = low opacity
             const opacity = 0.15 + rz * 0.85;
 
             projected.push({ x: screenX, y: screenY, z: rz, opacity });
         }
 
-        // Sort by depth (back to front) for proper layering
+        // Sort by depth (back to front)
         projected.sort((a, b) => a.z - b.z);
 
         // Draw circles
@@ -185,9 +198,9 @@ export function DitherGlobe({
             ctx.fillStyle = `rgba(${color}, ${finalOpacity})`;
             ctx.fill();
         }
-    }, [color, isHovering, dotSize]);
+    }, [color, isHovering, dotSize, baseRotationX, baseRotationY, baseRotationZ]);
 
-    // Animation loop
+    // Animation loop with auto-pan and mouse interaction
     useEffect(() => {
         if (!isLoaded) return;
 
@@ -195,22 +208,24 @@ export function DitherGlobe({
             timeRef.current = time / 1000;
 
             if (isHovering && externalMousePos) {
+                // Mouse controls rotation when hovering
                 targetRotationRef.current = {
-                    x: -(externalMousePos.y - 0.5) * panRangeRad * 0.3,
-                    y: (externalMousePos.x - 0.5) * panRangeRad * 0.6,
+                    x: -(externalMousePos.y - 0.5) * panRangeRad * 0.5,
+                    y: (externalMousePos.x - 0.5) * panRangeRad,
                 };
-                rotationRef.current.x += (targetRotationRef.current.x - rotationRef.current.x) * 0.08;
-                rotationRef.current.y += (targetRotationRef.current.y - rotationRef.current.y) * 0.08;
             } else {
-                // Gentle continuous rotation
-                const targetY = Math.sin(timeRef.current * autoPanSpeed) * panRangeRad * 0.5;
-                rotationRef.current.y += (targetY - rotationRef.current.y) * 0.03;
-                rotationRef.current.x += (0 - rotationRef.current.x) * 0.05;
-                // Add slow constant rotation for globe effect
-                rotationRef.current.y += 0.001;
+                // Auto-pan: gentle oscillation
+                targetRotationRef.current = {
+                    x: 0,
+                    y: Math.sin(timeRef.current * autoPanSpeed) * panRangeRad * 0.5,
+                };
             }
 
-            render();
+            // Smooth interpolation
+            dynamicRotationRef.current.x += (targetRotationRef.current.x - dynamicRotationRef.current.x) * 0.05;
+            dynamicRotationRef.current.y += (targetRotationRef.current.y - dynamicRotationRef.current.y) * 0.05;
+
+            render(dynamicRotationRef.current.x, dynamicRotationRef.current.y);
             animationRef.current = requestAnimationFrame(animate);
         };
 

@@ -106,7 +106,19 @@ export default function About() {
     const heroRef = useRef<HTMLDivElement>(null);
     const [isHoveringGlobe, setIsHoveringGlobe] = useState(false);
     const [globeMousePos, setGlobeMousePos] = useState<{ x: number; y: number } | null>(null);
+    const [globeDotSize, setGlobeDotSize] = useState(2);
 
+    // Responsive dot size
+    useEffect(() => {
+        const updateDotSize = () => {
+            setGlobeDotSize(window.innerWidth < 640 ? 1.2 : 2);
+        };
+        updateDotSize();
+        window.addEventListener("resize", updateDotSize);
+        return () => window.removeEventListener("resize", updateDotSize);
+    }, []);
+
+        
     useEffect(() => {
         if (!emblaApi) return;
 
@@ -138,23 +150,13 @@ export default function About() {
             {/* Hero Section */}
             <section
                 ref={heroRef}
-                className="relative max-w-viewport w-full mx-auto px-5 py-16 md:py-24 min-h-[600px] md:min-h-[700px] flex flex-col overflow-hidden"
+                className="relative max-w-viewport w-full mx-auto px-5 py-16 md:py-24 lg:min-h-[700px] flex flex-col lg:justify-center overflow-hidden"
                 onMouseMove={handleHeroMouseMove}
                 onMouseEnter={() => setIsHoveringGlobe(true)}
                 onMouseLeave={() => setIsHoveringGlobe(false)}
             >
-                {/* Background Globe */}
-                <div className="absolute bottom-0 right-0 w-[60%] aspect-square translate-y-[35%] pointer-events-none">
-                    <DitherGlobe
-                        externalMousePos={globeMousePos}
-                        isHovering={isHoveringGlobe}
-                    />
-                    {/* Gradient fade overlay */}
-                    <div className="absolute inset-0 bg-linear-to-r from-background via-background/80 via-50% to-transparent" />
-                </div>
-
                 {/* Text Content */}
-                <div className="relative z-10 flex flex-col justify-between flex-1 max-w-2xl">
+                <div className="relative z-10 flex flex-col max-w-2xl items-center">
                     <div className="flex flex-col gap-2">
                         <p className="subheading">
                             About Us
@@ -163,9 +165,23 @@ export default function About() {
                             We&apos;re building the future of AI infrastructure
                         </h1>
                     </div>
-                    <p className="text-sm md:text-base text-white/60 leading-relaxed">
+                    <p className="text-sm md:text-base text-white/60 leading-relaxed pt-4">
                         We&apos;re on a mission to make AI development easy. From hardware to cloud, we provide the infrastructure that powers the next wave of AI products.
                     </p>
+                </div>
+
+                {/* Globe - in flow on mobile, absolute on lg+ */}
+                <div className="relative w-full aspect-square mt-8 -mb-[45%] lg:absolute lg:bottom-0 lg:right-0 lg:w-[60%] lg:mt-0 lg:mb-0 lg:translate-y-[35%] pointer-events-none">
+                    <DitherGlobe
+                        externalMousePos={globeMousePos}
+                        isHovering={isHoveringGlobe}
+                        baseRotationX={-90}
+                        baseRotationY={14}
+                        baseRotationZ={-36}
+                        dotSize={globeDotSize}
+                    />
+                    {/* Gradient fade overlay - bottom fade only */}
+                    <div className="absolute inset-0 bg-linear-to-t from-background via-background/50 via-30% to-transparent" />
                 </div>
             </section>
 
@@ -365,6 +381,7 @@ export default function About() {
             {/* <UseCasesSection /> */}
 
             <CallToActionNew />
-        </>
+
+                    </>
     );
 }
