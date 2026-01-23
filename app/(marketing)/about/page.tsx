@@ -2,6 +2,7 @@
 "use client";
 
 import { AboutStatsSection } from "@/app/(marketing)/about/_components/about-stats-section";
+import { DitherGlobe } from "@/app/(marketing)/about/_components/dither-globe";
 import { StoryTimeline } from "@/app/(marketing)/about/_components/story-timeline";
 // import { UseCasesSection } from "@/app/(marketing)/about/_components/use-cases-section";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/app/_components/accordion";
@@ -10,7 +11,7 @@ import { ScrollRevealText } from "@/app/_components/scroll-reveal-text";
 import { cn } from "@/lib/utils";
 import useEmblaCarousel from "embla-carousel-react";
 import { motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const storyItems = [
     {
@@ -101,6 +102,11 @@ export default function About() {
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "center" });
     const [selectedIndex, setSelectedIndex] = useState(0);
 
+    // Globe interaction state
+    const heroRef = useRef<HTMLDivElement>(null);
+    const [isHoveringGlobe, setIsHoveringGlobe] = useState(false);
+    const [globeMousePos, setGlobeMousePos] = useState<{ x: number; y: number } | null>(null);
+
     useEffect(() => {
         if (!emblaApi) return;
 
@@ -118,29 +124,48 @@ export default function About() {
 
     const scrollTo = (index: number) => emblaApi?.scrollTo(index);
 
+    const handleHeroMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!heroRef.current) return;
+        const rect = heroRef.current.getBoundingClientRect();
+        setGlobeMousePos({
+            x: (e.clientX - rect.left) / rect.width,
+            y: (e.clientY - rect.top) / rect.height,
+        });
+    };
+
     return (
         <>
             {/* Hero Section */}
-            <section className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24 flex flex-col">
-                <div className="flex lg:flex-row flex-col gap-12 lg:gap-16 items-center">
-                    {/* Left - Text Content */}
-                    <div className="flex flex-col gap-2 flex-1 min-w-0">
+            <section
+                ref={heroRef}
+                className="relative max-w-viewport w-full mx-auto px-5 py-16 md:py-24 min-h-[600px] md:min-h-[700px] flex flex-col overflow-hidden"
+                onMouseMove={handleHeroMouseMove}
+                onMouseEnter={() => setIsHoveringGlobe(true)}
+                onMouseLeave={() => setIsHoveringGlobe(false)}
+            >
+                {/* Background Globe */}
+                <div className="absolute bottom-0 right-0 w-[60%] aspect-square translate-y-[35%] pointer-events-none">
+                    <DitherGlobe
+                        externalMousePos={globeMousePos}
+                        isHovering={isHoveringGlobe}
+                    />
+                    {/* Gradient fade overlay */}
+                    <div className="absolute inset-0 bg-linear-to-r from-background via-background/80 via-50% to-transparent" />
+                </div>
+
+                {/* Text Content */}
+                <div className="relative z-10 flex flex-col justify-between flex-1 max-w-2xl">
+                    <div className="flex flex-col gap-2">
                         <p className="subheading">
                             About Us
                         </p>
-                        <h1 className="title max-w-2xl">
+                        <h1 className="title">
                             We&apos;re building the future of AI infrastructure
                         </h1>
-                        <p className="text-sm md:text-base text-white/60 leading-relaxed max-w-2xl pt-4">
-                            We&apos;re on a mission to make AI development easy. From hardware to cloud, we provide the infrastructure that powers the next wave of AI products.
-                        </p>
                     </div>
-                    {/* Right - Dither Placeholder */}
-                    <div className="w-full lg:w-auto lg:flex-1 flex items-center justify-center">
-                        <div className="w-full max-w-lg lg:max-w-xl aspect-square bg-background-secondary rounded-lg border border-white/10 flex items-center justify-center">
-                            <span className="font-mono text-xs text-white/30 uppercase tracking-wider">Dither Placeholder</span>
-                        </div>
-                    </div>
+                    <p className="text-sm md:text-base text-white/60 leading-relaxed">
+                        We&apos;re on a mission to make AI development easy. From hardware to cloud, we provide the infrastructure that powers the next wave of AI products.
+                    </p>
                 </div>
             </section>
 
