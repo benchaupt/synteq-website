@@ -91,7 +91,7 @@ export function AboutStatsSection({
   stats = defaultStats,
 }: AboutStatsSectionProps) {
   return (
-    <section className="max-w-viewport w-full mx-auto px-5 py-16 md:pt-6 md:pb-24">
+    <section className="max-w-viewport w-full mx-auto px-5 py-16 md:pt-2 md:pb-24">
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between items-center md:items-start gap-12 py-8 border-white/10">
         {/* Leader text */}
         <motion.h2

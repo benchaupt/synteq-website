@@ -5,21 +5,23 @@ import { TestimonialCarousel } from "@/app/_components/testimonial-carousel";
 import { LanderDynamic } from "@/app/(marketing)/animations/lander-dynamic";
 import { ComputeSection } from "./_components/compute-section";
 import { StorageSection } from "./_components/storage-section";
+import { AnimatedButton } from "@/app/_components/animated-button";
 import { motion, useInView } from "motion/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRef } from "react";
 import { useRouter } from "next/navigation";
 
 const services = [
     {
         title: "VPS/Compute",
-        description: "Scalable CPU infrastructure for data preprocessing, model serving, and general compute workloads.",
+        description: "General-purpose compute for all workloads and applications. Data processing, model serving, orchestration, and application workloads.",
         image: "/assets/infrastructure/cpu-compute-image.png",
         href: "#compute"
     },
     {
         title: "Storage",
-        description: "High-performance storage solutions for AI workloads. Fast access to training data and model checkpoints.",
+        description: "General-purpose storage for all workloads and applications. Datasets, artifacts, backups, and application data.",
         image: "/assets/infrastructure/storage-image.png",
         href: "#storage"
     },
@@ -104,23 +106,29 @@ export default function Infrastructure() {
     return (
         <>
             {/* Hero Section */}
-            <section className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24 flex flex-col">
-                <div className="flex lg:flex-row flex-col gap-12 lg:gap-16 items-center">
-                    <div className="flex flex-col gap-2 flex-1 min-w-0">
-                        <p className="subheading">
-                            Infrastructure
-                        </p>
-                        <h1 className="title max-w-2xl">
-                            Enterprise-grade AI infrastructure
-                        </h1>
-                        <p className="text-sm md:text-base text-white/60 leading-relaxed max-w-xl pt-4">
-                            Purpose-built data centers and hardware designed for the most demanding AI workloads. From training clusters to inference at scale.
-                        </p>
+            <section className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24 lg:py-32 flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-16">
+                <div className="flex flex-col gap-2 lg:flex-1">
+                    <p className="subheading">
+                        Infrastructure
+                    </p>
+                    <h1 className="title max-w-2xl">
+                      Best in class compute and storage.
+                    </h1>
+                    <p className="text-sm md:text-base text-white/60 leading-relaxed max-w-xl pt-4">
+                      Virtual machines and storage volumes for application servers, data pipelines, and the systems that support them.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-6 pt-12">
+                        <Link href="/contact">
+                            <AnimatedButton background="dark" className="hover:bg-background-secondary">
+                                Talk to Sales
+                            </AnimatedButton>
+                        </Link>
                     </div>
-                    {/* Right - Lander Animation */}
-                    <div className="w-full lg:w-auto lg:flex-1 flex items-center justify-center">
-                        <LanderDynamic className="w-full max-w-lg lg:max-w-xl xl:max-w-2xl" />
-                    </div>
+                </div>
+
+                {/* Lander Animation */}
+                <div className="w-full max-w-3xl mx-auto lg:flex-1 lg:max-w-none">
+                    <LanderDynamic className="w-full h-auto" />
                 </div>
             </section>
 
@@ -152,7 +160,7 @@ export default function Infrastructure() {
                             animate={isServicesInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
                             transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
                         >
-                            We provide infrastructure options spanning shared cloud, dedicated nodes, and bare metal—supporting workloads from initial experimentation through large-scale training and production inference.
+                            High-performance virtual private servers and storage for production applications and supporting systems.
                         </motion.p>
                     </div>
 

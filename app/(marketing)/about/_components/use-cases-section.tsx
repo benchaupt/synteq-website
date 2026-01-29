@@ -22,29 +22,29 @@ interface UseCase {
 const useCases: UseCase[] = [
     {
         title: "Research",
-        highlight: "Explore new frontiers in AI.",
-        description: "Purpose-built infrastructure for academic institutions, labs, and breakthrough experimentation.",
+        highlight: "Built for experimentation.",
+        description: "Dedicated infrastructure for labs and institutions pushing models beyond what’s known.",
         icon: null,
         useDitherSphere: true,
     },
     {
         title: "Training",
-        highlight: "Train models at any scale.",
-        description: "From fine-tuning to full pre-training, our GPU clusters handle the heaviest workloads.",
+        highlight: "Train at scale.",
+        description: "Built for fine-tuning and pre-training with elastic throughput- from baseline runs to peak utilization.",
         icon: null,
         useDitherGrid: true,
     },
     {
         title: "Startups",
-        highlight: "Ship faster, spend smarter.",
-        description: "Flexible pricing and instant access to GPUs let you iterate quickly without overcommitting.",
+        highlight: "Move at full speed.",
+        description: "Production ready systems with transparent pricing, built to scale when you do— not before.",
         icon: null,
         useDitherStartupStatue: true,
     },
     {
         title: "Enterprise",
-        highlight: "Infrastructure that scales with you.",
-        description: "Dedicated support, custom SLAs, and security compliance for mission-critical AI deployments.",
+        highlight: "Infrastructure you can commit to.",
+        description: "Dedicated architecture, custom SLAs, compliance, and direct support built around your AI strategy.",
         icon: null,
         useDitherEnterpriseStatue: true,
     }

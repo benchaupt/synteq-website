@@ -7,10 +7,10 @@ import Link from "next/link";
 
 const coreValues = [
     { number: "01", value: "Sub-50ms inference latency" },
-    { number: "02", value: "255+ production models" },
+    { number: "02", value: "Blackwell & H200 availity" },
     { number: "03", value: "99.99% uptime SLA" },
-    { number: "04", value: "H100 & A100 GPU clusters" },
-    { number: "05", value: "Research-grade infrastructure" }
+    { number: "05", value: "Research-grade infrastructure" },
+    { number: "06", value: "Transparent pricing" }
 ];
 
 export default function EffortlessSection() {
@@ -30,15 +30,16 @@ export default function EffortlessSection() {
                         <p className="subheading">
                             AI INFERENCE & RESEARCH PLATFORM
                         </p>
-                        <h1 className="title max-w-xl">
-                            Ship AI products in days, not months
+                        <h1 className="title">
+                            <span className="lg:block lg:whitespace-nowrap">AI at the speed</span>
+                            <span className="lg:block lg:whitespace-nowrap"> of ambition</span>
                         </h1>
                         <p className="text-base md:text-base lg:text-base text-white/70 leading-relaxed max-w-xl pt-4">
-                            Purpose-built infrastructure for AI inference and research. Deploy models to production with enterprise-grade GPUs, transparent pricing, and the performance your users expect.
+                        Built for inference, training, and general compute. Engineered for speed, control, and predictable performance.
                         </p>
                     </div>
 
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-4 pt-8">
                         {coreValues.map((item, index) => (
                             <motion.div
                                 key={index}

@@ -139,17 +139,18 @@ function CloudContent() {
     <>
       {/* Hero Section */}
       <div className="bg-background">
-        <div className="px-5 py-12 md:py-16 max-w-viewport w-full mx-auto flex flex-col gap-12">
-          <div className="flex lg:flex-row flex-col gap-12 lg:gap-16 items-center">
+        <div className="px-5 py-16 md:py-2 lg:min-h-[700px] max-w-viewport w-full mx-auto flex flex-col gap-12 justify-center">
+          <div className="flex lg:flex-row flex-col gap-12 lg:gap-16 items-center lg:min-h-[300px]">
             <div className="flex flex-col gap-2 items-start justify-center flex-1 min-w-0">
-              <p className="subheading">AI Cloud Platform</p>
+              <p className="subheading">Inference Cloud</p>
               <div className="max-w-4xl">
                 <h1 className="title max-w-2xl">
-                  Production AI without the complexity
-              </h1>
+                  <span className="lg:block lg:whitespace-nowrap">Production compute</span>
+                  <span className="lg:block lg:whitespace-nowrap">on dedicated hardware.</span>
+                </h1>
               </div>
-              <p className="text-base md:text-base lg:text-base text-white/60 max-w-lg pt-4">
-                Deploy, scale, and manage AI models in minutes. No DevOps required. No surprise bills. Just production-ready infrastructure that works.
+              <p className="text-base md:text-base lg:text-base text-white/60 max-w-2xl pt-4">
+              Build and train custom models, or deploy inference workloads from prebuilt images using dedicated GPU hardware and standardized environments.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 pt-12">
                 <AnimatedButton background="primary">
@@ -181,13 +182,10 @@ function CloudContent() {
       <div ref={modelsRef} className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24">
         <div className="flex flex-col gap-12">
           <div className="flex flex-col gap-4 items-center text-center">
-            <p className="subheading">Model Library</p>
-            <h2 className="heading max-w-3xl">
-              Deploy any model, instantly
+            <p className="subheading">Model Foundry</p>
+            <h2 className="heading w-full md:max-w-5xl">
+            Curated model foundations for training, fine-tuning, and deployment.
             </h2>
-            <p className="text-base text-white/60 max-w-2xl">
-              From GPT-4 to open-source giants. One API, 255+ models, zero infrastructure hassle.
-            </p>
           </div>
 
           {/* Model Grid */}

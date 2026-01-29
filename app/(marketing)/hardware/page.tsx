@@ -49,7 +49,7 @@ export default function Hardware() {
     <>
       {/* Hero Section */}
       <div className="bg-background">
-        <div className="px-5 py-12 md:py-16 max-w-viewport w-full mx-auto flex flex-col gap-12">
+        <div className="px-5 py-16 md:py-24 lg:min-h-[700px] max-w-viewport w-full mx-auto flex flex-col gap-12 lg:justify-center">
           <div className="flex lg:flex-row flex-col gap-12 lg:gap-16 items-center">
             <div className="flex flex-col gap-2 items-start flex-1 min-w-0">
               <p className="subheading">Hardware</p>
@@ -59,9 +59,9 @@ export default function Hardware() {
               </h1>
             </div>
               <p className="text-sm md:text-base text-white/60 max-w-2xl leading-relaxed pt-4">
-                Launch, run, and scale AI models in minutes, without the cloud confusion, GPU expertise, or unpredictable costs. As easy as a single click.
+               Launch, run, and scale AI models with predictable infrastructure, transparent costs, and production-ready workflows.
               </p>
-              <div className="flex flex-col sm:flex-row gap-6 pt-4">
+              <div className="flex flex-col sm:flex-row gap-6 pt-12">
                 <AnimatedButton background="primary">
                   Launch
                 </AnimatedButton>
@@ -87,7 +87,7 @@ export default function Hardware() {
           <div className="flex flex-col items-center justify-center text-center gap-4">
             <p className="subheading">Enterprise-grade infrastructure</p>
             <h2 className="heading">
-              Designed to do less, and perform better.
+             Curated platforms for every workload
             </h2>
           </div>
         </div>

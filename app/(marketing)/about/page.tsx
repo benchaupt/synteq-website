@@ -162,7 +162,8 @@ export default function About() {
                             About Us
                         </p>
                         <h1 className="title">
-                            We&apos;re building the future of AI infrastructure
+                            <span className="lg:block lg:whitespace-nowrap">We&apos;re building the future </span>
+                            <span className="lg:block lg:whitespace-nowrap">of AI infrastructure</span>
                         </h1>
                     </div>
                     <p className="text-sm md:text-base text-white/60 leading-relaxed pt-4">

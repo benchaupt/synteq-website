@@ -45,7 +45,7 @@ export default function Landing() {
             ))}
           </Marquee>
           <div className="flex items-center justify-center px-4">
-            <p className="subheading text-center">SYNTEQ AI POWERS THE BEST AI TEAMS. <Link href="#" className="subheading underline-offset-4 underline hover:underline-offset-6 duration-150">Meet our customers ↘</Link>.</p>
+            <p className="subheading text-center uppercase">SYNTEQ AI POWERS THE WORLDS LEADING AI TEAMS. {/* <Link href="#" className="subheading underline-offset-4 underline hover:underline-offset-6 duration-150">Meet our customers ↘</Link>.*/} </p>
           </div>
         </div>
 
@@ -79,7 +79,7 @@ export default function Landing() {
               </Marquee>
               <div className="flex items-center justify-center">
                 <p className="font-mono text-sm text-accent uppercase tracking-tight text-center">
-                build, and scale AI models in minutes, without the cloud confusion, GPU expertise. Easy as a single click.
+                 A curated foundry of top performing models for training, fine-tuning, and production inference
                 </p>
               </div>
             </div>
@@ -124,7 +124,7 @@ export default function Landing() {
 
       <section className="max-w-viewport w-full md:w-[70%] mx-auto px-5 py-24 md:py-32 lg:py-48 flex flex-col items-center">
         <ScrollRevealText
-          text="We build the infrastructure that powers the next generation of AI — reliable, scalable, and ready when you need it."
+          text="We’re the reason your competitor already shipped. State of the art inference built for speed and control."
           className="text-center"
           textClassName=""
         />

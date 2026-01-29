@@ -7,19 +7,19 @@ export default function ServicesSection() {
   const products = [
     {
       title: "Inference Cloud",
-      description: "Deploy AI models instantly with auto-scaling inference endpoints. Pay only for what you use.",
+      description: "Instant inference for production systems. Start serving traffic in minutes.",
       href: "/cloud",
       image: "/assets/landing/inference-cloud.svg"
     },
     {
-      title: "GPU Cloud Servers",
-      description: "High-performance GPU instances for training and fine-tuning. Scale from single to multi-node clusters.",
+      title: "GPU Clusters",
+      description: "Persistent GPU systems for long-running, high-intensity workloads.",
       href: "/cloud",
       image: "/assets/landing/gpu-cloud-servers.svg"
     },
     {
-      title: "Bare Metal Clusters",
-      description: "Dedicated GPU infrastructure with full hardware control. Maximum performance for large-scale workloads.",
+      title: "General Compute",
+      description: "The foundation everything else runs on. CPU and storage for orchestration, APIs, and data.",
       href: "/hardware",
       image: "/assets/landing/bare-metal-clusters.svg"
     }
@@ -34,9 +34,8 @@ export default function ServicesSection() {
             <p className="subheading">
               Our Products
             </p>
-            <h2 className="heading">
-              Purpose-built<br />
-              for AI at scale
+            <h2 className="heading max-w-[75%]">
+            Built for teams that ship
             </h2>
           </div>
           <p className="text-base md:text-base lg:text-base text-dark-foreground flex-1 leading-relaxed max-w-2xl">

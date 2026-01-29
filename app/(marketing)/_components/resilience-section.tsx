@@ -9,12 +9,11 @@ export default function ResilienceSection() {
           <div className="flex w-full flex-col gap-6 md:gap-8">
             <h2 className="heading leading-tight md:leading-9 font-sequel-book relative">
               <span className="text-white">Engineering for AI</span>
-              <span className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,transparent_35%,#4BDEB700_40%,#4BDEB7_50%,#4BDEB700_60%,transparent_65%,transparent_100%)] bg-[length:200%_100%] bg-clip-text text-transparent animate-shimmer pointer-events-none" aria-hidden="true">Engineering for AI</span>
+              <span className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,transparent_40%,#8EEBD3_50%,transparent_60%,transparent_100%)] bg-[length:200%_100%] bg-clip-text text-transparent animate-shimmer pointer-events-none select-none" aria-hidden="true">Engineering for AI</span>
             </h2>
             <p className="text-base md:text-base lg:text-base text-foreground/65 max-w-lg">
-              <span className="text-foreground text-base md:text-base lg:text-base">Purpose-built hardware</span>
-              {` meets cloud-native design. Every component from GPU clusters to network fabri is optimized for AI workloads. `}
-              <span className="text-foreground text-base md:text-base lg:text-base">{`Research-grade infrastructure `}</span>
+              <span> Every component from GPU clusters to network fabri is optimized for your workloads.</span>
+              <span className="text-foreground">{` Research-grade infrastructure `}</span>
               that delivers production reliability, designed for the next generation of AI products.
             </p>
           </div>
@@ -60,7 +59,7 @@ export default function ResilienceSection() {
               Hardware
             </p>
             <p className="heading2 text-white">
-              H100 & A100
+            Blackwell & H200 clusters
             </p>
             <p className="text-base md:text-base lg:text-base text-white/65">
               Latest-generation GPUs optimized for training and inference.

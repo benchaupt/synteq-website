@@ -110,9 +110,7 @@ export function ComputeSection() {
           >
             <p className="subheading">Compute</p>
             <h2 className="heading">
-              Revolutioning Storage and
-              <br />
-              more Storage with Storage
+            Modern Infrastructure for General-Purpose Compute
             </h2>
           </motion.div>
           <motion.p
@@ -121,10 +119,7 @@ export function ComputeSection() {
             animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-            porttitor, ex vitae vehicula sodales, urna sapien interdum orci, sed
-            accumsan erat magna eget enim. Integer quis libero in turpis sodales
-            blandit.
+            Flexible CPU-based infrastructure for running application servers, data pipelines, orchestration layers, and supporting services.
           </motion.p>
         </div>
 

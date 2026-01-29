@@ -471,7 +471,6 @@ const SelectHardwareInner = ({ hideOverview = false, className = "", navigateOnC
                                         transition={{ duration: 0.4, ease: "easeOut" }}
                                         className="relative"
                                     >
-                                        <div className="absolute inset-0 bg-accent/5 rounded-2xl blur-3xl" />
                                         <img src={hardware[currentIndex].image} className="relative object-contain w-full" alt={hardware[currentIndex].name} />
                                     </motion.div>
                                 </AnimatePresence>

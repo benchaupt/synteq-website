@@ -7,6 +7,8 @@ interface DitherStartupStatueProps {
     externalMousePos?: { x: number; y: number } | null;
     isHovering?: boolean;
     color?: string;
+    dotSize?: number;
+    gridResolution?: number;
     autoPanRange?: number;
     autoPanSpeed?: number;
 }
@@ -15,53 +17,73 @@ interface Point {
     x: number;
     y: number;
     z: number;
-    t: number;
+    t?: number;
 }
 
-// Pre-compute opacity values for batching
-const OPACITY_BUCKETS = 10;
-const OPACITY_VALUES: number[] = [];
-for (let i = 0; i <= OPACITY_BUCKETS; i++) {
-    OPACITY_VALUES.push(0.3 + (i / OPACITY_BUCKETS) * 0.7);
+// Snap points to a 3D Cartesian grid for uniform distribution
+function snapToGrid(points: Point[], resolution: number): Point[] {
+    const gridSet = new Set<string>();
+    const snappedPoints: Point[] = [];
+
+    for (const point of points) {
+        // Snap each coordinate to the grid
+        const snappedX = Math.round(point.x / resolution) * resolution;
+        const snappedY = Math.round(point.y / resolution) * resolution;
+        const snappedZ = Math.round(point.z / resolution) * resolution;
+
+        const key = `${snappedX},${snappedY},${snappedZ}`;
+        if (gridSet.has(key)) continue;
+        gridSet.add(key);
+
+        snappedPoints.push({
+            x: snappedX,
+            y: snappedY,
+            z: snappedZ,
+        });
+    }
+
+    return snappedPoints;
 }
 
 export function DitherStartupStatue({
     className = "",
     externalMousePos,
     isHovering = false,
-    color = "rgb(75, 222, 183)",
+    color = "75, 222, 183",
+    dotSize = 1,
+    gridResolution = 0.02,
     autoPanRange = 10,
     autoPanSpeed = 0.15,
 }: DitherStartupStatueProps) {
     const pointsUrl = "/assets/cards/startup-statue-points.json";
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
-    const rotationRef = useRef({ x: 0, y: 0 });
-    const targetRotationRef = useRef({ x: 0, y: 0 });
     const animationRef = useRef<number | null>(null);
-    const timeRef = useRef<number>(0);
     const pointsRef = useRef<Point[]>([]);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    // Cached buffers - reused each frame
-    const sizeRef = useRef({ width: 0, height: 0, dpr: 1, gridWidth: 0, gridHeight: 0 });
-    const depthBufferRef = useRef<Float32Array | null>(null);
-    const thresholdsRef = useRef<Float32Array | null>(null);
+    const sizeRef = useRef({ width: 0, height: 0, dpr: 1 });
+    const projectedRef = useRef<{ x: number; y: number; z: number; opacity: number }[]>([]);
+
+    // Dynamic rotation state
+    const timeRef = useRef<number>(0);
+    const rotationRef = useRef({ x: 0, y: 0 });
+    const targetRotationRef = useRef({ x: 0, y: 0 });
 
     const panRangeRad = (autoPanRange * Math.PI) / 180;
 
-    // Load points from JSON
+    // Load points from JSON and snap to grid
     useEffect(() => {
         fetch(pointsUrl)
             .then((res) => res.json() as Promise<Point[]>)
             .then((data) => {
-                pointsRef.current = data;
+                pointsRef.current = snapToGrid(data, gridResolution);
                 setIsLoaded(true);
             })
             .catch((err) => console.error("Failed to load statue points:", err));
-    }, [pointsUrl]);
+    }, [pointsUrl, gridResolution]);
 
-    // Handle canvas resize and buffer allocation
+    // Handle canvas resize
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
@@ -73,26 +95,10 @@ export function DitherStartupStatue({
             const height = rect.height;
 
             if (sizeRef.current.width !== width || sizeRef.current.height !== height || sizeRef.current.dpr !== dpr) {
-                const gridWidth = Math.ceil(width);
-                const gridHeight = Math.ceil(height);
-                const bufferSize = gridWidth * gridHeight;
-
-                sizeRef.current = { width, height, dpr, gridWidth, gridHeight };
+                sizeRef.current = { width, height, dpr };
                 canvas.width = width * dpr;
                 canvas.height = height * dpr;
 
-                // Allocate/reallocate buffers
-                depthBufferRef.current = new Float32Array(bufferSize);
-                thresholdsRef.current = new Float32Array(bufferSize);
-
-                // Pre-compute thresholds (deterministic, only changes on resize)
-                const thresholds = thresholdsRef.current;
-                for (let i = 0; i < bufferSize; i++) {
-                    const hash = Math.sin(i * 9999 + 127) * 10000;
-                    thresholds[i] = hash - Math.floor(hash);
-                }
-
-                // Re-acquire context
                 const ctx = canvas.getContext("2d", { alpha: true });
                 if (ctx) {
                     ctx.scale(dpr, dpr);
@@ -112,14 +118,11 @@ export function DitherStartupStatue({
     const render = useCallback(() => {
         const ctx = ctxRef.current;
         const points = pointsRef.current;
-        const depthBuffer = depthBufferRef.current;
-        const thresholds = thresholdsRef.current;
-        if (!ctx || points.length === 0 || !depthBuffer || !thresholds) return;
+        if (!ctx || points.length === 0) return;
 
-        const { width, height, gridWidth, gridHeight } = sizeRef.current;
+        const { width, height } = sizeRef.current;
         if (width === 0) return;
 
-        // Clear
         ctx.clearRect(0, 0, width, height);
 
         const rotation = rotationRef.current;
@@ -128,101 +131,67 @@ export function DitherStartupStatue({
         const cosY = Math.cos(rotation.y);
         const sinY = Math.sin(rotation.y);
 
-        const dotSize = 1.6;
+        const dotRadius = dotSize;
         const scale = Math.min(width, height) * 0.555;
         const centerX = width / 2;
         const centerY = height / 2;
 
-        // Reset depth buffer (use -1 as "empty" marker)
-        depthBuffer.fill(-1);
+        const projected = projectedRef.current;
+        projected.length = 0;
 
-        // Project all points and fill depth buffer
+        // Find depth range for normalization
+        let minZ = Infinity;
+        let maxZ = -Infinity;
+
         for (let i = 0; i < points.length; i++) {
             const point = points[i];
+            // Remap coordinates (statue uses different axis orientation)
             const px = point.x;
             const py = point.z;
             const pz = -point.y;
 
+            // Rotate around Y axis
             const rx = px * cosY - pz * sinY;
             const rz1 = px * sinY + pz * cosY;
+
+            // Rotate around X axis
             const ry = py * cosX - rz1 * sinX;
             const rz = py * sinX + rz1 * cosX;
 
-            if (rz < -0.05) continue;
+            // Back-face culling (less aggressive for statue)
+            if (rz < -0.3) continue;
+
+            if (rz < minZ) minZ = rz;
+            if (rz > maxZ) maxZ = rz;
 
             const screenX = centerX + rx * scale;
             const screenY = centerY - ry * scale;
 
-            const gridX = screenX | 0; // Fast floor
-            const gridY = screenY | 0;
-
-            if (gridX < 0 || gridX >= gridWidth || gridY < 0 || gridY >= gridHeight) continue;
-
-            const idx = gridY * gridWidth + gridX;
-            const normalizedDepth = (rz + 1) * 0.5;
-
-            if (depthBuffer[idx] < normalizedDepth) {
-                depthBuffer[idx] = normalizedDepth;
-            }
+            projected.push({ x: screenX, y: screenY, z: rz, opacity: 0 });
         }
 
-        // Render with batching by opacity when hovering
-        ctx.fillStyle = color;
-
-        if (isHovering) {
-            // Batch by opacity bucket
-            const buckets: number[][] = [];
-            for (let i = 0; i <= OPACITY_BUCKETS; i++) {
-                buckets.push([]);
-            }
-
-            for (let gy = 0; gy < gridHeight; gy++) {
-                const rowOffset = gy * gridWidth;
-                for (let gx = 0; gx < gridWidth; gx++) {
-                    const idx = rowOffset + gx;
-                    const depth = depthBuffer[idx];
-
-                    if (depth < 0) continue;
-
-                    const density = 0.1 + depth * 2;
-                    if (thresholds[idx] >= density) continue;
-
-                    const bucketIdx = Math.min(OPACITY_BUCKETS, (depth * OPACITY_BUCKETS) | 0);
-                    buckets[bucketIdx].push(gx, gy);
-                }
-            }
-
-            // Render each bucket
-            for (let b = 0; b <= OPACITY_BUCKETS; b++) {
-                const bucket = buckets[b];
-                if (bucket.length === 0) continue;
-
-                ctx.globalAlpha = OPACITY_VALUES[b];
-                for (let j = 0; j < bucket.length; j += 2) {
-                    ctx.fillRect(bucket[j], bucket[j + 1], dotSize, dotSize);
-                }
-            }
-            ctx.globalAlpha = 1;
-        } else {
-            // Single pass - CSS handles opacity
-            ctx.globalAlpha = 1;
-            for (let gy = 0; gy < gridHeight; gy++) {
-                const rowOffset = gy * gridWidth;
-                for (let gx = 0; gx < gridWidth; gx++) {
-                    const idx = rowOffset + gx;
-                    const depth = depthBuffer[idx];
-
-                    if (depth < 0) continue;
-
-                    const density = .1 + depth * 3;
-                    if (thresholds[idx] >= density) continue;
-
-                    ctx.fillRect(gx, gy, dotSize, dotSize);
-                }
-            }
-            ctx.globalAlpha = 1;
+        // Calculate opacity based on normalized depth
+        const depthRange = maxZ - minZ || 1;
+        for (let i = 0; i < projected.length; i++) {
+            const p = projected[i];
+            const normalizedDepth = (p.z - minZ) / depthRange;
+            p.opacity = 0.2 + normalizedDepth * 0.8;
         }
-    }, [color, isHovering]);
+
+        // Sort by depth (back to front)
+        projected.sort((a, b) => a.z - b.z);
+
+        // Draw circles
+        for (let i = 0; i < projected.length; i++) {
+            const p = projected[i];
+            const finalOpacity = isHovering ? p.opacity : p.opacity * 0.5;
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, dotRadius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${color}, ${finalOpacity})`;
+            ctx.fill();
+        }
+    }, [color, isHovering, dotSize]);
 
     // Animation loop
     useEffect(() => {
@@ -232,18 +201,23 @@ export function DitherStartupStatue({
             timeRef.current = time / 1000;
 
             if (isHovering && externalMousePos) {
+                // Mouse controls rotation when hovering
                 targetRotationRef.current = {
                     x: -(externalMousePos.y - 0.5) * panRangeRad * 0.25,
                     y: (externalMousePos.x - 0.5) * panRangeRad * 0.5,
                 };
-                rotationRef.current.x += (targetRotationRef.current.x - rotationRef.current.x) * 0.08;
-                rotationRef.current.y += (targetRotationRef.current.y - rotationRef.current.y) * 0.08;
             } else {
-                const baseOffset = (15 * Math.PI) / 180; // +10° base rotation
-                const targetY = baseOffset + Math.sin(timeRef.current * autoPanSpeed) * panRangeRad;
-                rotationRef.current.y += (targetY - rotationRef.current.y) * 0.05;
-                rotationRef.current.x += (0 - rotationRef.current.x) * 0.05;
+                // Auto-pan: gentle oscillation with base offset
+                const baseOffset = (15 * Math.PI) / 180;
+                targetRotationRef.current = {
+                    x: 0,
+                    y: baseOffset + Math.sin(timeRef.current * autoPanSpeed) * panRangeRad,
+                };
             }
+
+            // Smooth interpolation
+            rotationRef.current.x += (targetRotationRef.current.x - rotationRef.current.x) * 0.05;
+            rotationRef.current.y += (targetRotationRef.current.y - rotationRef.current.y) * 0.05;
 
             render();
             animationRef.current = requestAnimationFrame(animate);
