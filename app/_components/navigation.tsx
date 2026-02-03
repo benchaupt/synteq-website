@@ -57,11 +57,11 @@ export const Navigation = () => {
                 {/* Desktop Navigation */}
                 <NavigationMenu.Root className="hidden lg:flex absolute left-1/2 -translate-x-1/2 z-10 overflow-visible">
                     <NavigationMenu.List className="flex flex-row items-center gap-1">
-                        {/* Hardware Link */}
+                        {/* Clusters Link */}
                         <NavigationMenu.Item>
                             <NavigationMenu.Link asChild>
-                                <Link href="/hardware" className="px-4 py-2 text-white/80 hover:text-accent transition-colors duration-200 text-sm">
-                                    Hardware
+                                <Link href="/clusters" className="px-4 py-2 text-white/80 hover:text-accent transition-colors duration-200 text-sm">
+                                    Clusters
                                 </Link>
                             </NavigationMenu.Link>
                         </NavigationMenu.Item>
@@ -75,11 +75,11 @@ export const Navigation = () => {
                             </NavigationMenu.Link>
                         </NavigationMenu.Item>
 
-                        {/* Infrastructure Link */}
+                        {/* Compute Link */}
                         <NavigationMenu.Item>
                             <NavigationMenu.Link asChild>
-                                <Link href="/infrastructure" className="px-4 py-2 text-white/80 hover:text-accent transition-colors duration-200 text-sm">
-                                    Infrastructure
+                                <Link href="/compute" className="px-4 py-2 text-white/80 hover:text-accent transition-colors duration-200 text-sm">
+                                    Compute
                                 </Link>
                             </NavigationMenu.Link>
                         </NavigationMenu.Item>
@@ -112,18 +112,20 @@ export const Navigation = () => {
                                                 <div className="text-xs text-white/40 mt-0.5">OpenAPI compatible</div>
                                             </div>
                                         </div>
-                                        {/* Disabled - Model Library */}
-                                        <div className="flex items-center gap-3 px-3 py-3 rounded-lg opacity-50 cursor-not-allowed">
-                                            <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0">
-                                                <svg className="size-4 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                                                </svg>
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                                <div className="font-medium text-sm text-white">Model Library</div>
-                                                <div className="text-xs text-white/40 mt-0.5">255+ production models</div>
-                                            </div>
-                                        </div>
+                                        {/* Model Library */}
+                                        <NavigationMenu.Link asChild>
+                                            <Link href="/models" className="group/item flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-white/5 transition-all duration-200">
+                                                <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0 group-hover/item:bg-accent/10 transition-colors">
+                                                    <svg className="size-4 text-white/60 group-hover/item:text-accent transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                                    </svg>
+                                                </div>
+                                                <div className="flex-1 min-w-0">
+                                                    <div className="font-medium text-sm text-white group-hover/item:text-accent transition-colors">Models</div>
+                                                    <div className="text-xs text-white/40 mt-0.5">255+ production models</div>
+                                                </div>
+                                            </Link>
+                                        </NavigationMenu.Link>
                                         <NavigationMenu.Link asChild>
                                             <Link href="/blogs" className="group/item flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-white/5 transition-all duration-200">
                                                 <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0 group-hover/item:bg-accent/10 transition-colors">
@@ -195,13 +197,13 @@ export const Navigation = () => {
                     <div className="fixed inset-x-0 top-0 pt-20 pb-8 overflow-y-auto max-h-screen">
                         <div className="relative w-full max-w-md mx-auto px-5">
                             <nav className="flex flex-col gap-1 bg-background-secondary rounded-2xl p-4 shadow-xl border border-white/5">
-                                {/* Hardware Link */}
+                                {/* Clusters Link */}
                                 <Link
-                                    href="/hardware"
+                                    href="/clusters"
                                     className="text-lg text-white/90 hover:text-accent hover:bg-white/5 transition-all rounded-lg px-4 py-4 border-b border-white/5"
                                     onClick={() => setMobileNavbar(false)}
                                 >
-                                    Hardware
+                                    Clusters
                                 </Link>
 
                                 {/* Cloud Link */}
@@ -213,13 +215,13 @@ export const Navigation = () => {
                                     Cloud
                                 </Link>
 
-                                {/* Infrastructure Link */}
+                                {/* Compute Link */}
                                 <Link
-                                    href="/infrastructure"
+                                    href="/compute"
                                     className="text-lg text-white/90 hover:text-accent hover:bg-white/5 transition-all rounded-lg px-4 py-4 border-b border-white/5"
                                     onClick={() => setMobileNavbar(false)}
                                 >
-                                    Infrastructure
+                                    Compute
                                 </Link>
 
                                 {/* Resources Section */}
@@ -255,18 +257,22 @@ export const Navigation = () => {
                                                     <div className="text-xs text-white/40">OpenAPI compatible</div>
                                                 </div>
                                             </div>
-                                            {/* Disabled - Model Library */}
-                                            <div className="flex items-center gap-3 py-3 px-3 rounded-lg opacity-50 cursor-not-allowed">
+                                            {/* Model Library */}
+                                            <Link
+                                                href="/models"
+                                                className="flex items-center gap-3 py-3 px-3 rounded-lg hover:bg-white/5 transition-colors"
+                                                onClick={() => setMobileNavbar(false)}
+                                            >
                                                 <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0">
-                                                    <svg className="size-4 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <svg className="size-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                                                     </svg>
                                                 </div>
                                                 <div className="flex-1 min-w-0">
-                                                    <div className="text-white text-sm font-medium">Model Library</div>
+                                                    <div className="text-white text-sm font-medium">Models</div>
                                                     <div className="text-xs text-white/40">255+ production models</div>
                                                 </div>
-                                            </div>
+                                            </Link>
                                             <Link
                                                 href="/blogs"
                                                 className="flex items-center gap-3 py-3 px-3 rounded-lg hover:bg-white/5 transition-colors"

@@ -30,6 +30,14 @@
       "localConnectionString": "postgresql://neondb_owner:npg_CU8GS3fVtvnF@ep-misty-meadow-ah38yb0o-pooler.c-3.us-east-1.aws.neon.tech/neondb?sslmode=require"
     }
   ],
+  "d1_databases": [
+    {
+      "binding": "MODELS_DB",
+      "database_name": "synteq-models",
+      "database_id": "3d339ad8-d5e5-429f-9e1d-adb0f04bc324",
+      "migrations_dir": "db/migrations"
+    }
+  ],
   "r2_buckets": [
     // Create a R2 binding with the binding name "NEXT_INC_CACHE_R2_BUCKET"
     {

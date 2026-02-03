@@ -1,5 +1,4 @@
 "use client";
-import { AnimatedCard } from "@/app/_components/animated-card";
 import { CornerCard } from "@/app/_components/corner-card";
 import { cn } from "@/lib/utils";
 import useEmblaCarousel from "embla-carousel-react";

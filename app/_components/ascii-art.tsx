@@ -33,8 +33,6 @@ function generateDataStream(frame: number): string[] {
 
 // Generate GPU cluster visualization
 function generateGPUCluster(frame: number): string[] {
-    const width = 44;
-    const height = 18;
     const lines: string[] = [];
     
     // Header
@@ -164,17 +162,17 @@ export default function AsciiArt({ type = "gpu", className = "" }: AsciiArtProps
     }, [frame, type]);
 
     return (
-        <div className={`relative overflow-hidden ${className}`}>
-            <pre 
-                className="font-mono text-[8px] sm:text-[10px] md:text-xs lg:text-sm xl:text-base leading-tight text-accent whitespace-pre select-none"
-                style={{ 
+        <div className={`relative w-full ${className}`}>
+            <pre
+                className="font-mono text-[clamp(6px,1.8vw,14px)] leading-tight text-accent whitespace-pre select-none w-fit mx-auto"
+                style={{
                     textShadow: "0 0 10px rgba(75, 222, 183, 0.3)",
                 }}
             >
                 {lines.join("\n")}
             </pre>
             {/* Glow effect */}
-            <div 
+            <div
                 className="absolute inset-0 pointer-events-none opacity-30"
                 style={{
                     background: "radial-gradient(ellipse at center, rgba(75, 222, 183, 0.2) 0%, transparent 70%)",

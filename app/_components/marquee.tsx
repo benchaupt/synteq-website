@@ -52,7 +52,7 @@ export function Marquee({
     <div
       {...props}
       className={cn(
-        "marquee-container relative flex [gap:var(--gap)] overflow-hidden p-2 [--duration:40s] [--gap:1rem]",
+        "group marquee-container relative flex [gap:var(--gap)] overflow-hidden p-2 [--duration:40s] [--gap:1rem]",
         {
           "flex-row": !vertical,
           "flex-col": vertical,
@@ -73,6 +73,7 @@ export function Marquee({
               "animate-marquee flex-row": !vertical,
               "animate-marquee-vertical flex-col": vertical,
               "[animation-direction:reverse]": reverse,
+              "group-hover:[animation-play-state:paused]": pauseOnHover,
             })}
           >
             {children}

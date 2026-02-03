@@ -53,7 +53,7 @@ export const Footer = () => {
                     {/* Paragraph */}
                     <div className="flex flex-col gap-4 max-w-4xl">
                         <p className="text-white/60 leading-relaxed">
-                            Production-ready AI infrastructure that scales with your ambitions. Deploy, run, and manage AI models without the complexity of traditional cloud providers. From bare-metal GPU clusters to fully managed inference endpoints, we handle.
+                        Stop waiting on infrastructure. Stop fighting for GPU allocation. Stop waiting for the next supprise bill. We allocate inference, GPU clusters, and compute- so you ship on your timeline, not your provider's.
                         </p>
                     </div>
                 </div>
@@ -83,8 +83,11 @@ export const Footer = () => {
                         {/* Product */}
                         <div className="flex flex-col gap-4">
                             <h3 className="font-mono text-xs text-accent uppercase tracking-wider mb-2">Product</h3>
-                            <Link href="/hardware" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
-                                Hardware
+                            <Link href="/clusters" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
+                                Clusters
+                            </Link>
+                            <Link href="/compute" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
+                                Compute
                             </Link>
                             <Link href="/cloud" className="text-white/70 hover:text-accent transition-colors duration-200 text-sm">
                                 Cloud Platform

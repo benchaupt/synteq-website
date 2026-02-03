@@ -208,7 +208,7 @@ export default function About() {
             <section className="max-w-viewport w-full mx-auto px-5 py-24 flex flex-col gap-6">
                 <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
                     <div className="flex flex-col gap-4">
-                        <p className="font-mono text-accent text-xs uppercase tracking-widest">
+                        <p className="font-mono text-accent text-xs uppercase tracking-wider">
                             Leadership
                         </p>
                         <h2 className="heading">
@@ -336,10 +336,10 @@ export default function About() {
                             <AccordionTrigger className="py-6 group text-base [&>svg]:hidden">
                                 {/* Desktop Layout */}
                                 <div className="hidden md:grid md:grid-cols-[minmax(200px,1fr)_2fr_auto] w-full gap-8 items-center text-left">
-                                    <span className="text-lg md:text-xl text-white group-hover:text-accent transition-colors">
+                                    <span className="uppercase font-mono md:text-lg text-white group-hover:text-accent transition-colors">
                                         {value.title}
                                     </span>
-                                    <span className="font-mono text-sm md:text-sm text-white/50 group-hover:text-white/70 transition-colors">
+                                    <span className="text-base text-white/50 group-hover:text-white/70 transition-colors">
                                         {value.summary}
                                     </span>
                                     <div className="size-6 flex items-center justify-center text-white/50 group-hover:text-accent transition-all duration-200 group-data-[state=open]:rotate-45">
@@ -351,7 +351,7 @@ export default function About() {
                                 {/* Mobile Layout */}
                                 <div className="flex md:hidden flex-col gap-3 w-full text-left">
                                     <div className="flex items-center justify-between gap-4">
-                                        <span className="text-lg text-white group-hover:text-accent transition-colors">
+                                        <span className="text- font-mono uppercase text-white group-hover:text-accent transition-colors">
                                             {value.title}
                                         </span>
                                         <div className="size-6 flex items-center justify-center text-white/50 group-hover:text-accent transition-all duration-200 shrink-0 group-data-[state=open]:rotate-45">
@@ -360,12 +360,12 @@ export default function About() {
                                             </svg>
                                         </div>
                                     </div>
-                                    <span className="text-sm text-white/50">
+                                    <span className="text-base text-white/50">
                                         {value.summary}
                                     </span>
                                 </div>
                             </AccordionTrigger>
-                            <AccordionContent className="!text-base text-white/60 leading-relaxed !pb-6">
+                            <AccordionContent className="!text-base  text-white/60 leading-relaxed !pb-6">
                                 <div className="hidden md:grid md:grid-cols-[minmax(200px,1fr)_2fr_auto] w-full gap-8">
                                     <div />
                                     <p className="max-w-2xl">{value.content}</p>

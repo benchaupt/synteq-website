@@ -39,7 +39,7 @@ export function BlogCarousel({ blogs }: BlogCarouselProps) {
                 ref={carouselRef}
             >
 
-                <div className='embla__viewport' ref={emblaRef}>
+                <div className='embla__viewport pb-1' ref={emblaRef}>
                     <div className='embla__container'>
                         {blogs.map((blog, index) => (
                             <div key={index} className="min-w-full md:min-w-1/2 lg:min-w-1/3 px-4 md:px-6 lg:px-[25px]">

@@ -7,34 +7,24 @@ import CallToActionNew from "@/app/_components/call-to-action-new";
 import { StatsSection } from "@/app/_components/stats-section";
 import TensorVisualization from "@/app/_components/tensor-visualization";
 import { cn } from "@/lib/utils";
+import { getModelLogo } from "@/lib/model-logos";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 
-const toSlug = (name: string, provider: string) =>
-  `${name.toLowerCase().replace(/\s+/g, "-")}-${provider.toLowerCase().replace(/\s+/g, "-")}`;
+interface FeaturedModel {
+  id: number
+  name: string
+  author: string
+  taskType: string | null
+}
 
 const stats = [
   { value: "255+", label: "Production models" },
   { value: "50ms", label: "Global latency" },
   { value: "99.99%", label: "Uptime SLA" },
   { value: "30+", label: "Global regions" },
-];
-
-const models = [
-  { name: "GPT-4o", provider: "OpenAI", category: "Multimodal" },
-  { name: "Claude 3.5 Sonnet", provider: "Anthropic", category: "Reasoning" },
-  { name: "Llama 3.1 405B", provider: "Meta", category: "Open Source" },
-  { name: "Gemini 1.5 Pro", provider: "Google", category: "Multimodal" },
-  { name: "DeepSeek R1", provider: "DeepSeek", category: "Reasoning" },
-  { name: "Qwen 2.5", provider: "Alibaba", category: "Multilingual" },
-  { name: "Mistral Large", provider: "Mistral AI", category: "Enterprise" },
-  { name: "Command R+", provider: "Cohere", category: "RAG-Optimized" },
-  { name: "Claude 3 Opus", provider: "Anthropic", category: "Advanced" },
-  { name: "Mixtral 8x22B", provider: "Mistral AI", category: "Open Source" },
-  { name: "Grok-2", provider: "xAI", category: "Reasoning" },
-  { name: "Phi-3", provider: "Microsoft", category: "Efficient" },
 ];
 
 const features = [
@@ -126,6 +116,26 @@ function CloudContent() {
   const searchParams = useSearchParams();
   const modelsRef = useRef<HTMLDivElement>(null);
   const selectedModel = searchParams.get("model");
+  const [featuredModels, setFeaturedModels] = useState<FeaturedModel[]>([]);
+  const [isLoadingModels, setIsLoadingModels] = useState(true);
+
+  // Fetch featured models
+  useEffect(() => {
+    async function fetchFeaturedModels() {
+      try {
+        const response = await fetch("/api/models?featured=true&limit=12");
+        if (response.ok) {
+          const data = await response.json() as { models: FeaturedModel[] };
+          setFeaturedModels(data.models);
+        }
+      } catch (err) {
+        console.error("Failed to fetch featured models:", err);
+      } finally {
+        setIsLoadingModels(false);
+      }
+    }
+    fetchFeaturedModels();
+  }, []);
 
   useEffect(() => {
     if (selectedModel) {
@@ -138,7 +148,7 @@ function CloudContent() {
   return (
     <>
       {/* Hero Section */}
-      <div className="bg-background">
+      <div>
         <div className="px-5 py-16 md:py-2 lg:min-h-[700px] max-w-viewport w-full mx-auto flex flex-col gap-12 justify-center">
           <div className="flex lg:flex-row flex-col gap-12 lg:gap-16 items-center lg:min-h-[300px]">
             <div className="flex flex-col gap-2 items-start justify-center flex-1 min-w-0">
@@ -190,37 +200,88 @@ function CloudContent() {
 
           {/* Model Grid */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
-            {models.map((model, index) => {
-              const isActive = selectedModel === toSlug(model.name, model.provider);
-              return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                className={index >= 4 ? "hidden md:block" : ""}
-              >
-                <AnimatedCard className={cn("flex flex-col gap-3 p-4 md:p-5 h-full cursor-pointer", isActive && "border-accent/30")} isActive={isActive}>
-                  <div className="flex flex-col gap-2">
-                    <h3 className={cn("text-base md:text-lg font-medium", isActive && "text-accent")}>{model.name}</h3>
-                    <p className="text-xs md:text-sm text-white/50">{model.provider}</p>
+            {isLoadingModels ? (
+              // Loading skeletons
+              [...Array(8)].map((_, index) => (
+                <div
+                  key={index}
+                  className={cn(
+                    "bg-background-secondary/50 border border-white/5 rounded-xl p-4 md:p-5 animate-pulse",
+                    index >= 4 ? "hidden md:block" : ""
+                  )}
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="size-10 rounded-lg bg-white/10" />
+                    <div className="flex flex-col gap-2 flex-1">
+                      <div className="h-5 w-3/4 bg-white/10 rounded" />
+                      <div className="h-4 w-1/2 bg-white/10 rounded" />
+                    </div>
                   </div>
-                  <div className="mt-auto">
-                    <span className="inline-flex items-center px-2 py-1 rounded-md bg-accent/10 border border-accent/20 text-xs font-mono text-accent">
-                      {model.category}
-                    </span>
+                  <div className="mt-4">
+                    <div className="h-6 w-20 bg-white/10 rounded" />
                   </div>
-                </AnimatedCard>
-              </motion.div>
-            );
-            })}
+                </div>
+              ))
+            ) : (
+              featuredModels.slice(0, 12).map((model, index) => {
+                const logo = getModelLogo(model.author)
+                const taskLabel = model.taskType
+                  ? model.taskType.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")
+                  : "AI Model"
+                return (
+                  <motion.div
+                    key={model.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.05 }}
+                    className={index >= 4 ? "hidden md:block" : ""}
+                  >
+                    <Link href={`/models?selected=${model.id}`}>
+                      <AnimatedCard className="flex flex-col gap-3 p-4 md:p-5 h-full cursor-pointer">
+                        <div className="flex items-start gap-3">
+                          {logo && (
+                            <div className="size-10 rounded-lg bg-white/5 flex items-center justify-center shrink-0 overflow-hidden">
+                              <img src={logo} alt={model.author} className="size-6 object-contain" />
+                            </div>
+                          )}
+                          <div className="flex flex-col gap-1 min-w-0">
+                            <h3 className="text-base md:text-lg font-medium truncate">{model.name}</h3>
+                            <p className="text-xs md:text-sm text-white/50">{model.author}</p>
+                          </div>
+                        </div>
+                        <div className="mt-auto">
+                          <span className="inline-flex items-center px-2 py-1 rounded-md bg-accent/10 border border-accent/20 text-xs font-mono text-accent">
+                            {taskLabel}
+                          </span>
+                        </div>
+                      </AnimatedCard>
+                    </Link>
+                  </motion.div>
+                )
+              })
+            )}
           </div>
 
           <div className="flex items-center justify-center pt-4">
-            <p className="font-mono text-sm text-accent uppercase tracking-wider">
+            <Link
+              href="/models"
+              className="group relative font-mono text-sm text-accent uppercase tracking-wider hover:text-white transition-colors flex items-center gap-2"
+            >
               + thousands more
-            </p>
+              <svg
+                className="size-3 -rotate-45 group-hover:rotate-0 transition-transform duration-300"
+                viewBox="0 0 16 15"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0.000235885 7.36992C0.000235485 6.87117 0.404899 6.46651 0.904036 6.46612L10.3528 6.46613C11.1055 6.46613 11.4827 5.55582 10.9503 5.02341L7.48116 1.55432C7.12813 1.20129 7.12813 0.6291 7.48116 0.276071L7.49416 0.263067C7.84681 -0.0888145 8.41862 -0.0891969 8.77164 0.263832L14.8776 6.36974C15.4302 6.92243 15.4302 7.81819 14.8776 8.37088L8.77165 14.4768C8.41862 14.8298 7.84643 14.8298 7.4934 14.4768L7.4804 14.4638C7.12737 14.1107 7.12737 13.5386 7.48039 13.1855L10.9499 9.71606C11.4823 9.18364 11.1052 8.27334 10.3524 8.27334L0.904036 8.27372C0.405282 8.27372 0.000618115 7.86906 0.000618368 7.37031L0.000235885 7.36992Z"
+                  fill="currentColor"
+                />
+              </svg>
+              <span className="absolute left-0 -bottom-1 h-px w-full bg-current origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+            </Link>
           </div>
         </div>
       </div>
@@ -271,13 +332,6 @@ function CloudContent() {
             <p className="text-base text-white/60 leading-relaxed max-w-sm">
               Can&apos;t find what you&apos;re looking for? Reach out to our support team. We&apos;re here to help.
             </p>
-            <div className="pt-4">
-              <Link href="/contact">
-                <AnimatedButton background="dark" className="hover:bg-background-secondary">
-                  Contact Support
-                </AnimatedButton>
-              </Link>
-            </div>
         </div>
 
           <div className="lg:col-span-3">

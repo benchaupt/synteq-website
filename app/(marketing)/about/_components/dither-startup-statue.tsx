@@ -236,7 +236,7 @@ export function DitherStartupStatue({
         <div className={`w-full h-full ${className}`}>
             <canvas
                 ref={canvasRef}
-                className={`w-full h-full transition-opacity duration-300 ${isHovering ? "opacity-100" : "opacity-50"}`}
+                className={`w-full h-full transition-opacity duration-300 ${isHovering ? "opacity-100" : "opacity-75"}`}
             />
         </div>
     );

@@ -102,7 +102,7 @@ export default async function Post({ params: paramsPromise }: Args) {
 
 
 
-            <section className="max-w-viewport w-full mx-auto px-5 pt-24 pb-8">
+            <section className="max-w-viewport w-full mx-auto px-5 pt-18 pb-24">
                 <div className="flex flex-col items-center gap-4">
                     {/* Category & Read Time */}
                     <span className="subheading text-center">

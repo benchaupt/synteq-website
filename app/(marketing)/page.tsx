@@ -1,18 +1,15 @@
-/* eslint-disable @next/next/no-img-element */
 import { Blog } from "@/app/(marketing)/_components/blog";
 import EffortlessSection from "@/app/(marketing)/_components/effortless-section";
+import { ModelFoundry } from "@/app/(marketing)/_components/model-foundry";
 import ResilienceSection from "@/app/(marketing)/_components/resilience-section";
 import ServicesSection from "@/app/(marketing)/_components/services-section";
-import { SelectHardware } from "@/app/(marketing)/hardware/_components/select-hardware";
+import { SelectHardware } from "@/app/(marketing)/clusters/_components/select-hardware";
 import { UseCasesCards } from "@/app/(marketing)/about/_components/use-cases-section";
 import { AnimatedButton } from "@/app/_components/animated-button";
-import { AnimatedCard } from "@/app/_components/animated-card";
-import { CornerCard } from "@/app/_components/corner-card";
 import CallToActionNew from "@/app/_components/call-to-action-new";
 import { Marquee } from "@/app/_components/marquee";
 import { ScrollRevealText } from "@/app/_components/scroll-reveal-text";
 import { TestimonialCarousel } from "@/app/_components/testimonial-carousel";
-import Link from "next/link";
 // Enable ISR: revalidate every 60 seconds to keep blog data fresh
 // export const revalidate = 60;
 
@@ -59,30 +56,7 @@ export default function Landing() {
               </div>
             </div>
 
-            <div className="relative grid gap-4 w-full">
-              <div className="absolute top-0 left-0 w-[25px] sm:w-[200px] h-full bg-linear-to-r from-background to-transparent pointer-events-none z-10" />
-              <div className="absolute top-0 right-0 w-[25px] sm:w-[200px] h-full bg-linear-to-l from-background to-transparent pointer-events-none z-10" />
-              <Marquee pauseOnHover disableGradient className="[--duration:30s]">
-                {[
-                  { name: "GPT-4o", provider: "OpenAI", logo: <svg className="h-10 w-12" viewBox="0 0 47 41" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M31.5852 5.59068L27.6501 14.3371C27.3086 15.0964 26.8132 15.7777 26.1953 16.3385C25.5774 16.8992 24.8497 17.3276 24.058 17.5966H27.3438V17.6118C28.8514 17.7213 30.2613 18.3942 31.2905 19.495C32.3197 20.5959 32.8917 22.0433 32.8915 23.5463V36.5789H26.9076V20.8556C26.532 21.6592 25.9333 22.3395 25.1819 22.8161C24.4305 23.2928 23.5575 23.5463 22.6662 23.5463H12.1148V36.5789H6.13086V5.64321H12.1131V17.5979H19.6001L24.8959 5.59068H31.5852Z" fill="currentColor" /><path d="M37.0945 4.3152C37.8321 4.24602 38.556 4.32146 39.2271 4.67814C40.1084 5.14704 40.6219 5.86183 40.7888 6.84879C40.9218 7.63588 40.8969 8.40456 40.6728 9.16705C40.2754 10.5169 39.2996 11.2165 37.9621 11.3933C36.852 11.5409 35.7263 11.5593 34.6069 11.6347C34.5203 11.6408 34.4321 11.6347 34.3316 11.6347C34.5836 11.3134 34.8049 11.0199 35.0383 10.7356C35.1466 10.6018 35.137 10.4999 35.0319 10.36C34.0192 9.03641 33.9235 7.56678 34.5064 6.0756C34.9439 4.95337 35.9117 4.42748 37.0945 4.3152Z" fill="currentColor" /></svg> },
-                  { name: "Claude 3.5 Sonnet", provider: "Anthropic", logo: <svg className="h-10 w-12" viewBox="0 0 47 41" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M31.5852 5.59068L27.6501 14.3371C27.3086 15.0964 26.8132 15.7777 26.1953 16.3385C25.5774 16.8992 24.8497 17.3276 24.058 17.5966H27.3438V17.6118C28.8514 17.7213 30.2613 18.3942 31.2905 19.495C32.3197 20.5959 32.8917 22.0433 32.8915 23.5463V36.5789H26.9076V20.8556C26.532 21.6592 25.9333 22.3395 25.1819 22.8161C24.4305 23.2928 23.5575 23.5463 22.6662 23.5463H12.1148V36.5789H6.13086V5.64321H12.1131V17.5979H19.6001L24.8959 5.59068H31.5852Z" fill="currentColor" /><path d="M37.0945 4.3152C37.8321 4.24602 38.556 4.32146 39.2271 4.67814C40.1084 5.14704 40.6219 5.86183 40.7888 6.84879C40.9218 7.63588 40.8969 8.40456 40.6728 9.16705C40.2754 10.5169 39.2996 11.2165 37.9621 11.3933C36.852 11.5409 35.7263 11.5593 34.6069 11.6347C34.5203 11.6408 34.4321 11.6347 34.3316 11.6347C34.5836 11.3134 34.8049 11.0199 35.0383 10.7356C35.1466 10.6018 35.137 10.4999 35.0319 10.36C34.0192 9.03641 33.9235 7.56678 34.5064 6.0756C34.9439 4.95337 35.9117 4.42748 37.0945 4.3152Z" fill="currentColor" /></svg> },
-                  { name: "DeepSeek R1", provider: "DeepSeek", logo: <svg className="h-10 w-12" viewBox="0 0 47 41" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M31.5852 5.59068L27.6501 14.3371C27.3086 15.0964 26.8132 15.7777 26.1953 16.3385C25.5774 16.8992 24.8497 17.3276 24.058 17.5966H27.3438V17.6118C28.8514 17.7213 30.2613 18.3942 31.2905 19.495C32.3197 20.5959 32.8917 22.0433 32.8915 23.5463V36.5789H26.9076V20.8556C26.532 21.6592 25.9333 22.3395 25.1819 22.8161C24.4305 23.2928 23.5575 23.5463 22.6662 23.5463H12.1148V36.5789H6.13086V5.64321H12.1131V17.5979H19.6001L24.8959 5.59068H31.5852Z" fill="currentColor" /><path d="M37.0945 4.3152C37.8321 4.24602 38.556 4.32146 39.2271 4.67814C40.1084 5.14704 40.6219 5.86183 40.7888 6.84879C40.9218 7.63588 40.8969 8.40456 40.6728 9.16705C40.2754 10.5169 39.2996 11.2165 37.9621 11.3933C36.852 11.5409 35.7263 11.5593 34.6069 11.6347C34.5203 11.6408 34.4321 11.6347 34.3316 11.6347C34.5836 11.3134 34.8049 11.0199 35.0383 10.7356C35.1466 10.6018 35.137 10.4999 35.0319 10.36C34.0192 9.03641 33.9235 7.56678 34.5064 6.0756C34.9439 4.95337 35.9117 4.42748 37.0945 4.3152Z" fill="currentColor" /></svg> },
-                  { name: "Llama 3.1 405B", provider: "Meta", logo: <svg className="h-10 w-12" viewBox="0 0 47 41" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M31.5852 5.59068L27.6501 14.3371C27.3086 15.0964 26.8132 15.7777 26.1953 16.3385C25.5774 16.8992 24.8497 17.3276 24.058 17.5966H27.3438V17.6118C28.8514 17.7213 30.2613 18.3942 31.2905 19.495C32.3197 20.5959 32.8917 22.0433 32.8915 23.5463V36.5789H26.9076V20.8556C26.532 21.6592 25.9333 22.3395 25.1819 22.8161C24.4305 23.2928 23.5575 23.5463 22.6662 23.5463H12.1148V36.5789H6.13086V5.64321H12.1131V17.5979H19.6001L24.8959 5.59068H31.5852Z" fill="currentColor" /><path d="M37.0945 4.3152C37.8321 4.24602 38.556 4.32146 39.2271 4.67814C40.1084 5.14704 40.6219 5.86183 40.7888 6.84879C40.9218 7.63588 40.8969 8.40456 40.6728 9.16705C40.2754 10.5169 39.2996 11.2165 37.9621 11.3933C36.852 11.5409 35.7263 11.5593 34.6069 11.6347C34.5203 11.6408 34.4321 11.6347 34.3316 11.6347C34.5836 11.3134 34.8049 11.0199 35.0383 10.7356C35.1466 10.6018 35.137 10.4999 35.0319 10.36C34.0192 9.03641 33.9235 7.56678 34.5064 6.0756C34.9439 4.95337 35.9117 4.42748 37.0945 4.3152Z" fill="currentColor" /></svg> },
-                ].map((model, index) => (
-                  <Link key={index} href={`/cloud?model=${model.name.toLowerCase().replace(/\s+/g, "-")}-${model.provider.toLowerCase().replace(/\s+/g, "-")}`}>
-                    <AnimatedCard className="mx-6 shrink-0 flex flex-row gap-4 items-center md:p-4 md:px-6 p-4 px-4">
-                      <div className="text-white">{model.logo}</div>
-                      <p className="text-lg tracking-tight max-w-[15ch]">{model.name}</p>
-                    </AnimatedCard>
-                  </Link>
-                ))}
-              </Marquee>
-              <div className="flex items-center justify-center">
-                <p className="font-mono text-sm text-accent uppercase tracking-tight text-center">
-                 A curated foundry of top performing models for training, fine-tuning, and production inference
-                </p>
-              </div>
-            </div>
+            <ModelFoundry />
           </div>
         </div>
       </div>

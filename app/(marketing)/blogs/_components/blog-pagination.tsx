@@ -19,8 +19,13 @@ export function BlogPagination({
       <button
         onClick={() => onPageChange(Math.max(0, currentPage - 1))}
         disabled={currentPage === 0}
-        className="p-2 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-70 transition-opacity"
+        className="size-10 relative flex items-center justify-center hover:bg-white/5 rounded-lg transition-colors group disabled:opacity-50 disabled:cursor-not-allowed"
       >
+        {/* Corner accents */}
+        <span className="absolute top-0 left-0 w-2 h-2 border-l border-t border-white/30 group-hover:border-accent transition-colors" />
+        <span className="absolute top-0 right-0 w-2 h-2 border-r border-t border-white/30 group-hover:border-accent transition-colors" />
+        <span className="absolute bottom-0 left-0 w-2 h-2 border-l border-b border-white/30 group-hover:border-accent transition-colors" />
+        <span className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-white/30 group-hover:border-accent transition-colors" />
         <svg
           className="size-4"
           viewBox="0 0 16 15"
@@ -35,16 +40,16 @@ export function BlogPagination({
       </button>
 
       {/* Page Dots */}
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-1.5 px-3">
         {Array.from({ length: totalPages }).map((_, index) => (
           <button
             key={index}
             onClick={() => onPageChange(index)}
             className={cn(
-              "h-1 rounded-full transition-all duration-300",
+              "h-1.5 rounded-full transition-all duration-400",
               index === currentPage
-                ? "bg-accent w-[15px]"
-                : "bg-white/25 w-1 hover:bg-white/40"
+                ? "bg-accent w-4"
+                : "bg-white/50 w-1.5 hover:bg-white/70"
             )}
           />
         ))}
@@ -54,8 +59,13 @@ export function BlogPagination({
       <button
         onClick={() => onPageChange(Math.min(totalPages - 1, currentPage + 1))}
         disabled={currentPage === totalPages - 1}
-        className="p-2 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-70 transition-opacity"
+        className="size-10 relative flex items-center justify-center hover:bg-white/5 rounded-lg transition-colors group disabled:opacity-50 disabled:cursor-not-allowed"
       >
+        {/* Corner accents */}
+        <span className="absolute top-0 left-0 w-2 h-2 border-l border-t border-white/30 group-hover:border-accent transition-colors" />
+        <span className="absolute top-0 right-0 w-2 h-2 border-r border-t border-white/30 group-hover:border-accent transition-colors" />
+        <span className="absolute bottom-0 left-0 w-2 h-2 border-l border-b border-white/30 group-hover:border-accent transition-colors" />
+        <span className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-white/30 group-hover:border-accent transition-colors" />
         <svg
           className="size-4"
           viewBox="0 0 16 15"

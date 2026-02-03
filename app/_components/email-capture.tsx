@@ -18,7 +18,7 @@ export function EmailCapture({
   buttonText = "Subscribe",
   placeholder = "your@email.com",
   className,
-  layout = "vertical",
+  layout: _layout = "vertical",
   icon,
 }: EmailCaptureProps) {
   return (

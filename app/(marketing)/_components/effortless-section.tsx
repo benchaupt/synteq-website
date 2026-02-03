@@ -79,7 +79,7 @@ export default function EffortlessSection() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
-                    className="relative rounded-lg overflow-hidden flex items-center justify-center"
+                    className="relative rounded-lg flex items-center justify-center w-full"
                 >
                     <AsciiArt type="gpu" className="flex items-center justify-center" />
                 </motion.div>

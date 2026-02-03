@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useMemo, useEffect, useState } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { Html, Line } from "@react-three/drei";
 import * as THREE from "three";
 
@@ -77,7 +77,7 @@ function AnimatedLetter({ delay = 0 }: { delay?: number }) {
   const [letter, setLetter] = useState(() =>
     TENSOR_LETTERS[Math.floor(Math.random() * TENSOR_LETTERS.length)]
   );
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [, setIsAnimating] = useState(false);
 
   useEffect(() => {
     // Change letter periodically with animation
@@ -305,7 +305,7 @@ function TensorLabels({
             }}
           >
             <div
-              className="font-mono text-accent flex items-center justify-center rounded-full bg-background"
+              className="font-mono text-accent flex items-center justify-center rounded-full"// bg-background"
               style={{
                 fontSize: `${labelSize}px`,
                 width: `${labelSize * 2.8}px`,
@@ -326,7 +326,8 @@ function TensorLabels({
   );
 }
 
-// Semantic label component
+// Semantic label component (currently unused, kept for future use)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function SemanticLabel({
   size,
   spacing,
@@ -362,7 +363,7 @@ function TensorScene({
   labelSize,
   lineGap,
   rotationIntensity,
-  semanticLabel,
+  semanticLabel: _semanticLabel,
   mousePosition,
 }: {
   size: number;
