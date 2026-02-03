@@ -11,6 +11,7 @@ interface FeaturedModel {
   id: number
   name: string
   author: string
+  authorLogo?: string | null
 }
 
 export function ModelFoundry() {
@@ -67,7 +68,7 @@ export function ModelFoundry() {
       <div className="absolute top-0 right-0 w-[25px] sm:w-[200px] h-full bg-linear-to-l from-background to-transparent pointer-events-none z-10" />
       <Marquee pauseOnHover disableGradient className="[--duration:100s]">
         {models.map((model) => {
-          const logo = getModelLogo(model.author)
+          const logo = model.authorLogo || getModelLogo(model.author)
           return (
             <Link key={model.id} href={`/models?selected=${model.id}`}>
               <AnimatedCard className="mx-6 shrink-0 flex flex-row gap-4 items-center md:p-4 md:pl-6 md:pr-8 p-4 px-4 h-[72px]">

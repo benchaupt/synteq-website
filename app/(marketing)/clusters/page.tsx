@@ -183,8 +183,8 @@ function HardwareInner() {
           </div>
 
           {/* Specifications Table */}
-          <div className="border border-white/5 rounded-xl overflow-hidden">
-            <div className="bg-background-secondary p-6 border-b border-white/5">
+          <div className="overflow-hidden bg-background">
+            <div className="bg-background-secondary p-6">
               <h3 className="subheading">Technical Specifications</h3>
             </div>
 
@@ -250,7 +250,7 @@ function HardwareInner() {
               defaultValue="item-0"
             >
               {faqs.map((faq, index) => (
-                <AccordionItem key={index} value={`item-${index}`} className="border-white/5">
+                <AccordionItem key={index} value={`item-${index}`}>
                   <AccordionTrigger className="text-left text-base md:text-lg hover:text-accent transition-colors">
                     {faq.question}
                   </AccordionTrigger>

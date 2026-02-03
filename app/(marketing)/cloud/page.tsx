@@ -17,6 +17,7 @@ interface FeaturedModel {
   id: number
   name: string
   author: string
+  authorLogo?: string | null
   taskType: string | null
 }
 
@@ -224,7 +225,7 @@ function CloudContent() {
               ))
             ) : (
               featuredModels.slice(0, 12).map((model, index) => {
-                const logo = getModelLogo(model.author)
+                const logo = model.authorLogo || getModelLogo(model.author)
                 const taskLabel = model.taskType
                   ? model.taskType.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")
                   : "AI Model"

@@ -13,7 +13,8 @@ export async function GET(request: NextRequest) {
   const maxParams = searchParams.get("maxParams")
   const featured = searchParams.get("featured")
   const limit = Math.min(parseInt(searchParams.get("limit") || "50"), 100)
-  const offset = parseInt(searchParams.get("offset") || "0")
+  const page = parseInt(searchParams.get("page") || "1")
+  const offset = parseInt(searchParams.get("offset") || String((page - 1) * limit))
   const sortBy = searchParams.get("sortBy") || "downloads"
   const sortOrder = searchParams.get("sortOrder") || "desc"
 
@@ -94,14 +95,22 @@ export async function GET(request: NextRequest) {
       .orderBy(desc(huggingFaceModels.downloads))
       .limit(50)
 
+    const totalPages = Math.ceil(total / limit)
+
     return NextResponse.json({
       models: models.map(m => ({
         ...m,
-        tags: m.tags ? JSON.parse(m.tags) : []
+        tags: m.tags ? JSON.parse(m.tags) : [],
       })),
       total,
       limit,
       offset,
+      pagination: {
+        page,
+        totalPages,
+        hasNext: page < totalPages,
+        hasPrev: page > 1,
+      },
       filters: {
         taskTypes: taskTypes.map(t => t.taskType).filter(Boolean),
         authors: authors.map(a => a.author),

@@ -16,6 +16,7 @@ import { Categories } from "./payload/collections/Categories";
 import { Media } from "./payload/collections/Media";
 import { Posts } from "./payload/collections/Posts";
 import { Users } from "./payload/collections/Users";
+import { ModelManagement } from "./payload/globals/ModelManagement";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -39,6 +40,7 @@ export default buildConfig({
   },
   editor: lexicalEditor(),
   collections: [Users, Media, Categories, Posts],
+  globals: [ModelManagement],
   secret: process.env.PAYLOAD_SECRET || "my-im-crunchbits-ell-ell-cee-secure",
   db: postgresAdapter({
     pool: {

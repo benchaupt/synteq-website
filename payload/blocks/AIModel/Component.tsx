@@ -148,7 +148,8 @@ export function AIModelBlock({
 
   const logoUrl = modelData.authorLogo || getModelLogo(modelData.author)
 
-  const modelUrl = `/models?search=${encodeURIComponent(modelData.name)}`
+  // Use database ID for auto-selection, fallback to search if no ID
+  const modelUrl = modelData.id ? `/models?selected=${modelData.id}` : `/models?search=${encodeURIComponent(modelData.name)}`
 
   return (
     <div className={['not-prose', className].filter(Boolean).join(' ')}>
