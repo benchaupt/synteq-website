@@ -135,7 +135,6 @@ function HardwareInner() {
             </div>
           </div>
 
-          {/* Stats */}
           <StatsSection stats={stats} />
         </div>
           </div>

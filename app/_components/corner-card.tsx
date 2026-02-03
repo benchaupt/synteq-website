@@ -21,7 +21,7 @@ export function CornerCard({
   return (
     <div
       className={cn(
-        "relative md:p-8 md:px-12 p-4 px-6 border-2 font-medium",
+        "relative p-6 md:p-8 border-2 font-medium",
         borderColorClass,
         className
       )}

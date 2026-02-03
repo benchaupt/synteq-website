@@ -98,7 +98,7 @@ Custom CSS variables defined in `globals.css`:
 - `--color-foreground`: #F7EEEE (off-white)
 - `--color-accent`: #4BDEB7 (teal)
 - `--color-darker-accent`: #31D6BD (darker teal)
-- `--spacing-viewport`: 1600px (max content width)
+- `--spacing-viewport`: 1400px (max content width)
 
 Use these variables via Tailwind: `bg-background`, `bg-background-secondary`, `text-foreground`, `text-accent`, `max-w-viewport`
 
@@ -140,7 +140,7 @@ Use these variables via Tailwind: `bg-background`, `bg-background-secondary`, `t
 - **Avoid arbitrary `w-[*]` values** - use `max-w-*` instead for responsive behavior
 - **Prefer max-width over fixed width**:
   - ✅ `max-w-xl`, `max-w-2xl`, `max-w-4xl` - element shrinks on small screens
-  - ✅ `max-w-viewport` - uses the custom 1600px max width (defined in globals.css)
+  - ✅ `max-w-viewport` - uses the custom 1400px max width (defined in globals.css)
   - ❌ `w-[600px]` - causes horizontal scroll on mobile
 - Use fixed widths (`w-*`) only for:
   - Small UI elements (icons, avatars, badges)

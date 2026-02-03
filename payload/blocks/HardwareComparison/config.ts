@@ -22,8 +22,6 @@ export const HardwareComparison: Block = {
       hasMany: true,
       label: 'Hardware to Compare',
       required: true,
-      minRows: 2,
-      maxRows: 4,
       options: [
         { label: 'Nvidia H100', value: '1' },
         { label: 'Nvidia H200', value: '2' },

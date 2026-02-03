@@ -234,7 +234,6 @@ function ModelsContent() {
         <div ref={detailRef}>
           <ModelDetail
             model={selectedModel}
-            onClose={() => setSelectedModel(null)}
           />
         </div>
       </div>

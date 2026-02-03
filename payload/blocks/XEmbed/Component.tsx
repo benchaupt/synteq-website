@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { CornerCard } from '@/app/_components/corner-card'
 
 export type XEmbedBlockProps = {
   tweetUrl: string
@@ -35,46 +36,60 @@ function extractTweetId(url: string): string | null {
 
 export function XEmbedBlock({ className, tweetUrl, theme = 'dark' }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const embeddedRef = useRef(false)
   const tweetId = extractTweetId(tweetUrl)
 
   useEffect(() => {
     if (!tweetId || !containerRef.current) return
 
-    // Load Twitter widget script if not already loaded
-    const loadTwitterScript = () => {
-      if (window.twttr) {
-        window.twttr.widgets.createTweet(tweetId, containerRef.current!, {
-          theme,
-          align: 'center',
-          conversation: 'none',
-          dnt: true,
-        })
-        return
-      }
+    // Prevent double embedding (React Strict Mode runs effects twice)
+    if (embeddedRef.current) return
+    embeddedRef.current = true
 
-      const script = document.createElement('script')
-      script.src = 'https://platform.twitter.com/widgets.js'
-      script.async = true
-      script.onload = () => {
-        window.twttr?.widgets.createTweet(tweetId, containerRef.current!, {
-          theme,
-          align: 'center',
-          conversation: 'none',
-          dnt: true,
-        })
-      }
-      document.body.appendChild(script)
+    // Clear any existing content
+    containerRef.current.innerHTML = ''
+
+    const createTweet = () => {
+      if (!containerRef.current) return
+
+      window.twttr?.widgets.createTweet(tweetId, containerRef.current, {
+        theme,
+        align: 'center',
+        conversation: 'none',
+        dnt: true,
+      })
     }
 
-    loadTwitterScript()
+    // Load Twitter widget script if not already loaded
+    if (window.twttr) {
+      createTweet()
+    } else {
+      // Check if script is already being loaded
+      const existingScript = document.querySelector('script[src*="platform.twitter.com/widgets.js"]')
+
+      if (existingScript) {
+        // Wait for existing script to load
+        existingScript.addEventListener('load', createTweet)
+      } else {
+        const script = document.createElement('script')
+        script.src = 'https://platform.twitter.com/widgets.js'
+        script.async = true
+        script.onload = createTweet
+        document.body.appendChild(script)
+      }
+    }
+
+    return () => {
+      embeddedRef.current = false
+    }
   }, [tweetId, theme])
 
   if (!tweetId) {
     return (
       <div className={className}>
-        <div className="bg-background-secondary border border-white/10 rounded-xl p-6 text-center">
+        <CornerCard className="text-center">
           <p className="text-white/50">Invalid X/Twitter URL</p>
-        </div>
+        </CornerCard>
       </div>
     )
   }

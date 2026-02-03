@@ -65,7 +65,7 @@ export function ModelFoundry() {
     <div className="relative grid gap-4 w-full">
       <div className="absolute top-0 left-0 w-[25px] sm:w-[200px] h-full bg-linear-to-r from-background to-transparent pointer-events-none z-10" />
       <div className="absolute top-0 right-0 w-[25px] sm:w-[200px] h-full bg-linear-to-l from-background to-transparent pointer-events-none z-10" />
-      <Marquee pauseOnHover disableGradient className="[--duration:60s]">
+      <Marquee pauseOnHover disableGradient className="[--duration:100s]">
         {models.map((model) => {
           const logo = getModelLogo(model.author)
           return (

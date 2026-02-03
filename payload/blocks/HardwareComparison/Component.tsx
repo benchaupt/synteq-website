@@ -1,5 +1,6 @@
 import { hardware, toSlug, type HardwareSpec } from '@/lib/hardware-data'
-import { Check, Trophy } from 'lucide-react'
+import { CornerCard } from '@/app/_components/corner-card'
+import { Check } from 'lucide-react'
 import Link from 'next/link'
 
 export type HardwareComparisonBlockProps = {
@@ -20,6 +21,12 @@ function parseSpecValue(spec: HardwareSpec): number {
 }
 
 function findBestForSpec(products: typeof hardware, specLabel: string): string | null {
+  // Count how many products have this spec
+  const productsWithSpec = products.filter((p) => p.specs.some((s) => s.label === specLabel))
+
+  // Only show "best" if multiple products have the spec (actual comparison)
+  if (productsWithSpec.length < 2) return null
+
   let bestId: string | null = null
   let bestValue = -Infinity
 
@@ -59,9 +66,9 @@ export function HardwareComparisonBlock({
   if (products.length < 2) {
     return (
       <div className={className}>
-        <div className="bg-background-secondary border border-white/10 rounded-xl p-6 text-center">
+        <CornerCard className="text-center">
           <p className="text-white/50">Select at least 2 hardware products to compare</p>
-        </div>
+        </CornerCard>
       </div>
     )
   }
@@ -76,24 +83,25 @@ export function HardwareComparisonBlock({
 
   return (
     <div className={['not-prose', className].filter(Boolean).join(' ')}>
-      <div className="bg-background-secondary border border-white/10 rounded-xl overflow-hidden">
+      <CornerCard className="!p-0 overflow-hidden">
         {title && (
           <div className="p-6 border-b border-white/10">
-            <h3 className="text-xl font-semibold text-white">{title}</h3>
+            <h3 className="text-xl font-semibold text-white text-center">{title}</h3>
           </div>
         )}
 
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
+              {/* Row 1: Product images and names */}
               <tr className="border-b border-white/10">
                 <th className="p-4 text-left text-sm font-medium text-white/50 min-w-32">
-                  Specification
+                  Product
                 </th>
                 {products.map((product) => (
                   <th key={product.id} className="p-4 text-center min-w-40">
                     <Link
-                      href={`/compute/${toSlug(product.name)}`}
+                      href={`/clusters?product=${toSlug(product.name)}`}
                       className="group inline-flex flex-col items-center gap-2"
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -102,17 +110,12 @@ export function HardwareComparisonBlock({
                         alt={product.name}
                         className="h-16 object-contain"
                       />
-                      <div className="text-center">
-                        <p className="text-xs font-mono text-accent uppercase tracking-wider">
-                          {product.manufacturer}
-                        </p>
-                        <p className="font-medium text-white group-hover:text-accent transition-colors">
-                          {product.name}
-                        </p>
-                      </div>
+                      <p className="font-medium text-white group-hover:text-accent transition-colors">
+                        {product.name}
+                      </p>
                       {bestProductId === product.id && (
                         <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-accent/20 text-accent text-xs rounded-full">
-                          <Trophy className="size-3" />
+                          <Check className="size-3" />
                           Best {highlightSpec}
                         </span>
                       )}
@@ -141,16 +144,14 @@ export function HardwareComparisonBlock({
                           {spec ? (
                             <span
                               className={`font-mono ${
-                                spec.accentValue
-                                  ? 'text-accent'
-                                  : isBest
+                                spec.accentValue || isBest
                                   ? 'text-accent font-medium'
                                   : 'text-white'
                               }`}
                             >
                               {spec.value}
                               {spec.unit && (
-                                <span className="text-white/50 text-sm ml-0.5">
+                                <span className={`text-sm ml-0.5 ${spec.accentValue || isBest ? 'text-accent' : 'text-white/50'}`}>
                                   {spec.unit}
                                 </span>
                               )}
@@ -172,18 +173,30 @@ export function HardwareComparisonBlock({
         </div>
 
         {/* Quick links */}
-        <div className="p-4 border-t border-white/10 flex flex-wrap gap-2 justify-center">
+        <div className="p-4 border-t border-white/10 flex flex-wrap gap-6 justify-center">
           {products.map((product) => (
             <Link
               key={product.id}
-              href={`/compute/${toSlug(product.name)}`}
-              className="px-4 py-2 bg-white/5 hover:bg-accent/10 text-white hover:text-accent text-sm rounded-lg transition-colors"
+              href={`/clusters?product=${toSlug(product.name)}`}
+              className="group relative font-mono text-sm text-white/70 hover:text-accent transition-colors flex items-center gap-2"
             >
               View {product.name}
+              <svg
+                className="size-3 -rotate-45 group-hover:rotate-0 transition-transform duration-300"
+                viewBox="0 0 16 15"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0.000235885 7.36992C0.000235485 6.87117 0.404899 6.46651 0.904036 6.46612L10.3528 6.46613C11.1055 6.46613 11.4827 5.55582 10.9503 5.02341L7.48116 1.55432C7.12813 1.20129 7.12813 0.6291 7.48116 0.276071L7.49416 0.263067C7.84681 -0.0888145 8.41862 -0.0891969 8.77164 0.263832L14.8776 6.36974C15.4302 6.92243 15.4302 7.81819 14.8776 8.37088L8.77165 14.4768C8.41862 14.8298 7.84643 14.8298 7.4934 14.4768L7.4804 14.4638C7.12737 14.1107 7.12737 13.5386 7.48039 13.1855L10.9499 9.71606C11.4823 9.18364 11.1052 8.27334 10.3524 8.27334L0.904036 8.27372C0.405282 8.27372 0.000618115 7.86906 0.000618368 7.37031L0.000235885 7.36992Z"
+                  fill="currentColor"
+                />
+              </svg>
+              <span className="absolute left-0 -bottom-1 h-px w-full bg-current origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
             </Link>
           ))}
         </div>
-      </div>
+      </CornerCard>
     </div>
   )
 }

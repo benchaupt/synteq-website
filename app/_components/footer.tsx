@@ -53,7 +53,7 @@ export const Footer = () => {
                     {/* Paragraph */}
                     <div className="flex flex-col gap-4 max-w-4xl">
                         <p className="text-white/60 leading-relaxed">
-                        Stop waiting on infrastructure. Stop fighting for GPU allocation. Stop waiting for the next supprise bill. We allocate inference, GPU clusters, and compute- so you ship on your timeline, not your provider's.
+                        Stop waiting on infrastructure. Stop fighting for GPU allocation. Stop waiting for the next surprise bill. We allocate inference, GPU clusters, and compute- so you ship on your timeline, not your provider&apos;s.
                         </p>
                     </div>
                 </div>

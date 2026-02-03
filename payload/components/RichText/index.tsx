@@ -12,6 +12,11 @@ import {
 } from '@payloadcms/richtext-lexical/react'
 
 import { CodeBlock, CodeBlockProps } from '@/payload/blocks/Code/Component'
+import { XEmbedBlock, XEmbedBlockProps } from '@/payload/blocks/XEmbed/Component'
+import { GitHubEmbedBlock, GitHubEmbedBlockProps } from '@/payload/blocks/GitHubEmbed/Component'
+import { HardwareProductBlock, HardwareProductBlockProps } from '@/payload/blocks/HardwareProduct/Component'
+import { HardwareComparisonBlock, HardwareComparisonBlockProps } from '@/payload/blocks/HardwareComparison/Component'
+import { AIModelBlock, AIModelBlockProps } from '@/payload/blocks/AIModel/Component'
 
 import type {
   BannerBlock as BannerBlockProps,
@@ -23,7 +28,16 @@ import { cn } from '@/payload/utilities/ui'
 
 type NodeTypes =
   | DefaultNodeTypes
-  | SerializedBlockNode<MediaBlockProps | BannerBlockProps | CodeBlockProps>
+  | SerializedBlockNode<
+      | MediaBlockProps
+      | BannerBlockProps
+      | CodeBlockProps
+      | XEmbedBlockProps
+      | GitHubEmbedBlockProps
+      | HardwareProductBlockProps
+      | HardwareComparisonBlockProps
+      | AIModelBlockProps
+    >
 
 const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
   const { value, relationTo } = linkNode.fields.doc!
@@ -50,6 +64,11 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
       />
     ),
     code: ({ node }) => <CodeBlock className="col-start-2" {...node.fields} />,
+    xEmbed: ({ node }) => <XEmbedBlock className="col-start-2 mb-4" {...node.fields} />,
+    githubEmbed: ({ node }) => <GitHubEmbedBlock className="col-start-2 mb-4" {...node.fields} />,
+    hardwareProduct: ({ node }) => <HardwareProductBlock className="col-start-2 mb-4" {...node.fields} />,
+    hardwareComparison: ({ node }) => <HardwareComparisonBlock className="col-start-1 col-span-3 mb-4" {...node.fields} />,
+    aiModel: ({ node }) => <AIModelBlock className="col-start-2 mb-4" {...node.fields} />,
     // cta: ({ node }) => <CallToActionBlock {...node.fields} />,
   },
 })

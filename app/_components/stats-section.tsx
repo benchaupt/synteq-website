@@ -84,7 +84,7 @@ function AnimatedCounter({ value }: { value: string }) {
 
 export function StatsSection({ stats }: StatsSectionProps) {
   return (
-    <div className="grid grid-cols-2 lg:flex lg:justify-between gap-8 pt-8 border-t border-white/5">
+    <div className="grid grid-cols-2 lg:flex lg:justify-between gap-8 pt-8">
       {stats.map((stat, index) => (
         <motion.div
           key={index}

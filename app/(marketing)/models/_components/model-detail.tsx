@@ -5,12 +5,11 @@ import { cn } from "@/lib/utils"
 import { getModelLogo } from "@/lib/model-logos"
 import { Download, Heart, ExternalLink } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
-import { useState, useMemo, useEffect } from "react"
+import { useState, useMemo } from "react"
 import type { ModelWithParsedTags } from "./model-grid"
 
 interface ModelDetailProps {
   model: ModelWithParsedTags | null
-  onClose: () => void
   className?: string
 }
 
@@ -65,30 +64,29 @@ function formatNumber(num: number): string {
   return num.toString()
 }
 
-export function ModelDetail({ model, onClose, className }: ModelDetailProps) {
+export function ModelDetail({ model, className }: ModelDetailProps) {
   // Use authorLogo from database, fallback to hardcoded logos
   const logoUrl = model ? (model.authorLogo || getModelLogo(model.author)) : null
   const [showAllTags, setShowAllTags] = useState(false)
   const [logoError, setLogoError] = useState(false)
 
-  // Reset logo error when model changes
-  useEffect(() => {
+  // Track model ID to reset state when model changes
+  const [prevModelId, setPrevModelId] = useState<number | undefined>(model?.id)
+  if (model?.id !== prevModelId) {
+    setPrevModelId(model?.id)
     setLogoError(false)
-  }, [model?.id])
+    setShowAllTags(false)
+  }
 
   // Only show logo if we have a URL and it hasn't failed to load
   const showLogo = logoUrl && !logoError
 
-  // Reset expanded state when model changes
-  useEffect(() => {
-    setShowAllTags(false)
-  }, [model?.id])
-
   // Filter tags: meaningful tags shown, irrelevant ones hidden
+  const modelTags = model?.tags
   const { primary: primaryTags, hidden: hiddenTags } = useMemo(() => {
-    if (!model?.tags) return { primary: [], hidden: [] }
-    return filterTags(model.tags)
-  }, [model?.tags])
+    if (!modelTags) return { primary: [], hidden: [] }
+    return filterTags(modelTags)
+  }, [modelTags])
 
   return (
     <AnimatePresence mode="wait">
@@ -244,7 +242,7 @@ export function ModelDetail({ model, onClose, className }: ModelDetailProps) {
                 </a>
               )}
               <AnimatedButton background="primary">
-                Deploy {model.name}
+                Deploy
               </AnimatedButton>
             </div>
           </div>

@@ -14,6 +14,11 @@ import { authenticatedOrPublished } from '@/payload/access/authenticatedOrPublis
 import { Banner } from '@/payload/blocks/Banner/config'
 import { Code } from '@/payload/blocks/Code/config'
 import { MediaBlock } from '@/payload/blocks/MediaBlock/config'
+import { XEmbed } from '@/payload/blocks/XEmbed/config'
+import { GitHubEmbed } from '@/payload/blocks/GitHubEmbed/config'
+import { HardwareProduct } from '@/payload/blocks/HardwareProduct/config'
+import { HardwareComparison } from '@/payload/blocks/HardwareComparison/config'
+import { AIModel } from '@/payload/blocks/AIModel/config'
 import { populateAuthors } from '@/payload/collections/Posts/hooks/populateAuthors'
 import { revalidateDelete, revalidatePost } from '@/payload/collections/Posts/hooks/revalidatePost'
 import { slugField } from '@/payload/fields/slug'
@@ -91,7 +96,7 @@ export const Posts: CollectionConfig<'posts'> = {
                   return [
                     ...rootFeatures,
                     HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-                    BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
+                    BlocksFeature({ blocks: [Banner, Code, MediaBlock, XEmbed, GitHubEmbed, HardwareProduct, HardwareComparison, AIModel] }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
                     HorizontalRuleFeature(),

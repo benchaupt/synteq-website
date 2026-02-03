@@ -11,11 +11,12 @@ export const AIModel: Block = {
     {
       name: 'modelId',
       type: 'text',
-      label: 'Model ID',
+      label: 'Model',
       required: true,
       admin: {
-        placeholder: 'e.g., meta-llama/Llama-3.3-70B-Instruct',
-        description: 'Enter the full HuggingFace model ID',
+        components: {
+          Field: '/payload/blocks/AIModel/ModelSelect#ModelSelect',
+        },
       },
     },
     {

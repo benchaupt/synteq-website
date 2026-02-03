@@ -86,7 +86,7 @@ function UseCaseCard({ useCase, index, isInView }: UseCaseCardProps) {
     return (
         <motion.div
             ref={cardRef}
-            className="group relative bg-background-secondary p-6 flex flex-col aspect-3/4 overflow-hidden transition-transform duration-300 ease-out hover:-translate-y-2 cursor-pointer"
+            className="group relative bg-background-secondary p-6 flex flex-col min-h-96 overflow-hidden transition-transform duration-300 ease-out hover:-translate-y-2 cursor-pointer"
             initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
             animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 + index * 0.1 }}

@@ -12,6 +12,7 @@ import { cache } from 'react'
 import { AnimatedButton } from '@/app/_components/animated-button'
 import { BlogCarousel } from '@/app/_components/blog-carousel'
 import { ShareArticle } from '@/app/(marketing)/blogs/[slug]/_components/share-article'
+import { TableOfContents } from '@/app/(marketing)/blogs/[slug]/_components/table-of-contents'
 import { LivePreviewListener } from '@/payload/components/LivePreviewListener'
 import { formatDateTime } from '@/payload/utilities/formatDateTime'
 import { generateMeta } from '@/payload/utilities/generateMeta'
@@ -180,13 +181,7 @@ export default async function Post({ params: paramsPromise }: Args) {
                     {/* Sticky Table of Contents - Left Side */}
                     <aside className="hidden lg:block w-64 shrink-0">
                         <div className="sticky top-24">
-                            <nav className="flex flex-col gap-4">
-                                <h3 className="font-mono text-xs text-accent uppercase tracking-wider">Table of Contents</h3>
-                                <div className="flex flex-col gap-2 border-l-2 border-white/10 pl-4">
-                                    {/* ToC items will be dynamically generated from content headings */}
-                                    <p className="text-sm text-white/50">Content navigation will appear here</p>
-                                </div>
-                            </nav>
+                            <TableOfContents />
                         </div>
                     </aside>
 

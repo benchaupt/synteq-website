@@ -7,6 +7,7 @@
 
 export interface Env {
   MODELS_DB: D1Database
+  SCRAPER_SECRET: string
 }
 
 const HF_API_BASE = "https://huggingface.co/api"
@@ -323,8 +324,8 @@ async function scrapeAndStore(db: D1Database): Promise<{ success: boolean; count
 
 export default {
   // Handle scheduled cron trigger
-  async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext): Promise<void> {
-    console.log(`Cron triggered at ${new Date(event.scheduledTime).toISOString()}`)
+  async scheduled(controller: ScheduledController, env: Env, ctx: ExecutionContext): Promise<void> {
+    console.log(`Cron triggered at ${new Date(controller.scheduledTime).toISOString()}`)
 
     ctx.waitUntil(
       scrapeAndStore(env.MODELS_DB).then((result) => {
