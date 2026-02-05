@@ -9,7 +9,7 @@ interface ShareArticleProps {
 export function ShareArticle({ className }: ShareArticleProps) {
   return (
     <div className={cn("flex items-center gap-4", className)}>
-      <span className="font-mono text-sm tracking-tight text-dark-foreground uppercase">
+      <span className="font-mono text-xs tracking-tight text-dark-foreground uppercase">
         Share this article
       </span>
       <div className="flex items-center gap-3">

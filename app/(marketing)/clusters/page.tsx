@@ -169,7 +169,7 @@ function HardwareInner() {
           <div className={`grid grid-cols-1 ${comparedHardware.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3'} gap-6 md:gap-8`}>
             {comparedHardware.map((item) => (
               <button key={item!.id} onClick={() => openModalWithHardware(item!.id)} className="w-full">
-                <AnimatedCard className="h-full" isActive disableScale disableTextColor>
+                <AnimatedCard className="h-full" inverseHover disableScale disableTextColor>
                   <div className="flex flex-col gap-4 items-center">
                     <div className="size-24 flex items-center justify-center">
                       {/* eslint-disable-next-line @next/next/no-img-element */}

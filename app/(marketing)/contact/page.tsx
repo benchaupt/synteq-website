@@ -122,11 +122,21 @@ export default function Contact() {
         setTimeout(() => {
             setIsLoading(false);
             setIsSuccess(true);
+            setFirstName("");
+            setLastName("");
+            setCompany("");
+            setEmail("");
+            setSelectedProduct(productOptions[0]);
+            setBudget("");
+            setTeamSize("");
+            setMessage("");
         }, 2000);
     };
 
     const budgetLabel = budget ? budgetOptions.find(o => o.value === budget)?.label : null;
     const teamSizeLabel = teamSize ? teamSizeOptions.find(o => o.value === teamSize)?.label : null;
+
+    const isFormValid = firstName.trim() !== "" && lastName.trim() !== "" && email.trim() !== "" && message.trim() !== "";
 
     const testimonials = [
         {
@@ -215,7 +225,7 @@ export default function Contact() {
                                                 type="text"
                                                 value={firstName}
                                                 onChange={(e) => { setFirstName(e.target.value); clearSuccess(); }}
-                                                placeholder="First Name"
+                                                placeholder="First Name *"
                                                 disabled={isLoading}
                                                 className={cn(
                                                     "bg-transparent w-full outline-none transition-colors duration-300",
@@ -224,7 +234,7 @@ export default function Contact() {
                                             />
                                             {isLoading && (
                                                 <span className="absolute inset-0 flex items-center pointer-events-none shimmer-accent truncate" style={shimmerTextStyle} aria-hidden="true">
-                                                    {firstName || "First Name"}
+                                                    {firstName || "First Name *"}
                                                 </span>
                                             )}
                                         </div>
@@ -240,7 +250,7 @@ export default function Contact() {
                                                 type="text"
                                                 value={lastName}
                                                 onChange={(e) => { setLastName(e.target.value); clearSuccess(); }}
-                                                placeholder="Last Name"
+                                                placeholder="Last Name *"
                                                 disabled={isLoading}
                                                 className={cn(
                                                     "bg-transparent w-full outline-none transition-colors duration-300",
@@ -249,7 +259,7 @@ export default function Contact() {
                                             />
                                             {isLoading && (
                                                 <span className="absolute inset-0 flex items-center pointer-events-none shimmer-accent truncate" style={shimmerTextStyle} aria-hidden="true">
-                                                    {lastName || "Last Name"}
+                                                    {lastName || "Last Name *"}
                                                 </span>
                                             )}
                                         </div>
@@ -294,7 +304,7 @@ export default function Contact() {
                                                 type="email"
                                                 value={email}
                                                 onChange={(e) => { setEmail(e.target.value); clearSuccess(); }}
-                                                placeholder="Email Address"
+                                                placeholder="Email Address *"
                                                 disabled={isLoading}
                                                 className={cn(
                                                     "bg-transparent w-full outline-none transition-colors duration-300",
@@ -303,7 +313,7 @@ export default function Contact() {
                                             />
                                             {isLoading && (
                                                 <span className="absolute inset-0 flex items-center pointer-events-none shimmer-accent truncate" style={shimmerTextStyle} aria-hidden="true">
-                                                    {email || "Email Address"}
+                                                    {email || "Email Address *"}
                                                 </span>
                                             )}
                                         </div>
@@ -434,7 +444,7 @@ export default function Contact() {
                                     <textarea
                                         value={message}
                                         onChange={(e) => { setMessage(e.target.value); clearSuccess(); }}
-                                        placeholder="Tell us what you're working on"
+                                        placeholder="Tell us what you're working on *"
                                         rows={4}
                                         disabled={isLoading}
                                         className={cn(
@@ -448,7 +458,7 @@ export default function Contact() {
                                             style={shimmerTextStyle}
                                             aria-hidden="true"
                                         >
-                                            {message || "Tell us what you're working on"}
+                                            {message || "Tell us what you're working on *"}
                                         </span>
                                     )}
                                 </div>
@@ -462,7 +472,9 @@ export default function Contact() {
                                     background={isSuccess ? "primary" : "dark"}
                                     size="wide"
                                     onClick={handleSubmit}
-                                    disabled={isLoading}
+                                    disabled={isLoading || (!isFormValid && !isSuccess)}
+                                    data-active={isLoading || isSuccess ? "" : undefined}
+                                    className={cn("min-w-32 min-h-12 flex items-center justify-center", !isFormValid && !isLoading && !isSuccess && "opacity-50 pointer-events-none")}
                                 >
                                     {isLoading ? (
                                         <svg className="size-4 animate-spin" viewBox="0 0 24 24" fill="none">
@@ -470,11 +482,11 @@ export default function Contact() {
                                             <path className="opacity-75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" fill="currentColor" />
                                         </svg>
                                     ) : isSuccess ? (
-                                        <span className="flex items-center gap-2">
-                                            <svg className="size-4" viewBox="0 0 16 16" fill="none">
+                                        <span className="flex items-center gap-2 text-accent">
+                                            Sent
+                                            <svg className="size-4 text-accent" viewBox="0 0 16 16" fill="none">
                                                 <path d="M2 8L6 12L14 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                             </svg>
-                                            Sent
                                         </span>
                                     ) : (
                                         "Submit"

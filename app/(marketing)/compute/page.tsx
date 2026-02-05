@@ -170,7 +170,7 @@ export default function Infrastructure() {
                             <motion.div
                                 key={index}
                                 onClick={() => handleServiceClick(service.href)}
-                                className="group bg-background-secondary border border-white/10 hover:border-accent/50 flex flex-col overflow-hidden relative transition-all duration-300 hover:scale-[1.01] hover:shadow-2xl hover:shadow-accent/10 cursor-pointer min-h-[480px] md:min-h-[560px] lg:min-h-[640px]"
+                                className="group bg-background-secondary flex flex-col overflow-hidden relative transition-all duration-300 hover:-translate-y-2 cursor-pointer min-h-[480px] md:min-h-[560px] lg:min-h-[640px]"
                                 initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
                                 animate={isServicesInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
                                 transition={{
