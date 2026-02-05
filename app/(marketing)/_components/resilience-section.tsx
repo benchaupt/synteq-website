@@ -1,4 +1,63 @@
+"use client";
+
 import Link from "next/link";
+import { useRef, useCallback } from "react";
+
+function StatCard({
+  label,
+  value,
+  description,
+  className,
+}: {
+  label: string;
+  value: string;
+  description: string;
+  className?: string;
+}) {
+  const shimmerRef = useRef<HTMLSpanElement>(null);
+  const hovering = useRef(false);
+
+  const onMouseEnter = useCallback(() => {
+    hovering.current = true;
+    shimmerRef.current?.classList.add("animate-shimmer-stat");
+  }, []);
+
+  const onMouseLeave = useCallback(() => {
+    hovering.current = false;
+  }, []);
+
+  const onAnimationIteration = useCallback(() => {
+    if (!hovering.current) {
+      shimmerRef.current?.classList.remove("animate-shimmer-stat");
+    }
+  }, []);
+
+  return (
+    <div
+      className={`flex flex-col gap-3 md:gap-4 ${className ?? ""}`}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
+      <p className="font-mono text-sm md:text-sm lg:text-md text-white/65 uppercase">
+        {label}
+      </p>
+      <p className="heading2 text-white relative">
+        {value}
+        <span
+          ref={shimmerRef}
+          onAnimationIteration={onAnimationIteration}
+          className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,transparent_35%,#A0F0CD_50%,transparent_65%,transparent_100%)] bg-[length:200%_100%] bg-[position:200%_0] bg-clip-text text-transparent pointer-events-none select-none"
+          aria-hidden="true"
+        >
+          {value}
+        </span>
+      </p>
+      <p className="text-base md:text-base lg:text-base text-white/65">
+        {description}
+      </p>
+    </div>
+  );
+}
 
 export default function ResilienceSection() {
   return (
@@ -6,10 +65,9 @@ export default function ResilienceSection() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-20">
         {/* Left Content */}
         <div className="flex h-full shrink-0 flex-col justify-between gap-8 md:gap-10">
-          <div className="flex w-full flex-col gap-6 md:gap-8">
-            <h2 className="heading leading-tight md:leading-9 font-sequel-book relative">
-              <span className="text-white">Engineering for AI</span>
-              <span className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,transparent_40%,#8EEBD3_50%,transparent_60%,transparent_100%)] bg-[length:200%_100%] bg-clip-text text-transparent animate-shimmer pointer-events-none select-none" aria-hidden="true">Engineering for AI</span>
+          <div className="flex w-full flex-col gap-6 md:gap-6">
+            <h2 className="heading leading-tight md:leading-9 font-sequel-book text-white">
+              Engineering for AI
             </h2>
             <p className="text-base md:text-base lg:text-base text-foreground/65 max-w-lg">
               <span>Every layer of our infrastructure is purpose-built &amp; engineered for your workloads. </span>
@@ -39,57 +97,30 @@ export default function ResilienceSection() {
 
         {/* Right Grid - Stats */}
         <div className="grid shrink-0 grid-cols-1 sm:grid-cols-2 gap-8 md:gap-12 lg:gap-16 h-full">
-          {/* Uptime Card - Top Left */}
-          <div className="flex flex-col gap-3 md:gap-4 justify-self-start">
-            <p className="font-mono text-md md:text-md lg:text-md text-white/65 uppercase">
-              Uptime
-            </p>
-            <p className="heading2 text-white">
-              99.99% SLA
-            </p>
-            <p className="text-base md:text-base lg:text-base text-white/65">
-              Redundant systems and monitoring to keep workloads running.
-            </p>
-          </div>
-
-          {/* Latency Card - Top Right */}
-          <div className="flex flex-col gap-3 md:gap-4 justify-self-start sm:justify-self-end">
-            <p className="font-mono text-md md:text-md lg:text-md text-white/65 uppercase">
-              Latency
-            </p>
-            <p className="heading2 text-white">
-              &lt;50ms
-            </p>
-            <p className="text-base md:text-base lg:text-base text-white/65">
-              Sub-50ms response times for production workloads.
-            </p>
-          </div>
-
-          {/* Hardware Card - Bottom Left */}
-          <div className="flex flex-col gap-3 md:gap-4 justify-self-start">
-            <p className="font-mono text-md md:text-md lg:text-md text-white/65 uppercase">
-              Hardware
-            </p>
-            <p className="heading2 text-white">
-            Blackwell & H200
-            </p>
-            <p className="text-base md:text-base lg:text-base text-white/65">
-              Latest-generation GPUs, available to you.
-            </p>
-          </div>
-
-          {/* Design Card - Bottom Right */}
-          <div className="flex flex-col gap-3 md:gap-4 justify-self-start sm:justify-self-end">
-            <p className="font-mono text-md md:text-md lg:text-md text-white/65 uppercase">
-            EXECUTION
-            </p>
-            <p className="heading2 text-white">
-            We get shit done
-            </p>
-            <p className="text-base md:text-base lg:text-base text-white/65">
-            Deployment, support, and scale. Without wait.
-            </p>
-          </div>
+          <StatCard
+            label="Uptime"
+            value="99.99% SLA"
+            description="Redundant systems and monitoring to keep workloads running."
+            className="justify-self-start"
+          />
+          <StatCard
+            label="Latency"
+            value="<50ms"
+            description="Sub-50ms response times for production workloads."
+            className="justify-self-start sm:justify-self-end"
+          />
+          <StatCard
+            label="Hardware"
+            value="Blackwell & H200"
+            description="Latest-generation GPUs, available to you."
+            className="justify-self-start"
+          />
+          <StatCard
+            label="EXECUTION"
+            value="We get shit done"
+            description="Deployment, support, and scale. Without wait."
+            className="justify-self-start sm:justify-self-end"
+          />
         </div>
       </div>
     </section>

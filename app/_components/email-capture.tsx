@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 interface EmailCaptureProps {
   title?: string;
@@ -22,14 +22,22 @@ export function EmailCapture({
   icon,
 }: EmailCaptureProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [email, setEmail] = useState("");
+
+  const clearSuccess = useCallback(() => {
+    setIsSuccess(false);
+  }, []);
 
   const handleSubmit = () => {
     if (isLoading) return;
     setIsLoading(true);
+    setIsSuccess(false);
     // Simulate loading — replace with real submit logic
     setTimeout(() => {
       setIsLoading(false);
+      setIsSuccess(true);
+      setEmail("");
     }, 2000);
   };
 
@@ -65,7 +73,7 @@ export function EmailCapture({
                 type="email"
                 placeholder={placeholder}
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => { setEmail(e.target.value); clearSuccess(); }}
                 disabled={isLoading}
                 className={cn(
                   "w-full bg-transparent text-sm focus:outline-none min-w-0 transition-colors duration-300",
@@ -100,35 +108,39 @@ export function EmailCapture({
         </div>
         <button
           onClick={handleSubmit}
-          disabled={isLoading}
+          disabled={isLoading || isSuccess}
           className={cn(
             "size-10 relative flex items-center justify-center shrink-0 transition-colors group/btn mb-0.5 overflow-hidden",
-            !isLoading && "hover:bg-white/5"
+            !isLoading && !isSuccess && "hover:bg-white/5"
           )}
         >
           {/* Corner accents */}
           <span className={cn(
             "absolute top-0 left-0 w-2 h-2 border-l border-t transition-colors",
-            isLoading ? "border-accent" : "border-white/30 group-hover/btn:border-accent"
+            isLoading || isSuccess ? "border-accent" : "border-white/30 group-hover/btn:border-accent"
           )} />
           <span className={cn(
             "absolute top-0 right-0 w-2 h-2 border-r border-t transition-colors",
-            isLoading ? "border-accent" : "border-white/30 group-hover/btn:border-accent"
+            isLoading || isSuccess ? "border-accent" : "border-white/30 group-hover/btn:border-accent"
           )} />
           <span className={cn(
             "absolute bottom-0 left-0 w-2 h-2 border-l border-b transition-colors",
-            isLoading ? "border-accent" : "border-white/30 group-hover/btn:border-accent"
+            isLoading || isSuccess ? "border-accent" : "border-white/30 group-hover/btn:border-accent"
           )} />
           <span className={cn(
             "absolute bottom-0 right-0 w-2 h-2 border-r border-b transition-colors",
-            isLoading ? "border-accent" : "border-white/30 group-hover/btn:border-accent"
+            isLoading || isSuccess ? "border-accent" : "border-white/30 group-hover/btn:border-accent"
           )} />
 
-          {/* Arrow / Spinner */}
+          {/* Arrow / Spinner / Checkmark */}
           {isLoading ? (
             <svg className="size-4 animate-spin text-accent" viewBox="0 0 24 24" fill="none">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
               <path className="opacity-75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" fill="currentColor" />
+            </svg>
+          ) : isSuccess ? (
+            <svg className="size-4 text-accent" viewBox="0 0 16 16" fill="none">
+              <path d="M2 8L6 12L14 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           ) : (
             <svg

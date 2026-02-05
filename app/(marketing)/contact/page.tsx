@@ -12,7 +12,7 @@ const FormIcon = ({ src, size = "h-4", isShimmering = false }: { src: string; si
     <span
         className={cn(
             `${size} aspect-square shrink-0 transition-colors duration-300`,
-            isShimmering ? "shimmer-accent" : "bg-white/50 group-focus-within/field:bg-accent"
+            isShimmering ? "shimmer-accent" : "bg-white/80 group-focus-within/field:bg-accent"
         )}
         style={{
             maskImage: `url(${src})`,
@@ -28,7 +28,7 @@ const FormIcon = ({ src, size = "h-4", isShimmering = false }: { src: string; si
 );
 
 const ChevronDownIcon = () => (
-    <svg className="size-4 text-white/50" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg className="size-4 text-white/80" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
 );
@@ -239,7 +239,7 @@ export default function Contact() {
                                             )}
                                         </div>
                                     </div>
-                                    <span className={cn("absolute bottom-0 left-0 w-full h-px transition-all duration-300", isLoading ? "shimmer-accent" : "bg-white/25")} />
+                                    <span className={cn("absolute bottom-0 left-0 w-full h-px transition-all duration-300", isLoading ? "shimmer-accent" : "bg-white/50")} />
                                     <span className={cn("absolute bottom-0 left-0 w-full h-px bg-accent origin-left transition-transform duration-300", isLoading ? "scale-x-0" : "scale-x-0 group-focus-within/field:scale-x-100")} />
                                 </div>
                                 <div className="group/field relative">
@@ -264,7 +264,7 @@ export default function Contact() {
                                             )}
                                         </div>
                                     </div>
-                                    <span className={cn("absolute bottom-0 left-0 w-full h-px transition-all duration-300", isLoading ? "shimmer-accent" : "bg-white/25")} />
+                                    <span className={cn("absolute bottom-0 left-0 w-full h-px transition-all duration-300", isLoading ? "shimmer-accent" : "bg-white/50")} />
                                     <span className={cn("absolute bottom-0 left-0 w-full h-px bg-accent origin-left transition-transform duration-300", isLoading ? "scale-x-0" : "scale-x-0 group-focus-within/field:scale-x-100")} />
                                 </div>
                             </div>
@@ -293,7 +293,7 @@ export default function Contact() {
                                             )}
                                         </div>
                                     </div>
-                                    <span className={cn("absolute bottom-0 left-0 w-full h-px transition-all duration-300", isLoading ? "shimmer-accent" : "bg-white/25")} />
+                                    <span className={cn("absolute bottom-0 left-0 w-full h-px transition-all duration-300", isLoading ? "shimmer-accent" : "bg-white/50")} />
                                     <span className={cn("absolute bottom-0 left-0 w-full h-px bg-accent origin-left transition-transform duration-300", isLoading ? "scale-x-0" : "scale-x-0 group-focus-within/field:scale-x-100")} />
                                 </div>
                                 <div className="group/field relative">
@@ -318,18 +318,19 @@ export default function Contact() {
                                             )}
                                         </div>
                                     </div>
-                                    <span className={cn("absolute bottom-0 left-0 w-full h-px transition-all duration-300", isLoading ? "shimmer-accent" : "bg-white/25")} />
+                                    <span className={cn("absolute bottom-0 left-0 w-full h-px transition-all duration-300", isLoading ? "shimmer-accent" : "bg-white/50")} />
                                     <span className={cn("absolute bottom-0 left-0 w-full h-px bg-accent origin-left transition-transform duration-300", isLoading ? "scale-x-0" : "scale-x-0 group-focus-within/field:scale-x-100")} />
                                 </div>
                             </div>
 
                             {/* Product Stack Selection */}
-                            <div className={cn("flex flex-col gap-3 transition-opacity duration-300", isLoading && "opacity-50 pointer-events-none")}>
+                            <div className="flex flex-col gap-3">
                                 <p className="text-white/40 text-sm">What product stack are you interested in?</p>
                                 <SliderTabs
                                     items={productOptions}
                                     activeItem={selectedProduct}
                                     onItemChange={(v) => { setSelectedProduct(v); clearSuccess(); }}
+                                    isShimmering={isLoading}
                                 />
                             </div>
 
@@ -382,7 +383,7 @@ export default function Contact() {
                                             </Select.Content>
                                         </Select.Portal>
                                     </Select.Root>
-                                    <span className={cn("absolute bottom-0 left-0 w-full h-px transition-all duration-300", isLoading ? "shimmer-accent" : "bg-white/25")} />
+                                    <span className={cn("absolute bottom-0 left-0 w-full h-px transition-all duration-300", isLoading ? "shimmer-accent" : "bg-white/50")} />
                                     <span className={cn("absolute bottom-0 left-0 w-full h-px bg-accent origin-left transition-transform duration-300", isLoading ? "scale-x-0" : "scale-x-0 group-focus-within/field:scale-x-100")} />
                                 </div>
 
@@ -433,7 +434,7 @@ export default function Contact() {
                                             </Select.Content>
                                         </Select.Portal>
                                     </Select.Root>
-                                    <span className={cn("absolute bottom-0 left-0 w-full h-px transition-all duration-300", isLoading ? "shimmer-accent" : "bg-white/25")} />
+                                    <span className={cn("absolute bottom-0 left-0 w-full h-px transition-all duration-300", isLoading ? "shimmer-accent" : "bg-white/50")} />
                                     <span className={cn("absolute bottom-0 left-0 w-full h-px bg-accent origin-left transition-transform duration-300", isLoading ? "scale-x-0" : "scale-x-0 group-focus-within/field:scale-x-100")} />
                                 </div>
                             </div>
@@ -462,7 +463,7 @@ export default function Contact() {
                                         </span>
                                     )}
                                 </div>
-                                <span className={cn("absolute bottom-0 left-0 w-full h-px transition-all duration-300", isLoading ? "shimmer-accent" : "bg-white/25")} />
+                                <span className={cn("absolute bottom-0 left-0 w-full h-px transition-all duration-300", isLoading ? "shimmer-accent" : "bg-white/50")} />
                                 <span className={cn("absolute bottom-0 left-0 w-full h-px bg-accent origin-left transition-transform duration-300", isLoading ? "scale-x-0" : "scale-x-0 group-focus-within/field:scale-x-100")} />
                             </div>
 

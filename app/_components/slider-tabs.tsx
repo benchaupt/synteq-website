@@ -9,6 +9,7 @@ interface SliderTabsProps {
   activeItem: string;
   onItemChange: (item: string) => void;
   className?: string;
+  isShimmering?: boolean;
 }
 
 export function SliderTabs({
@@ -16,6 +17,7 @@ export function SliderTabs({
   activeItem,
   onItemChange,
   className,
+  isShimmering = false,
 }: SliderTabsProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
@@ -54,10 +56,18 @@ export function SliderTabs({
         <button
           key={item}
           onClick={() => onItemChange(item)}
+          disabled={isShimmering}
           className={cn(
             "relative font-mono text-sm uppercase tracking-tight py-2 transition-colors duration-200",
-            activeItem === item ? "text-accent" : "text-white hover:text-white/80"
+            isShimmering
+              ? activeItem === item ? "shimmer-accent" : "text-white/40"
+              : activeItem === item ? "text-accent" : "text-white hover:text-white/80"
           )}
+          style={isShimmering && activeItem === item ? {
+            backgroundClip: "text",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          } : undefined}
         >
           {item}
         </button>
@@ -65,7 +75,7 @@ export function SliderTabs({
 
       {/* Sliding underline indicator */}
       <motion.div
-        className="absolute bottom-0 h-[2px] bg-accent"
+        className={cn("absolute bottom-0 h-[2px]", isShimmering ? "shimmer-accent" : "bg-accent")}
         initial={false}
         animate={{
           left: indicatorStyle.left,

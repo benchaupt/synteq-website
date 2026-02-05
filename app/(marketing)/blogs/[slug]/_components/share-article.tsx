@@ -16,37 +16,29 @@ export function ShareArticle({ className }: ShareArticleProps) {
         {/* LinkedIn */}
         <a
           href="#"
-          className="size-5 flex items-center justify-center text-foreground/60 hover:text-foreground transition-colors"
+          className="size-4 flex items-center justify-center text-foreground/60 hover:text-foreground transition-colors"
           aria-label="Share on LinkedIn"
         >
-          <svg className="size-full" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+          <svg className="size-full" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.83398 16.458H0.291992V5.75H3.83398V16.458Z" fill="currentColor"/>
+            <path d="M11.7715 5.47852C15.3544 5.47864 16.0839 7.84334 16.084 10.916V16.458H12.542V11.25C12.542 9.91667 12.5212 8.2287 10.709 8.22852C8.87558 8.22852 8.58398 9.65591 8.58398 11.1455V16.458H5.04199V5.75H8.4375V7.29102H8.47949C8.94827 6.41608 10.0841 5.47852 11.7715 5.47852Z" fill="currentColor"/>
+            <path d="M2.0625 0C3.20317 0 4.125 0.92187 4.125 2.0625C4.12483 3.20297 3.20306 4.125 2.0625 4.125C0.922136 4.12483 0.000173621 3.20286 0 2.0625C0 0.921977 0.922029 0.000173689 2.0625 0Z" fill="currentColor"/>
           </svg>
         </a>
         {/* X (Twitter) */}
         <a
           href="#"
-          className="size-5 flex items-center justify-center text-foreground/60 hover:text-foreground transition-colors"
+          className="size-[1.125rem] flex items-center justify-center text-foreground/60 hover:text-foreground transition-colors"
           aria-label="Share on X"
         >
-          <svg className="size-full" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-          </svg>
-        </a>
-        {/* Facebook */}
-        <a
-          href="#"
-          className="size-5 flex items-center justify-center text-foreground/60 hover:text-foreground transition-colors"
-          aria-label="Share on Facebook"
-        >
-          <svg className="size-full" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+          <svg className="size-full" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18.9014 14.3251L28.3464 3.875H26.0914L17.9264 12.9501L11.4264 3.875H3.875L13.7964 17.5551L3.875 28.5625H6.13L14.7714 18.9301L21.6364 28.5625H29.1875L18.9014 14.3251ZM15.8764 17.6801L14.8914 16.3151L6.91641 5.46H10.3714L16.7514 14.2501L17.7364 15.6151L26.0914 27.0375H22.6364L15.8764 17.6801Z" fill="currentColor" />
           </svg>
         </a>
         {/* Copy Link */}
         <button
           onClick={() => navigator.clipboard.writeText(window.location.href)}
-          className="size-5 flex items-center justify-center text-foreground/60 hover:text-foreground transition-colors"
+          className="size-4 flex items-center justify-center text-foreground/60 hover:text-foreground transition-colors"
           aria-label="Copy link"
         >
           <svg className="size-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
