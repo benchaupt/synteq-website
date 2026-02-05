@@ -17,6 +17,7 @@ interface ModelsResponse {
   filters: {
     taskTypes: string[]
     authors: string[]
+    sizes: string[]
   }
 }
 
@@ -52,6 +53,7 @@ function ModelsContent() {
   // Available filter options
   const [taskTypes, setTaskTypes] = useState<string[]>([])
   const [authors, setAuthors] = useState<string[]>([])
+  const [availableSizes, setAvailableSizes] = useState<string[]>([])
 
   // Pagination (4x5 grid = 20 items per page)
   const [total, setTotal] = useState(0)
@@ -92,6 +94,12 @@ function ModelsContent() {
       setTotal(data.total)
       setTaskTypes(data.filters.taskTypes)
       setAuthors(data.filters.authors)
+      setAvailableSizes(data.filters.sizes)
+
+      // Clear filters that are no longer available in scoped results
+      if (taskType && !data.filters.taskTypes.includes(taskType)) setTaskType(null)
+      if (author && !data.filters.authors.includes(author)) setAuthor(null)
+      if (size && !data.filters.sizes.includes(size)) setSize(null)
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred")
     } finally {
@@ -185,6 +193,7 @@ function ModelsContent() {
           <ModelFilters
             taskTypes={taskTypes}
             authors={authors}
+            availableSizes={availableSizes}
             selectedTaskType={taskType}
             selectedAuthor={author}
             selectedSize={size}

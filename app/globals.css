@@ -95,6 +95,20 @@
   animation: marquee-vertical var(--duration) linear infinite;
 }
 
+/* Unified shimmer accent — use on icon (mask), text (background-clip), underline (bg) */
+/* background-attachment: fixed ensures all elements share the same gradient position */
+@keyframes shimmer-sweep {
+  0% { background-position: -100vw 0; }
+  100% { background-position: 100vw 0; }
+}
+
+.shimmer-accent {
+  background: linear-gradient(90deg, var(--color-accent) 0%, var(--color-accent) 35%, #9AEFD5 50%, var(--color-accent) 65%, var(--color-accent) 100%);
+  background-size: 80vw 100%;
+  background-attachment: fixed;
+  animation: shimmer-sweep 2.5s ease-in-out infinite;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

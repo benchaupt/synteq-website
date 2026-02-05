@@ -335,7 +335,7 @@ export default function About() {
                             <AccordionTrigger className="py-6 group text-base [&>svg]:hidden">
                                 {/* Desktop Layout */}
                                 <div className="hidden md:grid md:grid-cols-[minmax(200px,1fr)_2fr_auto] w-full gap-8 items-center text-left">
-                                    <span className="uppercase font-mono md:text-lg text-white group-hover:text-accent transition-colors">
+                                    <span className="uppercase font-mono md:text-md text-white group-hover:text-accent transition-colors">
                                         {value.title}
                                     </span>
                                     <span className="text-base text-white/50 group-hover:text-white/70 transition-colors">

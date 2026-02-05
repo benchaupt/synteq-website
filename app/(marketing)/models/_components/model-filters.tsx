@@ -4,10 +4,12 @@ import { cn } from "@/lib/utils"
 import * as Select from "@radix-ui/react-select"
 import { ChevronDown, Check, X } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
+import { useCallback, useRef, useState } from "react"
 
 interface ModelFiltersProps {
   taskTypes: string[]
   authors: string[]
+  availableSizes?: string[]
   selectedTaskType: string | null
   selectedAuthor: string | null
   selectedSize: string | null
@@ -39,61 +41,108 @@ function FilterSelect({
   options: { value: string; label: string }[]
   onChange: (value: string | null) => void
 }) {
-  return (
-    <Select.Root
-      value={value || ALL_VALUE}
-      onValueChange={(v) => onChange(v === ALL_VALUE ? null : v)}
-    >
-      <Select.Trigger
-        className={cn(
-          "inline-flex items-center justify-between gap-2 px-4 py-2.5 min-w-[140px]",
-          "bg-background-secondary border border-white/10 rounded-lg",
-          "text-sm text-white/60 hover:text-white hover:border-white/20",
-          "focus:outline-none focus:border-accent/50 transition-colors",
-          "data-[state=open]:border-accent/50"
-        )}
-      >
-        <Select.Value placeholder={placeholder} />
-        <Select.Icon>
-          <ChevronDown className="size-4" />
-        </Select.Icon>
-      </Select.Trigger>
+  const [canScrollUp, setCanScrollUp] = useState(false)
+  const [canScrollDown, setCanScrollDown] = useState(false)
+  const viewportRef = useRef<HTMLDivElement>(null)
 
-      <Select.Portal>
-        <Select.Content
-          className="bg-background-secondary border border-white/10 rounded-lg shadow-xl overflow-hidden z-50"
-          position="popper"
-          sideOffset={4}
+  const checkScroll = useCallback(() => {
+    const el = viewportRef.current
+    if (!el) return
+    setCanScrollUp(el.scrollTop > 2)
+    setCanScrollDown(el.scrollTop < el.scrollHeight - el.clientHeight - 2)
+  }, [])
+
+  return (
+    <div className="group/field relative">
+      <Select.Root
+        value={value || ALL_VALUE}
+        onValueChange={(v) => onChange(v === ALL_VALUE ? null : v)}
+        onOpenChange={(open) => {
+          if (open) {
+            requestAnimationFrame(() => requestAnimationFrame(checkScroll))
+          }
+        }}
+      >
+        <Select.Trigger
+          className="inline-flex items-center justify-between gap-2 px-2 py-2.5 min-w-[140px] text-sm text-white/50 hover:text-white focus:outline-none transition-colors group"
         >
-          <Select.Viewport className="p-1 max-h-[300px] overflow-y-auto">
-            <Select.Item
-              value={ALL_VALUE}
-              className="relative flex items-center px-3 py-2 text-sm text-white/60 rounded cursor-pointer hover:bg-white/5 hover:text-white focus:outline-none focus:bg-white/5 data-[highlighted]:bg-white/5"
-            >
-              <Select.ItemText>All</Select.ItemText>
-            </Select.Item>
-            {options.map((option) => (
-              <Select.Item
-                key={option.value}
-                value={option.value}
-                className="relative flex items-center px-3 py-2 pr-8 text-sm text-white/60 rounded cursor-pointer hover:bg-white/5 hover:text-white focus:outline-none focus:bg-white/5 data-[highlighted]:bg-white/5"
+          <Select.Value placeholder={placeholder} />
+          <Select.Icon className="transition-transform duration-200 group-data-[state=open]:rotate-180">
+            <ChevronDown className="size-4" />
+          </Select.Icon>
+        </Select.Trigger>
+
+        <Select.Portal>
+          <Select.Content
+            className="bg-background-secondary overflow-hidden z-50 border border-white/10 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0 data-[state=open]:slide-in-from-top-1 data-[state=closed]:slide-out-to-top-1 duration-150"
+            position="popper"
+            sideOffset={8}
+          >
+            <div className="relative">
+              {/* Top gradient mask */}
+              <div
+                className={cn(
+                  "absolute top-0 left-0 right-0 h-6 bg-gradient-to-b from-background-secondary to-transparent z-10 pointer-events-none transition-opacity duration-200",
+                  canScrollUp ? "opacity-100" : "opacity-0"
+                )}
+              />
+
+              <Select.Viewport
+                ref={viewportRef}
+                onScroll={checkScroll}
+                className="max-h-[300px] overflow-y-auto"
               >
-                <Select.ItemText>{option.label}</Select.ItemText>
-                <Select.ItemIndicator className="absolute right-2">
-                  <Check className="size-4 text-accent" />
-                </Select.ItemIndicator>
-              </Select.Item>
-            ))}
-          </Select.Viewport>
-        </Select.Content>
-      </Select.Portal>
-    </Select.Root>
+                <Select.Item
+                  value={ALL_VALUE}
+                  className="px-4 py-2.5 text-sm text-white/60 outline-none cursor-pointer hover:bg-white/5 data-highlighted:bg-white/5 border-b border-white/5"
+                >
+                  <Select.ItemText>All</Select.ItemText>
+                </Select.Item>
+                {options.map((option, i) => (
+                  <Select.Item
+                    key={option.value}
+                    value={option.value}
+                    className={cn(
+                      "relative flex items-center px-4 py-2.5 pr-8 text-sm text-white/60 outline-none cursor-pointer hover:bg-white/5 data-highlighted:bg-white/5",
+                      i > 0 && "border-t border-white/5"
+                    )}
+                    onPointerUp={() => {
+                      if (option.value === value) {
+                        onChange(null)
+                      }
+                    }}
+                  >
+                    <Select.ItemText>{option.label}</Select.ItemText>
+                    <Select.ItemIndicator className="absolute right-3">
+                      <Check className="size-4 text-accent" />
+                    </Select.ItemIndicator>
+                  </Select.Item>
+                ))}
+              </Select.Viewport>
+
+              {/* Bottom gradient mask + chevron */}
+              <div
+                className={cn(
+                  "absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-background-secondary via-background-secondary/80 to-transparent z-10 pointer-events-none flex items-end justify-center pb-2 transition-opacity duration-200",
+                  canScrollDown ? "opacity-100" : "opacity-0"
+                )}
+              >
+                <ChevronDown className="size-4 text-white/60" />
+              </div>
+            </div>
+          </Select.Content>
+        </Select.Portal>
+      </Select.Root>
+      <span className="absolute bottom-0 left-0 w-full h-px bg-white/25" />
+      <span className="absolute bottom-0 left-0 w-full h-px bg-accent origin-left scale-x-0 group-focus-within/field:scale-x-100 transition-transform duration-300" />
+    </div>
   )
 }
 
 export function ModelFilters({
   taskTypes,
   authors,
+  availableSizes,
   selectedTaskType,
   selectedAuthor,
   selectedSize,
@@ -114,7 +163,9 @@ export function ModelFilters({
     label: a,
   }))
 
-  const sizeOptions = SIZE_OPTIONS.map((s) => ({
+  const sizeOptions = SIZE_OPTIONS
+    .filter((s) => !availableSizes || availableSizes.includes(s.value))
+    .map((s) => ({
     value: s.value,
     label: s.label,
   }))
@@ -129,7 +180,7 @@ export function ModelFilters({
   }
 
   return (
-    <div className={cn("flex flex-wrap items-center gap-3", className)}>
+    <div className={cn("flex flex-wrap items-end gap-4", className)}>
       <FilterSelect
         placeholder="Task Type"
         value={selectedTaskType}
@@ -156,7 +207,7 @@ export function ModelFilters({
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.15 }}
             onClick={clearAllFilters}
-            className="p-2 text-white/50 hover:text-white transition-colors"
+            className="p-2 mb-0.5 text-white/50 hover:text-white transition-colors"
           >
             <X className="size-5" />
           </motion.button>

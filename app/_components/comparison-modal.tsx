@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 import { AnimatePresence, motion } from "motion/react"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { createPortal } from "react-dom"
-import { X, Search, ChevronDown } from "lucide-react"
+import { X, Search, ChevronDown, Check } from "lucide-react"
 import * as Select from "@radix-ui/react-select"
 import { AnimatedButton } from "./animated-button"
 import { AnimatedCard } from "./animated-card"
@@ -140,64 +140,77 @@ function ComparisonModalInner({
         </div>
 
         {/* Search & Filters */}
-        <div className="p-4 flex flex-col sm:flex-row gap-3">
-          <div className="relative flex-1 max-w-md">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-white/40" />
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search hardware..."
-              className="w-full bg-background-secondary border border-white/10 rounded-lg pl-12 pr-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:border-accent/50 transition-colors"
-            />
+        <div className="px-6 pt-4 flex flex-wrap items-end gap-6">
+          <div className="group/field relative flex-1 max-w-md">
+            <div className="flex items-center gap-3 px-2 py-3">
+              <Search className="size-5 shrink-0 text-white/40 group-focus-within/field:text-accent transition-colors duration-300" />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search hardware..."
+                className="w-full bg-transparent text-white placeholder:text-white/40 outline-none"
+              />
+            </div>
+            <span className="absolute bottom-0 left-0 w-full h-px bg-white/25" />
+            <span className="absolute bottom-0 left-0 w-full h-px bg-accent origin-left scale-x-0 group-focus-within/field:scale-x-100 transition-transform duration-300" />
           </div>
 
           {/* Manufacturer Dropdown */}
-          <Select.Root
-            value={manufacturerFilter || "__all__"}
-            onValueChange={(v) => setManufacturerFilter(v === "__all__" ? null : v)}
-          >
-            <Select.Trigger
-              className={cn(
-                "inline-flex items-center justify-between gap-2 px-4 py-3 min-w-[160px]",
-                "bg-background-secondary border border-white/10 rounded-lg",
-                "text-sm text-white/60 hover:text-white hover:border-white/20",
-                "focus:outline-none focus:border-accent/50 transition-colors",
-                "data-[state=open]:border-accent/50"
-              )}
+          <div className="group/field relative">
+            <Select.Root
+              value={manufacturerFilter || "__all__"}
+              onValueChange={(v) => setManufacturerFilter(v === "__all__" ? null : v)}
             >
-              <Select.Value placeholder="Manufacturer" />
-              <Select.Icon>
-                <ChevronDown className="size-4" />
-              </Select.Icon>
-            </Select.Trigger>
-
-            <Select.Portal>
-              <Select.Content
-                className="bg-background-dropdown border border-white/10 rounded-lg shadow-xl overflow-hidden z-[10000]"
-                position="popper"
-                sideOffset={4}
+              <Select.Trigger
+                className="inline-flex items-center justify-between gap-2 px-2 py-2.5 min-w-[160px] text-sm text-white/50 hover:text-white focus:outline-none transition-colors group"
               >
-                <Select.Viewport className="p-1">
-                  <Select.Item
-                    value="__all__"
-                    className="relative flex items-center px-3 py-2 text-sm text-white/60 rounded cursor-pointer hover:bg-white/5 hover:text-white focus:outline-none focus:bg-white/5 data-[highlighted]:bg-white/5"
-                  >
-                    <Select.ItemText>All Manufacturers</Select.ItemText>
-                  </Select.Item>
-                  {MANUFACTURERS.map((m) => (
+                <Select.Value placeholder="Manufacturer" />
+                <Select.Icon className="transition-transform duration-200 group-data-[state=open]:rotate-180">
+                  <ChevronDown className="size-4" />
+                </Select.Icon>
+              </Select.Trigger>
+
+              <Select.Portal>
+                <Select.Content
+                  className="bg-background-secondary overflow-hidden z-[10000] border border-white/10 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0 data-[state=open]:slide-in-from-top-1 data-[state=closed]:slide-out-to-top-1 duration-150"
+                  position="popper"
+                  sideOffset={8}
+                >
+                  <Select.Viewport>
                     <Select.Item
-                      key={m}
-                      value={m}
-                      className="relative flex items-center px-3 py-2 text-sm text-white/60 rounded cursor-pointer hover:bg-white/5 hover:text-white focus:outline-none focus:bg-white/5 data-[highlighted]:bg-white/5"
+                      value="__all__"
+                      className="px-4 py-2.5 text-sm text-white/60 outline-none cursor-pointer hover:bg-white/5 data-highlighted:bg-white/5 border-b border-white/5"
                     >
-                      <Select.ItemText>{m}</Select.ItemText>
+                      <Select.ItemText>All Manufacturers</Select.ItemText>
                     </Select.Item>
-                  ))}
-                </Select.Viewport>
-              </Select.Content>
-            </Select.Portal>
-          </Select.Root>
+                    {MANUFACTURERS.map((m, i) => (
+                      <Select.Item
+                        key={m}
+                        value={m}
+                        className={cn(
+                          "relative flex items-center px-4 py-2.5 pr-8 text-sm text-white/60 outline-none cursor-pointer hover:bg-white/5 data-highlighted:bg-white/5",
+                          i > 0 && "border-t border-white/5"
+                        )}
+                        onPointerUp={() => {
+                          if (m === manufacturerFilter) {
+                            setManufacturerFilter(null)
+                          }
+                        }}
+                      >
+                        <Select.ItemText>{m}</Select.ItemText>
+                        <Select.ItemIndicator className="absolute right-3">
+                          <Check className="size-4 text-accent" />
+                        </Select.ItemIndicator>
+                      </Select.Item>
+                    ))}
+                  </Select.Viewport>
+                </Select.Content>
+              </Select.Portal>
+            </Select.Root>
+            <span className="absolute bottom-0 left-0 w-full h-px bg-white/25" />
+            <span className="absolute bottom-0 left-0 w-full h-px bg-accent origin-left scale-x-0 group-focus-within/field:scale-x-100 transition-transform duration-300" />
+          </div>
         </div>
 
         {/* Hardware Grid */}
@@ -226,7 +239,7 @@ function ComparisonModalInner({
           <div className="flex items-center justify-between gap-4">
             <div className="flex-1 min-w-0">
               {selectedHardware.length > 0 ? (
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 items-center">
                   <span className="text-white/50 text-sm mr-1">Selected:</span>
                   {selectedHardware.map((h) => (
                     <button

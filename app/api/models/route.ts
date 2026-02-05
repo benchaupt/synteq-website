@@ -83,17 +83,47 @@ export async function GET(request: NextRequest) {
 
     const total = countResult[0]?.count || 0
 
-    // Get unique task types and authors for filters
+    // Get unique task types and authors for filters, scoped to search
+    const searchCondition = search
+      ? or(
+          like(huggingFaceModels.name, `%${search}%`),
+          like(huggingFaceModels.author, `%${search}%`),
+          like(huggingFaceModels.modelId, `%${search}%`)
+        )
+      : undefined
+
     const taskTypes = await db
       .selectDistinct({ taskType: huggingFaceModels.taskType })
       .from(huggingFaceModels)
-      .where(sql`${huggingFaceModels.taskType} IS NOT NULL`)
+      .where(
+        searchCondition
+          ? and(sql`${huggingFaceModels.taskType} IS NOT NULL`, searchCondition)
+          : sql`${huggingFaceModels.taskType} IS NOT NULL`
+      )
 
     const authors = await db
       .selectDistinct({ author: huggingFaceModels.author })
       .from(huggingFaceModels)
+      .where(searchCondition || undefined)
       .orderBy(desc(huggingFaceModels.downloads))
       .limit(50)
+
+    // Check which size buckets have models in search results
+    const sizeBuckets = await db
+      .select({
+        small: sql<number>`SUM(CASE WHEN ${huggingFaceModels.parameterCount} < 1 THEN 1 ELSE 0 END)`,
+        medium: sql<number>`SUM(CASE WHEN ${huggingFaceModels.parameterCount} >= 1 AND ${huggingFaceModels.parameterCount} < 10 THEN 1 ELSE 0 END)`,
+        large: sql<number>`SUM(CASE WHEN ${huggingFaceModels.parameterCount} >= 10 AND ${huggingFaceModels.parameterCount} < 70 THEN 1 ELSE 0 END)`,
+        xlarge: sql<number>`SUM(CASE WHEN ${huggingFaceModels.parameterCount} >= 70 THEN 1 ELSE 0 END)`,
+      })
+      .from(huggingFaceModels)
+      .where(searchCondition || undefined)
+
+    const availableSizes: string[] = []
+    if (sizeBuckets[0]?.small > 0) availableSizes.push("small")
+    if (sizeBuckets[0]?.medium > 0) availableSizes.push("medium")
+    if (sizeBuckets[0]?.large > 0) availableSizes.push("large")
+    if (sizeBuckets[0]?.xlarge > 0) availableSizes.push("xlarge")
 
     const totalPages = Math.ceil(total / limit)
 
@@ -114,6 +144,7 @@ export async function GET(request: NextRequest) {
       filters: {
         taskTypes: taskTypes.map(t => t.taskType).filter(Boolean),
         authors: authors.map(a => a.author),
+        sizes: availableSizes,
       }
     })
   } catch (error) {

@@ -97,12 +97,12 @@ export const Navigation = () => {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                 </svg>
                             </NavigationMenu.Trigger>
-                            <NavigationMenu.Content className="absolute left-1/2 -translate-x-1/2 top-full mt-2.5 w-auto rounded-xl border border-white/5 bg-background-dropdown shadow-2xl data-[state=open]:animate-in data-[state=open]:fade-in data-[state=open]:zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=closed]:zoom-out-95 duration-200">
+                            <NavigationMenu.Content className="absolute left-1/2 -translate-x-1/2 top-full mt-2.5 w-auto border border-white/5 bg-background-secondary shadow-2xl data-[state=open]:animate-in data-[state=open]:fade-in data-[state=open]:zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=closed]:zoom-out-95 duration-200">
                                 <div className="p-4 sm:w-[320px]">
                                     <div className="space-y-1">
                                         {/* Disabled - API */}
-                                        <div className="flex items-center gap-3 px-3 py-3 rounded-lg opacity-50 cursor-not-allowed">
-                                            <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0">
+                                        <div className="flex items-center gap-3 px-3 py-3 opacity-50 cursor-not-allowed">
+                                            <div className="size-8 bg-white/5 flex items-center justify-center shrink-0">
                                                 <svg className="size-4 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                                                 </svg>
@@ -114,7 +114,7 @@ export const Navigation = () => {
                                         </div>
                                         {/* Model Library */}
                                         <NavigationMenu.Link asChild>
-                                            <Link href="/models" className="group/item flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-white/5 transition-all duration-200">
+                                            <Link href="/models" className="group/item flex items-center gap-3 px-3 py-3 hover:bg-white/5 transition-all duration-200">
                                                 <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0 group-hover/item:bg-accent/10 transition-colors">
                                                     <svg className="size-4 text-white/60 group-hover/item:text-accent transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
@@ -127,7 +127,7 @@ export const Navigation = () => {
                                             </Link>
                                         </NavigationMenu.Link>
                                         <NavigationMenu.Link asChild>
-                                            <Link href="/blogs" className="group/item flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-white/5 transition-all duration-200">
+                                            <Link href="/blogs" className="group/item flex items-center gap-3 px-3 py-3  hover:bg-white/5 transition-all duration-200">
                                                 <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0 group-hover/item:bg-accent/10 transition-colors">
                                                     <svg className="size-4 text-white/60 group-hover/item:text-accent transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
@@ -196,7 +196,7 @@ export const Navigation = () => {
                     {/* Menu content */}
                     <div className="fixed inset-x-0 top-0 pt-20 pb-8 overflow-y-auto max-h-screen">
                         <div className="relative w-full max-w-md mx-auto px-5">
-                            <nav className="flex flex-col gap-1 bg-background-secondary rounded-2xl p-4 shadow-xl border border-white/5">
+                            <nav className="flex flex-col gap-1 bg-background-secondary p-4 pb-6 shadow-xl border border-white/5">
                                 {/* Clusters Link */}
                                 <Link
                                     href="/clusters"
@@ -244,7 +244,7 @@ export const Navigation = () => {
                                         </svg>
                                     </button>
                                     {mobileActiveDropdown === 'resources' && (
-                                        <div className="pb-2 px-4 space-y-1">
+                                        <div className="pb-2 space-y-1">
                                             {/* Disabled - API */}
                                             <div className="flex items-center gap-3 py-3 px-3 rounded-lg opacity-50 cursor-not-allowed">
                                                 <div className="size-8 rounded-md bg-white/5 flex items-center justify-center shrink-0">

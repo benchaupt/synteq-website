@@ -1,16 +1,19 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { AnimatedButton } from "@/app/_components/animated-button";
 import { SliderTabs } from "@/app/_components/slider-tabs";
 import { TestimonialCarousel } from "@/app/_components/testimonial-carousel";
+import { cn } from "@/lib/utils";
 import * as Select from "@radix-ui/react-select";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 // Icon component using CSS mask so color can transition on focus
-const FormIcon = ({ src, size = "h-4" }: { src: string; size?: string }) => (
+const FormIcon = ({ src, size = "h-4", isShimmering = false }: { src: string; size?: string; isShimmering?: boolean }) => (
     <span
-        className={`${size} aspect-square shrink-0 bg-white/50 group-focus-within/field:bg-accent transition-colors duration-300`}
+        className={cn(
+            `${size} aspect-square shrink-0 transition-colors duration-300`,
+            isShimmering ? "shimmer-accent" : "bg-white/50 group-focus-within/field:bg-accent"
+        )}
         style={{
             maskImage: `url(${src})`,
             maskSize: "contain",
@@ -72,10 +75,58 @@ const DelvLogo = () => (
     </svg>
 );
 
+const budgetOptions = [
+    { value: "<10k", label: "<$10k", desc: "Early-stage or prototype" },
+    { value: "10k-50k", label: "$10k - $50k", desc: "Growing teams and workloads" },
+    { value: "50k-100k", label: "$50k - $100k", desc: "Production-grade infrastructure" },
+    { value: "100k+", label: "$100k+", desc: "Enterprise-scale deployments" },
+];
+
+const teamSizeOptions = [
+    { value: "1-10", label: "1–10", desc: "Startup or small team" },
+    { value: "11-50", label: "11–50", desc: "Growing engineering org" },
+    { value: "51-200", label: "51–200", desc: "Mid-size company" },
+    { value: "200+", label: "200+", desc: "Enterprise organization" },
+];
+
 const productOptions = ["GPU Cloud", "GPU Metal", "Unsure"];
 
+// Shared inline style for shimmer text overlay (bg-clip:text via CSS class gets reset by background shorthand)
+const shimmerTextStyle: React.CSSProperties = {
+    backgroundClip: "text",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+};
+
 export default function Contact() {
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [company, setCompany] = useState("");
+    const [email, setEmail] = useState("");
     const [selectedProduct, setSelectedProduct] = useState(productOptions[0]);
+    const [budget, setBudget] = useState("");
+    const [teamSize, setTeamSize] = useState("");
+    const [message, setMessage] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+
+    const clearSuccess = useCallback(() => {
+        setIsSuccess(false);
+    }, []);
+
+    const handleSubmit = () => {
+        if (isLoading) return;
+        setIsLoading(true);
+        setIsSuccess(false);
+        // Simulate loading — replace with real submit logic
+        setTimeout(() => {
+            setIsLoading(false);
+            setIsSuccess(true);
+        }, 2000);
+    };
+
+    const budgetLabel = budget ? budgetOptions.find(o => o.value === budget)?.label : null;
+    const teamSizeLabel = teamSize ? teamSizeOptions.find(o => o.value === teamSize)?.label : null;
 
     const testimonials = [
         {
@@ -158,27 +209,53 @@ export default function Contact() {
                             <div className="grid grid-cols-2 gap-6">
                                 <div className="group/field relative">
                                     <div className="flex items-center gap-3 px-2 py-3">
-                                        <FormIcon src="/assets/icons/person.svg" />
-                                        <input
-                                            type="text"
-                                            placeholder="First Name"
-                                            className="bg-transparent w-full text-white placeholder:text-white/40 outline-none"
-                                        />
+                                        <FormIcon src="/assets/icons/person.svg" isShimmering={isLoading} />
+                                        <div className="relative flex-1 min-w-0">
+                                            <input
+                                                type="text"
+                                                value={firstName}
+                                                onChange={(e) => { setFirstName(e.target.value); clearSuccess(); }}
+                                                placeholder="First Name"
+                                                disabled={isLoading}
+                                                className={cn(
+                                                    "bg-transparent w-full outline-none transition-colors duration-300",
+                                                    isLoading ? "text-transparent placeholder:text-transparent" : "text-white placeholder:text-white/40"
+                                                )}
+                                            />
+                                            {isLoading && (
+                                                <span className="absolute inset-0 flex items-center pointer-events-none shimmer-accent truncate" style={shimmerTextStyle} aria-hidden="true">
+                                                    {firstName || "First Name"}
+                                                </span>
+                                            )}
+                                        </div>
                                     </div>
-                                    <span className="absolute bottom-0 left-0 w-full h-px bg-white/25" />
-                                    <span className="absolute bottom-0 left-0 w-full h-px bg-accent origin-left scale-x-0 group-focus-within/field:scale-x-100 transition-transform duration-300" />
+                                    <span className={cn("absolute bottom-0 left-0 w-full h-px transition-all duration-300", isLoading ? "shimmer-accent" : "bg-white/25")} />
+                                    <span className={cn("absolute bottom-0 left-0 w-full h-px bg-accent origin-left transition-transform duration-300", isLoading ? "scale-x-0" : "scale-x-0 group-focus-within/field:scale-x-100")} />
                                 </div>
                                 <div className="group/field relative">
                                     <div className="flex items-center gap-3 px-2 py-3">
-                                        <FormIcon src="/assets/icons/person.svg" />
-                                        <input
-                                            type="text"
-                                            placeholder="Last Name"
-                                            className="bg-transparent w-full text-white placeholder:text-white/40 outline-none"
-                                        />
+                                        <FormIcon src="/assets/icons/person.svg" isShimmering={isLoading} />
+                                        <div className="relative flex-1 min-w-0">
+                                            <input
+                                                type="text"
+                                                value={lastName}
+                                                onChange={(e) => { setLastName(e.target.value); clearSuccess(); }}
+                                                placeholder="Last Name"
+                                                disabled={isLoading}
+                                                className={cn(
+                                                    "bg-transparent w-full outline-none transition-colors duration-300",
+                                                    isLoading ? "text-transparent placeholder:text-transparent" : "text-white placeholder:text-white/40"
+                                                )}
+                                            />
+                                            {isLoading && (
+                                                <span className="absolute inset-0 flex items-center pointer-events-none shimmer-accent truncate" style={shimmerTextStyle} aria-hidden="true">
+                                                    {lastName || "Last Name"}
+                                                </span>
+                                            )}
+                                        </div>
                                     </div>
-                                    <span className="absolute bottom-0 left-0 w-full h-px bg-white/25" />
-                                    <span className="absolute bottom-0 left-0 w-full h-px bg-accent origin-left scale-x-0 group-focus-within/field:scale-x-100 transition-transform duration-300" />
+                                    <span className={cn("absolute bottom-0 left-0 w-full h-px transition-all duration-300", isLoading ? "shimmer-accent" : "bg-white/25")} />
+                                    <span className={cn("absolute bottom-0 left-0 w-full h-px bg-accent origin-left transition-transform duration-300", isLoading ? "scale-x-0" : "scale-x-0 group-focus-within/field:scale-x-100")} />
                                 </div>
                             </div>
 
@@ -186,37 +263,63 @@ export default function Contact() {
                             <div className="grid grid-cols-2 gap-6">
                                 <div className="group/field relative">
                                     <div className="flex items-center gap-3 px-2 py-3">
-                                        <FormIcon src="/assets/icons/company.svg" size="h-3.5" />
-                                        <input
-                                            type="text"
-                                            placeholder="Company"
-                                            className="bg-transparent w-full text-white placeholder:text-white/40 outline-none"
-                                        />
+                                        <FormIcon src="/assets/icons/company.svg" size="h-3.5" isShimmering={isLoading} />
+                                        <div className="relative flex-1 min-w-0">
+                                            <input
+                                                type="text"
+                                                value={company}
+                                                onChange={(e) => { setCompany(e.target.value); clearSuccess(); }}
+                                                placeholder="Company"
+                                                disabled={isLoading}
+                                                className={cn(
+                                                    "bg-transparent w-full outline-none transition-colors duration-300",
+                                                    isLoading ? "text-transparent placeholder:text-transparent" : "text-white placeholder:text-white/40"
+                                                )}
+                                            />
+                                            {isLoading && (
+                                                <span className="absolute inset-0 flex items-center pointer-events-none shimmer-accent truncate" style={shimmerTextStyle} aria-hidden="true">
+                                                    {company || "Company"}
+                                                </span>
+                                            )}
+                                        </div>
                                     </div>
-                                    <span className="absolute bottom-0 left-0 w-full h-px bg-white/25" />
-                                    <span className="absolute bottom-0 left-0 w-full h-px bg-accent origin-left scale-x-0 group-focus-within/field:scale-x-100 transition-transform duration-300" />
+                                    <span className={cn("absolute bottom-0 left-0 w-full h-px transition-all duration-300", isLoading ? "shimmer-accent" : "bg-white/25")} />
+                                    <span className={cn("absolute bottom-0 left-0 w-full h-px bg-accent origin-left transition-transform duration-300", isLoading ? "scale-x-0" : "scale-x-0 group-focus-within/field:scale-x-100")} />
                                 </div>
                                 <div className="group/field relative">
                                     <div className="flex items-center gap-3 px-2 py-3">
-                                        <FormIcon src="/assets/icons/email.svg" size="h-3" />
-                                        <input
-                                            type="email"
-                                            placeholder="Email Address"
-                                            className="bg-transparent w-full text-white placeholder:text-white/40 outline-none"
-                                        />
+                                        <FormIcon src="/assets/icons/email.svg" size="h-3" isShimmering={isLoading} />
+                                        <div className="relative flex-1 min-w-0">
+                                            <input
+                                                type="email"
+                                                value={email}
+                                                onChange={(e) => { setEmail(e.target.value); clearSuccess(); }}
+                                                placeholder="Email Address"
+                                                disabled={isLoading}
+                                                className={cn(
+                                                    "bg-transparent w-full outline-none transition-colors duration-300",
+                                                    isLoading ? "text-transparent placeholder:text-transparent" : "text-white placeholder:text-white/40"
+                                                )}
+                                            />
+                                            {isLoading && (
+                                                <span className="absolute inset-0 flex items-center pointer-events-none shimmer-accent truncate" style={shimmerTextStyle} aria-hidden="true">
+                                                    {email || "Email Address"}
+                                                </span>
+                                            )}
+                                        </div>
                                     </div>
-                                    <span className="absolute bottom-0 left-0 w-full h-px bg-white/25" />
-                                    <span className="absolute bottom-0 left-0 w-full h-px bg-accent origin-left scale-x-0 group-focus-within/field:scale-x-100 transition-transform duration-300" />
+                                    <span className={cn("absolute bottom-0 left-0 w-full h-px transition-all duration-300", isLoading ? "shimmer-accent" : "bg-white/25")} />
+                                    <span className={cn("absolute bottom-0 left-0 w-full h-px bg-accent origin-left transition-transform duration-300", isLoading ? "scale-x-0" : "scale-x-0 group-focus-within/field:scale-x-100")} />
                                 </div>
                             </div>
 
                             {/* Product Stack Selection */}
-                            <div className="flex flex-col gap-3">
+                            <div className={cn("flex flex-col gap-3 transition-opacity duration-300", isLoading && "opacity-50 pointer-events-none")}>
                                 <p className="text-white/40 text-sm">What product stack are you interested in?</p>
                                 <SliderTabs
                                     items={productOptions}
                                     activeItem={selectedProduct}
-                                    onItemChange={setSelectedProduct}
+                                    onItemChange={(v) => { setSelectedProduct(v); clearSuccess(); }}
                                 />
                             </div>
 
@@ -224,102 +327,158 @@ export default function Contact() {
                             <div className="grid grid-cols-2 gap-6">
                                 {/* Project Budget Select */}
                                 <div className="group/field relative">
-                                    <Select.Root>
+                                    <Select.Root value={budget || undefined} onValueChange={(v) => { setBudget(v); clearSuccess(); }} disabled={isLoading}>
                                         <Select.Trigger className="flex items-center justify-between gap-3 w-full px-2 py-3 outline-none data-placeholder:text-white/40 text-white cursor-pointer group">
                                             <div className="flex items-center gap-3">
-                                                <FormIcon src="/assets/icons/budget.svg" />
-                                                <Select.Value placeholder="Project Budget" />
+                                                <FormIcon src="/assets/icons/budget.svg" isShimmering={isLoading} />
+                                                <div className="relative">
+                                                    <span className={cn(isLoading && "invisible")}>
+                                                        <Select.Value placeholder="Estimated Budget" />
+                                                    </span>
+                                                    {isLoading && (
+                                                        <span className="absolute inset-0 flex items-center pointer-events-none shimmer-accent truncate whitespace-nowrap" style={shimmerTextStyle} aria-hidden="true">
+                                                            {budgetLabel || "Estimated Budget"}
+                                                        </span>
+                                                    )}
+                                                </div>
                                             </div>
-                                            <Select.Icon className="transition-transform duration-200 group-data-[state=open]:rotate-180">
+                                            <Select.Icon className={cn("transition-transform duration-200 group-data-[state=open]:rotate-180", isLoading && "invisible")}>
                                                 <ChevronDownIcon />
                                             </Select.Icon>
                                         </Select.Trigger>
                                         <Select.Portal>
                                             <Select.Content
-                                                className="bg-background-secondary rounded-md overflow-hidden z-50 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]"
+                                                className="bg-background-secondary overflow-hidden z-50 border border-white/10 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0 data-[state=open]:slide-in-from-top-1 data-[state=closed]:slide-out-to-top-1 duration-150"
                                                 position="popper"
-                                                sideOffset={4}
+                                                sideOffset={8}
                                             >
-                                                <Select.Viewport className="p-1">
-                                                    {[
-                                                        { value: "<10k", label: "<$10k" },
-                                                        { value: "10k-50k", label: "$10k - $50k" },
-                                                        { value: "50k-100k", label: "$50k - $100k" },
-                                                        { value: "100k+", label: "$100k+" },
-                                                    ].map((option) => (
+                                                <Select.Viewport>
+                                                    {budgetOptions.map((option, i) => (
                                                         <Select.Item
                                                             key={option.value}
                                                             value={option.value}
-                                                            className="px-4 py-2 text-white/70 rounded outline-none cursor-pointer hover:bg-white/10 hover:text-white data-highlighted:bg-white/10 data-highlighted:text-white transition-colors"
+                                                            className={cn(
+                                                                "px-4 py-3 outline-none cursor-pointer hover:bg-white/5 data-highlighted:bg-white/5 transition-colors",
+                                                                i > 0 && "border-t border-white/5"
+                                                            )}
                                                         >
-                                                            <Select.ItemText>{option.label}</Select.ItemText>
+                                                            <Select.ItemText>
+                                                                <span className="text-white text-sm font-medium">{option.label}</span>
+                                                            </Select.ItemText>
+                                                            {/* <p className="text-white/40 text-xs mt-0.5">{option.desc}</p> */}
                                                         </Select.Item>
                                                     ))}
                                                 </Select.Viewport>
                                             </Select.Content>
                                         </Select.Portal>
                                     </Select.Root>
-                                    <span className="absolute bottom-0 left-0 w-full h-px bg-white/25" />
-                                    <span className="absolute bottom-0 left-0 w-full h-px bg-accent origin-left scale-x-0 group-focus-within/field:scale-x-100 transition-transform duration-300" />
+                                    <span className={cn("absolute bottom-0 left-0 w-full h-px transition-all duration-300", isLoading ? "shimmer-accent" : "bg-white/25")} />
+                                    <span className={cn("absolute bottom-0 left-0 w-full h-px bg-accent origin-left transition-transform duration-300", isLoading ? "scale-x-0" : "scale-x-0 group-focus-within/field:scale-x-100")} />
                                 </div>
 
                                 {/* Team Size Select */}
                                 <div className="group/field relative">
-                                    <Select.Root>
+                                    <Select.Root value={teamSize || undefined} onValueChange={(v) => { setTeamSize(v); clearSuccess(); }} disabled={isLoading}>
                                         <Select.Trigger className="flex items-center justify-between gap-3 w-full px-2 py-3 outline-none data-placeholder:text-white/40 text-white cursor-pointer group">
                                             <div className="flex items-center gap-3">
-                                                <FormIcon src="/assets/icons/team.svg" size="h-3.5" />
-                                                <Select.Value placeholder="Team Size" />
+                                                <FormIcon src="/assets/icons/team.svg" size="h-3.5" isShimmering={isLoading} />
+                                                <div className="relative">
+                                                    <span className={cn(isLoading && "invisible")}>
+                                                        <Select.Value placeholder="Team Size" />
+                                                    </span>
+                                                    {isLoading && (
+                                                        <span className="absolute inset-0 flex items-center pointer-events-none shimmer-accent truncate whitespace-nowrap" style={shimmerTextStyle} aria-hidden="true">
+                                                            {teamSizeLabel || "Team Size"}
+                                                        </span>
+                                                    )}
+                                                </div>
                                             </div>
-                                            <Select.Icon className="transition-transform duration-200 group-data-[state=open]:rotate-180">
+                                            <Select.Icon className={cn("transition-transform duration-200 group-data-[state=open]:rotate-180", isLoading && "invisible")}>
                                                 <ChevronDownIcon />
                                             </Select.Icon>
                                         </Select.Trigger>
                                         <Select.Portal>
                                             <Select.Content
-                                                className="bg-background-secondary rounded-md overflow-hidden z-50 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]"
+                                                className="bg-background-secondary overflow-hidden z-50 border border-white/10 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0 data-[state=open]:slide-in-from-top-1 data-[state=closed]:slide-out-to-top-1 duration-150"
                                                 position="popper"
-                                                sideOffset={4}
+                                                sideOffset={8}
                                             >
-                                                <Select.Viewport className="p-1">
-                                                    {[
-                                                        { value: "1-10", label: "1-10" },
-                                                        { value: "11-50", label: "11-50" },
-                                                        { value: "51-200", label: "51-200" },
-                                                        { value: "200+", label: "200+" },
-                                                    ].map((option) => (
+                                                <Select.Viewport>
+                                                    {teamSizeOptions.map((option, i) => (
                                                         <Select.Item
                                                             key={option.value}
                                                             value={option.value}
-                                                            className="px-4 py-2 text-white/70 rounded outline-none cursor-pointer hover:bg-white/10 hover:text-white data-highlighted:bg-white/10 data-highlighted:text-white transition-colors"
+                                                            className={cn(
+                                                                "px-4 py-3 outline-none cursor-pointer hover:bg-white/5 data-highlighted:bg-white/5 transition-colors",
+                                                                i > 0 && "border-t border-white/5"
+                                                            )}
                                                         >
-                                                            <Select.ItemText>{option.label}</Select.ItemText>
+                                                            <Select.ItemText>
+                                                                <span className="text-white text-sm font-medium">{option.label}</span>
+                                                            </Select.ItemText>
+                                                            {/* <p className="text-white/40 text-xs mt-0.5">{option.desc}</p> */}
                                                         </Select.Item>
                                                     ))}
                                                 </Select.Viewport>
                                             </Select.Content>
                                         </Select.Portal>
                                     </Select.Root>
-                                    <span className="absolute bottom-0 left-0 w-full h-px bg-white/25" />
-                                    <span className="absolute bottom-0 left-0 w-full h-px bg-accent origin-left scale-x-0 group-focus-within/field:scale-x-100 transition-transform duration-300" />
+                                    <span className={cn("absolute bottom-0 left-0 w-full h-px transition-all duration-300", isLoading ? "shimmer-accent" : "bg-white/25")} />
+                                    <span className={cn("absolute bottom-0 left-0 w-full h-px bg-accent origin-left transition-transform duration-300", isLoading ? "scale-x-0" : "scale-x-0 group-focus-within/field:scale-x-100")} />
                                 </div>
                             </div>
 
                             {/* Textarea */}
                             <div className="group/field relative">
-                                <textarea
-                                    placeholder="Tell us what you're working on"
-                                    rows={4}
-                                    className="bg-transparent w-full px-2 py-3 text-white placeholder:text-white/40 outline-none resize-none"
-                                />
-                                <span className="absolute bottom-0 left-0 w-full h-px bg-white/25" />
-                                <span className="absolute bottom-0 left-0 w-full h-px bg-accent origin-left scale-x-0 group-focus-within/field:scale-x-100 transition-transform duration-300" />
+                                <div className="relative">
+                                    <textarea
+                                        value={message}
+                                        onChange={(e) => { setMessage(e.target.value); clearSuccess(); }}
+                                        placeholder="Tell us what you're working on"
+                                        rows={4}
+                                        disabled={isLoading}
+                                        className={cn(
+                                            "bg-transparent w-full px-2 py-3 outline-none resize-none transition-colors duration-300",
+                                            isLoading ? "text-transparent placeholder:text-transparent" : "text-white placeholder:text-white/40"
+                                        )}
+                                    />
+                                    {isLoading && (
+                                        <span
+                                            className="absolute inset-0 px-2 py-3 pointer-events-none shimmer-accent whitespace-pre-wrap break-words"
+                                            style={shimmerTextStyle}
+                                            aria-hidden="true"
+                                        >
+                                            {message || "Tell us what you're working on"}
+                                        </span>
+                                    )}
+                                </div>
+                                <span className={cn("absolute bottom-0 left-0 w-full h-px transition-all duration-300", isLoading ? "shimmer-accent" : "bg-white/25")} />
+                                <span className={cn("absolute bottom-0 left-0 w-full h-px bg-accent origin-left transition-transform duration-300", isLoading ? "scale-x-0" : "scale-x-0 group-focus-within/field:scale-x-100")} />
                             </div>
 
                             {/* Submit Button */}
                             <div className="flex justify-start pt-2">
-                                <AnimatedButton background="dark" size="wide">
-                                    Submit
+                                <AnimatedButton
+                                    background={isSuccess ? "primary" : "dark"}
+                                    size="wide"
+                                    onClick={handleSubmit}
+                                    disabled={isLoading}
+                                >
+                                    {isLoading ? (
+                                        <svg className="size-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
+                                            <path className="opacity-75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" fill="currentColor" />
+                                        </svg>
+                                    ) : isSuccess ? (
+                                        <span className="flex items-center gap-2">
+                                            <svg className="size-4" viewBox="0 0 16 16" fill="none">
+                                                <path d="M2 8L6 12L14 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                            Sent
+                                        </span>
+                                    ) : (
+                                        "Submit"
+                                    )}
                                 </AnimatedButton>
                             </div>
                         </div>

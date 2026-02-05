@@ -34,15 +34,19 @@ export function ModelSearch({ value, onChange, className }: ModelSearchProps) {
   }, [])
 
   return (
-    <div className={cn("relative", className)}>
-      <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-white/40" />
-      <input
-        type="text"
-        value={localValue}
-        onChange={handleChange}
-        placeholder="Search models by name, author, or task..."
-        className="w-full bg-background-secondary border border-white/10 rounded-lg pl-12 pr-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:border-accent/50 transition-colors"
-      />
+    <div className={cn("group/field relative", className)}>
+      <div className="flex items-center gap-3 px-2 py-3">
+        <Search className="size-5 shrink-0 text-white/40 group-focus-within/field:text-accent transition-colors duration-300" />
+        <input
+          type="text"
+          value={localValue}
+          onChange={handleChange}
+          placeholder="Search models by name, author, or task..."
+          className="w-full bg-transparent text-white placeholder:text-white/40 outline-none"
+        />
+      </div>
+      <span className="absolute bottom-0 left-0 w-full h-px bg-white/25" />
+      <span className="absolute bottom-0 left-0 w-full h-px bg-accent origin-left scale-x-0 group-focus-within/field:scale-x-100 transition-transform duration-300" />
     </div>
   )
 }
