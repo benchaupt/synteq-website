@@ -105,7 +105,7 @@ export function AboutStatsSection({
         </motion.h2>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-12 lg:gap-16">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16">
           {stats.map((stat, index) => (
             <motion.div
               key={index}

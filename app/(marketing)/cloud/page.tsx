@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/app/_components/accordion";

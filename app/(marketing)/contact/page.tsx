@@ -1,5 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
- 
 
 import { AnimatedButton } from "@/app/_components/animated-button";
 import { SliderTabs } from "@/app/_components/slider-tabs";
@@ -7,9 +7,21 @@ import { TestimonialCarousel } from "@/app/_components/testimonial-carousel";
 import * as Select from "@radix-ui/react-select";
 import { useState } from "react";
 
-// Icon component that uses SVG files
+// Icon component using CSS mask so color can transition on focus
 const FormIcon = ({ src, size = "h-4" }: { src: string; size?: string }) => (
-    <img src={src} alt="" className={`${size} w-auto brightness-0 invert`} />
+    <span
+        className={`${size} aspect-square shrink-0 bg-white/50 group-focus-within/field:bg-accent transition-colors duration-300`}
+        style={{
+            maskImage: `url(${src})`,
+            maskSize: "contain",
+            maskRepeat: "no-repeat",
+            maskPosition: "center",
+            WebkitMaskImage: `url(${src})`,
+            WebkitMaskSize: "contain",
+            WebkitMaskRepeat: "no-repeat",
+            WebkitMaskPosition: "center",
+        }}
+    />
 );
 
 const ChevronDownIcon = () => (
@@ -113,11 +125,11 @@ export default function Contact() {
                             </h1>
                         </div>
 
-                        <p className="text-base text-[#bfbfbf] max-w-xl leading-relaxed">
+                        <p className="text-base text-[#bfbfbf] max-w-lg leading-relaxed">
                             Launch, run, and scale AI models in minutes, without the cloud confusion, GPU expertise, or unpredictable costs. As easy as a single click.
                         </p>
 
-                        <div className="flex flex-col gap-2 mt-8">
+                        <div className="flex flex-col gap-2 mt-8 w-fit">
                             <p className="font-mono text-sm md:text-sm lg:text-sm text-white/50">
                                 Prefer to start the conversation over email?
                             </p>
@@ -140,51 +152,67 @@ export default function Contact() {
                     </div>
 
                     {/* Right - Contact Form */}
-                    <div className="bg-background-secondary rounded-lg p-8">
-                        <div className="flex flex-col gap-6">
+                    <div className="pt-8">
+                        <div className="flex flex-col gap-8">
                             {/* Name Fields */}
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="flex items-center gap-3 bg-background rounded-md px-4 py-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.8),inset_0_0_0_2px_rgba(255,255,255,0.05)]">
-                                    <FormIcon src="/assets/icons/person.svg" />
-                                    <input
-                                        type="text"
-                                        placeholder="First Name"
-                                        className="bg-transparent w-full text-white placeholder:text-white/50 outline-none"
-                                    />
+                            <div className="grid grid-cols-2 gap-6">
+                                <div className="group/field relative">
+                                    <div className="flex items-center gap-3 px-2 py-3">
+                                        <FormIcon src="/assets/icons/person.svg" />
+                                        <input
+                                            type="text"
+                                            placeholder="First Name"
+                                            className="bg-transparent w-full text-white placeholder:text-white/40 outline-none"
+                                        />
+                                    </div>
+                                    <span className="absolute bottom-0 left-0 w-full h-px bg-white/25" />
+                                    <span className="absolute bottom-0 left-0 w-full h-px bg-accent origin-left scale-x-0 group-focus-within/field:scale-x-100 transition-transform duration-300" />
                                 </div>
-                                <div className="flex items-center gap-3 bg-background rounded-md px-4 py-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.8),inset_0_0_0_2px_rgba(255,255,255,0.05)]">
-                                    <FormIcon src="/assets/icons/person.svg" />
-                                    <input
-                                        type="text"
-                                        placeholder="Last Name"
-                                        className="bg-transparent w-full text-white placeholder:text-white/50 outline-none"
-                                    />
+                                <div className="group/field relative">
+                                    <div className="flex items-center gap-3 px-2 py-3">
+                                        <FormIcon src="/assets/icons/person.svg" />
+                                        <input
+                                            type="text"
+                                            placeholder="Last Name"
+                                            className="bg-transparent w-full text-white placeholder:text-white/40 outline-none"
+                                        />
+                                    </div>
+                                    <span className="absolute bottom-0 left-0 w-full h-px bg-white/25" />
+                                    <span className="absolute bottom-0 left-0 w-full h-px bg-accent origin-left scale-x-0 group-focus-within/field:scale-x-100 transition-transform duration-300" />
                                 </div>
                             </div>
 
                             {/* Company & Email Fields */}
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="flex items-center gap-3 bg-background rounded-md px-4 py-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.8),inset_0_0_0_2px_rgba(255,255,255,0.05)]">
-                                    <FormIcon src="/assets/icons/company.svg" size="h-3.5" />
-                                    <input
-                                        type="text"
-                                        placeholder="Company"
-                                        className="bg-transparent w-full text-white placeholder:text-white/50 outline-none"
-                                    />
+                            <div className="grid grid-cols-2 gap-6">
+                                <div className="group/field relative">
+                                    <div className="flex items-center gap-3 px-2 py-3">
+                                        <FormIcon src="/assets/icons/company.svg" size="h-3.5" />
+                                        <input
+                                            type="text"
+                                            placeholder="Company"
+                                            className="bg-transparent w-full text-white placeholder:text-white/40 outline-none"
+                                        />
+                                    </div>
+                                    <span className="absolute bottom-0 left-0 w-full h-px bg-white/25" />
+                                    <span className="absolute bottom-0 left-0 w-full h-px bg-accent origin-left scale-x-0 group-focus-within/field:scale-x-100 transition-transform duration-300" />
                                 </div>
-                                <div className="flex items-center gap-3 bg-background rounded-md px-4 py-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.8),inset_0_0_0_2px_rgba(255,255,255,0.05)]">
-                                    <FormIcon src="/assets/icons/email.svg" size="h-3" />
-                                    <input
-                                        type="email"
-                                        placeholder="Email Address"
-                                        className="bg-transparent w-full text-white placeholder:text-white/50 outline-none"
-                                    />
+                                <div className="group/field relative">
+                                    <div className="flex items-center gap-3 px-2 py-3">
+                                        <FormIcon src="/assets/icons/email.svg" size="h-3" />
+                                        <input
+                                            type="email"
+                                            placeholder="Email Address"
+                                            className="bg-transparent w-full text-white placeholder:text-white/40 outline-none"
+                                        />
+                                    </div>
+                                    <span className="absolute bottom-0 left-0 w-full h-px bg-white/25" />
+                                    <span className="absolute bottom-0 left-0 w-full h-px bg-accent origin-left scale-x-0 group-focus-within/field:scale-x-100 transition-transform duration-300" />
                                 </div>
                             </div>
 
                             {/* Product Stack Selection */}
                             <div className="flex flex-col gap-3">
-                                <p className="text-white text-sm">What product stack are you interested in?</p>
+                                <p className="text-white/40 text-sm">What product stack are you interested in?</p>
                                 <SliderTabs
                                     items={productOptions}
                                     activeItem={selectedProduct}
@@ -193,93 +221,103 @@ export default function Contact() {
                             </div>
 
                             {/* Dropdowns */}
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-2 gap-6">
                                 {/* Project Budget Select */}
-                                <Select.Root>
-                                    <Select.Trigger className="flex items-center justify-between gap-3 bg-background rounded-md px-4 py-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.8),inset_0_0_0_2px_rgba(255,255,255,0.05)] outline-none data-placeholder:text-white/50 text-white cursor-pointer group">
-                                        <div className="flex items-center gap-3">
-                                            <FormIcon src="/assets/icons/budget.svg" />
-                                            <Select.Value placeholder="Project Budget" />
-                                        </div>
-                                        <Select.Icon className="transition-transform duration-200 group-data-[state=open]:rotate-180">
-                                            <ChevronDownIcon />
-                                        </Select.Icon>
-                                    </Select.Trigger>
-                                    <Select.Portal>
-                                        <Select.Content
-                                            className="bg-background-secondary rounded-md overflow-hidden z-50 shadow-[0_0_0_1px_rgba(0,0,0,0.8),0_0_0_2px_rgba(255,255,255,0.05)]"
-                                            position="popper"
-                                            sideOffset={4}
-                                        >
-                                            <Select.Viewport className="p-1">
-                                                {[
-                                                    { value: "<10k", label: "<$10k" },
-                                                    { value: "10k-50k", label: "$10k - $50k" },
-                                                    { value: "50k-100k", label: "$50k - $100k" },
-                                                    { value: "100k+", label: "$100k+" },
-                                                ].map((option) => (
-                                                    <Select.Item
-                                                        key={option.value}
-                                                        value={option.value}
-                                                        className="px-4 py-2 text-white/70 rounded outline-none cursor-pointer hover:bg-white/10 hover:text-white data-highlighted:bg-white/10 data-highlighted:text-white transition-colors"
-                                                    >
-                                                        <Select.ItemText>{option.label}</Select.ItemText>
-                                                    </Select.Item>
-                                                ))}
-                                            </Select.Viewport>
-                                        </Select.Content>
-                                    </Select.Portal>
-                                </Select.Root>
+                                <div className="group/field relative">
+                                    <Select.Root>
+                                        <Select.Trigger className="flex items-center justify-between gap-3 w-full px-2 py-3 outline-none data-placeholder:text-white/40 text-white cursor-pointer group">
+                                            <div className="flex items-center gap-3">
+                                                <FormIcon src="/assets/icons/budget.svg" />
+                                                <Select.Value placeholder="Project Budget" />
+                                            </div>
+                                            <Select.Icon className="transition-transform duration-200 group-data-[state=open]:rotate-180">
+                                                <ChevronDownIcon />
+                                            </Select.Icon>
+                                        </Select.Trigger>
+                                        <Select.Portal>
+                                            <Select.Content
+                                                className="bg-background-secondary rounded-md overflow-hidden z-50 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]"
+                                                position="popper"
+                                                sideOffset={4}
+                                            >
+                                                <Select.Viewport className="p-1">
+                                                    {[
+                                                        { value: "<10k", label: "<$10k" },
+                                                        { value: "10k-50k", label: "$10k - $50k" },
+                                                        { value: "50k-100k", label: "$50k - $100k" },
+                                                        { value: "100k+", label: "$100k+" },
+                                                    ].map((option) => (
+                                                        <Select.Item
+                                                            key={option.value}
+                                                            value={option.value}
+                                                            className="px-4 py-2 text-white/70 rounded outline-none cursor-pointer hover:bg-white/10 hover:text-white data-highlighted:bg-white/10 data-highlighted:text-white transition-colors"
+                                                        >
+                                                            <Select.ItemText>{option.label}</Select.ItemText>
+                                                        </Select.Item>
+                                                    ))}
+                                                </Select.Viewport>
+                                            </Select.Content>
+                                        </Select.Portal>
+                                    </Select.Root>
+                                    <span className="absolute bottom-0 left-0 w-full h-px bg-white/25" />
+                                    <span className="absolute bottom-0 left-0 w-full h-px bg-accent origin-left scale-x-0 group-focus-within/field:scale-x-100 transition-transform duration-300" />
+                                </div>
 
                                 {/* Team Size Select */}
-                                <Select.Root>
-                                    <Select.Trigger className="flex items-center justify-between gap-3 bg-background rounded-md px-4 py-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.8),inset_0_0_0_2px_rgba(255,255,255,0.05)] outline-none data-placeholder:text-white/50 text-white cursor-pointer group">
-                                        <div className="flex items-center gap-3">
-                                            <FormIcon src="/assets/icons/team.svg" size="h-3.5" />
-                                            <Select.Value placeholder="Team Size" />
-                                        </div>
-                                        <Select.Icon className="transition-transform duration-200 group-data-[state=open]:rotate-180">
-                                            <ChevronDownIcon />
-                                        </Select.Icon>
-                                    </Select.Trigger>
-                                    <Select.Portal>
-                                        <Select.Content
-                                            className="bg-background-secondary rounded-md overflow-hidden z-50 shadow-[0_0_0_1px_rgba(0,0,0,0.8),0_0_0_2px_rgba(255,255,255,0.05)]"
-                                            position="popper"
-                                            sideOffset={4}
-                                        >
-                                            <Select.Viewport className="p-1">
-                                                {[
-                                                    { value: "1-10", label: "1-10" },
-                                                    { value: "11-50", label: "11-50" },
-                                                    { value: "51-200", label: "51-200" },
-                                                    { value: "200+", label: "200+" },
-                                                ].map((option) => (
-                                                    <Select.Item
-                                                        key={option.value}
-                                                        value={option.value}
-                                                        className="px-4 py-2 text-white/70 rounded outline-none cursor-pointer hover:bg-white/10 hover:text-white data-highlighted:bg-white/10 data-highlighted:text-white transition-colors"
-                                                    >
-                                                        <Select.ItemText>{option.label}</Select.ItemText>
-                                                    </Select.Item>
-                                                ))}
-                                            </Select.Viewport>
-                                        </Select.Content>
-                                    </Select.Portal>
-                                </Select.Root>
+                                <div className="group/field relative">
+                                    <Select.Root>
+                                        <Select.Trigger className="flex items-center justify-between gap-3 w-full px-2 py-3 outline-none data-placeholder:text-white/40 text-white cursor-pointer group">
+                                            <div className="flex items-center gap-3">
+                                                <FormIcon src="/assets/icons/team.svg" size="h-3.5" />
+                                                <Select.Value placeholder="Team Size" />
+                                            </div>
+                                            <Select.Icon className="transition-transform duration-200 group-data-[state=open]:rotate-180">
+                                                <ChevronDownIcon />
+                                            </Select.Icon>
+                                        </Select.Trigger>
+                                        <Select.Portal>
+                                            <Select.Content
+                                                className="bg-background-secondary rounded-md overflow-hidden z-50 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]"
+                                                position="popper"
+                                                sideOffset={4}
+                                            >
+                                                <Select.Viewport className="p-1">
+                                                    {[
+                                                        { value: "1-10", label: "1-10" },
+                                                        { value: "11-50", label: "11-50" },
+                                                        { value: "51-200", label: "51-200" },
+                                                        { value: "200+", label: "200+" },
+                                                    ].map((option) => (
+                                                        <Select.Item
+                                                            key={option.value}
+                                                            value={option.value}
+                                                            className="px-4 py-2 text-white/70 rounded outline-none cursor-pointer hover:bg-white/10 hover:text-white data-highlighted:bg-white/10 data-highlighted:text-white transition-colors"
+                                                        >
+                                                            <Select.ItemText>{option.label}</Select.ItemText>
+                                                        </Select.Item>
+                                                    ))}
+                                                </Select.Viewport>
+                                            </Select.Content>
+                                        </Select.Portal>
+                                    </Select.Root>
+                                    <span className="absolute bottom-0 left-0 w-full h-px bg-white/25" />
+                                    <span className="absolute bottom-0 left-0 w-full h-px bg-accent origin-left scale-x-0 group-focus-within/field:scale-x-100 transition-transform duration-300" />
+                                </div>
                             </div>
 
                             {/* Textarea */}
-                            <div className="flex flex-col gap-2">
+                            <div className="group/field relative">
                                 <textarea
                                     placeholder="Tell us what you're working on"
-                                    rows={5}
-                                    className="bg-background rounded-md px-4 py-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.8),inset_0_0_0_2px_rgba(255,255,255,0.05)] text-white placeholder:text-white/50 outline-none resize-none"
+                                    rows={4}
+                                    className="bg-transparent w-full px-2 py-3 text-white placeholder:text-white/40 outline-none resize-none"
                                 />
+                                <span className="absolute bottom-0 left-0 w-full h-px bg-white/25" />
+                                <span className="absolute bottom-0 left-0 w-full h-px bg-accent origin-left scale-x-0 group-focus-within/field:scale-x-100 transition-transform duration-300" />
                             </div>
 
                             {/* Submit Button */}
-                            <div className="flex justify-end">
+                            <div className="flex justify-start pt-2">
                                 <AnimatedButton background="dark" size="wide">
                                     Submit
                                 </AnimatedButton>

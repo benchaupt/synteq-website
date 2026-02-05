@@ -10,7 +10,6 @@ import CallToActionNew from "@/app/_components/call-to-action-new";
 import { ScrollRevealText } from "@/app/_components/scroll-reveal-text";
 import { cn } from "@/lib/utils";
 import useEmblaCarousel from "embla-carousel-react";
-import { motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
 const storyItems = [

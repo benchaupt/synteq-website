@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { AnimatedButton } from "@/app/_components/animated-button";
@@ -86,8 +87,8 @@ export default function EffortlessSection() {
                     </div>
 
                     {/* Request an AI summary - aligned with CTA buttons */}
-                    <div className="flex items-center gap-4 justify-end pt-4">
-                        <span className="text-sm font-mono uppercase text-white/60">Request an AI summary of Synteq AI</span>
+                    <div className="flex flex-col lg:flex-row items-center gap-4 justify-center lg:justify-end pt-4 w-full">
+                        <span className="text-sm font-mono uppercase text-white/60">Ask AI about us</span>
                         <div className="flex items-center gap-2">
                             <a
                                 href="https://grok.com/?q=As%20a%20potential%20client%2C%20I%20want%20to%20concretely%20understand%20what%20I%20will%20receive%20with%20Synteq%20AI%20(synteq.ai).%20Detail%20step%20by%20step%20what%20the%20service%20includes%3A%20what%20I%20receive%2C%20how%20it%20affects%20our%20AI%20infrastructure%2C%20the%20inference%20speeds%2C%20GPU%20availability%20(H200%2C%20Blackwell)%2C%20uptime%20guarantees%2C%20pricing%2C%20and%20cloud%20platform%20features.%20Explain%20it%20simply%2C%20as%20if%20you%20were%20describing%20the%20real%20experience%20of%20the%20service."

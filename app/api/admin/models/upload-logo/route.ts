@@ -38,14 +38,10 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    // Return the public URL
-    // Assuming R2 is configured with a public domain or using Cloudflare Images
-    // You may need to adjust this URL based on your R2 public access setup
-    const publicUrl = `https://media.synteq.ai/${filename}`
-
+    // Return the URL - served through our own API route
     return NextResponse.json({
       success: true,
-      url: publicUrl,
+      url: `/api/model-logo/${filename}`,
       filename,
     })
   } catch (error) {

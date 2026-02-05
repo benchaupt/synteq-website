@@ -1,7 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { AnimatedButton } from "@/app/_components/animated-button";
-import { cn } from "@/lib/utils";
 import { motion, useInView } from "motion/react";
 import Image from "next/image";
 import { useRef } from "react";
@@ -13,46 +12,6 @@ const stats = [
   { value: "99.99%", label: "Uptime SLA availability" },
 ];
 
-// Placeholder headshots - replace with actual images
-const headshots = [
-  "/assets/infrastructure/headshot-1.png",
-  "/assets/infrastructure/headshot-2.png",
-  "/assets/infrastructure/headshot-3.png",
-  "/assets/infrastructure/headshot-4.png",
-  "/assets/infrastructure/headshot-5.png",
-  "/assets/infrastructure/headshot-6.png",
-  "/assets/infrastructure/headshot-7.png",
-];
-
-function MultiHeadshots() {
-  return (
-    <div className="flex flex-col gap-1">
-      {/* First row - 4 headshots */}
-      <div className="flex -space-x-2">
-        {headshots.slice(0, 4).map((src, index) => (
-          <div
-            key={index}
-            className="size-8 rounded-full bg-white/20 border-2 border-background-secondary overflow-hidden"
-          >
-            {/* Placeholder circles - replace with actual images when available */}
-            <div className="size-full bg-gradient-to-br from-white/30 to-white/10" />
-          </div>
-        ))}
-      </div>
-      {/* Second row - 3 headshots */}
-      <div className="flex -space-x-2">
-        {headshots.slice(4, 7).map((src, index) => (
-          <div
-            key={index}
-            className="size-8 rounded-full bg-white/20 border-2 border-background-secondary overflow-hidden"
-          >
-            <div className="size-full bg-gradient-to-br from-white/30 to-white/10" />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 function UptimeDotGrid() {
   // Easy size control
@@ -81,12 +40,9 @@ function UptimeDotGrid() {
 }
 
 function AnimatedCounter({ value }: { value: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true });
-
   // For simplicity, just display the value directly
   // The main stats section has the full animated counter
-  return <span ref={ref}>{value}</span>;
+  return <span>{value}</span>;
 }
 
 export function ComputeSection() {

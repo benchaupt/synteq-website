@@ -113,6 +113,8 @@ const TOP_AUTHORS = [
 
 // Cache for author logos to avoid repeated API calls
 const authorLogoCache = new Map<string, string | null>()
+// Cache for priority authors (fetched from DB)
+const priorityAuthorCache = new Set<string>()
 
 async function fetchAuthorLogo(author: string): Promise<string | null> {
   // Check cache first
@@ -121,12 +123,12 @@ async function fetchAuthorLogo(author: string): Promise<string | null> {
   }
 
   try {
-    // Try organization endpoint first
-    let response = await fetch(`${HF_API_BASE}/organizations/${author}`)
+    // Try organization endpoint first (needs /overview suffix)
+    let response = await fetch(`${HF_API_BASE}/organizations/${author}/overview`)
 
     if (!response.ok) {
-      // Fall back to user endpoint
-      response = await fetch(`${HF_API_BASE}/users/${author}`)
+      // Fall back to user endpoint (needs /overview suffix)
+      response = await fetch(`${HF_API_BASE}/users/${author}/overview`)
     }
 
     if (response.ok) {
@@ -205,10 +207,29 @@ async function fetchModelInfo(modelId: string): Promise<HFModelInfo | null> {
   }
 }
 
+async function fetchPriorityAuthors(db: D1Database): Promise<void> {
+  try {
+    const result = await db
+      .prepare("SELECT DISTINCT author FROM huggingface_models WHERE priority_author = 1")
+      .all<{ author: string }>()
+
+    priorityAuthorCache.clear()
+    for (const row of result.results || []) {
+      priorityAuthorCache.add(row.author)
+    }
+    console.log(`Loaded ${priorityAuthorCache.size} priority authors from DB`)
+  } catch (err) {
+    console.error("Failed to fetch priority authors:", err)
+  }
+}
+
 async function scrapeAndStore(db: D1Database): Promise<{ success: boolean; count: number; error?: string }> {
   console.log("Starting HuggingFace models scrape...")
 
   try {
+    // Load priority authors from DB first
+    await fetchPriorityAuthors(db)
+
     const allModels: HFModelInfo[] = []
     const seenIds = new Set<string>()
 
@@ -278,13 +299,31 @@ async function scrapeAndStore(db: D1Database): Promise<{ success: boolean; count
       const { count, label } = parseParameterCount(model)
       const [author, ...nameParts] = model.id.split("/")
       const authorLogo = authorLogoCache.get(author) || null
+      const isPriorityAuthor = priorityAuthorCache.has(author)
+      // Auto-feature if: priority author, or high downloads/likes
+      const shouldFeature = isPriorityAuthor || model.downloads > 1_000_000 || model.likes > 10_000
 
       try {
+        // Use INSERT ... ON CONFLICT to preserve custom logos and featured status
         await db
           .prepare(
-            `INSERT OR REPLACE INTO huggingface_models
-            (model_id, name, author, author_logo, description, task_type, pipeline_tag, downloads, likes, tags, parameter_count, parameter_label, model_url, last_modified, featured, scraped_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+            `INSERT INTO huggingface_models
+            (model_id, name, author, author_logo, description, task_type, pipeline_tag, downloads, likes, tags, parameter_count, parameter_label, model_url, last_modified, featured, priority_author, scraped_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT(model_id) DO UPDATE SET
+              downloads = excluded.downloads,
+              likes = excluded.likes,
+              tags = excluded.tags,
+              parameter_count = excluded.parameter_count,
+              parameter_label = excluded.parameter_label,
+              last_modified = excluded.last_modified,
+              scraped_at = excluded.scraped_at,
+              -- Only update author_logo if current value is NULL (preserve custom logos)
+              author_logo = COALESCE(huggingface_models.author_logo, excluded.author_logo),
+              -- Auto-feature new models from priority authors (but don't un-feature existing)
+              featured = CASE WHEN excluded.priority_author = 1 THEN 1 ELSE huggingface_models.featured END,
+              -- Preserve priority_author status
+              priority_author = COALESCE(huggingface_models.priority_author, excluded.priority_author)`
           )
           .bind(
             model.id,
@@ -301,7 +340,8 @@ async function scrapeAndStore(db: D1Database): Promise<{ success: boolean; count
             label,
             `https://huggingface.co/${model.id}`,
             model.lastModified,
-            model.downloads > 1_000_000 || model.likes > 10_000 ? 1 : 0,
+            shouldFeature ? 1 : 0,
+            isPriorityAuthor ? 1 : 0,
             scrapedAt
           )
           .run()

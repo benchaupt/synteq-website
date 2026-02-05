@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
     const db = createDb(d1)
 
     // Update all models with this author
-    const result = await db
+    await db
       .update(huggingFaceModels)
       .set({ authorLogo })
       .where(eq(huggingFaceModels.author, author))

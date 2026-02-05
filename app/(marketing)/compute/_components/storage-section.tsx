@@ -1,6 +1,5 @@
 "use client";
 
-import { AnimatedButton } from "@/app/_components/animated-button";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 

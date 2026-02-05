@@ -17,6 +17,7 @@ export const huggingFaceModels = sqliteTable("huggingface_models", {
   modelUrl: text("model_url"),
   lastModified: text("last_modified"), // ISO date string
   featured: integer("featured", { mode: "boolean" }).default(false),
+  priorityAuthor: integer("priority_author", { mode: "boolean" }).default(false), // Leading companies - new models auto-featured
   scrapedAt: text("scraped_at").notNull(), // ISO date string
 })
 

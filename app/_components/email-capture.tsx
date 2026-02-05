@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { cn } from "@/lib/utils";
@@ -18,7 +19,6 @@ export function EmailCapture({
   buttonText = "Subscribe",
   placeholder = "your@email.com",
   className,
-  layout: _layout = "vertical",
   icon,
 }: EmailCaptureProps) {
   return (

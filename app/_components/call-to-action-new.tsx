@@ -100,23 +100,14 @@ export default function CallToActionNew() {
             From first experiment to multi-node training runs, choose the right mix of shared cloud, dedicated nodes, and bare metal for your workload.
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center gap-3 md:gap-4 lg:gap-6 mt-2 md:mt-4 w-full sm:w-auto">
-            <Link
-              href="/cloud"
-              onMouseEnter={(e) => handleButtonHover("btn-cloud", e, true)}
-              onMouseLeave={(e) => handleButtonHover("btn-cloud", e, false)}
-            >
-              <AnimatedButton className="px-5 md:px-6 py-2.5 md:py-3 bg-background text-accent font-medium hover:bg-background/90 transition-colors w-full sm:w-auto">
-                Start building with AI
-              </AnimatedButton>
-            </Link>
+          {/* CTA Button */}
+          <div className="flex items-center justify-center mt-2 md:mt-4">
             <Link
               href="/contact"
               onMouseEnter={(e) => handleButtonHover("btn-contact", e, true)}
               onMouseLeave={(e) => handleButtonHover("btn-contact", e, false)}
             >
-              <AnimatedButton className="px-5 md:px-6 py-2.5 md:py-3 text-background/80 font-medium hover:text-background transition-colors text-sm w-full sm:w-auto">
+              <AnimatedButton className="px-5 md:px-10 py-2.5 md:py-3 bg-white/20 text-black font-medium hover:bg-white/30 transition-colors">
                 Chat with Sales
               </AnimatedButton>
             </Link>

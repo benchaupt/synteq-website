@@ -209,6 +209,23 @@ h1, h2, h3, h4, h5, h6, p {
   height: 35%;
 }
 
+/* Autofill overrides for dark theme */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--foreground);
+  -webkit-box-shadow: 0 0 0px 1000px var(--background) inset;
+  box-shadow: 0 0 0px 1000px var(--background) inset;
+  transition: background-color 5000s ease-in-out 0s;
+  caret-color: var(--foreground);
+}
+
 /* Typography utility classes */
 .title {
   @apply text-4xl sm:text-5xl md:text-5xl lg:text-6xl tracking-tight leading-tight text-white;

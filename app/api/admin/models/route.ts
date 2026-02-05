@@ -5,6 +5,38 @@ import { NextRequest, NextResponse } from "next/server"
 
 const HF_API_BASE = "https://huggingface.co/api"
 
+interface HFAuthorInfo {
+  avatarUrl?: string
+}
+
+// Fetch author avatar from HuggingFace (tries organizations first, then users)
+async function fetchHuggingFaceAvatar(author: string): Promise<string | null> {
+  try {
+    // Try as organization first (needs /overview suffix)
+    const orgResponse = await fetch(`${HF_API_BASE}/organizations/${author}/overview`)
+    if (orgResponse.ok) {
+      const orgData: HFAuthorInfo = await orgResponse.json()
+      if (orgData.avatarUrl) {
+        return orgData.avatarUrl
+      }
+    }
+
+    // Try as user (needs /overview suffix)
+    const userResponse = await fetch(`${HF_API_BASE}/users/${author}/overview`)
+    if (userResponse.ok) {
+      const userData: HFAuthorInfo = await userResponse.json()
+      if (userData.avatarUrl) {
+        return userData.avatarUrl
+      }
+    }
+
+    return null
+  } catch (error) {
+    console.error(`Failed to fetch avatar for ${author}:`, error)
+    return null
+  }
+}
+
 interface HFModelInfo {
   _id: string
   id: string
@@ -125,14 +157,24 @@ export async function POST(request: NextRequest) {
     const d1 = cloudflare.env.MODELS_DB as D1Database
     const db = createDb(d1)
 
-    // Check if any existing model from this author has a logo
-    const [existingWithLogo] = await db
-      .select({ authorLogo: huggingFaceModels.authorLogo })
+    // Check if any existing model from this author has a logo or priority status
+    const [existingAuthorModel] = await db
+      .select({
+        authorLogo: huggingFaceModels.authorLogo,
+        priorityAuthor: huggingFaceModels.priorityAuthor,
+      })
       .from(huggingFaceModels)
       .where(eq(huggingFaceModels.author, author || "unknown"))
       .limit(1)
 
-    const authorLogo = existingWithLogo?.authorLogo || null
+    // Priority: 1) Existing custom logo, 2) Fetch from HuggingFace
+    let authorLogo = existingAuthorModel?.authorLogo || null
+    if (!authorLogo && author) {
+      authorLogo = await fetchHuggingFaceAvatar(author)
+    }
+
+    // Auto-feature if author is marked as priority
+    const isPriorityAuthor = existingAuthorModel?.priorityAuthor || false
 
     // Insert or update the model
     const modelData = {
@@ -150,7 +192,8 @@ export async function POST(request: NextRequest) {
       parameterLabel: label,
       modelUrl: `https://huggingface.co/${hfModel.id}`,
       lastModified: hfModel.lastModified,
-      featured: false,
+      featured: isPriorityAuthor, // Auto-feature if author is priority
+      priorityAuthor: isPriorityAuthor, // Inherit priority status
       scrapedAt: new Date().toISOString(),
     }
 
@@ -186,6 +229,7 @@ export async function POST(request: NextRequest) {
 interface PatchBody {
   id?: number
   featured?: boolean
+  priorityAuthor?: boolean
   name?: string
   description?: string | null
   authorLogo?: string | null
@@ -195,7 +239,7 @@ interface PatchBody {
 export async function PATCH(request: NextRequest) {
   try {
     const body = (await request.json()) as PatchBody
-    const { id, featured, name, description, authorLogo } = body
+    const { id, featured, priorityAuthor, name, description, authorLogo } = body
 
     if (!id) {
       return NextResponse.json({ error: "id is required" }, { status: 400 })
@@ -209,6 +253,9 @@ export async function PATCH(request: NextRequest) {
 
     if (typeof featured === "boolean") {
       updates.featured = featured
+    }
+    if (typeof priorityAuthor === "boolean") {
+      updates.priorityAuthor = priorityAuthor
     }
     if (name !== undefined) {
       updates.name = name
