@@ -22,7 +22,7 @@ export default function ServicesSection() {
     },
     {
       title: "General Compute",
-      description: "Low latency compute for the workloads around the model",
+      description: "Low latency compute for general workloads.",
       href: "/compute",
       depth: "/assets/landing/depth-images/depth/gpu-clusters.png",
     }

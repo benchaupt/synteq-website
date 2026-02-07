@@ -123,12 +123,14 @@ async function fetchAuthorLogo(author: string): Promise<string | null> {
   }
 
   try {
+    const headers = { "User-Agent": "SynteqAI-Scraper/1.0" }
+
     // Try organization endpoint first (needs /overview suffix)
-    let response = await fetch(`${HF_API_BASE}/organizations/${author}/overview`)
+    let response = await fetch(`${HF_API_BASE}/organizations/${author}/overview`, { headers })
 
     if (!response.ok) {
       // Fall back to user endpoint (needs /overview suffix)
-      response = await fetch(`${HF_API_BASE}/users/${author}/overview`)
+      response = await fetch(`${HF_API_BASE}/users/${author}/overview`, { headers })
     }
 
     if (response.ok) {
@@ -189,9 +191,12 @@ async function fetchModels(limit = 100, sort = "downloads"): Promise<HFModel[]> 
   url.searchParams.set("direction", "-1")
   url.searchParams.set("full", "true")
 
-  const response = await fetch(url.toString())
+  const response = await fetch(url.toString(), {
+    headers: { "User-Agent": "SynteqAI-Scraper/1.0" },
+  })
   if (!response.ok) {
-    throw new Error(`Failed to fetch models: ${response.statusText}`)
+    const body = await response.text()
+    throw new Error(`Failed to fetch models (${response.status}): ${body}`)
   }
 
   return response.json()
@@ -199,7 +204,9 @@ async function fetchModels(limit = 100, sort = "downloads"): Promise<HFModel[]> 
 
 async function fetchModelInfo(modelId: string): Promise<HFModelInfo | null> {
   try {
-    const response = await fetch(`${HF_API_BASE}/models/${modelId}`)
+    const response = await fetch(`${HF_API_BASE}/models/${modelId}`, {
+      headers: { "User-Agent": "SynteqAI-Scraper/1.0" },
+    })
     if (!response.ok) return null
     return response.json()
   } catch {
@@ -243,7 +250,7 @@ async function scrapeAndStore(db: D1Database): Promise<{ success: boolean; count
 
     // Fetch trending models
     console.log("Fetching trending models...")
-    const trending = await fetchModels(100, "trending")
+    const trending = await fetchModels(100, "trendingScore")
 
     // Combine and dedupe
     const combined = [...byDownloads, ...byLikes, ...trending]

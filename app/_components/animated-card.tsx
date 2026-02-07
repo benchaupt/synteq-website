@@ -21,7 +21,7 @@ export function AnimatedCard({ children, className = "", disableScale = false, d
       className={cn(
         "relative md:p-8 md:px-12 p-4 px-6 border-2 transition-all duration-400 font-medium group/card",
         inverseHover
-          ? "bg-background-secondary border-accent/25 hover:bg-transparent hover:border-white/50"
+          ? "bg-background-secondary border-accent/25 text-accent hover:text-white hover:bg-transparent hover:border-white/50"
           : cn(
               isActive ? "bg-background-secondary border-accent/25" : "bg-transparent",
               !disableScale && "hover:scale-[1.00] hover:bg-background-secondary",
