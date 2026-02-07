@@ -75,7 +75,7 @@ export function BlogArticleLayout({ children }: BlogArticleLayoutProps) {
 
       {/* Main content — centered editorial column */}
       <div className="flex-1 flex justify-center">
-        <div className="max-w-3xl w-full" data-article-content>
+        <div className="max-w-3xl w-full min-w-0" data-article-content>
           {children}
         </div>
       </div>

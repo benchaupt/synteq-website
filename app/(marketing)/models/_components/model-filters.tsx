@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 import * as Select from "@radix-ui/react-select"
 import { ChevronDown, Check, X } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
-import { useCallback, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 interface ModelFiltersProps {
   taskTypes: string[]
@@ -41,6 +41,7 @@ function FilterSelect({
   options: { value: string; label: string }[]
   onChange: (value: string | null) => void
 }) {
+  const [open, setOpen] = useState(false)
   const [canScrollUp, setCanScrollUp] = useState(false)
   const [canScrollDown, setCanScrollDown] = useState(false)
   const viewportRef = useRef<HTMLDivElement>(null)
@@ -52,13 +53,31 @@ function FilterSelect({
     setCanScrollDown(el.scrollTop < el.scrollHeight - el.clientHeight - 2)
   }, [])
 
+  // Close dropdown on scroll outside it
+  useEffect(() => {
+    if (!open) return
+    const handleWheel = (e: WheelEvent) => {
+      if (!(e.target as HTMLElement).closest('[data-radix-popper-content-wrapper]')) {
+        setOpen(false)
+      }
+    }
+    window.addEventListener('wheel', handleWheel, { passive: true })
+    window.addEventListener('touchmove', () => setOpen(false), { passive: true })
+    return () => {
+      window.removeEventListener('wheel', handleWheel)
+      window.removeEventListener('touchmove', () => setOpen(false))
+    }
+  }, [open])
+
   return (
     <div className="group/field relative">
       <Select.Root
+        open={open}
         value={value || ALL_VALUE}
         onValueChange={(v) => onChange(v === ALL_VALUE ? null : v)}
-        onOpenChange={(open) => {
-          if (open) {
+        onOpenChange={(isOpen) => {
+          setOpen(isOpen)
+          if (isOpen) {
             requestAnimationFrame(() => requestAnimationFrame(checkScroll))
           }
         }}
@@ -91,6 +110,7 @@ function FilterSelect({
                 ref={viewportRef}
                 onScroll={checkScroll}
                 className="max-h-[300px] overflow-y-auto"
+                data-lenis-prevent
               >
                 <Select.Item
                   value={ALL_VALUE}

@@ -171,7 +171,7 @@ export function AIModelBlock({
             />
           </div>
           <div className="p-6 md:p-8">
-            <div className="flex items-start gap-4">
+            <div className="flex flex-col sm:flex-row items-start gap-4">
               {/* Logo */}
               <div className="size-14 rounded-xl bg-white/5 flex items-center justify-center shrink-0 overflow-hidden">
                 {logoUrl ? (
@@ -187,7 +187,7 @@ export function AIModelBlock({
               </div>
 
               {/* Content */}
-              <div className="flex-1 min-w-0 pr-16">
+              <div className="flex-1 min-w-0 pr-8 md:pr-16">
                 <div className="mb-2">
                   <p className="text-xs font-mono text-accent uppercase tracking-wider mb-1">
                     {modelData.author}

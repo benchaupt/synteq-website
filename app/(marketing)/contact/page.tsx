@@ -5,7 +5,7 @@ import { SliderTabs } from "@/app/_components/slider-tabs";
 import { TestimonialCarousel } from "@/app/_components/testimonial-carousel";
 import { cn } from "@/lib/utils";
 import * as Select from "@radix-ui/react-select";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 // Icon component using CSS mask so color can transition on focus
 const FormIcon = ({ src, size = "h-4", isShimmering = false }: { src: string; size?: string; isShimmering?: boolean }) => (
@@ -109,6 +109,26 @@ export default function Contact() {
     const [message, setMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [budgetOpen, setBudgetOpen] = useState(false);
+    const [teamSizeOpen, setTeamSizeOpen] = useState(false);
+
+    // Close dropdowns on scroll outside them
+    useEffect(() => {
+        if (!budgetOpen && !teamSizeOpen) return;
+        const handleWheel = (e: WheelEvent) => {
+            if (!(e.target as HTMLElement).closest('[data-radix-popper-content-wrapper]')) {
+                setBudgetOpen(false);
+                setTeamSizeOpen(false);
+            }
+        };
+        const handleTouch = () => { setBudgetOpen(false); setTeamSizeOpen(false); };
+        window.addEventListener('wheel', handleWheel, { passive: true });
+        window.addEventListener('touchmove', handleTouch, { passive: true });
+        return () => {
+            window.removeEventListener('wheel', handleWheel);
+            window.removeEventListener('touchmove', handleTouch);
+        };
+    }, [budgetOpen, teamSizeOpen]);
 
     const clearSuccess = useCallback(() => {
         setIsSuccess(false);
@@ -338,7 +358,7 @@ export default function Contact() {
                             <div className="grid grid-cols-2 gap-6">
                                 {/* Project Budget Select */}
                                 <div className="group/field relative">
-                                    <Select.Root value={budget || undefined} onValueChange={(v) => { setBudget(v); clearSuccess(); }} disabled={isLoading}>
+                                    <Select.Root open={budgetOpen} onOpenChange={setBudgetOpen} value={budget || undefined} onValueChange={(v) => { setBudget(v); clearSuccess(); }} disabled={isLoading}>
                                         <Select.Trigger className="flex items-center justify-between gap-3 w-full px-2 py-3 outline-none data-placeholder:text-white/40 text-white cursor-pointer group">
                                             <div className="flex items-center gap-3">
                                                 <FormIcon src="/assets/icons/budget.svg" isShimmering={isLoading} />
@@ -389,7 +409,7 @@ export default function Contact() {
 
                                 {/* Team Size Select */}
                                 <div className="group/field relative">
-                                    <Select.Root value={teamSize || undefined} onValueChange={(v) => { setTeamSize(v); clearSuccess(); }} disabled={isLoading}>
+                                    <Select.Root open={teamSizeOpen} onOpenChange={setTeamSizeOpen} value={teamSize || undefined} onValueChange={(v) => { setTeamSize(v); clearSuccess(); }} disabled={isLoading}>
                                         <Select.Trigger className="flex items-center justify-between gap-3 w-full px-2 py-3 outline-none data-placeholder:text-white/40 text-white cursor-pointer group">
                                             <div className="flex items-center gap-3">
                                                 <FormIcon src="/assets/icons/team.svg" size="h-3.5" isShimmering={isLoading} />

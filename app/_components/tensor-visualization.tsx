@@ -363,7 +363,6 @@ function TensorScene({
   labelSize,
   lineGap,
   rotationIntensity,
-  semanticLabel: _semanticLabel,
   mousePosition,
 }: {
   size: number;

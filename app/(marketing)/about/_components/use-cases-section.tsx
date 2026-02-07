@@ -174,10 +174,15 @@ function useDitherTiming(isInView: boolean) {
     const hoverTimerRef = useRef<NodeJS.Timeout | null>(null);
     const viewTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-    // First time in view — lock entrance animations
-    useEffect(() => {
-        if (isInView && !hasEntered) setHasEntered(true);
-    }, [isInView, hasEntered]);
+    // First time in view — lock entrance animations (adjusting state during render)
+    if (isInView && !hasEntered) setHasEntered(true);
+
+    // Reset ditherReady when leaving view (adjusting state during render)
+    const [prevIsInView, setPrevIsInView] = useState(isInView);
+    if (prevIsInView !== isInView) {
+        setPrevIsInView(isInView);
+        if (!isInView) setDitherReady(false);
+    }
 
     // 3s in-view timer, stops on leave
     useEffect(() => {
@@ -185,7 +190,6 @@ function useDitherTiming(isInView: boolean) {
             viewTimerRef.current = setTimeout(() => setDitherReady(true), 3000);
             return () => { if (viewTimerRef.current) clearTimeout(viewTimerRef.current); };
         } else {
-            setDitherReady(false);
             if (viewTimerRef.current) clearTimeout(viewTimerRef.current);
         }
     }, [isInView]);
@@ -234,7 +238,8 @@ export function UseCasesCards() {
 
 export function UseCasesSection() {
     const sectionRef = useRef<HTMLElement>(null);
-    const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+    const isInView = useInView(sectionRef, { margin: "-100px" });
+    const { hasEntered, ditherReady, onHoverStart, onHoverEnd } = useDitherTiming(isInView);
 
     return (
         <section
@@ -245,7 +250,7 @@ export function UseCasesSection() {
                 <motion.p
                     className="font-mono text-accent text-xs uppercase tracking-widest"
                     initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
-                    animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+                    animate={hasEntered ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
                     transition={{ duration: 0.7, ease: "easeOut" }}
                 >
                     Built for every stage of AI
@@ -253,7 +258,7 @@ export function UseCasesSection() {
                 <motion.h2
                     className="heading max-w-5xl"
                     initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
-                    animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+                    animate={hasEntered ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
                     transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
                 >
                     We&apos;re here to support your workloads, whether they&apos;re research, training, or production.
@@ -266,10 +271,10 @@ export function UseCasesSection() {
                         key={useCase.title}
                         useCase={useCase}
                         index={index}
-                        hasEntered={isInView}
-                        ditherReady={true}
-                        onHoverStart={() => {}}
-                        onHoverEnd={() => {}}
+                        hasEntered={hasEntered}
+                        ditherReady={ditherReady}
+                        onHoverStart={onHoverStart}
+                        onHoverEnd={onHoverEnd}
                     />
                 ))}
             </div>

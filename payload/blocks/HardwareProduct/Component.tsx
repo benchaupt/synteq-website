@@ -51,7 +51,7 @@ export function HardwareProductBlock({
 
         {/* Content */}
         <div className="md:w-2/3 p-6">
-          <div className="flex items-start justify-between gap-12 mb-4">
+          <div className="flex items-start justify-between gap-4 md:gap-12 mb-4">
             <div>
               <p className="text-xs font-mono text-accent uppercase tracking-wider mb-1">
                 {product.manufacturer}

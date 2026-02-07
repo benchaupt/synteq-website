@@ -111,18 +111,18 @@ export function HardwareComparisonBlock({
       </div>
 
       {/* Specifications Table */}
-      <div className="overflow-hidden bg-background">
-        <div className="bg-background-secondary p-6 border-b border-white/5">
+      <div className="overflow-x-auto bg-background">
+        <div className="bg-background-secondary p-4 md:p-6 border-b border-white/5">
           <h3 className="subheading">Technical Specifications</h3>
         </div>
 
         {/* Spec Rows */}
-        <div className="divide-y divide-white/5">
+        <div className="divide-y divide-white/5 min-w-0">
           {/* Header row with product names */}
-          <div className={`grid ${products.length === 2 ? 'grid-cols-3' : 'grid-cols-4'} gap-4 p-6 transition-colors bg-background-secondary/50`}>
-            <div className="font-mono text-xs text-white/40 uppercase tracking-wider">Spec</div>
+          <div className={`grid ${products.length === 2 ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-3 sm:grid-cols-4'} gap-3 md:gap-4 p-4 md:p-6 transition-colors bg-background-secondary/50`}>
+            <div className="font-mono text-xs text-white/40 uppercase tracking-wider hidden sm:block">Spec</div>
             {products.map((product) => (
-              <div key={product.id} className="font-mono text-sm text-accent">{product.name}</div>
+              <div key={product.id} className="font-mono text-xs sm:text-sm text-accent truncate">{product.name}</div>
             ))}
           </div>
 
@@ -131,8 +131,8 @@ export function HardwareComparisonBlock({
             const bestForThisSpec = findBestForSpec(products, specLabel)
 
             return (
-              <div key={specLabel} className={`grid ${products.length === 2 ? 'grid-cols-3' : 'grid-cols-4'} gap-4 p-6 transition-colors hover:bg-white/[0.02]`}>
-                <div className="font-mono text-xs text-white/40 uppercase tracking-wider">{specLabel}</div>
+              <div key={specLabel} className={`grid ${products.length === 2 ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-3 sm:grid-cols-4'} gap-3 md:gap-4 p-4 md:p-6 transition-colors hover:bg-white/[0.02]`}>
+                <div className="font-mono text-xs text-white/40 uppercase tracking-wider col-span-full sm:col-span-1">{specLabel}</div>
                 {products.map((product) => {
                   const spec = product.specs.find((s) => s.label === specLabel)
                   const isBest = bestForThisSpec === product.id && showFullSpecs
@@ -158,7 +158,7 @@ export function HardwareComparisonBlock({
       </div>
 
       {/* Quick links */}
-      <div className="flex flex-wrap gap-12 justify-center">
+      <div className="flex flex-wrap gap-6 md:gap-12 justify-center">
         {products.map((product) => (
           <Link
             key={product.id}

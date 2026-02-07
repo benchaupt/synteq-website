@@ -16,7 +16,6 @@ interface EmailCaptureProps {
 export function EmailCapture({
   title,
   description,
-  buttonText = "Subscribe",
   placeholder = "your@email.com",
   className,
   icon,

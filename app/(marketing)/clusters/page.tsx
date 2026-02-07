@@ -183,18 +183,18 @@ function HardwareInner() {
           </div>
 
           {/* Specifications Table */}
-          <div className="overflow-hidden bg-background">
-            <div className="bg-background-secondary p-6">
+          <div className="overflow-x-auto bg-background">
+            <div className="bg-background-secondary p-4 md:p-6 border-b border-white/5">
               <h3 className="subheading">Technical Specifications</h3>
             </div>
 
             {/* Spec Rows - dynamically generated from hardware specs */}
-            <div className="divide-y divide-white/5">
+            <div className="divide-y divide-white/5 min-w-0">
               {/* Header row with product names */}
-              <div className={`grid ${comparedHardware.length === 2 ? 'grid-cols-3' : 'grid-cols-4'} gap-4 p-6 transition-colors bg-background-secondary/50`}>
-                <div className="font-mono text-xs text-white/40 uppercase tracking-wider">Spec</div>
+              <div className={`grid ${comparedHardware.length === 2 ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-3 sm:grid-cols-4'} gap-3 md:gap-4 p-4 md:p-6 transition-colors bg-background-secondary/50`}>
+                <div className="font-mono text-xs text-white/40 uppercase tracking-wider hidden sm:block">Spec</div>
                 {comparedHardware.map((item) => (
-                  <div key={item!.id} className="font-mono text-sm text-accent">{item!.name}</div>
+                  <div key={item!.id} className="font-mono text-xs sm:text-sm text-accent truncate">{item!.name}</div>
                 ))}
               </div>
 
@@ -205,8 +205,8 @@ function HardwareInner() {
                   item!.specs.forEach((spec) => allLabels.add(spec.label));
                 });
                 return Array.from(allLabels).map((label) => (
-                  <div key={label} className={`grid ${comparedHardware.length === 2 ? 'grid-cols-3' : 'grid-cols-4'} gap-4 p-6 transition-colors hover:bg-white/[0.02]`}>
-                    <div className="font-mono text-xs text-white/40 uppercase tracking-wider">{label}</div>
+                  <div key={label} className={`grid ${comparedHardware.length === 2 ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-3 sm:grid-cols-4'} gap-3 md:gap-4 p-4 md:p-6 transition-colors hover:bg-white/[0.02]`}>
+                    <div className="font-mono text-xs text-white/40 uppercase tracking-wider col-span-full sm:col-span-1">{label}</div>
                     {comparedHardware.map((item) => {
                       const spec = item!.specs.find((s) => s.label === label);
                       return (

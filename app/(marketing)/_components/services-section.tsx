@@ -2,14 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import dynamic from "next/dynamic";
-
-const DepthImage = dynamic(() => import("@/app/_components/depth-image"), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-full bg-background-secondary animate-pulse" />
-  ),
-});
+import DepthImage from "@/app/_components/depth-image";
 
 export default function ServicesSection() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);

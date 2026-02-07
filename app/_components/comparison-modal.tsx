@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils"
 import { AnimatePresence, motion } from "motion/react"
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import { X, Search, ChevronDown, Check } from "lucide-react"
 import * as Select from "@radix-ui/react-select"
@@ -27,6 +27,12 @@ function ComparisonModalInner({
   const [manufacturerFilter, setManufacturerFilter] = useState<string | null>(null)
   const [selectedIds, setSelectedIds] = useState<string[]>(() => [...initialSelected])
   const [mounted, setMounted] = useState(false)
+  const [dropdownOpen, setDropdownOpen] = useState(false)
+  const dropdownOpenRef = useRef(false)
+
+  useEffect(() => {
+    dropdownOpenRef.current = dropdownOpen
+  }, [dropdownOpen])
 
   useEffect(() => {
     setTimeout(() => {
@@ -34,18 +40,46 @@ function ComparisonModalInner({
     }, 100)
   }, [])
 
-  // Close on escape key
+  // Close on escape, and block all page scroll while modal is open.
+  // stopPropagation → blocks Lenis (listens on window).
+  // preventDefault → blocks native scroll, except inside the modal's scrollable area or dropdowns.
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose()
     }
+    const handleWheel = (e: WheelEvent) => {
+      e.stopPropagation()
+
+      if (dropdownOpenRef.current && !(e.target as HTMLElement).closest('[data-radix-popper-content-wrapper]')) {
+        setDropdownOpen(false)
+      }
+
+      const target = e.target as HTMLElement
+      const inPopper = target.closest('[data-radix-popper-content-wrapper]')
+      if (inPopper) return
+
+      const scrollable = target.closest('[data-modal-scroll]') as HTMLElement | null
+      if (scrollable) {
+        const { scrollTop, scrollHeight, clientHeight } = scrollable
+        const atTop = scrollTop <= 0
+        const atBottom = scrollTop >= scrollHeight - clientHeight - 1
+        if ((e.deltaY < 0 && !atTop) || (e.deltaY > 0 && !atBottom)) return
+      }
+
+      e.preventDefault()
+    }
+    const handleTouch = (e: TouchEvent) => {
+      e.stopPropagation()
+      if (dropdownOpenRef.current) setDropdownOpen(false)
+    }
 
     document.addEventListener("keydown", handleKeyDown)
-    document.body.style.overflow = "hidden"
-
+    document.addEventListener('wheel', handleWheel, { passive: false })
+    document.addEventListener('touchmove', handleTouch)
     return () => {
       document.removeEventListener("keydown", handleKeyDown)
-      document.body.style.overflow = ""
+      document.removeEventListener('wheel', handleWheel)
+      document.removeEventListener('touchmove', handleTouch)
     }
   }, [onClose])
 
@@ -100,12 +134,13 @@ function ComparisonModalInner({
   )
 
   const modalContent = (
+    <div className="fixed inset-0 z-[9999]">
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
-      className="fixed inset-0 z-[9999] flex items-center justify-center"
+      className="absolute inset-0 flex items-center justify-center"
       onClick={onClose}
     >
       {/* Backdrop */}
@@ -151,6 +186,11 @@ function ComparisonModalInner({
                 placeholder="Search hardware..."
                 className="w-full bg-transparent text-white placeholder:text-white/40 outline-none"
               />
+              {search && (
+                <button onClick={() => setSearch("")} className="shrink-0 text-white/40 hover:text-white transition-colors">
+                  <X className="size-4" />
+                </button>
+              )}
             </div>
             <span className="absolute bottom-0 left-0 w-full h-px bg-white/25" />
             <span className="absolute bottom-0 left-0 w-full h-px bg-accent origin-left scale-x-0 group-focus-within/field:scale-x-100 transition-transform duration-300" />
@@ -159,6 +199,8 @@ function ComparisonModalInner({
           {/* Manufacturer Dropdown */}
           <div className="group/field relative">
             <Select.Root
+              open={dropdownOpen}
+              onOpenChange={setDropdownOpen}
               value={manufacturerFilter || "__all__"}
               onValueChange={(v) => setManufacturerFilter(v === "__all__" ? null : v)}
             >
@@ -211,10 +253,26 @@ function ComparisonModalInner({
             <span className="absolute bottom-0 left-0 w-full h-px bg-white/25" />
             <span className="absolute bottom-0 left-0 w-full h-px bg-accent origin-left scale-x-0 group-focus-within/field:scale-x-100 transition-transform duration-300" />
           </div>
+
+          {/* Clear all filters */}
+          <AnimatePresence>
+            {(search || manufacturerFilter) && (
+              <motion.button
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.15 }}
+                onClick={() => { setSearch(""); setManufacturerFilter(null) }}
+                className="p-2 mb-0.5 text-white/50 hover:text-white transition-colors"
+              >
+                <X className="size-5" />
+              </motion.button>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Hardware Grid */}
-        <div className="flex-1 overflow-y-auto p-6">
+        <div className="flex-1 overflow-y-auto p-6" data-modal-scroll>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredHardware.map((item) => (
               <HardwareSelectCard
@@ -268,6 +326,7 @@ function ComparisonModalInner({
         </div>
       </motion.div>
     </motion.div>
+    </div>
   )
 
   // Use portal to render outside the main element's stacking context

@@ -1,7 +1,6 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { motion } from "motion/react";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 interface SliderTabsProps {
@@ -20,46 +19,55 @@ export function SliderTabs({
   isShimmering = false,
 }: SliderTabsProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
+  const barRef = useRef<HTMLDivElement>(null);
   const hasSelection = activeItem !== null && activeItem !== "" && items.includes(activeItem);
-  const prevHasSelection = useRef(false);
-  const isRevealing = hasSelection && !prevHasSelection.current;
 
-  const measureIndicator = useCallback(() => {
+  // "idle" = hidden, "revealing" = scaleX grows, "sliding" = left/width also transition
+  const [mode, setMode] = useState<"idle" | "revealing" | "sliding">("idle");
+
+  // Position bar directly on the DOM — no React state, no stale renders
+  const positionBar = useCallback(() => {
+    const bar = barRef.current;
     const container = containerRef.current;
-    if (!container || !activeItem) return;
+    if (!bar || !container || !activeItem) return;
 
     const activeIndex = items.indexOf(activeItem);
     if (activeIndex === -1) return;
     const buttons = container.querySelectorAll("button");
     const activeButton = buttons[activeIndex];
+    if (!activeButton) return;
 
-    if (activeButton) {
-      const containerRect = container.getBoundingClientRect();
-      const buttonRect = activeButton.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+    const buttonRect = activeButton.getBoundingClientRect();
 
-      setIndicatorStyle({
-        left: buttonRect.left - containerRect.left,
-        width: buttonRect.width,
-      });
-    }
+    bar.style.left = `${buttonRect.left - containerRect.left}px`;
+    bar.style.width = `${buttonRect.width}px`;
   }, [activeItem, items]);
 
-  // Measure synchronously before paint so isRevealing sees the correct position
+  // Runs synchronously before paint — bar is at correct position before anything is visible
   useLayoutEffect(() => {
-    measureIndicator();
-  }, [measureIndicator]);
+    positionBar();
+  }, [positionBar]);
 
-  // Resize listener in regular effect
   useEffect(() => {
-    window.addEventListener("resize", measureIndicator);
-    return () => window.removeEventListener("resize", measureIndicator);
-  }, [measureIndicator]);
+    window.addEventListener("resize", positionBar);
+    return () => window.removeEventListener("resize", positionBar);
+  }, [positionBar]);
 
-  // Track previous selection state after paint
+  // Kick off reveal when selection appears (adjusting state during render)
+  if (!hasSelection && mode !== "idle") {
+    setMode("idle");
+  } else if (hasSelection && mode === "idle") {
+    setMode("revealing");
+  }
+
+  // After reveal completes, enable position transitions
   useEffect(() => {
-    prevHasSelection.current = hasSelection;
-  });
+    if (mode === "revealing") {
+      const timer = setTimeout(() => setMode("sliding"), 350);
+      return () => clearTimeout(timer);
+    }
+  }, [mode]);
 
   return (
     <div
@@ -87,21 +95,18 @@ export function SliderTabs({
         </button>
       ))}
 
-      {/* Sliding underline indicator — only visible after first selection */}
-      <motion.div
-        className={cn("absolute bottom-0 h-[2px]", isShimmering ? "shimmer-accent" : "bg-accent")}
-        initial={false}
-        animate={{
-          left: indicatorStyle.left,
-          width: hasSelection ? indicatorStyle.width : 0,
-          opacity: hasSelection ? 1 : 0,
-        }}
-        transition={{
-          left: isRevealing
-            ? { duration: 0 }
-            : { type: "spring", stiffness: 500, damping: 35 },
-          width: { type: "spring", stiffness: 500, damping: 35 },
-          opacity: { duration: 0.1 },
+      <div
+        ref={barRef}
+        className={cn(
+          "absolute bottom-0 h-[2px]",
+          isShimmering ? "shimmer-accent" : "bg-accent"
+        )}
+        style={{
+          transformOrigin: "left",
+          transform: mode !== "idle" ? "scaleX(1)" : "scaleX(0)",
+          transitionProperty: mode === "sliding" ? "transform, left, width" : "transform",
+          transitionDuration: "300ms",
+          transitionTimingFunction: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
         }}
       />
     </div>
