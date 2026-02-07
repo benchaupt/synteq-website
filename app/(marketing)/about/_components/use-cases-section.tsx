@@ -37,14 +37,14 @@ const useCases: UseCase[] = [
     {
         title: "Startups",
         highlight: "Move at full speed.",
-        description: "Production ready systems with transparent pricing, built to scale when you do— not before.",
+        description: "Production ready systems with transparent pricing, built to scale when you do.",
         icon: null,
         useDitherStartupStatue: true,
     },
     {
         title: "Enterprise",
         highlight: "Infrastructure you can commit to.",
-        description: "Dedicated architecture, custom SLAs, compliance, and direct support built around your AI strategy.",
+        description: "Dedicated architecture, custom SLAs, compliance, and direct support. Built around your AI strategy.",
         icon: null,
         useDitherEnterpriseStatue: true,
     }

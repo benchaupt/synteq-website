@@ -8,9 +8,9 @@ import Link from "next/link";
 
 const coreValues = [
     { number: "01", value: "Sub-50ms inference latency" },
-    { number: "02", value: "Blackwell & H200 availity" },
+    { number: "02", value: "Blackwell & H200 availability" },
     { number: "03", value: "99.99% uptime SLA" },
-    { number: "05", value: "Research-grade infrastructure" },
+    { number: "04", value: "Enterprise-grade infrastructure" },
     { number: "06", value: "Transparent pricing" }
 ];
 

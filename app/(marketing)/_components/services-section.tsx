@@ -17,19 +17,19 @@ export default function ServicesSection() {
   const products = [
     {
       title: "Inference Cloud",
-      description: "Instant inference for production systems. Start serving traffic in minutes.",
+      description: "Ultra-low latency and scalable throughput, built for production workloads.",
       href: "/cloud",
       depth: "/assets/landing/depth-images/depth/inference-cloud.png",
     },
     {
       title: "GPU Clusters",
-      description: "Persistent GPU clusters for long-running, high-intensity workloads.",
+      description: "Dedicated GPU architecture for pre training, fine tuning, and high intensity workloads.",
       href: "/clusters",
       depth: "/assets/landing/depth-images/depth/general-compute.png",
     },
     {
       title: "General Compute",
-      description: "The foundation everything else runs on. CPU and storage for orchestration, APIs, and data.",
+      description: "Low latency compute for the workloads around the model",
       href: "/compute",
       depth: "/assets/landing/depth-images/depth/gpu-clusters.png",
     }
@@ -45,11 +45,12 @@ export default function ServicesSection() {
               Our Products
             </p>
             <h2 className="heading max-w-[75%]">
-            Built for teams that ship
+            Purpose-built for AI
             </h2>
           </div>
           <p className="text-base md:text-base lg:text-base text-dark-foreground flex-1 leading-relaxed max-w-2xl">
-          We&apos;re here from first experiment to full-scale training, with the infrastructure for every stage.
+          We&apos;re here from first experiment to full scale production. Best in class speed, throughput, and reliability- at every stage.
+          {/* We&apos;re here at every stage. From first experiment to full scale production, with purpose-built infrastructure, best in class speed, throughput, and reliability. */}
           </p>
         </div>
 

@@ -96,9 +96,10 @@ export default function Landing() {
       </div>
       */}
 
-      <section className="max-w-viewport w-full md:w-[70%] mx-auto px-5 py-24 md:py-32 lg:py-48 flex flex-col items-center">
+      <section className="max-w-viewport w-full md:w-[72.5%] mx-auto px-5 py-24 md:py-32 lg:py-48 flex flex-col items-center">
         <ScrollRevealText
-          text="We’re the reason your competitor already shipped. State of the art inference built for speed and control."
+          text="Your infrastructure should be the tailwind, not the bottleneck. 
+State of the art inference for teams building the future. Backed by reliability, transparency, and trust."
           className="text-center"
           textClassName=""
         />

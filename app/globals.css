@@ -50,13 +50,11 @@
   --animate-marquee: marquee var(--duration) infinite linear;
   --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
   --animate-shimmer: shimmer 4s linear infinite;
-  --animate-shimmer-stat: shimmer-stat 3s ease-in-out infinite;
+  --animate-shimmer-stat: shimmer-stat 1.5s ease-in-out;
 
   @keyframes shimmer-stat {
-    0% { background-position: 200% 0; }
-    45% { background-position: -200% 0; }
-    45.1% { background-position: 200% 0; }
-    100% { background-position: 200% 0; }
+    0% { background-position: 150% 0; }
+    100% { background-position: -150% 0; }
   }
  
   @keyframes marquee {

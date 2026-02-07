@@ -15,28 +15,27 @@ function StatCard({
   className?: string;
 }) {
   const shimmerRef = useRef<HTMLSpanElement>(null);
-  const hovering = useRef(false);
+  const running = useRef(false);
 
   const onMouseEnter = useCallback(() => {
-    hovering.current = true;
-    shimmerRef.current?.classList.add("animate-shimmer-stat");
+    if (running.current) return;
+    const el = shimmerRef.current;
+    if (!el) return;
+    running.current = true;
+    el.classList.remove("animate-shimmer-stat");
+    void el.offsetWidth;
+    el.classList.add("animate-shimmer-stat");
   }, []);
 
-  const onMouseLeave = useCallback(() => {
-    hovering.current = false;
-  }, []);
-
-  const onAnimationIteration = useCallback(() => {
-    if (!hovering.current) {
-      shimmerRef.current?.classList.remove("animate-shimmer-stat");
-    }
+  const onAnimationEnd = useCallback(() => {
+    running.current = false;
+    shimmerRef.current?.classList.remove("animate-shimmer-stat");
   }, []);
 
   return (
     <div
       className={`flex flex-col gap-3 md:gap-4 ${className ?? ""}`}
       onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
     >
       <p className="font-mono text-sm md:text-sm lg:text-md text-white/65 uppercase">
         {label}
@@ -45,8 +44,9 @@ function StatCard({
         {value}
         <span
           ref={shimmerRef}
-          onAnimationIteration={onAnimationIteration}
-          className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,transparent_35%,#A0F0CD_50%,transparent_65%,transparent_100%)] bg-[length:200%_100%] bg-[position:200%_0] bg-clip-text text-transparent pointer-events-none select-none"
+          onAnimationEnd={onAnimationEnd}
+          className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,transparent_35%,#A0F0CD_50%,transparent_65%,transparent_100%)] bg-[length:200%_100%] bg-no-repeat bg-clip-text text-transparent pointer-events-none select-none"
+          style={{ backgroundPosition: "150% 0" }}
           aria-hidden="true"
         >
           {value}
@@ -67,10 +67,10 @@ export default function ResilienceSection() {
         <div className="flex h-full shrink-0 flex-col justify-between gap-8 md:gap-10">
           <div className="flex w-full flex-col gap-6 md:gap-6">
             <h2 className="heading leading-tight md:leading-9 font-sequel-book text-white">
-              Engineering for AI
+              Designed for the frontier
             </h2>
             <p className="text-base md:text-base lg:text-base text-foreground/65 max-w-lg">
-              <span>Every layer of our infrastructure is purpose-built &amp; engineered for your workloads. </span>
+              <span>Every layer of our infrastructure has been engineered from the group up for your workloads. </span>
               <span className="text-foreground">{`Enterprise grade hardware `}</span>
               with production reliability, to support what ships next.
             </p>
@@ -100,7 +100,7 @@ export default function ResilienceSection() {
           <StatCard
             label="Uptime"
             value="99.99% SLA"
-            description="Redundant systems and monitoring to keep workloads running."
+            description="Built in redundancy & monitoring to keep running."
             className="justify-self-start"
           />
           <StatCard

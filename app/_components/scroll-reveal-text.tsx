@@ -40,21 +40,37 @@ export function ScrollRevealText({ text, className, textClassName }: ScrollRevea
     offset: ["start 0.9", "end 0.6"],
   });
 
-  // Split text into words
-  const words = text.split(" ");
+  // Split text into paragraphs by newline, then words by space
+  const paragraphs = text.split("\n");
+  const allWords = paragraphs.flatMap((p) => p.split(" "));
+  const totalWords = allWords.length;
+
+  // Pre-compute word offset for each paragraph
+  const paragraphOffsets = paragraphs.reduce<number[]>((acc, p, i) => {
+    acc.push(i === 0 ? 0 : acc[i - 1] + paragraphs[i - 1].split(" ").length);
+    return acc;
+  }, []);
 
   return (
     <div ref={containerRef} className={className}>
       <p className={cn("heading max-w-8xl", textClassName)}>
-        {words.map((word, index) => (
-          <Word
-            key={index}
-            word={word}
-            index={index}
-            totalWords={words.length}
-            scrollYProgress={scrollYProgress}
-          />
-        ))}
+        {paragraphs.map((paragraph, pIndex) => {
+          const words = paragraph.split(" ");
+          const offset = paragraphOffsets[pIndex];
+          return (
+            <span key={pIndex} className={pIndex > 0 ? "block mt-4" : undefined}>
+              {words.map((word, wIndex) => (
+                <Word
+                  key={offset + wIndex}
+                  word={word}
+                  index={offset + wIndex}
+                  totalWords={totalWords}
+                  scrollYProgress={scrollYProgress}
+                />
+              ))}
+            </span>
+          );
+        })}
       </p>
     </div>
   );
