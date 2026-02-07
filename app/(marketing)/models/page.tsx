@@ -2,6 +2,7 @@
 
 import { Suspense, useCallback, useEffect, useRef, useState } from "react"
 import { useSearchParams } from "next/navigation"
+import { getInitialModels } from "@/lib/model-cache"
 import { ModelSearch } from "./_components/model-search"
 import { ModelFilters, SIZE_OPTIONS } from "./_components/model-filters"
 import { ModelGrid, type ModelWithParsedTags } from "./_components/model-grid"
@@ -23,14 +24,18 @@ interface ModelsResponse {
 
 function ModelsContent() {
   const searchParams = useSearchParams()
-  const [models, setModels] = useState<ModelWithParsedTags[]>([])
+  const initialCache = getInitialModels()
+  const [models, setModels] = useState<ModelWithParsedTags[]>(
+    (initialCache.cached?.models as ModelWithParsedTags[]) ?? []
+  )
   const [selectedModel, setSelectedModel] = useState<ModelWithParsedTags | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(!initialCache.cached)
   const [isPaginating, setIsPaginating] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const detailRef = useRef<HTMLDivElement>(null)
   const hasAutoSelected = useRef(false)
-  const isInitialLoad = useRef(true)
+  const isInitialLoad = useRef(!initialCache.cached)
+  const usedCache = useRef(!!initialCache.cached)
 
   // URL params
   const selectedId = searchParams.get("selected")
@@ -51,16 +56,22 @@ function ModelsContent() {
   }, [selectedId])
 
   // Available filter options
-  const [taskTypes, setTaskTypes] = useState<string[]>([])
-  const [authors, setAuthors] = useState<string[]>([])
-  const [availableSizes, setAvailableSizes] = useState<string[]>([])
+  const [taskTypes, setTaskTypes] = useState<string[]>(initialCache.cached?.filters?.taskTypes ?? [])
+  const [authors, setAuthors] = useState<string[]>(initialCache.cached?.filters?.authors ?? [])
+  const [availableSizes, setAvailableSizes] = useState<string[]>(initialCache.cached?.filters?.sizes ?? [])
 
   // Pagination (4x5 grid = 20 items per page)
-  const [total, setTotal] = useState(0)
+  const [total, setTotal] = useState(initialCache.cached?.total ?? 0)
   const [offset, setOffset] = useState(0)
   const limit = 20
 
   const fetchModels = useCallback(async () => {
+    // Skip first fetch if we already have cached data
+    if (usedCache.current) {
+      usedCache.current = false
+      return
+    }
+
     // Only show full loading state on initial load, use subtle indicator for pagination
     if (isInitialLoad.current) {
       setIsLoading(true)

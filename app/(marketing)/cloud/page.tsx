@@ -9,6 +9,7 @@ import { StatsSection } from "@/app/_components/stats-section";
 import TensorVisualization from "@/app/_components/tensor-visualization";
 import { cn } from "@/lib/utils";
 import { getModelLogo } from "@/lib/model-logos";
+import { getFeaturedModels } from "@/lib/model-cache";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -118,26 +119,18 @@ function CloudContent() {
   const searchParams = useSearchParams();
   const modelsRef = useRef<HTMLDivElement>(null);
   const selectedModel = searchParams.get("model");
-  const [featuredModels, setFeaturedModels] = useState<FeaturedModel[]>([]);
-  const [isLoadingModels, setIsLoadingModels] = useState(true);
+  const { cached } = getFeaturedModels();
+  const [featuredModels, setFeaturedModels] = useState<FeaturedModel[]>((cached ?? []) as FeaturedModel[]);
+  const [isLoadingModels, setIsLoadingModels] = useState(!cached);
 
-  // Fetch featured models
+  // Use prefetched models from cache
   useEffect(() => {
-    async function fetchFeaturedModels() {
-      try {
-        const response = await fetch("/api/models?featured=true&limit=12");
-        if (response.ok) {
-          const data = await response.json() as { models: FeaturedModel[] };
-          setFeaturedModels(data.models);
-        }
-      } catch (err) {
-        console.error("Failed to fetch featured models:", err);
-      } finally {
-        setIsLoadingModels(false);
-      }
-    }
-    fetchFeaturedModels();
-  }, []);
+    if (cached) return;
+    getFeaturedModels().promise.then((data) => {
+      setFeaturedModels(data as FeaturedModel[]);
+      setIsLoadingModels(false);
+    });
+  }, [cached]);
 
   useEffect(() => {
     if (selectedModel) {

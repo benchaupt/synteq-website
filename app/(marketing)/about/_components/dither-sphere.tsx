@@ -6,6 +6,7 @@ interface DitherSphereProps {
     className?: string;
     externalMousePos?: { x: number; y: number } | null;
     isHovering?: boolean;
+    animating?: boolean;
     baseBrightness?: number; // multiplier, default 0.75
     hoverBrightness?: number; // multiplier, default 1.3 (can go above 1 for extra bright)
 }
@@ -46,6 +47,7 @@ export function DitherSphere({
     className = "",
     externalMousePos,
     isHovering = false,
+    animating = true,
     baseBrightness = 0.75,
     hoverBrightness = 1.3,
 }: DitherSphereProps) {
@@ -56,6 +58,14 @@ export function DitherSphere({
     const pointsRef = useRef<Float32Array | null>(null);
     const sizeRef = useRef({ width: 0, height: 0, dpr: 1 });
     const [isLoaded, setIsLoaded] = useState(false);
+
+    // Pre-allocated grid buffers (avoids GC pressure every frame)
+    const gridBuffersRef = useRef<{
+        depth: Float32Array;
+        light: Float32Array;
+        count: Uint16Array;
+        concave: Uint8Array;
+    } | null>(null);
 
     // Animated rotation state (oscillates within limits)
     const spinYRef = useRef(0);
@@ -151,11 +161,24 @@ export function DitherSphere({
         const ly = LIGHT_DIR_Y / lightLen;
         const lz = LIGHT_DIR_Z / lightLen;
 
-        // Grid stores
-        const depthGrid = new Float32Array(GRID_SIZE * GRID_SIZE);
-        const lightGrid = new Float32Array(GRID_SIZE * GRID_SIZE);
-        const countGrid = new Uint16Array(GRID_SIZE * GRID_SIZE);
-        const concaveGrid = new Uint8Array(GRID_SIZE * GRID_SIZE);
+        // Pre-allocated grid stores (reused across frames)
+        const bufSize = GRID_SIZE * GRID_SIZE;
+        if (!gridBuffersRef.current) {
+            gridBuffersRef.current = {
+                depth: new Float32Array(bufSize),
+                light: new Float32Array(bufSize),
+                count: new Uint16Array(bufSize),
+                concave: new Uint8Array(bufSize),
+            };
+        }
+        const depthGrid = gridBuffersRef.current.depth;
+        const lightGrid = gridBuffersRef.current.light;
+        const countGrid = gridBuffersRef.current.count;
+        const concaveGrid = gridBuffersRef.current.concave;
+        depthGrid.fill(0);
+        lightGrid.fill(0);
+        countGrid.fill(0);
+        concaveGrid.fill(0);
 
         const margin = size * 0.05;
         const drawSize = size - margin * 2;
@@ -280,9 +303,14 @@ export function DitherSphere({
         }
     }, []);
 
+    // Render one static frame once data + canvas are ready
+    useEffect(() => {
+        if (isLoaded) render();
+    }, [isLoaded, render]);
+
     // Animation loop
     useEffect(() => {
-        if (!isLoaded) return;
+        if (!isLoaded || !animating) return;
 
         const animate = (time: number) => {
             if (lastTimeRef.current === 0) {
@@ -334,7 +362,7 @@ export function DitherSphere({
                 cancelAnimationFrame(animationRef.current);
             }
         };
-    }, [isHovering, externalMousePos, isLoaded, render, baseBrightness, hoverBrightness]);
+    }, [isHovering, externalMousePos, isLoaded, animating, render, baseBrightness, hoverBrightness]);
 
     return (
         <div className={`aspect-square w-full flex items-center justify-center ${className}`}>

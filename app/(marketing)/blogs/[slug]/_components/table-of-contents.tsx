@@ -1,7 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
+import { motion, AnimatePresence } from 'motion/react'
 
 interface TocItem {
   id: string
@@ -10,14 +11,15 @@ interface TocItem {
 }
 
 interface TableOfContentsProps {
+  isExpanded: boolean
+  onToggle: () => void
   className?: string
 }
 
 function extractHeadings(): TocItem[] {
   if (typeof document === 'undefined') return []
 
-  // Only get headings from the main content area (RichText), not the "Read more" carousel
-  const mainContent = document.querySelector('article .flex-1.min-w-0')
+  const mainContent = document.querySelector('article [data-article-content]')
   if (!mainContent) return []
 
   const headingElements = mainContent.querySelectorAll('h2, h3')
@@ -25,11 +27,8 @@ function extractHeadings(): TocItem[] {
 
   headingElements.forEach((heading, index) => {
     const text = heading.textContent || ''
-
-    // Skip empty headings
     if (!text.trim()) return
 
-    // Generate ID if not present
     if (!heading.id) {
       heading.id = `heading-${index}`
     }
@@ -44,11 +43,11 @@ function extractHeadings(): TocItem[] {
   return items
 }
 
-export function TableOfContents({ className }: TableOfContentsProps) {
+export function TableOfContents({ isExpanded, onToggle, className }: TableOfContentsProps) {
   const [headings, setHeadings] = useState<TocItem[]>([])
   const [activeId, setActiveId] = useState<string>('')
+  const isScrollingTo = useRef(false)
 
-  // Extract headings after mount (deferred to avoid sync setState in effect)
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
       setHeadings(extractHeadings())
@@ -56,12 +55,14 @@ export function TableOfContents({ className }: TableOfContentsProps) {
     return () => cancelAnimationFrame(frame)
   }, [])
 
-  // Track active heading based on scroll position
   useEffect(() => {
     if (headings.length === 0) return
 
     const observer = new IntersectionObserver(
       (entries) => {
+        // Skip observer updates while programmatically scrolling to a heading
+        if (isScrollingTo.current) return
+
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setActiveId(entry.target.id)
@@ -82,13 +83,24 @@ export function TableOfContents({ className }: TableOfContentsProps) {
     return () => observer.disconnect()
   }, [headings])
 
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault()
+  const handleClick = (id: string) => {
     const element = document.getElementById(id)
     if (element) {
+      // Lock active state to the clicked heading during smooth scroll
+      isScrollingTo.current = true
+      setActiveId(id)
+
       const top = element.getBoundingClientRect().top + window.scrollY - 100
       window.scrollTo({ top, behavior: 'smooth' })
-      setActiveId(id)
+
+      // Re-enable observer after scroll completes
+      const unlock = () => {
+        isScrollingTo.current = false
+        window.removeEventListener('scrollend', unlock)
+      }
+      window.addEventListener('scrollend', unlock, { once: true })
+      // Fallback for browsers without scrollend
+      setTimeout(() => { isScrollingTo.current = false }, 1000)
     }
   }
 
@@ -98,27 +110,97 @@ export function TableOfContents({ className }: TableOfContentsProps) {
 
   return (
     <nav className={cn('flex flex-col gap-4', className)}>
-      <h3 className="font-mono text-xs text-accent uppercase tracking-wider">
-        Table of Contents
-      </h3>
-      <div className="flex flex-col gap-1 border-l-2 border-white/10">
-        {headings.map((heading) => (
-          <a
-            key={heading.id}
-            href={`#${heading.id}`}
-            onClick={(e) => handleClick(e, heading.id)}
-            className={cn(
-              'text-sm py-1.5 transition-colors border-l-2 -ml-0.5',
-              heading.level === 2 ? 'pl-4' : 'pl-7',
-              activeId === heading.id
-                ? 'text-accent border-accent'
-                : 'text-white/50 hover:text-white/80 border-transparent'
-            )}
+      {/* Toggle button */}
+      <button
+        onClick={onToggle}
+        className="flex items-center gap-2 text-foreground/60 hover:text-foreground transition-colors"
+        aria-label={isExpanded ? 'Collapse table of contents' : 'Expand table of contents'}
+      >
+        <motion.svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          animate={{ rotate: isExpanded ? 180 : 0 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+        >
+          <polyline points="9 18 15 12 9 6" />
+        </motion.svg>
+      </button>
+
+      <AnimatePresence mode="wait">
+        {isExpanded ? (
+          <motion.div
+            key="expanded"
+            initial={{ opacity: 0, x: -10, height: 0 }}
+            animate={{ opacity: 1, x: 0, height: 'auto' }}
+            exit={{ opacity: 0, x: -10, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className="flex flex-col gap-1 overflow-hidden"
           >
-            {heading.text}
-          </a>
-        ))}
-      </div>
+            <span className="font-mono text-xs text-accent uppercase tracking-wider mb-2">
+              Table of Contents
+            </span>
+            <div className="flex flex-col gap-1 border-l-2 border-white/10">
+              {headings.map((heading, i) => (
+                <motion.a
+                  key={heading.id}
+                  href={`#${heading.id}`}
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.03, duration: 0.2 }}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    handleClick(heading.id)
+                  }}
+                  className={cn(
+                    'text-sm py-1.5 transition-colors border-l-2 -ml-0.5',
+                    heading.level === 2 ? 'pl-4' : 'pl-7',
+                    activeId === heading.id
+                      ? 'text-accent border-accent'
+                      : 'text-white/50 hover:text-white/80 border-transparent'
+                  )}
+                >
+                  {heading.text}
+                </motion.a>
+              ))}
+            </div>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="collapsed"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className="flex flex-col overflow-hidden"
+          >
+            {headings.map((heading) => (
+              <button
+                key={heading.id}
+                onClick={() => handleClick(heading.id)}
+                className="flex items-center py-1.5 cursor-pointer group"
+                aria-label={`Scroll to ${heading.text}`}
+              >
+                <div
+                  className={cn(
+                    'h-0.5 rounded-full transition-colors',
+                    heading.level === 2 ? 'w-8' : 'w-5',
+                    activeId === heading.id
+                      ? 'bg-accent'
+                      : 'bg-foreground/20 group-hover:bg-foreground/40'
+                  )}
+                />
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   )
 }

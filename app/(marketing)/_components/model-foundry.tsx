@@ -4,6 +4,7 @@
 import { AnimatedCard } from "@/app/_components/animated-card"
 import { Marquee } from "@/app/_components/marquee"
 import { getModelLogo } from "@/lib/model-logos"
+import { getFeaturedModels } from "@/lib/model-cache"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
@@ -15,26 +16,17 @@ interface FeaturedModel {
 }
 
 export function ModelFoundry() {
-  const [models, setModels] = useState<FeaturedModel[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const { cached } = getFeaturedModels()
+  const [models, setModels] = useState<FeaturedModel[]>(cached ?? [])
+  const [isLoading, setIsLoading] = useState(!cached)
 
   useEffect(() => {
-    async function fetchFeaturedModels() {
-      try {
-        const response = await fetch("/api/models?featured=true&limit=12")
-        if (response.ok) {
-          const data = await response.json() as { models: FeaturedModel[] }
-          setModels(data.models)
-        }
-      } catch (err) {
-        console.error("Failed to fetch featured models:", err)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    fetchFeaturedModels()
-  }, [])
+    if (cached) return
+    getFeaturedModels().promise.then((data) => {
+      setModels(data as FeaturedModel[])
+      setIsLoading(false)
+    })
+  }, [cached])
 
   // Show placeholder while loading
   if (isLoading || models.length === 0) {

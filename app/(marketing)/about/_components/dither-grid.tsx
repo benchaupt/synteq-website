@@ -8,6 +8,7 @@ interface DitherGridProps {
     cellDotGrid?: number;
     externalMousePos?: { x: number; y: number } | null;
     isHovering?: boolean;
+    animating?: boolean;
 }
 
 interface CellState {
@@ -69,6 +70,7 @@ export function DitherGrid({
     cellDotGrid = 8,
     externalMousePos,
     isHovering = false,
+    animating = true,
 }: DitherGridProps) {
     const [cellStates, setCellStates] = useState<Map<string, CellState>>(new Map());
     const [throttledMousePos, setThrottledMousePos] = useState<{ x: number; y: number } | null>(null);
@@ -107,7 +109,7 @@ export function DitherGrid({
 
     // Animate random cells when not hovering
     useEffect(() => {
-        if (isHovering) return;
+        if (isHovering || !animating) return;
 
         const currentKey = animationKeyRef.current;
 
@@ -173,7 +175,7 @@ export function DitherGrid({
             clearInterval(interval);
             clearAllTimeouts();
         };
-    }, [isHovering, gridSize, clearAllTimeouts]);
+    }, [isHovering, animating, gridSize, clearAllTimeouts]);
 
     // Pre-generate dot positions
     const cellDotPositions = useMemo(() => {

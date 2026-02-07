@@ -3,12 +3,44 @@ import { cn } from '@/lib/utils';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { AnimatedButton } from './animated-button';
+import { motion, useMotionValue, useSpring } from 'motion/react';
 
 export const Navigation = () => {
     const [mobileNavbar, setMobileNavbar] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [mobileActiveDropdown, setMobileActiveDropdown] = useState<string | null>(null);
+    const pathname = usePathname();
+    const isBlogArticle = pathname.startsWith('/blogs/') && pathname !== '/blogs';
+    const progressValue = useMotionValue(0);
+    const scaleX = useSpring(progressValue, { stiffness: 100, damping: 30, restDelta: 0.001 });
+
+    useEffect(() => {
+        if (!isBlogArticle) return;
+
+        const handleScrollProgress = () => {
+            const content = document.querySelector('[data-article-content]');
+            if (!content) return;
+
+            const rect = content.getBoundingClientRect();
+            const contentTop = rect.top + window.scrollY;
+            const contentHeight = rect.height;
+            const scrollPos = window.scrollY - contentTop;
+            const scrollable = contentHeight - window.innerHeight;
+
+            if (scrollable <= 0) {
+                progressValue.set(1);
+                return;
+            }
+
+            progressValue.set(Math.max(0, Math.min(1, scrollPos / scrollable)));
+        };
+
+        window.addEventListener('scroll', handleScrollProgress, { passive: true });
+        handleScrollProgress();
+        return () => window.removeEventListener('scroll', handleScrollProgress);
+    }, [isBlogArticle, progressValue]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -316,6 +348,14 @@ export const Navigation = () => {
                         </div>
                     </div>
                 </div>
+            )}
+
+            {/* Scroll progress bar — blog articles only */}
+            {isBlogArticle && (
+                <motion.div
+                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent origin-left"
+                    style={{ scaleX }}
+                />
             )}
         </nav>
     )

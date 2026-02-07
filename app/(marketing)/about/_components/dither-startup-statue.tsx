@@ -6,6 +6,7 @@ interface DitherStartupStatueProps {
     className?: string;
     externalMousePos?: { x: number; y: number } | null;
     isHovering?: boolean;
+    animating?: boolean;
     color?: string;
     dotSize?: number;
     gridResolution?: number;
@@ -49,6 +50,7 @@ export function DitherStartupStatue({
     className = "",
     externalMousePos,
     isHovering = false,
+    animating = true,
     color = "75, 222, 183",
     dotSize = 1,
     gridResolution = 0.02,
@@ -193,9 +195,14 @@ export function DitherStartupStatue({
         }
     }, [color, isHovering, dotSize]);
 
+    // Render one static frame once data + canvas are ready
+    useEffect(() => {
+        if (isLoaded) render();
+    }, [isLoaded, render]);
+
     // Animation loop
     useEffect(() => {
-        if (!isLoaded) return;
+        if (!isLoaded || !animating) return;
 
         const animate = (time: number) => {
             timeRef.current = time / 1000;
@@ -230,7 +237,7 @@ export function DitherStartupStatue({
                 cancelAnimationFrame(animationRef.current);
             }
         };
-    }, [isLoaded, isHovering, externalMousePos, panRangeRad, autoPanSpeed, render]);
+    }, [isLoaded, animating, isHovering, externalMousePos, panRangeRad, autoPanSpeed, render]);
 
     return (
         <div className={`w-full h-full ${className}`}>

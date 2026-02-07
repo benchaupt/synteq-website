@@ -6,6 +6,7 @@ interface DitherEnterpriseStatueProps {
     className?: string;
     externalMousePos?: { x: number; y: number } | null;
     isHovering?: boolean;
+    animating?: boolean;
     color?: string;
     autoPanRange?: number;
     autoPanSpeed?: number;
@@ -29,6 +30,7 @@ export function DitherEnterpriseStatue({
     className = "",
     externalMousePos,
     isHovering = false,
+    animating = true,
     color = "rgb(75, 222, 183)",
     autoPanRange = 15,
     autoPanSpeed = 0.15,
@@ -225,9 +227,14 @@ export function DitherEnterpriseStatue({
         }
     }, [color, isHovering]);
 
+    // Render one static frame once data + canvas are ready
+    useEffect(() => {
+        if (isLoaded) render();
+    }, [isLoaded, render]);
+
     // Animation loop
     useEffect(() => {
-        if (!isLoaded) return;
+        if (!isLoaded || !animating) return;
 
         const animate = (time: number) => {
             timeRef.current = time / 1000;
@@ -259,7 +266,7 @@ export function DitherEnterpriseStatue({
                 cancelAnimationFrame(animationRef.current);
             }
         };
-    }, [isLoaded, isHovering, externalMousePos, panRangeRad, autoPanSpeed, render]);
+    }, [isLoaded, animating, isHovering, externalMousePos, panRangeRad, autoPanSpeed, render]);
 
     return (
         <div className={`w-full h-full ${className}`}>

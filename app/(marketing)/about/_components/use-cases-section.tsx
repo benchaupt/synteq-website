@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView } from "motion/react";
-import { useRef, useState, useCallback, ReactNode } from "react";
+import { useRef, useState, useCallback, useEffect, ReactNode } from "react";
 import { DitherGrid } from "./dither-grid";
 import { DitherSphere } from "./dither-sphere";
 import { DitherStartupStatue } from "./dither-startup-statue";
@@ -23,7 +23,7 @@ const useCases: UseCase[] = [
     {
         title: "Research",
         highlight: "Built for experimentation.",
-        description: "Dedicated infrastructure for labs and institutions pushing models beyond what’s known.",
+        description: "Dedicated infrastructure for labs and institutions pushing models beyond what's known.",
         icon: null,
         useDitherSphere: true,
     },
@@ -53,10 +53,13 @@ const useCases: UseCase[] = [
 interface UseCaseCardProps {
     useCase: UseCase;
     index: number;
-    isInView: boolean;
+    hasEntered: boolean;
+    ditherReady: boolean;
+    onHoverStart: () => void;
+    onHoverEnd: () => void;
 }
 
-function UseCaseCard({ useCase, index, isInView }: UseCaseCardProps) {
+function UseCaseCard({ useCase, index, hasEntered, ditherReady, onHoverStart, onHoverEnd }: UseCaseCardProps) {
     const cardRef = useRef<HTMLDivElement>(null);
     const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
     const [isHovering, setIsHovering] = useState(false);
@@ -75,20 +78,22 @@ function UseCaseCard({ useCase, index, isInView }: UseCaseCardProps) {
     const handleMouseEnter = useCallback(() => {
         if (hasDitherEffect) {
             setIsHovering(true);
+            onHoverStart();
         }
-    }, [hasDitherEffect]);
+    }, [hasDitherEffect, onHoverStart]);
 
     const handleMouseLeave = useCallback(() => {
         setMousePos(null);
         setIsHovering(false);
-    }, []);
+        onHoverEnd();
+    }, [onHoverEnd]);
 
     return (
         <motion.div
             ref={cardRef}
             className="group relative bg-background-secondary p-6 flex flex-col min-h-96 overflow-hidden transition-transform duration-300 ease-out hover:-translate-y-2 cursor-pointer"
             initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
-            animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+            animate={hasEntered ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 + index * 0.1 }}
             onMouseMove={handleMouseMove}
             onMouseEnter={handleMouseEnter}
@@ -107,12 +112,14 @@ function UseCaseCard({ useCase, index, isInView }: UseCaseCardProps) {
                     <DitherGrid
                         externalMousePos={mousePos}
                         isHovering={isHovering}
+                        animating={ditherReady}
                         className="max-w-full"
                     />
                 ) : useCase.useDitherSphere ? (
                     <DitherSphere
                         externalMousePos={mousePos}
                         isHovering={isHovering}
+                        animating={ditherReady}
                         className="max-w-full"
                     />
                 ) : useCase.useDitherStartupStatue ? (
@@ -120,6 +127,7 @@ function UseCaseCard({ useCase, index, isInView }: UseCaseCardProps) {
                         <DitherStartupStatue
                             externalMousePos={mousePos}
                             isHovering={isHovering}
+                            animating={ditherReady}
                             autoPanRange={35}
                             autoPanSpeed={0.4}
                         />
@@ -129,6 +137,7 @@ function UseCaseCard({ useCase, index, isInView }: UseCaseCardProps) {
                         <DitherEnterpriseStatue
                             externalMousePos={mousePos}
                             isHovering={isHovering}
+                            animating={ditherReady}
                             autoPanRange={35}
                             autoPanSpeed={0.4}
                         />
@@ -159,10 +168,49 @@ function UseCaseCard({ useCase, index, isInView }: UseCaseCardProps) {
     );
 }
 
+function useDitherTiming(isInView: boolean) {
+    const [hasEntered, setHasEntered] = useState(false);
+    const [ditherReady, setDitherReady] = useState(false);
+    const hoverTimerRef = useRef<NodeJS.Timeout | null>(null);
+    const viewTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+    // First time in view — lock entrance animations
+    useEffect(() => {
+        if (isInView && !hasEntered) setHasEntered(true);
+    }, [isInView, hasEntered]);
+
+    // 3s in-view timer, stops on leave
+    useEffect(() => {
+        if (isInView) {
+            viewTimerRef.current = setTimeout(() => setDitherReady(true), 3000);
+            return () => { if (viewTimerRef.current) clearTimeout(viewTimerRef.current); };
+        } else {
+            setDitherReady(false);
+            if (viewTimerRef.current) clearTimeout(viewTimerRef.current);
+        }
+    }, [isInView]);
+
+    // Hover for 1s also kicks it off
+    const onHoverStart = useCallback(() => {
+        if (ditherReady) return;
+        hoverTimerRef.current = setTimeout(() => setDitherReady(true), 1000);
+    }, [ditherReady]);
+
+    const onHoverEnd = useCallback(() => {
+        if (hoverTimerRef.current) {
+            clearTimeout(hoverTimerRef.current);
+            hoverTimerRef.current = null;
+        }
+    }, []);
+
+    return { hasEntered, ditherReady, onHoverStart, onHoverEnd };
+}
+
 // Just the cards grid (for reuse on other pages)
 export function UseCasesCards() {
     const containerRef = useRef<HTMLDivElement>(null);
-    const isInView = useInView(containerRef, { once: true, margin: "-100px" });
+    const isInView = useInView(containerRef, { margin: "-100px" });
+    const { hasEntered, ditherReady, onHoverStart, onHoverEnd } = useDitherTiming(isInView);
 
     return (
         <div
@@ -174,7 +222,10 @@ export function UseCasesCards() {
                     key={useCase.title}
                     useCase={useCase}
                     index={index}
-                    isInView={isInView}
+                    hasEntered={hasEntered}
+                    ditherReady={ditherReady}
+                    onHoverStart={onHoverStart}
+                    onHoverEnd={onHoverEnd}
                 />
             ))}
         </div>
@@ -215,7 +266,10 @@ export function UseCasesSection() {
                         key={useCase.title}
                         useCase={useCase}
                         index={index}
-                        isInView={isInView}
+                        hasEntered={isInView}
+                        ditherReady={true}
+                        onHoverStart={() => {}}
+                        onHoverEnd={() => {}}
                     />
                 ))}
             </div>

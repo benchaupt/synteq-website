@@ -13,7 +13,7 @@ import { cache } from 'react'
 import { AnimatedButton } from '@/app/_components/animated-button'
 import { BlogCarousel } from '@/app/_components/blog-carousel'
 import { ShareArticle } from '@/app/(marketing)/blogs/[slug]/_components/share-article'
-import { TableOfContents } from '@/app/(marketing)/blogs/[slug]/_components/table-of-contents'
+import { BlogArticleLayout } from '@/app/(marketing)/blogs/[slug]/_components/blog-article-layout'
 import { LivePreviewListener } from '@/payload/components/LivePreviewListener'
 import { formatDateTime } from '@/payload/utilities/formatDateTime'
 import { generateMeta } from '@/payload/utilities/generateMeta'
@@ -104,7 +104,7 @@ export default async function Post({ params: paramsPromise }: Args) {
 
 
 
-            <section className="max-w-viewport w-full mx-auto px-5 pt-18 pb-24">
+            <section className="max-w-viewport w-full mx-auto px-5 pt-16 pb-22">
                 <div className="flex flex-col items-center gap-4">
                     {/* Category & Read Time */}
                     <span className="subheading text-center">
@@ -129,7 +129,7 @@ export default async function Post({ params: paramsPromise }: Args) {
                     </span>
 
                     {/* Title */}
-                    <h1 className="heading text-center max-w-2xl">
+                    <h1 className="heading font-medium text-center max-w-2xl">
                         {post.title}
                     </h1>
 
@@ -163,8 +163,8 @@ export default async function Post({ params: paramsPromise }: Args) {
 
                 if (image && image.url) {
                     return (
-                        <section className="max-w-viewport w-full mx-auto px-5 pb-8">
-                            <div className="w-full aspect-[4/3] md:aspect-[5/2] lg:aspect-[5/2] rounded-lg overflow-hidden">
+                        <section className="max-w-viewport w-full mx-auto px-5 pb-22">
+                            <div className="w-full aspect-[4/3] md:aspect-[5/2] lg:aspect-[5/2] overflow-hidden">
                                 <img
                                     src={image.url}
                                     alt={image.alt || post.title}
@@ -177,31 +177,21 @@ export default async function Post({ params: paramsPromise }: Args) {
                 return null;
             })()}
 
-            <div className="max-w-viewport w-full mx-auto px-5 pt-8">
-                <div className="flex gap-12 lg:gap-16 relative">
-                    {/* Sticky Table of Contents - Left Side */}
-                    <aside className="hidden lg:block w-64 shrink-0">
-                        <div className="sticky top-24">
-                            <TableOfContents />
-                        </div>
-                    </aside>
-
-                    {/* Main Content */}
-                    <div className="flex-1 min-w-0">
-                        <RichText className="max-w-[60rem]" data={post.content} enableGutter={false} />
-                        {post.relatedPosts && post.relatedPosts.length > 0 && (
-                            <RelatedPosts
-                                className="mt-12 max-w-[52rem]"
-                                docs={post.relatedPosts.filter((post) => typeof post === 'object')}
-                            />
-                        )}
-                    </div>
-                </div>
-            </div>
+            <section className="max-w-viewport w-full mx-auto px-5 pt-8">
+                <BlogArticleLayout>
+                    <RichText className="prose-blog" data={post.content} enableGutter={false} />
+                    {post.relatedPosts && post.relatedPosts.length > 0 && (
+                        <RelatedPosts
+                            className="mt-12"
+                            docs={post.relatedPosts.filter((post) => typeof post === 'object')}
+                        />
+                    )}
+                </BlogArticleLayout>
+            </section>
 
             {/* Read More Carousel */}
             {recentPosts.length > 0 && (
-                <section className="max-w-viewport w-full mx-auto px-5 pt-48 pb-24">
+                <section className="max-w-viewport w-full mx-auto px-5 pt-18 pb-24">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 md:gap-8 lg:gap-12 mb-6 md:mb-8 lg:mb-12 px-4 md:px-6 lg:px-[25px]">
                         <h2 className="heading">Read more</h2>
                         <Link href="/blogs">

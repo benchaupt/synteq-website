@@ -267,6 +267,14 @@ select:-webkit-autofill:focus {
   @apply font-mono text-xs md:text-sm text-accent uppercase tracking-tight;
 }
 
+/* Blog prose — editorial weight cap at medium (500) */
+.prose-blog :is(h1, h2, h3, h4, h5, h6) {
+  font-weight: 500;
+}
+.prose-blog strong {
+  font-weight: 500;
+}
+
 /* Grid background pattern */
 .bg-grid {
   background-image:

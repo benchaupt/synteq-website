@@ -103,7 +103,7 @@ export default function Contact() {
     const [lastName, setLastName] = useState("");
     const [company, setCompany] = useState("");
     const [email, setEmail] = useState("");
-    const [selectedProduct, setSelectedProduct] = useState(productOptions[0]);
+    const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
     const [budget, setBudget] = useState("");
     const [teamSize, setTeamSize] = useState("");
     const [message, setMessage] = useState("");
@@ -126,7 +126,7 @@ export default function Contact() {
             setLastName("");
             setCompany("");
             setEmail("");
-            setSelectedProduct(productOptions[0]);
+            setSelectedProduct(null);
             setBudget("");
             setTeamSize("");
             setMessage("");
@@ -136,7 +136,7 @@ export default function Contact() {
     const budgetLabel = budget ? budgetOptions.find(o => o.value === budget)?.label : null;
     const teamSizeLabel = teamSize ? teamSizeOptions.find(o => o.value === teamSize)?.label : null;
 
-    const isFormValid = firstName.trim() !== "" && lastName.trim() !== "" && email.trim() !== "" && message.trim() !== "";
+    const isFormValid = firstName.trim() !== "" && lastName.trim() !== "" && email.trim() !== "" && selectedProduct !== null && message.trim() !== "";
 
     const testimonials = [
         {
@@ -325,7 +325,7 @@ export default function Contact() {
 
                             {/* Product Stack Selection */}
                             <div className="flex flex-col gap-3">
-                                <p className="text-white/40 text-sm">What product stack are you interested in?</p>
+                                <p className="text-white/40 text-sm">What product stack are you interested in?*</p>
                                 <SliderTabs
                                     items={productOptions}
                                     activeItem={selectedProduct}
