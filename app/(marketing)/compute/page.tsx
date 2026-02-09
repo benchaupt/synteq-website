@@ -14,20 +14,20 @@ import { useRouter } from "next/navigation";
 
 const services = [
     {
-        title: "VPS/Compute",
-        description: "General-purpose compute for all workloads and applications. Data processing, model serving, orchestration, and application workloads.",
+        title: "CPU Clusters",
+        description: "General purpose compute for all workloads and applications.",
         image: "/assets/infrastructure/cpu-compute-image.png",
         href: "#compute"
     },
     {
         title: "Storage",
-        description: "General-purpose storage for all workloads and applications. Datasets, artifacts, backups, and application data.",
+        description: "Flexible storage infrastructure designed to support both AI and non-AI workloads.",
         image: "/assets/infrastructure/storage-image.png",
         href: "#storage"
     },
     {
-        title: "AI/ML Compute",
-        description: "Enterprise-grade GPU clusters for training and inference. From single GPUs to multi-node configurations.",
+        title: "GPU Clusters",
+        description: "Enterprise-grade GPU clusters for training and inference.",
         image: "/assets/infrastructure/gpu-compute-image.png",
         href: "/clusters"
     }
@@ -112,10 +112,10 @@ export default function Infrastructure() {
                         Compute
                     </p>
                     <h1 className="title max-w-2xl">
-                      Best in class compute and storage.
+                        Compute and storage for the future
                     </h1>
                     <p className="text-sm md:text-base text-white/60 leading-relaxed max-w-xl pt-4">
-                      Virtual machines and storage volumes for application servers, data pipelines, and the systems that support them.
+                      High-performance clusters for production applications and supporting systems.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-6 pt-12">
                         <Link href="/contact">
@@ -138,7 +138,7 @@ export default function Infrastructure() {
                 className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24 lg:py-32 flex flex-col"
             >
                 <div className="flex flex-col gap-8 md:gap-12 lg:gap-8 w-full">
-                    {/* Header */}
+                    {/* Header 
                     <div className="flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-52 items-start lg:items-end w-full">
                         <motion.div
                             className="flex flex-col gap-3 flex-1"
@@ -146,12 +146,12 @@ export default function Infrastructure() {
                             animate={isServicesInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
                             transition={{ duration: 0.7, ease: "easeOut" }}
                         >
-                            <p className="subheading">
-                                Ancillary Products
-                            </p>
+                            {/*<p className="subheading">
+                                Products
+                            </p>/}*
                             <h2 className="heading">
-                                Full stack hosting<br />
-                                solutions
+                                Compute and storage, <br />
+                                built to keep up
                             </h2>
                         </motion.div>
                         <motion.p
@@ -160,9 +160,9 @@ export default function Infrastructure() {
                             animate={isServicesInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
                             transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
                         >
-                            High-performance virtual private servers and storage for production applications and supporting systems.
+                            High-performance clusters for production applications and supporting systems.
                         </motion.p>
-                    </div>
+                    </div> */}
 
                     {/* Cards */}
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full">

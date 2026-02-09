@@ -3,7 +3,7 @@
 
 import { motion, useInView } from "motion/react";
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const stats = [
   { value: "~40%", label: "Lower inference costs" },
@@ -14,27 +14,56 @@ const stats = [
 
 
 function UptimeDotGrid() {
-  // Easy size control
-  const dotSize = 7; // pixels
-  const gap = 8; // pixels
-  const cols = 22;
-  const rows = 10;
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [cols, setCols] = useState(0);
+  const dotSize = 7;
+  const gap = 8;
+  const totalDots = 220;
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver(([entry]) => {
+      const width = entry.contentRect.width;
+      setCols(Math.max(1, Math.floor((width + gap) / (dotSize + gap))));
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  if (cols === 0) return <div ref={containerRef} className="w-full" />;
+
+  const firstRowCount = totalDots % cols || cols;
+  const remainingDots = totalDots - firstRowCount;
 
   return (
-    <div
-      className="inline-grid"
-      style={{
-        gridTemplateColumns: `repeat(${cols}, ${dotSize}px)`,
-        gap: gap,
-      }}
-    >
-      {Array.from({ length: cols * rows }).map((_, index) => (
+    <div ref={containerRef} className="flex flex-col items-end w-full" style={{ gap }}>
+      <div className="flex justify-end" style={{ gap }}>
+        {Array.from({ length: firstRowCount }).map((_, i) => (
+          <div
+            key={`first-${i}`}
+            className={`rounded-full ${i === 0 ? "bg-accent" : "bg-accent"}`}
+            style={{ width: dotSize, height: dotSize }}
+          />
+        ))}
+      </div>
+      {remainingDots > 0 && (
         <div
-          key={index}
-          className={`rounded-full ${index === 0 ? "bg-white/50" : "bg-accent"}`}
-          style={{ width: dotSize, height: dotSize }}
-        />
-      ))}
+          className="grid"
+          style={{
+            gridTemplateColumns: `repeat(${cols}, ${dotSize}px)`,
+            gap,
+          }}
+        >
+          {Array.from({ length: remainingDots }).map((_, i) => (
+            <div
+              key={`rest-${i}`}
+              className="rounded-full bg-accent"
+              style={{ width: dotSize, height: dotSize }}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -64,9 +93,9 @@ export function ComputeSection() {
             animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            <p className="subheading">Compute</p>
+            <p className="subheading">CPU Clusters</p>
             <h2 className="heading">
-            Modern Infrastructure for General-Purpose Compute
+            Modern Infrastructure for General Purpose Compute
             </h2>
           </motion.div>
           <motion.p
@@ -75,7 +104,7 @@ export function ComputeSection() {
             animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
           >
-            Flexible CPU-based infrastructure for running application servers, data pipelines, orchestration layers, and supporting services.
+            State of the art CPU clusters for running application servers, data pipelines, orchestration layers, and supporting services.
           </motion.p>
         </div>
 

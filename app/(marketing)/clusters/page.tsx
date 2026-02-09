@@ -113,11 +113,11 @@ function HardwareInner() {
               <p className="subheading">Hardware</p>
               <div className="max-w-4xl">
                 <h1 className="title max-w-2xl">
-                  Powerful hardware ready for AI workloads
+                The power to build what others can&apos;t.
               </h1>
             </div>
               <p className="text-sm md:text-base text-white/60 max-w-2xl leading-relaxed pt-4">
-               Launch, run, and scale AI models with predictable infrastructure, transparent costs, and production-ready workflows.
+              Dedicated multi-node clusters with high-bandwidth interconnect. Built for pre-training, fine-tuning, and workloads that demand sustained throughput
               </p>
               <div className="flex flex-col sm:flex-row gap-6 pt-12">
                 <AnimatedButton background="primary">
@@ -169,13 +169,13 @@ function HardwareInner() {
           <div className={`grid grid-cols-1 ${comparedHardware.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3'} gap-6 md:gap-8`}>
             {comparedHardware.map((item) => (
               <button key={item!.id} onClick={() => openModalWithHardware(item!.id)} className="w-full">
-                <AnimatedCard className="h-full" inverseHover disableScale disableTextColor>
+                <AnimatedCard className="h-full group" inverseHover disableScale disableTextColor>
                   <div className="flex flex-col gap-4 items-center">
                     <div className="size-24 flex items-center justify-center">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={item!.image} className="object-contain" alt={item!.name} />
                     </div>
-                    <h3 className="font-mono text-sm md:text-base text-accent text-center">{item!.name}</h3>
+                    <h3 className="font-mono text-sm md:text-base text-accent group-hover:text-white text-center transition-all duration-300">{item!.name}</h3>
                   </div>
                 </AnimatedCard>
               </button>
@@ -191,7 +191,7 @@ function HardwareInner() {
             {/* Spec Rows - dynamically generated from hardware specs */}
             <div className="divide-y divide-white/5 min-w-0">
               {/* Header row with product names */}
-              <div className={`grid ${comparedHardware.length === 2 ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-3 sm:grid-cols-4'} gap-3 md:gap-4 p-4 md:p-6 transition-colors bg-background-secondary/50`}>
+              <div className={`grid ${comparedHardware.length === 2 ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-2 sm:grid-cols-4'} gap-3 md:gap-4 p-4 md:p-6 transition-colors bg-background-secondary/50`}>
                 <div className="font-mono text-xs text-white/40 uppercase tracking-wider hidden sm:block">Spec</div>
                 {comparedHardware.map((item) => (
                   <div key={item!.id} className="font-mono text-xs sm:text-sm text-accent truncate">{item!.name}</div>
@@ -205,7 +205,7 @@ function HardwareInner() {
                   item!.specs.forEach((spec) => allLabels.add(spec.label));
                 });
                 return Array.from(allLabels).map((label) => (
-                  <div key={label} className={`grid ${comparedHardware.length === 2 ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-3 sm:grid-cols-4'} gap-3 md:gap-4 p-4 md:p-6 transition-colors hover:bg-white/[0.02]`}>
+                  <div key={label} className={`grid ${comparedHardware.length === 2 ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-2 sm:grid-cols-4'} gap-3 md:gap-4 p-4 md:p-6 transition-colors hover:bg-white/[0.02]`}>
                     <div className="font-mono text-xs text-white/40 uppercase tracking-wider col-span-full sm:col-span-1">{label}</div>
                     {comparedHardware.map((item) => {
                       const spec = item!.specs.find((s) => s.label === label);
@@ -233,7 +233,7 @@ function HardwareInner() {
       <div className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24">
         <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
           <div className="lg:col-span-2 flex flex-col gap-4">
-            <p className="subheading">Support</p>
+            {/*<p className="subheading">Support</p>*/}
             <h2 className="heading">
               Frequently Asked Questions
             </h2>

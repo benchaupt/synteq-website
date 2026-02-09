@@ -202,12 +202,12 @@ export default function Contact() {
                                 Contact Sales
                             </p>
                             <h1 className="title max-w-lg">
-                                Ready to build? Chat with us.
+                            Let&apos;s build the future together.
                             </h1>
                         </div>
 
                         <p className="text-base text-[#bfbfbf] max-w-lg leading-relaxed">
-                            Launch, run, and scale AI models in minutes, without the cloud confusion, GPU expertise, or unpredictable costs. As easy as a single click.
+                        The most ambitious teams don&apos;t wait for infrastructure to catch up. Tell us where you&apos;re going, and let us make sure you have the foundation to get there.
                         </p>
 
                         <div className="flex flex-col gap-2 mt-8 w-fit">

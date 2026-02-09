@@ -87,7 +87,7 @@ interface AboutStatsSectionProps {
 }
 
 export function AboutStatsSection({
-  title = "Designed to do less,\nand perform better.",
+  title = "Performance you \n can count on.",
   stats = defaultStats,
 }: AboutStatsSectionProps) {
   return (

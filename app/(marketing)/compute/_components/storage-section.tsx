@@ -31,7 +31,7 @@ export function StorageSection() {
           >
             <p className="subheading">Storage</p>
             <h2 className="heading">
-              A Better Foundation for General-Purpose Storage
+              A Better Foundation for Storage
             </h2>
           </motion.div>
           <motion.p
@@ -40,7 +40,7 @@ export function StorageSection() {
             animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
           >
-            Flexible storage infrastructure for datasets, application state, artifacts, backups, and archives. Designed to support both AI and non-AI workloads without unnecessary abstraction.
+            Flexible storage infrastructure designed to support both AI and non AI workloads. Scalable, reliable, and built to keep pace.
           </motion.p>
         </div>
 

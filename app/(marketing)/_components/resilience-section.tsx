@@ -112,13 +112,13 @@ export default function ResilienceSection() {
           <StatCard
             label="Hardware"
             value="Blackwell & H200"
-            description="Latest-generation GPUs, available to you."
+            description="Latest gen hardware, actually available."
             className="justify-self-start"
           />
           <StatCard
             label="EXECUTION"
             value="We get shit done"
-            description="Deployment, support, and scale. Without wait."
+            description="When you need it, not when we get around to it."
             className="justify-self-start sm:justify-self-end"
           />
         </div>

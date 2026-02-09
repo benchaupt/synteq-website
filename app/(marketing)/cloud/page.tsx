@@ -33,7 +33,7 @@ const stats = [
 const features = [
   {
     title: "One-Click Deployment",
-    description: "Launch production-ready AI models in seconds. No complex configurations, no infrastructure headaches.",
+    description: "Launch production models in seconds without complex configurations or infrastructure headaches.",
     icon: (
       <svg className="size-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M13 3L4 14H12L11 21L20 10H12L13 3Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -150,12 +150,12 @@ function CloudContent() {
               <p className="subheading">Inference Cloud</p>
               <div className="max-w-4xl">
                 <h1 className="title max-w-2xl">
-                  <span className="lg:block lg:whitespace-nowrap">Production compute</span>
-                  <span className="lg:block lg:whitespace-nowrap">on dedicated hardware.</span>
+                  <span className="lg:block lg:whitespace-nowrap">The fastest path from</span>
+                  <span className="lg:block lg:whitespace-nowrap">model to production.</span>
                 </h1>
               </div>
               <p className="text-base md:text-base lg:text-base text-white/60 max-w-2xl pt-4">
-              Build and train custom models, or deploy inference workloads from prebuilt images using dedicated GPU hardware and standardized environments.
+               Realtime inference with industry leading time to first token, and elastic autoscaling that handles peak demand.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 pt-12">
                 <AnimatedButton background="primary">
@@ -184,7 +184,7 @@ function CloudContent() {
       </div>
 
       {/* Supported Models */}
-      <div ref={modelsRef} className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24">
+      <div ref={modelsRef} className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24 mt-32">
         <div className="flex flex-col gap-12">
           <div className="flex flex-col gap-4 items-center text-center">
             <p className="subheading">Model Foundry</p>
@@ -246,7 +246,7 @@ function CloudContent() {
                           </div>
                         </div>
                         <div className="mt-auto">
-                          <span className="inline-flex items-center px-2 py-1 rounded-md bg-accent/10 border border-accent/20 text-xs font-mono text-accent">
+                          <span className="inline-flex items-center px-2 py-1 rounded-md bg-white/5 text-xs font-mono text-white/40">
                             {taskLabel}
                           </span>
                         </div>
@@ -285,7 +285,7 @@ function CloudContent() {
       <div className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24">
         <div className="flex flex-col gap-12">
           <div className="flex flex-col gap-4 items-center text-center">
-            <p className="subheading">Platform Features</p>
+            {/* <p className="subheading">Platform Features</p> */}
             <h2 className="heading max-w-3xl">
               Everything you need to ship AI
             </h2>
@@ -320,7 +320,7 @@ function CloudContent() {
       <div className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24">
         <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
           <div className="lg:col-span-2 flex flex-col gap-4">
-            <p className="subheading">Support</p>
+            {/*<p className="subheading">Support</p>*/}
             <h2 className="heading">
               Frequently Asked Questions
             </h2>

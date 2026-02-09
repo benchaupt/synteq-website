@@ -28,9 +28,9 @@ export default function EffortlessSection() {
                     className="flex flex-col gap-10"
                 >
                     <div className="flex flex-col gap-2">
-                        <p className="subheading">
+                        {/*<p className="subheading">
                             AI INFERENCE & RESEARCH PLATFORM
-                        </p>
+                        </p>*/}
                         <h1 className="title">
                             <span className="lg:block lg:whitespace-nowrap">AI at the speed</span>
                             <span className="lg:block lg:whitespace-nowrap"> of ambition</span>

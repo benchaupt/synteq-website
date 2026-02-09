@@ -140,7 +140,12 @@ function ModelsContent() {
         hasAutoSelected.current = true
         setSelectedModel(existingModel)
         setTimeout(() => {
-          detailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+          const lenis = window.__lenis
+          if (lenis && detailRef.current) {
+            lenis.scrollTo(detailRef.current)
+          } else {
+            detailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+          }
         }, 100)
         return
       }
@@ -156,7 +161,12 @@ function ModelsContent() {
           hasAutoSelected.current = true
           setSelectedModel({ ...model, tags: model.tags || [] })
           setTimeout(() => {
-            detailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+            const lenis = window.__lenis
+            if (lenis && detailRef.current) {
+              lenis.scrollTo(detailRef.current)
+            } else {
+              detailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+            }
           }, 100)
         }
       } catch (err) {
@@ -174,7 +184,12 @@ function ModelsContent() {
     // Scroll to detail section when selecting a model
     if (!isDeselecting) {
       setTimeout(() => {
-        detailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+        const lenis = window.__lenis
+        if (lenis && detailRef.current) {
+          lenis.scrollTo(detailRef.current)
+        } else {
+          detailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+        }
       }, 100)
     }
   }, [selectedModel?.id])

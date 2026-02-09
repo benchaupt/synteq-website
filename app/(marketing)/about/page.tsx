@@ -15,46 +15,46 @@ import { useEffect, useRef, useState } from "react";
 const storyItems = [
     {
         title: "Foundation",
-        date: "2025",
-        description: "Synteq AI emerged from Synteq Digital, a company formed by the union of two leading firms in the digital infrastructure space."
+        date: "2024",
+        description: "Synteq Digital was founded in 2024 through a joint merger. We quickly grew into an industry leader in the digital asset compute space, becoming the preferred vendor to 25+ public companies, representing over $30B in market capitalization."
     },
     {
         title: "Infrastructure Acquisition",
         date: "Q2 2025",
-        description: "Synteq Digital acquires Crunchbits, an established infrastructure provider, strengthening its HPC capabilities and accelerating growth across large-scale compute."
+        description: "Through a strategic acquisition in Q2 2025, we brough on Crunchbits— a long-standing, leading HPC provider with decades of infrastructure experience and a proven track record."
     },
     {
         title: "HPC Expansion",
         date: "Q3 2025",
-        description: "Synteq expanded into high-performance computing, delivering scalable GPU and enterprise-grade infrastructure built for modern workloads."
+        description: "With Crunchbits' expertise and infrastructure, we expanded our capabilities into high-performance computing, serving research institutions, AI labs, and enterprise clients with demanding workloads."
     },
     {
         title: "AI Expansion",
-        date: "Q4 2025",
-        description: "With infrastructure at its core, Synteq entered the AI space, transforming proven compute foundations into AI-native products designed for real-world deployment."
+        date: "Today",
+        description: "Synteq AI represents our next phase: purpose built AI infrastructure for inference and training at scale. The same standards that made us leaders in digital asset, and general purpose compute now powering the future of intelligence itself."
     }
 ];
 
 const coreValues = [
     {
         title: "Trust First",
-        summary: "Built on reliability, transparency, and long-term partnership.",
-        content: "We believe trust is earned through consistent action. Every decision we make prioritizes our clients' success, from transparent pricing to reliable infrastructure that performs when it matters most."
-    },
-    {
-        title: "Execution Over Promises",
-        summary: "Results matter more than rhetoric.",
-        content: "Technology evolves quickly, and we design with that reality in mind. We continuously adapt, invest, and innovate so our clients stay ahead as workloads and demands change."
-    },
-    {
-        title: "Infrastructure-Led Thinking",
-        summary: "Strong systems enable everything that follows.",
-        content: "We start with infrastructure because everything else depends on it. By getting the foundation right, we enable our clients to build faster, scale easier, and operate with confidence."
+        summary: "Reliability, transparency, and partnership.",
+        content: "Built on reliability, transparency, and long term partnership. Every decision we make is designed for long term success, and represented through consistent action and results."
     },
     {
         title: "Forward by Design",
-        summary: "Built for what's next, not just what's now.",
-        content: "We architect our systems with tomorrow in mind. Our infrastructure anticipates the needs of next-generation AI workloads, ensuring our clients are always ready for what comes next."
+        summary: "Built for what's next.",
+        content: "Technology compounds faster than ever. Synteq AI was built with that in mind: an operational philosophy that evolves with the industry, not behind it. We continuously adapt, invest, innovate, and tinker, so our infrastructure stays ahead as workloads and demands change."
+    },
+    {
+        title: "Built for Tomorrow",
+        summary: "Systems that anticipate the future.",
+        content: "We architect our systems with tomorrow in mind. Our infrastructure anticipates the needs of next-gen workloads, ensuring we're there when we need to be."
+    },
+    {
+        title: "First Principles",
+        summary: "Compounding from A > B",
+        content: "We question assumptions and reason from fundamentals. Evaluating everything from the ground up."
     }
 ];
 
@@ -155,18 +155,17 @@ export default function About() {
                 onMouseLeave={() => setIsHoveringGlobe(false)}
             >
                 {/* Text Content */}
-                <div className="relative z-10 flex flex-col max-w-2xl items-center">
-                    <div className="flex flex-col gap-2">
+                <div className="relative z-10 flex flex-col max-w-2xl items-start">
+                    <div className="flex flex-col gap-2 items-start">
                         <p className="subheading">
                             About Us
                         </p>
                         <h1 className="title">
-                            <span className="lg:block lg:whitespace-nowrap">We&apos;re building the future </span>
-                            <span className="lg:block lg:whitespace-nowrap">of AI infrastructure</span>
+                            <span className="lg:block lg:whitespace-nowrap">We&apos;re building the future.</span>
                         </h1>
                     </div>
                     <p className="text-sm md:text-base text-white/60 leading-relaxed pt-4">
-                        We&apos;re on a mission to make AI development easy. From hardware to cloud, we provide the infrastructure that powers the next wave of AI products.
+                    AI is moving faster than ever. We&apos;re building the infrastructure to keep up, with the team to make sure you never slow down.
                     </p>
                 </div>
 
@@ -194,7 +193,7 @@ export default function About() {
                     Our Mission
                 </p>
                 <ScrollRevealText
-                    text="Our mission is to deliver dependable digital infrastructure and AI systems that turn complex compute into real-world outcomes."
+                    text="We believe the future of AI will be built by teams that refuse to slow down. Our mission is to make sure they never have to."
                     className="max-w-5xl mx-auto"
                     textClassName="text-center"
                 />
@@ -316,9 +315,9 @@ export default function About() {
                     <h2 className="heading shrink-0">
                         Grounded in our core values
                     </h2>
-                    <p className="text-base text-white/60 leading-relaxed max-w-2xl">
+                    {/*<p className="text-base text-white/60 leading-relaxed max-w-2xl">
                         From first experiment to multi-node training runs, Synteq and Crunchbits give you a clear path to the right mix of shared cloud, dedicated nodes, and bare metal.
-                    </p>
+                    </p>*/}
                 </div>
 
                 <Accordion
@@ -335,7 +334,7 @@ export default function About() {
                             <AccordionTrigger className="py-6 group text-base [&>svg]:hidden">
                                 {/* Desktop Layout */}
                                 <div className="hidden md:grid md:grid-cols-[minmax(200px,1fr)_2fr_auto] w-full gap-8 items-center text-left">
-                                    <span className="uppercase font-mono md:text-md text-white group-hover:text-accent transition-colors">
+                                    <span className="uppercase font-mono text-[15px] text-white group-hover:text-accent transition-colors">
                                         {value.title}
                                     </span>
                                     <span className="text-base text-white/50 group-hover:text-white/70 transition-colors">

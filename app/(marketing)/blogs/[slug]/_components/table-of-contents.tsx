@@ -90,16 +90,18 @@ export function TableOfContents({ isExpanded, onToggle, className }: TableOfCont
       isScrollingTo.current = true
       setActiveId(id)
 
-      const top = element.getBoundingClientRect().top + window.scrollY - 100
-      window.scrollTo({ top, behavior: 'smooth' })
-
-      // Re-enable observer after scroll completes
-      const unlock = () => {
-        isScrollingTo.current = false
-        window.removeEventListener('scrollend', unlock)
+      const lenis = window.__lenis
+      if (lenis) {
+        lenis.scrollTo(element, {
+          offset: -100,
+          onComplete: () => { isScrollingTo.current = false },
+        })
+      } else {
+        const top = element.getBoundingClientRect().top + window.scrollY - 100
+        window.scrollTo({ top, behavior: 'smooth' })
       }
-      window.addEventListener('scrollend', unlock, { once: true })
-      // Fallback for browsers without scrollend
+
+      // Fallback timeout to re-enable observer
       setTimeout(() => { isScrollingTo.current = false }, 1000)
     }
   }

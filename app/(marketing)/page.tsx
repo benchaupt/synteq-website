@@ -239,7 +239,7 @@ State of the art inference for teams building the future. Backed by reliability,
       />
       <div>
         <div className="max-w-viewport w-full mx-auto px-5 flex flex-col md:flex-row gap-6 md:gap-8 items-center md:items-end justify-between">
-          <h2 className="heading">Only the best AI hardware</h2>
+          <h2 className="heading">Only the best in AI hardware</h2>
           <AnimatedButton background="dark" className="hover:bg-background-secondary shrink-0">
             Talk To Sales
           </AnimatedButton>
