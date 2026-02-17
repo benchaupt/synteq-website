@@ -89,5 +89,9 @@
   },
   "placement": {
     "mode": "smart"
+  },
+  "vars": {
+    "NEXT_PUBLIC_TURNSTILE_SITE_KEY": "0x4AAAAAACeUkqYATOyVaWw6",
+    "HUBSPOT_BLOG_LIST_ID": "9"
   }
 }

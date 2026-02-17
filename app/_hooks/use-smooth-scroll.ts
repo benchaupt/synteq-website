@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 
 declare global {
@@ -11,6 +12,7 @@ declare global {
 
 const useSmoothScroll = () => {
   const lenisRef = useRef<Lenis | null>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -34,6 +36,12 @@ const useSmoothScroll = () => {
       window.__lenis = null;
     };
   }, []);
+
+  useEffect(() => {
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: true });
+    }
+  }, [pathname]);
 };
 
 export default useSmoothScroll;

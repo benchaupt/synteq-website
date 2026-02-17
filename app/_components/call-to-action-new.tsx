@@ -94,7 +94,7 @@ export default function CallToActionNew() {
         {/* Main content */}
         <div className="relative z-20 flex flex-col items-center text-center gap-4 md:gap-6 max-w-3xl mx-auto py-12 md:py-16 lg:py-24 px-5 md:px-8 flex-1 justify-center">
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-background font-sequel-book">
-          The future won&apos;t wait. Neither should you.
+          Get started today.
           </h2>
           {/*<p className="text-base md:text-base lg:text-base text-background/80 max-w-xl">
             From first experiment to multi-node training runs, choose the right mix of shared cloud, dedicated nodes, and bare metal for your workload.

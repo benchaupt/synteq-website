@@ -159,11 +159,11 @@ function CloudContent() {
               </p>
               <div className="flex flex-col sm:flex-row gap-6 pt-12">
                 <AnimatedButton background="primary">
-                  Start Free
+                  Start Building
                 </AnimatedButton>
-                <AnimatedButton background="dark" className="hover:bg-background-secondary">
+                {/*<AnimatedButton background="dark" className="hover:bg-background-secondary">
                   View Pricing
-                </AnimatedButton>
+                </AnimatedButton>*/}
               </div>
             </div>
             <div className="flex flex-col gap-4 items-center justify-center w-full lg:w-auto lg:flex-1">
@@ -284,7 +284,7 @@ function CloudContent() {
       {/* Features Section */}
       <div className="max-w-viewport w-full mx-auto px-5 py-16 md:py-24">
         <div className="flex flex-col gap-12">
-          <div className="flex flex-col gap-4 items-center text-center">
+          <div className="flex flex-col gap-4 items-center text-left">
             {/* <p className="subheading">Platform Features</p> */}
             <h2 className="heading max-w-3xl">
               Everything you need to ship AI

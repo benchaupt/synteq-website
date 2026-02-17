@@ -62,8 +62,8 @@ export const Footer = () => {
                 <div className="flex flex-col lg:flex-row lg:justify-between gap-16 items-start">
                     {/* Email + Social */}
                     <div className="flex flex-col gap-12">
-                        <a href="mailto:info@synteq.ai" className="text-2xl text-white hover:text-accent transition-colors">
-                            info@synteq.ai
+                        <a href="mailto:hello@synteq.ai" className="text-2xl text-white hover:text-accent transition-colors">
+                            hello@synteq.ai
                         </a>
                         <div className="flex gap-6">
                             <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-accent transition-colors">
@@ -168,7 +168,7 @@ export const Footer = () => {
                 {/* Row 3: Copyright */}
                 <div className="pt-12">
                     <p className="font-mono text-xs text-white/40">
-                        © 2025 Synteq Digital — All Rights Reserved
+                        © 2026 Synteq Digital — All Rights Reserved
                     </p>
                 </div>
             </div>

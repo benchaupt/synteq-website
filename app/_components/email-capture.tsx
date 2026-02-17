@@ -1,7 +1,8 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
+import { TurnstileWidget } from "@/app/_components/turnstile-widget";
 
 interface EmailCaptureProps {
   title?: string;
@@ -23,21 +24,49 @@ export function EmailCapture({
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [email, setEmail] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const mountTimestamp = useRef(Date.now());
 
   const clearSuccess = useCallback(() => {
     setIsSuccess(false);
   }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (isLoading) return;
     setIsLoading(true);
     setIsSuccess(false);
-    // Simulate loading — replace with real submit logic
-    setTimeout(() => {
-      setIsLoading(false);
+    setError(null);
+
+    try {
+      const res = await fetch("/api/blog-subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          turnstileToken,
+          _t: mountTimestamp.current,
+        }),
+      });
+
+      const data = (await res.json()) as { success?: boolean; error?: string };
+
+      if (!res.ok || !data.success) {
+        setError(data.error || "Something went wrong. Please try again.");
+        setTurnstileToken(null);
+        return;
+      }
+
       setIsSuccess(true);
       setEmail("");
-    }, 2000);
+      setTurnstileToken(null);
+    } catch {
+      setError("Something went wrong. Please try again.");
+      setTurnstileToken(null);
+    } finally {
+      setIsLoading(false);
+      mountTimestamp.current = Date.now();
+    }
   };
 
   return (
@@ -46,6 +75,20 @@ export function EmailCapture({
       {description && (
         <p className="text-white/60 text-sm">{description}</p>
       )}
+      {/* Honeypot — hidden from real users */}
+      <input
+        type="email"
+        name="_hp_email"
+        autoComplete="off"
+        tabIndex={-1}
+        aria-hidden="true"
+        className="absolute -left-[9999px] opacity-0 size-0"
+      />
+      <TurnstileWidget
+        onVerify={setTurnstileToken}
+        onError={() => setTurnstileToken(null)}
+        onExpire={() => setTurnstileToken(null)}
+      />
       <div className="flex gap-4 flex-col sm:flex-row sm:items-end">
         <div className="group/field relative flex-1 min-w-0">
           <div className="flex items-center gap-3 px-2 py-3">
@@ -107,7 +150,7 @@ export function EmailCapture({
         </div>
         <button
           onClick={handleSubmit}
-          disabled={isLoading || isSuccess}
+          disabled={isLoading || isSuccess || !turnstileToken}
           className={cn(
             "size-10 relative flex items-center justify-center shrink-0 transition-colors group/btn mb-0.5 overflow-hidden",
             !isLoading && !isSuccess && "hover:bg-white/5"
@@ -156,6 +199,9 @@ export function EmailCapture({
           )}
         </button>
       </div>
+      {error && (
+        <p className="text-red-400 text-sm">{error}</p>
+      )}
     </div>
   );
 }

@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "motion/react";
 import { useRef, useState, useCallback, useEffect, ReactNode } from "react";
+import Link from "next/link";
 import { DitherGrid } from "./dither-grid";
 import { DitherSphere } from "./dither-sphere";
 import { DitherStartupStatue } from "./dither-startup-statue";
@@ -89,82 +90,84 @@ function UseCaseCard({ useCase, index, hasEntered, ditherReady, onHoverStart, on
     }, [onHoverEnd]);
 
     return (
-        <motion.div
-            ref={cardRef}
-            className="group relative bg-background-secondary p-6 flex flex-col min-h-96 overflow-hidden transition-transform duration-300 ease-out hover:-translate-y-2 cursor-pointer"
-            initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
-            animate={hasEntered ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
-            transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 + index * 0.1 }}
-            onMouseMove={handleMouseMove}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-        >
-            {/* Explore link - top right */}
-            <div className="absolute top-6 right-6 flex items-center gap-1 text-accent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
-                <span className="text-sm font-medium">Explore</span>
-                <svg className="size-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-            </div>
+        <Link href="/contact" className="block">
+            <motion.div
+                ref={cardRef}
+                className="group relative bg-background-secondary p-6 flex flex-col min-h-96 overflow-hidden transition-transform duration-300 ease-out hover:-translate-y-2 cursor-pointer h-full"
+                initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
+                animate={hasEntered ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+                transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 + index * 0.1 }}
+                onMouseMove={handleMouseMove}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+            >
+                {/* Explore link - top right */}
+                <div className="absolute top-6 right-6 flex items-center gap-1 text-accent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
+                    <span className="text-sm font-medium">Explore</span>
+                    <svg className="size-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
 
-            <div className="flex-1 flex items-start justify-start w-full">
-                {useCase.useDitherGrid ? (
-                    <DitherGrid
-                        externalMousePos={mousePos}
-                        isHovering={isHovering}
-                        animating={ditherReady}
-                        className="max-w-full"
-                    />
-                ) : useCase.useDitherSphere ? (
-                    <DitherSphere
-                        externalMousePos={mousePos}
-                        isHovering={isHovering}
-                        animating={ditherReady}
-                        className="max-w-full"
-                    />
-                ) : useCase.useDitherStartupStatue ? (
-                    <div className="aspect-square w-full flex items-center justify-center">
-                        <DitherStartupStatue
+                <div className="flex-1 flex items-start justify-start w-full">
+                    {useCase.useDitherGrid ? (
+                        <DitherGrid
                             externalMousePos={mousePos}
                             isHovering={isHovering}
                             animating={ditherReady}
-                            autoPanRange={35}
-                            autoPanSpeed={0.4}
+                            className="max-w-full"
                         />
-                    </div>
-                ) : useCase.useDitherEnterpriseStatue ? (
-                    <div className="aspect-square w-full flex items-center justify-center">
-                        <DitherEnterpriseStatue
+                    ) : useCase.useDitherSphere ? (
+                        <DitherSphere
                             externalMousePos={mousePos}
                             isHovering={isHovering}
                             animating={ditherReady}
-                            autoPanRange={35}
-                            autoPanSpeed={0.4}
+                            className="max-w-full"
                         />
-                    </div>
-                ) : useCase.ditherImage ? (
-                    <div className="aspect-square w-full flex items-center justify-center">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                            src={useCase.ditherImage}
-                            alt=""
-                            className="w-3/4 h-3/4 object-contain opacity-50"
-                        />
-                    </div>
-                ) : (
-                    <div className="size-16 text-white/30">
-                        {useCase.icon}
-                    </div>
-                )}
-            </div>
-            <div className="mt-auto flex flex-col gap-2">
-                <h3 className="heading3">{useCase.title}</h3>
-                <p className="text-base leading-relaxed">
-                    <span className="text-white">{useCase.highlight}</span>{" "}
-                    <span className="text-white/50">{useCase.description}</span>
-                </p>
-            </div>
-        </motion.div>
+                    ) : useCase.useDitherStartupStatue ? (
+                        <div className="aspect-square w-full flex items-center justify-center">
+                            <DitherStartupStatue
+                                externalMousePos={mousePos}
+                                isHovering={isHovering}
+                                animating={ditherReady}
+                                autoPanRange={35}
+                                autoPanSpeed={0.4}
+                            />
+                        </div>
+                    ) : useCase.useDitherEnterpriseStatue ? (
+                        <div className="aspect-square w-full flex items-center justify-center">
+                            <DitherEnterpriseStatue
+                                externalMousePos={mousePos}
+                                isHovering={isHovering}
+                                animating={ditherReady}
+                                autoPanRange={35}
+                                autoPanSpeed={0.4}
+                            />
+                        </div>
+                    ) : useCase.ditherImage ? (
+                        <div className="aspect-square w-full flex items-center justify-center">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                                src={useCase.ditherImage}
+                                alt=""
+                                className="w-3/4 h-3/4 object-contain opacity-50"
+                            />
+                        </div>
+                    ) : (
+                        <div className="size-16 text-white/30">
+                            {useCase.icon}
+                        </div>
+                    )}
+                </div>
+                <div className="mt-auto flex flex-col gap-2">
+                    <h3 className="heading3">{useCase.title}</h3>
+                    <p className="text-base leading-relaxed">
+                        <span className="text-white">{useCase.highlight}</span>{" "}
+                        <span className="text-white/50">{useCase.description}</span>
+                    </p>
+                </div>
+            </motion.div>
+        </Link>
     );
 }
 

@@ -5,7 +5,8 @@ import { SliderTabs } from "@/app/_components/slider-tabs";
 import { TestimonialCarousel } from "@/app/_components/testimonial-carousel";
 import { cn } from "@/lib/utils";
 import * as Select from "@radix-ui/react-select";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
+import { TurnstileWidget } from "@/app/_components/turnstile-widget";
 
 // Icon component using CSS mask so color can transition on focus
 const FormIcon = ({ src, size = "h-4", isShimmering = false }: { src: string; size?: string; isShimmering?: boolean }) => (
@@ -109,8 +110,11 @@ export default function Contact() {
     const [message, setMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
     const [budgetOpen, setBudgetOpen] = useState(false);
     const [teamSizeOpen, setTeamSizeOpen] = useState(false);
+    const mountTimestamp = useRef(Date.now());
 
     // Close dropdowns on scroll outside them
     useEffect(() => {
@@ -134,13 +138,38 @@ export default function Contact() {
         setIsSuccess(false);
     }, []);
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (isLoading) return;
         setIsLoading(true);
         setIsSuccess(false);
-        // Simulate loading — replace with real submit logic
-        setTimeout(() => {
-            setIsLoading(false);
+        setError(null);
+
+        try {
+            const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    firstName,
+                    lastName,
+                    company,
+                    email,
+                    selectedProduct,
+                    budget,
+                    teamSize,
+                    message,
+                    turnstileToken,
+                    _t: mountTimestamp.current,
+                }),
+            });
+
+            const data = (await res.json()) as { success?: boolean; error?: string };
+
+            if (!res.ok || !data.success) {
+                setError(data.error || "Something went wrong. Please try again.");
+                setTurnstileToken(null);
+                return;
+            }
+
             setIsSuccess(true);
             setFirstName("");
             setLastName("");
@@ -150,13 +179,20 @@ export default function Contact() {
             setBudget("");
             setTeamSize("");
             setMessage("");
-        }, 2000);
+            setTurnstileToken(null);
+        } catch {
+            setError("Something went wrong. Please try again.");
+            setTurnstileToken(null);
+        } finally {
+            setIsLoading(false);
+            mountTimestamp.current = Date.now();
+        }
     };
 
     const budgetLabel = budget ? budgetOptions.find(o => o.value === budget)?.label : null;
     const teamSizeLabel = teamSize ? teamSizeOptions.find(o => o.value === teamSize)?.label : null;
 
-    const isFormValid = firstName.trim() !== "" && lastName.trim() !== "" && email.trim() !== "" && selectedProduct !== null && message.trim() !== "";
+    const isFormValid = firstName.trim() !== "" && lastName.trim() !== "" && email.trim() !== "" && selectedProduct !== null && message.trim() !== "" && turnstileToken !== null;
 
     const testimonials = [
         {
@@ -487,6 +523,28 @@ export default function Contact() {
                                 <span className={cn("absolute bottom-0 left-0 w-full h-px bg-accent origin-left transition-transform duration-300", isLoading ? "scale-x-0" : "scale-x-0 group-focus-within/field:scale-x-100")} />
                             </div>
 
+                            {/* Honeypot — hidden from real users */}
+                            <input
+                                type="email"
+                                name="_hp_email"
+                                autoComplete="off"
+                                tabIndex={-1}
+                                aria-hidden="true"
+                                className="absolute -left-[9999px] opacity-0 size-0"
+                            />
+
+                            {/* Turnstile invisible captcha */}
+                            <TurnstileWidget
+                                onVerify={setTurnstileToken}
+                                onError={() => setTurnstileToken(null)}
+                                onExpire={() => setTurnstileToken(null)}
+                            />
+
+                            {/* Error message */}
+                            {error && (
+                                <p className="text-red-400 text-sm">{error}</p>
+                            )}
+
                             {/* Submit Button */}
                             <div className="flex justify-start pt-2">
                                 <AnimatedButton
@@ -519,8 +577,8 @@ export default function Contact() {
                 </div>
             </section>
 
-            {/* Testimonial Carousel */}
-            <TestimonialCarousel testimonials={testimonials} />
+            {/* Testimonial Carousel 
+            <TestimonialCarousel testimonials={testimonials} />*/}
 
         </>
     );

@@ -1,0 +1,25 @@
+{
+  "type": "app",
+  "uid": "website-connection",
+  "config": {
+    "name": "Synteq Website Connection",
+    "description": "Manages contact form submissions and company creation from synteq.ai",
+    "distribution": "private",
+    "auth": {
+      "type": "static",
+      "requiredScopes": [
+        "crm.objects.contacts.write",
+        "crm.objects.contacts.read",
+        "crm.objects.companies.write",
+        "crm.objects.companies.read",
+        "crm.lists.write",
+        "crm.lists.read"
+      ]
+    },
+    "permittedUrls": {
+      "fetch": [],
+      "iframe": [],
+      "img": []
+    }
+  }
+}

@@ -231,17 +231,17 @@ export function ModelDetail({ model, className }: ModelDetailProps) {
             )}
 
             {/* Actions */}
-            <div className="flex flex-wrap gap-4 pt-4">
+            <div className="flex flex-wrap gap-8 pt-4">
               {model.modelUrl && (
                 <a href={model.modelUrl} target="_blank" rel="noopener noreferrer">
                   <AnimatedButton background="dark" className="gap-2 whitespace-nowrap">
                     <div className="flex items-center gap-2">
-                      <span>View on Hugging Face</span>
+                      <span>Hugging Face</span>
                     <ExternalLink className="size-4" /></div>
                   </AnimatedButton>
                 </a>
               )}
-              <AnimatedButton background="primary">
+              <AnimatedButton className="px-8" background="primary">
                 Deploy
               </AnimatedButton>
             </div>

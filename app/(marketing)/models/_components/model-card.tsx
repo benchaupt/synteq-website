@@ -17,7 +17,7 @@ interface ModelCardProps {
 
 export function ModelCardSkeleton() {
   return (
-    <div className="bg-background-secondary border border-white/5 rounded-xl p-5">
+    <div className="bg-background-secondary border border-white/5 p-5">
       <div className="flex flex-col gap-3 animate-pulse">
         {/* Header */}
         <div className="flex items-start justify-between gap-2">
@@ -69,7 +69,7 @@ export function ModelCard({ model, isSelected, onClick }: ModelCardProps) {
   return (
     <button onClick={onClick} className="text-left w-full">
       <AnimatedCard
-        className="cursor-pointer"
+        className="cursor-pointer !px-4 md:!px-8"
         isActive={isSelected}
         disableScale
       >

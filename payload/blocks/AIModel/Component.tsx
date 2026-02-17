@@ -261,9 +261,9 @@ export function AIModelBlock({
           </a>
 
           {linkToModels && (
-            <Link href={modelUrl}>
+            <Link href="/contact">
               <AnimatedButton background="primary">
-                {ctaText || 'Deploy Model'}
+                {ctaText || 'Deploy Now'}
               </AnimatedButton>
             </Link>
           )}

@@ -17,7 +17,7 @@ const coreValues = [
 export default function EffortlessSection() {
     return (
         <section className="max-w-viewport w-full mx-auto px-5 pt-20 pb-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center pb-32">
                 {/* ASCII Art on Left */}
                                 {/* Values List on Right */}
                                 <motion.div
@@ -25,7 +25,7 @@ export default function EffortlessSection() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
-                    className="flex flex-col gap-10"
+                    className="flex flex-col gap-6 md:gap-10"
                 >
                     <div className="flex flex-col gap-2">
                         {/*<p className="subheading">
@@ -40,7 +40,7 @@ export default function EffortlessSection() {
                         </p> */}
                     </div>
 
-                    <div className="flex flex-col gap-4 pt-8">
+                    <div className="flex flex-col gap-4 pt-2 md:pt-8">
                         {coreValues.map((item, index) => (
                             <motion.div
                                 key={index}
@@ -67,11 +67,11 @@ export default function EffortlessSection() {
                                 Start Building
                             </AnimatedButton>
                         </Link>
-                        <Link href="/about">
+                        {/*<Link href="/about">
                             <AnimatedButton background="dark" className="hover:bg-background-secondary w-full sm:w-auto">
                                 Learn More
                             </AnimatedButton>
-                        </Link>
+                        </Link>*/}
                     </div>
                 </motion.div>
                 {/* ASCII Art on Right */}
@@ -87,7 +87,7 @@ export default function EffortlessSection() {
                     </div>
 
                     {/* Request an AI summary - aligned with CTA buttons */}
-                    <div className="flex flex-col lg:flex-row items-center gap-4 justify-center lg:justify-end pt-4 w-full">
+                    <div className="flex flex-col lg:flex-row items-center gap-4 justify-center lg:justify-end pt-12 md:pt-4 w-full">
                         <span className="text-sm font-mono uppercase text-white/60">Ask AI about us</span>
                         <div className="flex items-center gap-2">
                             <a

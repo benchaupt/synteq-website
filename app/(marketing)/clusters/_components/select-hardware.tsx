@@ -104,10 +104,12 @@ const SelectHardwareInner = ({ hideOverview = false, className = "", navigateOnC
                                                 router.push(`/clusters?product=${toSlug(item.name)}`);
                                             }
                                         }}>
-                                            <AnimatedCard className="sm:min-w-[300px] min-w-[250px] m-5 mx-4 sm:mx-8" disableScale disableTextColor isActive={!navigateOnClick && index === currentIndex}>
-                                                <div className="flex flex-col gap-2 sm:gap-10 items-center justify-center">
-                                                    <img src={item.image} className="object-contain" />
-                                                    <h3 className={cn("font-mono text-md md:text-md lg:text-md text-center transition-all duration-400", !navigateOnClick && index === currentIndex ? "text-accent" : "text-white")}>{item.name}</h3>
+                                            <AnimatedCard className="sm:min-w-[300px] min-h-[300px] min-w-[250px] m-5 mx-4 sm:mx-8" disableScale disableTextColor isActive={!navigateOnClick && index === currentIndex}>
+                                                <div className="flex flex-col items-center gap-4">
+                                                    <div className="h-44 sm:h-56 flex items-center justify-center w-full">
+                                                        <img src={item.image} className="object-contain max-h-full max-w-full" />
+                                                    </div>
+                                                    <h3 className={cn("font-mono text-md text-center transition-all duration-400", !navigateOnClick && index === currentIndex ? "text-accent" : "text-white")}>{item.name}</h3>
                                                 </div>
                                             </AnimatedCard>
                                         </div>
@@ -176,13 +178,13 @@ const SelectHardwareInner = ({ hideOverview = false, className = "", navigateOnC
                                     </motion.h2>
                                 </AnimatePresence>
                             </div>
-                            <div className="flex gap-3">
+                            {/*<div className="flex gap-3">
                               <Link href="/contact">
                                 <AnimatedButton background={"dark"} className="hover:bg-background-secondary">Contact Sales</AnimatedButton>
                               </Link>
-                            </div>
+                            </div>*/}
                         </div>
-                        <div className="grid lg:grid-cols-5 gap-12 w-full">
+                        <div className="grid lg:grid-cols-5 gap-4 w-full">
                             <AnimatePresence mode="wait">
                                 <motion.div
                                     key={currentIndex}
@@ -216,7 +218,7 @@ const SelectHardwareInner = ({ hideOverview = false, className = "", navigateOnC
                                     </div>
                                 </motion.div>
                             </AnimatePresence>
-                            <div className="lg:col-span-2 flex items-start justify-end order-1 lg:order-2">
+                            <div className="lg:col-span-2 flex items-center justify-center order-1 lg:order-2 min-h-64 lg:min-h-96">
                                 <AnimatePresence mode="wait">
                                     <motion.div
                                         key={currentIndex}
@@ -224,9 +226,9 @@ const SelectHardwareInner = ({ hideOverview = false, className = "", navigateOnC
                                         animate={{ opacity: 1, x: 0 }}
                                         exit={{ opacity: 0, x: -30 }}
                                         transition={{ duration: 0.4, ease: "easeOut" }}
-                                        className="relative"
+                                        className="relative w-full"
                                     >
-                                        <img src={hardware[currentIndex].image} className="relative object-contain w-full" alt={hardware[currentIndex].name} />
+                                        <img src={hardware[currentIndex].image} className="relative object-contain w-[90%] md:w-[75%] mx-auto" alt={hardware[currentIndex].name} />
                                     </motion.div>
                                 </AnimatePresence>
                             </div>

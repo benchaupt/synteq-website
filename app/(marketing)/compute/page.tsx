@@ -219,7 +219,7 @@ export default function Infrastructure() {
 
             <CallToActionNew />
 
-            <TestimonialCarousel testimonials={testimonials} />
+            {/*<TestimonialCarousel testimonials={testimonials} />*/}
         </>
     );
 }

@@ -51,13 +51,13 @@ export function StoryTimeline({ items, className }: StoryTimelineProps) {
     return (
         <section className={cn("max-w-viewport w-full mx-auto px-5 py-24 flex flex-col gap-12", className)}>
             {/* Header Row - Our Story left, Buttons right */}
-            <div className="flex flex-col md:flex-row md:items-center items-center md:items-start md:justify-between gap-6">
+            <div className="flex flex-col md:flex-row md:items-center items-start md:items-start md:justify-between gap-6">
                 <h2 className="heading">
                     Our Story
                 </h2>
 
                 {/* Stage Buttons */}
-                <div className="flex flex-wrap gap-4 md:gap-8 justify-center md:justify-start">
+                <div className="flex flex-wrap gap-4 md:gap-8 justify-start md:justify-start">
                     {items.map((item, index) => (
                         <button
                             key={index}
@@ -83,14 +83,14 @@ export function StoryTimeline({ items, className }: StoryTimelineProps) {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.2 }}
-                    className="grid grid-cols-1 md:grid-cols-[minmax(140px,200px)_1fr] gap-4 md:gap-12"
+                    className="grid grid-cols-1 md:grid-cols-[minmax(140px,200px)_1fr] gap-4 md:gap-12 min-h-24 md:min-h-20"
                 >
                     {/* Date */}
                     <motion.p
                         initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
                         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                         transition={{ duration: 0.4, ease: "easeOut", delay: isMobile ? 0.15 : 0 }}
-                        className="text-lg md:text-xl text-white text-center md:text-left order-2 md:order-1"
+                        className="text-lg md:text-xl text-white text-left md:text-left order-2 md:order-1"
                     >
                         {activeItem.date}
                     </motion.p>
@@ -100,7 +100,7 @@ export function StoryTimeline({ items, className }: StoryTimelineProps) {
                         initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
                         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                         transition={{ duration: 0.4, ease: "easeOut", delay: isMobile ? 0 : 0.15 }}
-                        className="text-base md:text-lg text-white/80 leading-relaxed max-w-3xl text-center md:text-left order-1 md:order-2"
+                        className="text-base md:text-lg text-white/80 leading-relaxed max-w-3xl text-left md:text-left order-1 md:order-2"
                     >
                         {activeItem.description}
                     </motion.p>

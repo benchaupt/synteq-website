@@ -120,14 +120,14 @@ function HardwareInner() {
               Dedicated multi-node clusters with high-bandwidth interconnect. Built for pre-training, fine-tuning, and workloads that demand sustained throughput
               </p>
               <div className="flex flex-col sm:flex-row gap-6 pt-12">
-                <AnimatedButton background="primary">
-                  Launch
+                <AnimatedButton className="px-6" background="primary">
+                  Get Started
                 </AnimatedButton>
-                <Link href="/contact">
+                {/*<Link href="/contact">
                   <AnimatedButton background="dark" className="hover:bg-background-secondary">
                     Contact Sales
             </AnimatedButton>
-                </Link>
+                </Link>*/}
           </div>
             </div>
             <div className="flex flex-col gap-4 items-center justify-end w-full lg:w-auto">
@@ -188,7 +188,7 @@ function HardwareInner() {
               <h3 className="subheading">Technical Specifications</h3>
             </div>
 
-            {/* Spec Rows - dynamically generated from hardware specs */}
+            {/* Spec Rows - grouped by category from comparisonSpecs */}
             <div className="divide-y divide-white/5 min-w-0">
               {/* Header row with product names */}
               <div className={`grid ${comparedHardware.length === 2 ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-2 sm:grid-cols-4'} gap-3 md:gap-4 p-4 md:p-6 transition-colors bg-background-secondary/50`}>
@@ -198,32 +198,39 @@ function HardwareInner() {
                 ))}
               </div>
 
-              {/* Get unique spec labels across all compared hardware */}
+              {/* Grouped comparison specs with category headers */}
               {(() => {
-                const allLabels = new Set<string>();
-                comparedHardware.forEach((item) => {
-                  item!.specs.forEach((spec) => allLabels.add(spec.label));
-                });
-                return Array.from(allLabels).map((label) => (
-                  <div key={label} className={`grid ${comparedHardware.length === 2 ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-2 sm:grid-cols-4'} gap-3 md:gap-4 p-4 md:p-6 transition-colors hover:bg-white/[0.02]`}>
-                    <div className="font-mono text-xs text-white/40 uppercase tracking-wider col-span-full sm:col-span-1">{label}</div>
-                    {comparedHardware.map((item) => {
-                      const spec = item!.specs.find((s) => s.label === label);
-                      return (
-                        <div key={item!.id} className="text-sm">
-                          {spec ? (
-                            <span className={spec.accentValue ? 'text-accent' : ''}>
-                              {spec.value}
-                              {spec.unit && <span className="text-accent ml-1">{spec.unit}</span>}
-                            </span>
-                          ) : (
-                            <span className="text-white/30">—</span>
-                          )}
+                const categories = comparedHardware[0]!.comparisonSpecs.map((g) => g.category);
+                return categories.map((category) => {
+                  const groupSpecs = comparedHardware[0]!.comparisonSpecs.find((g) => g.category === category)!.specs;
+                  return (
+                    <div key={category}>
+                      {/* Category header */}
+                      <div className={`grid ${comparedHardware.length === 2 ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-2 sm:grid-cols-4'} gap-3 md:gap-4 px-4 md:px-6 py-3 md:py-4 bg-background-secondary/50 border-t border-white/5`}>
+                        <div className="col-span-full font-mono text-xs text-accent uppercase tracking-wider">{category}</div>
+                      </div>
+                      {/* Spec rows within this category */}
+                      {groupSpecs.map((spec) => (
+                        <div key={`${category}-${spec.label}`} className={`grid ${comparedHardware.length === 2 ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-2 sm:grid-cols-4'} gap-3 md:gap-4 p-4 md:p-6 transition-colors hover:bg-white/[0.02]`}>
+                          <div className="font-mono text-xs text-white/40 uppercase tracking-wider col-span-full sm:col-span-1">{spec.label}</div>
+                          {comparedHardware.map((item) => {
+                            const group = item!.comparisonSpecs.find((g) => g.category === category);
+                            const matchedSpec = group?.specs.find((s) => s.label === spec.label);
+                            return (
+                              <div key={item!.id} className="text-sm">
+                                {matchedSpec ? (
+                                  <span className={matchedSpec.value === "—" ? "text-white/30" : ""}>{matchedSpec.value}</span>
+                                ) : (
+                                  <span className="text-white/30">—</span>
+                                )}
+                              </div>
+                            );
+                          })}
                         </div>
-                      );
-                    })}
-                  </div>
-                ));
+                      ))}
+                    </div>
+                  );
+                });
               })()}
             </div>
           </div>

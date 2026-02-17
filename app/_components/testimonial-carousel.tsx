@@ -39,7 +39,7 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
     }, [emblaApi]);
     
     return (
-        <div className="relative flex flex-col gap-8 max-w-viewport w-full mx-auto px-5 pt-8 md:pt-12 lg:pt-16 pb-16 md:pb-24 lg:pb-32">
+        <div className="relative flex flex-col gap-8 max-w-viewport w-full mx-auto px-5 pt-8 md:pt-12 lg:pt-16 pb-32 md:pb-24 lg:pb-32">
             {/* Left gradient fade - hidden on mobile */}
             <div className="hidden md:block absolute top-0 left-0 w-32 lg:w-[200px] h-full bg-linear-to-r from-background to-transparent pointer-events-none z-10" />
             {/* Right gradient fade - hidden on mobile */}

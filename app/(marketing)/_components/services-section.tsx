@@ -37,7 +37,7 @@ export default function ServicesSection() {
             <p className="subheading">
               Our Products
             </p>
-            <h2 className="heading max-w-[75%]">
+            <h2 className="heading max-w-[100%] md:max-w-[75%]">
             Purpose-built for AI
             </h2>
           </div>

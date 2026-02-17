@@ -192,7 +192,7 @@ export default async function Post({ params: paramsPromise }: Args) {
             {/* Read More Carousel */}
             {recentPosts.length > 0 && (
                 <section className="max-w-viewport w-full mx-auto px-5 pt-18 pb-24">
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 md:gap-8 lg:gap-12 mb-6 md:mb-8 lg:mb-12 px-4 md:px-6 lg:px-[25px]">
+                    <div className="flex flex-col sm:flex-row items-center sm:items-center justify-between gap-4 md:gap-8 lg:gap-12 mb-6 md:mb-8 lg:mb-12 px-4 md:px-6 lg:px-[25px]">
                         <h2 className="heading">Read more</h2>
                         <Link href="/blogs">
                             <AnimatedButton background="dark" size="default">

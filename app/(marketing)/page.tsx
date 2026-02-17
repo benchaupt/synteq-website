@@ -21,7 +21,7 @@ export default function Landing() {
       <EffortlessSection />
 
       <div className="px-5 max-w-viewport w-full mx-auto flex flex-col gap-6 md:gap-10">
-        <div className="pt-16 md:pt-24 lg:pt-32 pb-12 md:pb-16 lg:pb-24 flex flex-col gap-8 md:gap-8">
+        {/*<div className="pt-16 md:pt-24 lg:pt-32 pb-12 md:pb-16 lg:pb-24 flex flex-col gap-8 md:gap-8">
           <Marquee pauseOnHover className="[--duration:25s] [--gap:3rem] md:[--gap:4rem]">
             {[...Array(5)].map((_, index) => (
               <svg className="h-5 md:h-7 shrink-0 opacity-60" viewBox="0 0 200 37" fill="none" xmlns="http://www.w3.org/2000/svg" key={index}>
@@ -42,9 +42,9 @@ export default function Landing() {
             ))}
           </Marquee>
           <div className="flex items-center justify-center px-4">
-            <p className="subheading text-center uppercase">SYNTEQ AI POWERS THE WORLDS LEADING AI TEAMS. {/* <Link href="#" className="subheading underline-offset-4 underline hover:underline-offset-6 duration-150">Meet our customers ↘</Link>.*/} </p>
+            <p className="subheading text-center uppercase">SYNTEQ AI POWERS THE WORLDS LEADING AI TEAMS. </p>
           </div>
-        </div>
+        </div>*/}
 
         <UseCasesCards />
 
@@ -107,7 +107,7 @@ State of the art inference for teams building the future. Backed by reliability,
 
       <ServicesSection />
       <ResilienceSection />
-      <TestimonialCarousel
+      {/*<TestimonialCarousel
         testimonials={[
           {
             logo: <svg className="h-7" viewBox="0 0 200 37" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -236,13 +236,13 @@ State of the art inference for teams building the future. Backed by reliability,
             text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
           },
         ]}
-      />
+      />*/}
       <div>
         <div className="max-w-viewport w-full mx-auto px-5 flex flex-col md:flex-row gap-6 md:gap-8 items-center md:items-end justify-between">
           <h2 className="heading">Only the best in AI hardware</h2>
-          <AnimatedButton background="dark" className="hover:bg-background-secondary shrink-0">
+          {/*<AnimatedButton background="dark" className="hover:bg-background-secondary shrink-0">
             Talk To Sales
-          </AnimatedButton>
+          </AnimatedButton>*/}
         </div>
         <SelectHardware className="sm:py-8 sm:pt-8" hideOverview navigateOnClick />
       </div>
