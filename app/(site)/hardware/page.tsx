@@ -57,6 +57,17 @@ const testimonials = [
     ),
     text: "Cormint has purchased over 40,000 used miners through different brokers and sellers since 2017. Machines that were sold to Cormint by Synteq ranked #1 in terms of longevity, achieving the lowest failure rate.",
   },
+  {
+    name: "James McAvity",
+    role: "CEO",
+    company: "Cormint",
+    logo: (
+      <span className="text-xl font-bold tracking-tight text-lava">
+        cormint
+      </span>
+    ),
+    text: "Cormint has purchased over 40,000 used miners through different brokers and sellers since 2017. Machines that were sold to Cormint by Synteq ranked #1 in terms of longevity, achieving the lowest failure rate.",
+  },
 ];
 
 const faqItems = [

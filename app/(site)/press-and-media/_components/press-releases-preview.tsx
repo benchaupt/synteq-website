@@ -17,7 +17,7 @@ export async function PressReleasesPreview() {
 
   return (
     <div className="flex flex-col gap-6 md:gap-10">
-      <div className="flex items-end justify-between gap-4">
+      <div className="flex items-center justify-between gap-4">
         <StyledHeading as="h2" className="heading">
           {"Press Releases."}
         </StyledHeading>

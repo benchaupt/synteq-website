@@ -41,7 +41,7 @@ function SwatchLabel({
   light: boolean;
 }) {
   return (
-    <span className={cn("text-label", light ? "text-white" : "text-lava")}>
+    <span className={cn("text-label font-medium", light ? "text-white" : "text-lava")}>
       {children}
     </span>
   );
@@ -60,8 +60,8 @@ export function BrandColorsSection() {
         <div className="col-span-5 flex flex-col justify-between bg-slate p-5">
           <span className="text-lg font-semibold text-white">Slate</span>
           <div className="flex flex-col gap-0.5">
-            <SwatchLabel light={false}>Hex: #768692</SwatchLabel>
-            <SwatchLabel light={false}>Pantone: 7544</SwatchLabel>
+            <SwatchLabel light>Hex: #768692</SwatchLabel>
+            <SwatchLabel light>Pantone: 7544</SwatchLabel>
           </div>
         </div>
 
@@ -110,10 +110,21 @@ export function BrandColorsSection() {
         <div className="flex flex-col justify-between bg-slate p-5 aspect-[4/3]">
           <span className="text-lg font-semibold text-white">Slate</span>
           <div className="flex flex-col gap-0.5">
-            <SwatchLabel light={false}>Hex: #768692</SwatchLabel>
-            <SwatchLabel light={false}>Pantone: 7544</SwatchLabel>
+            <SwatchLabel light>Hex: #768692</SwatchLabel>
+            <SwatchLabel light>Pantone: 7544</SwatchLabel>
           </div>
         </div>
+        {slateOpacities.map((o) => (
+          <div
+            key={o.label}
+            className={cn(
+              "flex items-center justify-between px-5 py-4",
+              o.className,
+            )}
+          >
+            <span className="text-sm font-medium text-white">{o.label} Opacity</span>
+          </div>
+        ))}
         {bottomColors.map((color) => (
           <div
             key={color.name}

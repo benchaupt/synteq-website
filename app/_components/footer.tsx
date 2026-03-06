@@ -32,7 +32,7 @@ const footerColumns = [
     title: "Resources",
     links: [
       { label: "Knowledge Block", href: "/knowledge-hub" },
-      { label: "Client Support", href: "/client-support" },
+      { label: "Client Support", href: "/contact?interest=support" },
     ],
   },
 ];

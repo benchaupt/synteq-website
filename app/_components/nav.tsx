@@ -6,7 +6,7 @@ import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { motion, useMotionValue, useSpring } from "motion/react";
+import { motion, useMotionValue, useSpring, AnimatePresence } from "motion/react";
 import { ChevronDown } from "lucide-react";
 
 // ---------- Data ----------
@@ -25,7 +25,7 @@ const aboutItems = [
 
 const resourcesLinks = [
   { label: "Knowledge Hub", href: "/knowledge-hub" },
-  { label: "Client Support", href: "/client-support" },
+  { label: "Client Support", href: "/contact?interest=support" },
 ];
 
 // ---------- Desktop sub-components ----------
@@ -160,7 +160,7 @@ function MobileDropdown({
   onNavigate,
 }: {
   label: string;
-  items: { label: string; href: string }[];
+  items: { label: string; href: string; comingSoon?: boolean }[];
   isOpen: boolean;
   onToggle: () => void;
   onNavigate: () => void;
@@ -179,27 +179,198 @@ function MobileDropdown({
           )}
         />
       </button>
-      {isOpen && (
-        <div className="pb-3 space-y-1 px-4">
-          {items.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="block py-2 text-sm font-medium text-lava hover:text-slate transition-colors"
-              onClick={onNavigate}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </div>
-      )}
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="pb-3 space-y-1 px-4">
+              {items.map((item) =>
+                item.comingSoon ? (
+                  <span
+                    key={item.href + item.label}
+                    className="block py-2 text-sm font-medium text-lava/50 cursor-default"
+                  >
+                    {item.label}
+                    <span className="bg-lava text-white text-body-xxs px-1.5 py-0.5 ml-2 inline-block align-middle">
+                      coming soon
+                    </span>
+                  </span>
+                ) : (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="block py-2 text-sm font-medium text-lava hover:text-slate transition-colors"
+                    onClick={onNavigate}
+                  >
+                    {item.label}
+                  </Link>
+                ),
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
+  );
+}
+
+// ---------- Nav panel cards ----------
+
+function JobCard({
+  job,
+  slate,
+}: {
+  job: { name: string; slug: string; department?: string; workLocation?: string };
+  slate?: boolean;
+}) {
+  return (
+    <NavigationMenu.Link asChild>
+      <Link
+        href={`/careers/${job.slug}`}
+        className={cn(
+          "block p-2 -mx-2 transition-colors",
+          slate ? "hover:bg-white/10" : "hover:bg-offwhite",
+        )}
+      >
+        <p className="text-base font-medium leading-snug">
+          {job.name}
+        </p>
+        {(job.department || job.workLocation) && (
+          <p className="text-body-sm opacity-60 mt-1">
+            {[job.department, job.workLocation].filter(Boolean).join(", ")}
+          </p>
+        )}
+      </Link>
+    </NavigationMenu.Link>
+  );
+}
+
+function PressReleaseCard({
+  pr,
+  slate,
+}: {
+  pr: { title: string; slug: string };
+  slate?: boolean;
+}) {
+  return (
+    <NavigationMenu.Link asChild>
+      <Link
+        href={`/knowledge-hub/press-releases/${pr.slug}`}
+        className={cn(
+          "block transition-colors",
+          slate ? "hover:bg-white/10" : "hover:bg-offwhite",
+        )}
+      >
+        <div className="border border-lava/25 p-4">
+          <p className="text-base font-bold leading-snug">
+            {pr.title}
+          </p>
+        </div>
+      </Link>
+    </NavigationMenu.Link>
+  );
+}
+
+function PressReleaseList({
+  prs,
+  slate,
+}: {
+  prs: { title: string; slug: string }[];
+  slate?: boolean;
+}) {
+  return (
+    <div className="space-y-2">
+      {prs.map((pr) => (
+        <NavigationMenu.Link asChild key={pr.slug}>
+          <Link
+            href={`/knowledge-hub/press-releases/${pr.slug}`}
+            className={cn(
+              "block p-3 border border-lava/25 transition-colors",
+              slate ? "hover:bg-white/10" : "hover:bg-offwhite",
+            )}
+          >
+            <p className="text-sm font-medium leading-snug">
+              {pr.title}
+            </p>
+          </Link>
+        </NavigationMenu.Link>
+      ))}
+    </div>
+  );
+}
+
+function SuccessStoryCard({
+  story,
+  slate,
+}: {
+  story: { title: string; slug: string; client: string; clientLogo?: string | null };
+  slate?: boolean;
+}) {
+  return (
+    <NavigationMenu.Link asChild>
+      <Link
+        href={`/knowledge-hub/success-stories/${story.slug}`}
+        className={cn(
+          "flex items-center gap-3 p-3 border border-lava/25 transition-colors",
+          slate ? "hover:bg-white/10" : "hover:bg-offwhite",
+        )}
+      >
+        <div className="size-14 shrink-0 flex items-center justify-center p-1 overflow-hidden">
+          {story.clientLogo ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={story.clientLogo}
+              alt={story.client}
+              className="max-w-full max-h-full object-contain"
+            />
+          ) : (
+            <span className={cn(
+              "text-[6px] font-bold leading-tight text-center uppercase",
+              slate ? "text-white" : "text-lava",
+            )}>
+              {story.client}
+            </span>
+          )}
+        </div>
+        <p className="text-sm leading-snug">
+          {story.title}
+        </p>
+      </Link>
+    </NavigationMenu.Link>
   );
 }
 
 // ---------- Nav ----------
 
-export function Nav() {
+export interface NavProps {
+  featuredJob?: {
+    name: string;
+    slug: string;
+    department?: string;
+    workLocation?: string;
+  } | null;
+  recentPR?: {
+    title: string;
+    slug: string;
+  } | null;
+  recentPRs?: {
+    title: string;
+    slug: string;
+  }[];
+  featuredSuccessStory?: {
+    title: string;
+    slug: string;
+    client: string;
+    clientLogo?: string | null;
+  } | null;
+}
+
+export function Nav({ featuredJob, recentPR, recentPRs = [], featuredSuccessStory }: NavProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
@@ -256,9 +427,11 @@ export function Nav() {
         <div
           className={cn(
             "relative transition-all duration-500",
-            scrolled
-              ? "bg-white/95 backdrop-blur-xl"
-              : "bg-slate-light-1 border-transparent",
+            mobileOpen
+              ? "z-[70] bg-white"
+              : scrolled
+                ? "bg-white/95 backdrop-blur-xl"
+                : "bg-slate-light-1 border-transparent",
           )}
         >
           <div
@@ -295,7 +468,12 @@ export function Nav() {
                     title="Services"
                     links={servicesItems}
                     slate={!scrolled}
-                  />
+                    rightLabel={recentPRs.length > 0 ? "Recent News" : undefined}
+                  >
+                    {recentPRs.length > 0 ? (
+                      <PressReleaseList prs={recentPRs} slate={!scrolled} />
+                    ) : undefined}
+                  </DropdownPanel>
                 </NavigationMenu.Content>
               </NavigationMenu.Item>
 
@@ -307,7 +485,20 @@ export function Nav() {
                     title="About"
                     links={aboutItems}
                     slate={!scrolled}
-                  />
+                    rightLabel={
+                      featuredJob
+                        ? "We're Hiring!"
+                        : recentPR
+                          ? "What's New"
+                          : undefined
+                    }
+                  >
+                    {featuredJob ? (
+                      <JobCard job={featuredJob} slate={!scrolled} />
+                    ) : recentPR ? (
+                      <PressReleaseCard pr={recentPR} slate={!scrolled} />
+                    ) : undefined}
+                  </DropdownPanel>
                 </NavigationMenu.Content>
               </NavigationMenu.Item>
 
@@ -319,46 +510,11 @@ export function Nav() {
                     title="Resources"
                     links={resourcesLinks}
                     slate={!scrolled}
-                    rightLabel="Recent Success"
+                    rightLabel={featuredSuccessStory ? "Recent Success" : undefined}
                   >
-                    <NavigationMenu.Link asChild>
-                      <Link
-                        href="/knowledge-hub/success-stories"
-                        className={cn(
-                          "flex items-start gap-3 p-2 -mx-2 transition-colors",
-                          !scrolled
-                            ? "hover:bg-white/10"
-                            : "hover:bg-offwhite",
-                        )}
-                      >
-                        <div
-                          className={cn(
-                            "size-14 border shrink-0 flex items-center justify-center p-1",
-                            !scrolled ? "border-white/30" : "border-lava",
-                          )}
-                        >
-                          <span
-                            className={cn(
-                              "text-[6px] font-bold leading-tight text-center uppercase",
-                              !scrolled ? "text-white" : "text-lava",
-                            )}
-                          >
-                            Block
-                            <br />
-                            Mining
-                            <br />
-                            Group
-                          </span>
-                        </div>
-                        <p
-                          className={cn(
-                            "text-sm leading-snug text-lava",
-                          )}
-                        >
-                          Trusted partners driving growth in mining.
-                        </p>
-                      </Link>
-                    </NavigationMenu.Link>
+                    {featuredSuccessStory ? (
+                      <SuccessStoryCard story={featuredSuccessStory} slate={!scrolled} />
+                    ) : undefined}
                   </DropdownPanel>
                 </NavigationMenu.Content>
               </NavigationMenu.Item>
@@ -370,7 +526,7 @@ export function Nav() {
 
             {/* ---- Mobile toggle ---- */}
             <button
-              className="lg:hidden text-lava hover:text-slate transition-colors relative z-[70]"
+              className="lg:hidden text-lava hover:text-slate transition-colors"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Toggle menu"
             >
@@ -432,76 +588,95 @@ export function Nav() {
         </div>
       </NavigationMenu.Root>
 
-      {/* ---- Mobile overlay ---- */}
-      {mobileOpen && (
-        <div className="fixed inset-0 z-[60] lg:hidden">
-          <div
-            className="fixed inset-0 bg-white/95 backdrop-blur-xl"
+      {/* ---- Mobile backdrop ---- */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            key="mobile-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[60] bg-white/50 backdrop-blur-sm lg:hidden"
             onClick={closeMobile}
             aria-hidden="true"
           />
-          <div className="fixed inset-x-0 top-0 pt-20 pb-8 overflow-y-auto max-h-screen">
-            <div className="relative w-full max-w-md mx-auto px-5">
-              <nav className="flex flex-col gap-1 bg-white p-4 pb-6 shadow-xl border border-cream">
-                <Link
-                  href="/hpc"
-                  className="text-lg text-lava hover:text-slate transition-all px-4 py-4 border-b border-cream"
-                  onClick={closeMobile}
-                >
-                  HPC
-                </Link>
-                <Link
-                  href="/hardware"
-                  className="text-lg text-lava hover:text-slate transition-all px-4 py-4 border-b border-cream"
-                  onClick={closeMobile}
-                >
-                  Hardware
-                </Link>
-                <MobileDropdown
-                  label="Services"
-                  items={servicesItems}
-                  isOpen={mobileDropdown === "services"}
-                  onToggle={() =>
-                    setMobileDropdown(
-                      mobileDropdown === "services" ? null : "services",
-                    )
-                  }
-                  onNavigate={closeMobile}
-                />
-                <MobileDropdown
-                  label="About"
-                  items={aboutItems}
-                  isOpen={mobileDropdown === "about"}
-                  onToggle={() =>
-                    setMobileDropdown(
-                      mobileDropdown === "about" ? null : "about",
-                    )
-                  }
-                  onNavigate={closeMobile}
-                />
-                <MobileDropdown
-                  label="Resources"
-                  items={resourcesLinks}
-                  isOpen={mobileDropdown === "resources"}
-                  onToggle={() =>
-                    setMobileDropdown(
-                      mobileDropdown === "resources" ? null : "resources",
-                    )
-                  }
-                  onNavigate={closeMobile}
-                />
-                <Link
-                  href="/contact"
-                  className="text-lg text-lava hover:text-slate transition-all px-4 py-4"
-                  onClick={closeMobile}
-                >
-                  Contact
-                </Link>
-              </nav>
-            </div>
+        )}
+      </AnimatePresence>
+
+      {/* ---- Mobile menu ---- */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <div className="absolute inset-x-0 top-full z-[65] lg:hidden">
+            <motion.div
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+              className="relative max-h-[calc(100vh-100%)] overflow-y-auto pb-8"
+            >
+              <div className="w-full max-w-md mx-auto px-5 pt-3">
+                <nav className="flex flex-col bg-white p-4 pb-6 shadow-xl border border-cream divide-y divide-cream">
+                  <Link
+                    href="/hpc"
+                    className="text-lg text-lava hover:text-slate transition-all px-4 py-4"
+                    onClick={closeMobile}
+                  >
+                    HPC
+                  </Link>
+                  <Link
+                    href="/hardware"
+                    className="text-lg text-lava hover:text-slate transition-all px-4 py-4"
+                    onClick={closeMobile}
+                  >
+                    Hardware
+                  </Link>
+                  <MobileDropdown
+                    label="Services"
+                    items={servicesItems}
+                    isOpen={mobileDropdown === "services"}
+                    onToggle={() =>
+                      setMobileDropdown(
+                        mobileDropdown === "services" ? null : "services",
+                      )
+                    }
+                    onNavigate={closeMobile}
+                  />
+                  <MobileDropdown
+                    label="About"
+                    items={aboutItems}
+                    isOpen={mobileDropdown === "about"}
+                    onToggle={() =>
+                      setMobileDropdown(
+                        mobileDropdown === "about" ? null : "about",
+                      )
+                    }
+                    onNavigate={closeMobile}
+                  />
+                  <MobileDropdown
+                    label="Resources"
+                    items={resourcesLinks}
+                    isOpen={mobileDropdown === "resources"}
+                    onToggle={() =>
+                      setMobileDropdown(
+                        mobileDropdown === "resources" ? null : "resources",
+                      )
+                    }
+                    onNavigate={closeMobile}
+                  />
+                  <Link
+                    href="/contact"
+                    className="text-lg text-lava hover:text-slate transition-all px-4 py-4"
+                    onClick={closeMobile}
+                  >
+                    Contact
+                  </Link>
+                </nav>
+              </div>
+            </motion.div>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

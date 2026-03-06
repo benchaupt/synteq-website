@@ -21,6 +21,7 @@ export default async function SuccessStoriesPage() {
           <StyledHeading as="h1" className="heading">
             {"Success Stories."}
           </StyledHeading>
+          <p className="body max-w-4xl">We&apos;re grateful to our clients and partners for placing their trust in us, and we&apos;re excited to share their stories with you. At Synteq, we believe that our clients&apos; success is our success, and we take pride in being a part of their journey.</p>
         </div>
       </Section>
 

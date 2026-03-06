@@ -118,64 +118,93 @@ export function BrandLogosSection() {
   return (
     <div className="flex flex-col gap-20">
       {/* Our Logo */}
-      <div className="flex flex-col gap-10">
-        <div className="flex items-end justify-between gap-4">
+      <div className="flex flex-col gap-6 md:gap-10">
+        <div className="flex items-center justify-between gap-4">
           <StyledHeading as="h2" className="heading">
             {"Our Logo."}
           </StyledHeading>
-          <DownloadAllButton />
+          <div className="hidden md:block">
+            <DownloadButton href="/images/logos/synteq-primary-logo.svg" />
+          </div>
         </div>
 
         <ColorToggles active={logoColor} onChange={setLogoColor} />
 
         <div className="flex flex-col gap-12">
-          {logoAssets.map((asset) => (
-            <div
-              key={asset.label}
-              className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start"
-            >
-              <div className="flex items-center py-4">
-                <div
+          {/* Primary Logo */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div className="flex items-center py-4">
+              <div
+                className={cn(
+                  "inline-flex items-center py-4 transition-all duration-300",
+                  logoColor === "white"
+                    ? "bg-lava px-6"
+                    : "bg-transparent px-0",
+                )}
+              >
+                <Logo
+                  size="xl"
                   className={cn(
-                    "inline-flex items-center py-4 transition-all duration-300",
-                    logoColor === "white"
-                      ? "bg-lava px-6"
-                      : "bg-transparent px-0",
+                    "h-12 w-auto transition-colors duration-300",
+                    logoColors[logoColor],
                   )}
-                >
-                  <Logo
-                    size="xl"
-                    className={cn(
-                      "h-12 w-auto transition-colors duration-300",
-                      logoColors[logoColor],
-                    )}
-                  />
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-3">
-                <div className="flex items-start justify-between gap-4">
-                  <h3 className="heading3 font-medium">{asset.label}</h3>
-                  <DownloadButton href={asset.file} />
-                </div>
+                />
               </div>
             </div>
-          ))}
+
+            <div className="flex flex-col gap-3">
+              <h3 className="heading3 font-medium">Primary Logo</h3>
+              <p className="body text-slate">
+                The primary Synteq Digital wordmark is the preferred logo for all communications. Use it on light backgrounds with adequate clear space around the mark.
+              </p>
+              <div className="md:hidden">
+                <DownloadButton href="/images/logos/synteq-primary-logo.svg" />
+              </div>
+            </div>
+          </div>
+
+          {/* Secondary Logo — hidden for now */}
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+            <div className="flex items-center py-4">
+              <div
+                className={cn(
+                  "inline-flex items-center py-4 transition-all duration-300",
+                  logoColor === "white"
+                    ? "bg-lava px-6"
+                    : "bg-transparent px-0",
+                )}
+              >
+                <Logo
+                  size="xl"
+                  className={cn(
+                    "h-12 w-auto transition-colors duration-300",
+                    logoColors[logoColor],
+                  )}
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <h3 className="heading3 font-medium">Secondary</h3>
+            </div>
+          </div> */}
         </div>
       </div>
 
       {/* Icon */}
-      <div className="flex flex-col gap-10">
-        <div className="flex items-end justify-between gap-4">
+      <div className="flex flex-col gap-6 md:gap-10">
+        <div className="flex items-center justify-between gap-4">
           <StyledHeading as="h2" className="heading">
-            {"Icon."}
+            {"Our Icon."}
           </StyledHeading>
-          <DownloadButton href="/assets/press-contact/synteq-icon.svg" />
+          <div className="hidden md:block">
+            <DownloadButton href="/assets/press-contact/synteq-icon.svg" />
+          </div>
         </div>
 
         <ColorToggles active={iconColor} onChange={setIconColor} />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="flex items-center py-4">
             <div
               className={cn(
@@ -206,8 +235,11 @@ export function BrandLogosSection() {
           </div>
 
           <div className="flex flex-col gap-3">
-            <div className="flex items-start justify-between gap-4">
-              <h3 className="heading3 font-medium">Primary Logo</h3>
+            <h3 className="heading3 font-medium">Icon</h3>
+            <p className="body text-slate">
+              The Synteq &ldquo;Q&rdquo; icon is used as a favicon, app icon, and social avatar. It should only appear at small sizes where the full wordmark would be illegible.
+            </p>
+            <div className="md:hidden">
               <DownloadButton href="/assets/press-contact/synteq-icon.svg" />
             </div>
           </div>

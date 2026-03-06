@@ -46,7 +46,7 @@ export function ValuesSection() {
           <div
             key={value.title}
             className={cn(
-              "flex flex-col gap-2 p-8 md:p-10 border-cream",
+              "flex flex-col gap-2 pr-8 pl-4 pt-8 pb-8 md:p-10 border-cream",
               index < 3 && "border-b",
               index >= 2 && "md:border-b-0",
               index % 2 === 0 && "md:border-r",

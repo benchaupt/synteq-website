@@ -15,7 +15,7 @@ interface LogoProps {
 export function Logo({ size = "md", className }: LogoProps) {
   return (
     <svg
-      viewBox="0 0 282 77.16"
+      viewBox="-1 -1 284 79.16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={cn(sizeMap[size], className)}

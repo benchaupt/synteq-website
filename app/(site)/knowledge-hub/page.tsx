@@ -57,12 +57,14 @@ export default async function KnowledgeHubPage() {
     <>
       {/* Small ancillary header */}
       <Section className="pt-28 md:pt-32" innerClassName="pb-8 md:pb-12">
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-12 md:gap-8">
           <div className="flex flex-col gap-2">
             <span className="subheading">Resources</span>
             <StyledHeading as="h1" className="heading">
               {"Knowledge Hub."}
             </StyledHeading>
+            <p className="body max-w-4xl">
+            We strive to elevate the industry through empowerment and education. Whether you&apos;re new, or already a key player in the industry, we&apos;re here to provide you with the latest insights and resources.</p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             <Button href="/knowledge-hub/blogs" variant="primary" size="md">Blogs</Button>

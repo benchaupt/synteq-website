@@ -66,8 +66,8 @@ export default async function TeamPage() {
 
       {/* CTA */}
       <CTASection
-        heading={<>Learn more about us</>}
-        subtext="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        heading={<>Learn more about us.</>}
+        subtext=" "
         buttonText="Learn More"
         buttonHref="/about"
         background="silver"

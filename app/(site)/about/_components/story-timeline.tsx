@@ -73,22 +73,22 @@ export function StoryTimeline() {
 
   return (
     <div className="flex flex-col gap-10">
-      <h2 className="heading">Our Story.</h2>
-
-      {/* Year tabs */}
-      <div className="flex flex-wrap gap-2 md:gap-3">
-        {milestones.map((milestone, i) => (
-          <button
-            key={milestone.year}
-            onClick={() => setSelectedIndex(i)}
-            className={cn(
-              "text-xl md:text-2xl font-medium transition-colors duration-200 cursor-pointer",
-              i === selectedIndex ? "text-lava" : "text-lava-25 hover:text-lava-50"
-            )}
-          >
-            {milestone.year}
-          </button>
-        ))}
+      <div className="flex flex-col gap-2">
+        <p className="subheading">Our Story</p>
+        <div className="flex flex-wrap gap-x-3 gap-y-1 md:gap-4">
+          {milestones.map((milestone, i) => (
+            <button
+              key={milestone.year}
+              onClick={() => setSelectedIndex(i)}
+              className={cn(
+                "text-2xl md:text-3xl lg:text-header font-medium transition-colors duration-200 cursor-pointer",
+                i === selectedIndex ? "text-lava" : "text-lava/50 hover:text-lava/75"
+              )}
+            >
+              {milestone.year}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Content */}
@@ -102,8 +102,8 @@ export function StoryTimeline() {
             transition={{ duration: 0.25 }}
             className="max-w-2xl"
           >
-            <h3 className="heading3 mb-3">{selected.title}</h3>
-            <p className="text-slate text-body-lg leading-relaxed">
+            <h3 className="heading3 font-medium mb-3">{selected.title}</h3>
+            <p className="text-lava text-body-lg">
               {selected.description}
             </p>
           </motion.div>

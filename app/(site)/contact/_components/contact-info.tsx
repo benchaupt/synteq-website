@@ -5,7 +5,7 @@ const contactChannels = [
   { label: "General", email: "info@synteq.com" },
   { label: "Sales", email: "sales@synteq.com" },
   { label: "Careers", email: "careers@synteq.digital" },
-  { label: "Media/Press", email: "media@synteq.digital" },
+  { label: "Media & Press", email: "pr@synteq.digital" },
   { label: "Support", email: "support@synteq.digital" },
 ] as const;
 
@@ -20,13 +20,10 @@ export function ContactInfo() {
     <div className="flex flex-col justify-between gap-12">
       {/* Header */}
       <div className="flex flex-col gap-5">
-        <h1 className="title">Contact Us</h1>
-        <p className="text-body max-w-md leading-relaxed">
+        <h1 className="title">Contact Us.</h1>
+        <p className="body max-w-4xl">
           Whether you&apos;re seeking ASIC miners, energy solutions, electrical
-          infrastructure, or consultation, it all starts with a conversation. We
-          pride ourselves on prompt and professional communication, and we can
-          utilize your preferred voice, text, or video platform to make our
-          back-and-forth as seamless as possible.
+          infrastructure, or consultation, it all starts with a conversation.
         </p>
       </div>
 
@@ -39,7 +36,7 @@ export function ContactInfo() {
             </span>
             <a
               href={`mailto:${channel.email}`}
-              className="heading6 origin-left hover:scale-95 transition-transform"
+              className="heading6 w-fit origin-left hover:scale-95 transition-transform"
             >
               {channel.email}
             </a>
@@ -69,7 +66,7 @@ export function ContactInfo() {
         <p className="text-sm text-lava flex items-center gap-1.5">
           Looking for support?
           <Link
-            href="/client-support"
+            href="/contact?interest=support"
             className="group inline-flex items-center gap-1 font-semibold underline-offset-4 underline decoration-lava bg-[linear-gradient(theme(colors.lava),theme(colors.lava))] bg-[position:0_100%] bg-no-repeat bg-[size:100%_0%] transition-all duration-500 ease-out hover:bg-[size:100%_100%] hover:text-white px-1 -mx-1"
           >
             Client Support
