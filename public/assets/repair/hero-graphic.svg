@@ -1,0 +1,20 @@
+<svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Outer circle -->
+  <circle cx="220" cy="200" r="160" stroke="#768692" stroke-width="1.5" />
+  <!-- Inner circle -->
+  <circle cx="220" cy="200" r="100" stroke="#B4BBC0" stroke-width="1" />
+  <!-- Dotted grid pattern -->
+  <g opacity="0.3">
+    <circle cx="180" cy="160" r="1.5" fill="#B4BBC0" /><circle cx="193" cy="160" r="1.5" fill="#B4BBC0" /><circle cx="206" cy="160" r="1.5" fill="#B4BBC0" /><circle cx="219" cy="160" r="1.5" fill="#B4BBC0" /><circle cx="232" cy="160" r="1.5" fill="#B4BBC0" /><circle cx="245" cy="160" r="1.5" fill="#B4BBC0" /><circle cx="258" cy="160" r="1.5" fill="#B4BBC0" />
+    <circle cx="180" cy="173" r="1.5" fill="#B4BBC0" /><circle cx="193" cy="173" r="1.5" fill="#B4BBC0" /><circle cx="206" cy="173" r="1.5" fill="#B4BBC0" /><circle cx="219" cy="173" r="1.5" fill="#B4BBC0" /><circle cx="232" cy="173" r="1.5" fill="#B4BBC0" /><circle cx="245" cy="173" r="1.5" fill="#B4BBC0" /><circle cx="258" cy="173" r="1.5" fill="#B4BBC0" />
+    <circle cx="180" cy="186" r="1.5" fill="#B4BBC0" /><circle cx="193" cy="186" r="1.5" fill="#B4BBC0" /><circle cx="206" cy="186" r="1.5" fill="#B4BBC0" /><circle cx="219" cy="186" r="1.5" fill="#B4BBC0" /><circle cx="232" cy="186" r="1.5" fill="#B4BBC0" /><circle cx="245" cy="186" r="1.5" fill="#B4BBC0" /><circle cx="258" cy="186" r="1.5" fill="#B4BBC0" />
+    <circle cx="180" cy="199" r="1.5" fill="#B4BBC0" /><circle cx="193" cy="199" r="1.5" fill="#B4BBC0" /><circle cx="206" cy="199" r="1.5" fill="#B4BBC0" /><circle cx="219" cy="199" r="1.5" fill="#B4BBC0" /><circle cx="232" cy="199" r="1.5" fill="#B4BBC0" /><circle cx="245" cy="199" r="1.5" fill="#B4BBC0" /><circle cx="258" cy="199" r="1.5" fill="#B4BBC0" />
+    <circle cx="180" cy="212" r="1.5" fill="#B4BBC0" /><circle cx="193" cy="212" r="1.5" fill="#B4BBC0" /><circle cx="206" cy="212" r="1.5" fill="#B4BBC0" /><circle cx="219" cy="212" r="1.5" fill="#B4BBC0" /><circle cx="232" cy="212" r="1.5" fill="#B4BBC0" /><circle cx="245" cy="212" r="1.5" fill="#B4BBC0" /><circle cx="258" cy="212" r="1.5" fill="#B4BBC0" />
+    <circle cx="180" cy="225" r="1.5" fill="#B4BBC0" /><circle cx="193" cy="225" r="1.5" fill="#B4BBC0" /><circle cx="206" cy="225" r="1.5" fill="#B4BBC0" /><circle cx="219" cy="225" r="1.5" fill="#B4BBC0" /><circle cx="232" cy="225" r="1.5" fill="#B4BBC0" /><circle cx="245" cy="225" r="1.5" fill="#B4BBC0" /><circle cx="258" cy="225" r="1.5" fill="#B4BBC0" />
+    <circle cx="180" cy="238" r="1.5" fill="#B4BBC0" /><circle cx="193" cy="238" r="1.5" fill="#B4BBC0" /><circle cx="206" cy="238" r="1.5" fill="#B4BBC0" /><circle cx="219" cy="238" r="1.5" fill="#B4BBC0" /><circle cx="232" cy="238" r="1.5" fill="#B4BBC0" /><circle cx="245" cy="238" r="1.5" fill="#B4BBC0" /><circle cx="258" cy="238" r="1.5" fill="#B4BBC0" />
+  </g>
+  <!-- Horizontal dashed line -->
+  <line x1="80" y1="200" x2="360" y2="200" stroke="#B4BBC0" stroke-width="1" stroke-dasharray="6 4" />
+  <!-- Center diamond -->
+  <rect x="204" y="184" width="24" height="24" rx="2" transform="rotate(45 216 196)" fill="#768692" />
+</svg>

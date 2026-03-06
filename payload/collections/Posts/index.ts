@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import {
   BlocksFeature,
+  EXPERIMENTAL_TableFeature,
   FixedToolbarFeature,
   HeadingFeature,
   HorizontalRuleFeature,
@@ -16,11 +17,9 @@ import { Code } from '@/payload/blocks/Code/config'
 import { MediaBlock } from '@/payload/blocks/MediaBlock/config'
 import { XEmbed } from '@/payload/blocks/XEmbed/config'
 import { GitHubEmbed } from '@/payload/blocks/GitHubEmbed/config'
-import { HardwareProduct } from '@/payload/blocks/HardwareProduct/config'
-import { HardwareComparison } from '@/payload/blocks/HardwareComparison/config'
-import { AIModel } from '@/payload/blocks/AIModel/config'
 import { populateAuthors } from '@/payload/collections/Posts/hooks/populateAuthors'
 import { revalidateDelete, revalidatePost } from '@/payload/collections/Posts/hooks/revalidatePost'
+import { enforceFeaturedLimit } from '@/payload/collections/Posts/hooks/enforceFeaturedLimit'
 import { slugField } from '@/payload/fields/slug'
 import { generatePreviewPath } from '@/payload/utilities/generatePreviewPath'
 import {
@@ -79,6 +78,54 @@ export const Posts: CollectionConfig<'posts'> = {
       required: true,
     },
     {
+      name: 'excerpt',
+      type: 'textarea',
+      admin: {
+        description: 'Short summary for listing pages and SEO',
+      },
+    },
+    {
+      name: 'author',
+      type: 'text',
+      admin: {
+        position: 'sidebar',
+        description: 'Display name of the author',
+      },
+    },
+    {
+      name: 'bylineAuthors',
+      type: 'relationship',
+      relationTo: 'authors',
+      hasMany: true,
+      admin: {
+        position: 'sidebar',
+        description: 'Select one or more authors for the byline',
+      },
+    },
+    {
+      name: 'tags',
+      type: 'array',
+      admin: {
+        position: 'sidebar',
+      },
+      fields: [
+        {
+          name: 'tag',
+          type: 'text',
+          required: true,
+        },
+      ],
+    },
+    {
+      name: 'featured',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: {
+        position: 'sidebar',
+        description: 'Feature this post. Up to 3 posts can be featured at once.',
+      },
+    },
+    {
       type: 'tabs',
       tabs: [
         {
@@ -96,10 +143,11 @@ export const Posts: CollectionConfig<'posts'> = {
                   return [
                     ...rootFeatures,
                     HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-                    BlocksFeature({ blocks: [Banner, Code, MediaBlock, XEmbed, GitHubEmbed, HardwareProduct, HardwareComparison, AIModel] }),
+                    BlocksFeature({ blocks: [Banner, Code, MediaBlock, XEmbed, GitHubEmbed] }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
                     HorizontalRuleFeature(),
+                    EXPERIMENTAL_TableFeature(),
                   ]
                 },
               }),
@@ -224,6 +272,7 @@ export const Posts: CollectionConfig<'posts'> = {
     ...slugField(),
   ],
   hooks: {
+    beforeChange: [enforceFeaturedLimit],
     afterChange: [revalidatePost],
     afterRead: [populateAuthors],
     afterDelete: [revalidateDelete],

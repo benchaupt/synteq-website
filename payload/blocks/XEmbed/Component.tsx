@@ -1,7 +1,15 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { CornerCard } from '@/app/_components/corner-card'
+import { cn } from '@/lib/utils'
+
+function EmbedCard({ children, className }: { children: React.ReactNode; className?: string }) {
+  return (
+    <div className={cn("bg-offwhite rounded-xl border border-cream p-6 md:p-8", className)}>
+      {children}
+    </div>
+  )
+}
 
 export type XEmbedBlockProps = {
   tweetUrl: string
@@ -87,9 +95,9 @@ export function XEmbedBlock({ className, tweetUrl, theme = 'dark' }: Props) {
   if (!tweetId) {
     return (
       <div className={className}>
-        <CornerCard className="text-center">
-          <p className="text-white/50">Invalid X/Twitter URL</p>
-        </CornerCard>
+        <EmbedCard className="text-center">
+          <p className="text-slate">Invalid X/Twitter URL</p>
+        </EmbedCard>
       </div>
     )
   }

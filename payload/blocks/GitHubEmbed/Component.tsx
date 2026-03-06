@@ -2,7 +2,15 @@
 
 import { useEffect, useState } from 'react'
 import { Star, GitFork, Eye, ExternalLink } from 'lucide-react'
-import { CornerCard } from '@/app/_components/corner-card'
+import { cn } from '@/lib/utils'
+
+function EmbedCard({ children, className }: { children: React.ReactNode; className?: string }) {
+  return (
+    <div className={cn("bg-offwhite rounded-xl border border-cream p-6 md:p-8", className)}>
+      {children}
+    </div>
+  )
+}
 
 export type GitHubEmbedBlockProps = {
   embedType: 'repo' | 'gist' | 'file'
@@ -127,9 +135,9 @@ export function GitHubEmbedBlock({
   if (!parsed) {
     return (
       <div className={className}>
-        <CornerCard className="text-center py-12 px-12">
+        <EmbedCard className="text-center py-12 px-12">
           <p className="text-white/50">Invalid GitHub URL</p>
-        </CornerCard>
+        </EmbedCard>
       </div>
     )
   }
@@ -138,7 +146,7 @@ export function GitHubEmbedBlock({
   if (embedType === 'gist') {
     return (
       <div className={['not-prose', className].filter(Boolean).join(' ')}>
-        <CornerCard className="!p-0 overflow-hidden">
+        <EmbedCard className="!p-0 overflow-hidden">
           <div className="p-4 border-b border-white/10 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <svg className="size-5 text-white/70" viewBox="0 0 16 16" fill="currentColor">
@@ -160,7 +168,7 @@ export function GitHubEmbedBlock({
             className="w-full min-h-64 bg-[#0d1117]"
             sandbox="allow-scripts allow-same-origin"
           />
-        </CornerCard>
+        </EmbedCard>
       </div>
     )
   }
@@ -169,7 +177,7 @@ export function GitHubEmbedBlock({
   if (embedType === 'file' && parsed.path) {
     return (
       <div className={['not-prose', className].filter(Boolean).join(' ')}>
-        <CornerCard className="!p-0 overflow-hidden">
+        <EmbedCard className="!p-0 overflow-hidden">
           <div className="p-4 border-b border-white/10 flex items-center justify-between gap-2">
             <div className="flex items-center gap-2 min-w-0">
               <svg className="size-5 text-white/70 shrink-0" viewBox="0 0 16 16" fill="currentColor">
@@ -195,7 +203,7 @@ export function GitHubEmbedBlock({
             className="w-full min-h-64"
             sandbox="allow-scripts allow-same-origin"
           />
-        </CornerCard>
+        </EmbedCard>
       </div>
     )
   }
@@ -204,7 +212,7 @@ export function GitHubEmbedBlock({
   if (loading) {
     return (
       <div className={['not-prose', className].filter(Boolean).join(' ')}>
-        <CornerCard className="animate-pulse">
+        <EmbedCard className="animate-pulse">
           <div className="flex items-center gap-3 mb-4">
             <div className="size-10 bg-white/10 rounded-full" />
             <div className="h-5 w-48 bg-white/10 rounded" />
@@ -214,7 +222,7 @@ export function GitHubEmbedBlock({
             <div className="h-4 w-16 bg-white/10 rounded" />
             <div className="h-4 w-16 bg-white/10 rounded" />
           </div>
-        </CornerCard>
+        </EmbedCard>
       </div>
     )
   }
@@ -229,7 +237,7 @@ export function GitHubEmbedBlock({
           rel="noopener noreferrer"
           className="block group"
         >
-          <CornerCard className="relative">
+          <EmbedCard className="relative">
             {/* GitHub logo - top right */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -246,7 +254,7 @@ export function GitHubEmbedBlock({
               </span>
               <ExternalLink className="size-4 text-white/50 ml-auto" />
             </div>
-          </CornerCard>
+          </EmbedCard>
         </a>
       </div>
     )
@@ -263,7 +271,7 @@ export function GitHubEmbedBlock({
         rel="noopener noreferrer"
         className="block group"
       >
-        <CornerCard className="relative">
+        <EmbedCard className="relative">
           {/* GitHub logo - top right */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -335,7 +343,7 @@ export function GitHubEmbedBlock({
               )}
             </div>
           </div>
-        </CornerCard>
+        </EmbedCard>
       </a>
     </div>
   )

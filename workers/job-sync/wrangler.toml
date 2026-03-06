@@ -1,0 +1,13 @@
+name = "synteq-job-sync"
+main = "worker.ts"
+compatibility_date = "2024-12-01"
+account_id = "23a32db33bd1c2709edcdddbe1c00ef7"
+
+# Run every 6 hours
+[triggers]
+crons = ["0 */6 * * *"]
+
+[vars]
+# The URL of the main site's sync endpoint
+SYNC_URL = "https://synteq-enterprise.synteq.com/api/sync-jobs"
+# Add CRON_SECRET as a secret via: wrangler secret put CRON_SECRET --config workers/job-sync/wrangler.toml

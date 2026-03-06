@@ -1,15 +1,11 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "main": ".open-next/worker.js",
-  "name": "synteqai",
+  "name": "synteq-enterprise",
   "compatibility_date": "2025-10-25",
   "account_id": "23a32db33bd1c2709edcdddbe1c00ef7", // BerryByte Limited
   "compatibility_flags": [
-    // Enable Node.js API
-    // see https://developers.cloudflare.com/workers/configuration/compatibility-flags/#nodejs-compatibility-flag
     "nodejs_compat",
-    // Allow to fetch URLs in your app
-    // see https://developers.cloudflare.com/workers/configuration/compatibility-flags/#global-fetch-strictly-public
     "global_fetch_strictly_public"
   ],
   "assets": {
@@ -19,34 +15,24 @@
   "services": [
     {
       "binding": "WORKER_SELF_REFERENCE",
-      // The service should match the "name" of your worker
-      "service": "synteqai"
+      "service": "synteq-enterprise"
     }
   ],
   "hyperdrive": [
     {
       "binding": "HYPERDRIVE",
-      "id": "743851ac32b7469595c45e932a295a0e",
-      "localConnectionString": "postgresql://neondb_owner:npg_CU8GS3fVtvnF@ep-misty-meadow-ah38yb0o-pooler.c-3.us-east-1.aws.neon.tech/neondb?sslmode=require"
-    }
-  ],
-  "d1_databases": [
-    {
-      "binding": "MODELS_DB",
-      "database_name": "synteq-models",
-      "database_id": "3d339ad8-d5e5-429f-9e1d-adb0f04bc324",
-      "migrations_dir": "db/migrations"
+      "id": "cb71e1089b394bb892bdefb112e16165",
+      "localConnectionString": "postgresql://neondb_owner:npg_Mb87JEBhskOp@ep-dawn-cherry-aiw82bk0-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require"
     }
   ],
   "r2_buckets": [
-    // Create a R2 binding with the binding name "NEXT_INC_CACHE_R2_BUCKET"
     {
       "binding": "NEXT_INC_CACHE_R2_BUCKET",
-      "bucket_name": "synteq-payloadcms-cache"
+      "bucket_name": "synteq-enterprise-cache"
     },
     {
       "binding": "MEDIA_R2_BUCKET",
-      "bucket_name": "synteq-payloadcms-staging"
+      "bucket_name": "synteq-enterprise-media"
     }
   ],
   "durable_objects": {
@@ -68,8 +54,6 @@
     }
   ],
   "images": {
-    // Enable image optimization
-    // see https://opennext.js.org/cloudflare/howtos/image
     "binding": "IMAGES"
   },
   "observability": {

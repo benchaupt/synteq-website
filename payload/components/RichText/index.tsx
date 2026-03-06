@@ -14,13 +14,9 @@ import {
 import { CodeBlock, CodeBlockProps } from '@/payload/blocks/Code/Component'
 import { XEmbedBlock, XEmbedBlockProps } from '@/payload/blocks/XEmbed/Component'
 import { GitHubEmbedBlock, GitHubEmbedBlockProps } from '@/payload/blocks/GitHubEmbed/Component'
-import { HardwareProductBlock, HardwareProductBlockProps } from '@/payload/blocks/HardwareProduct/Component'
-import { HardwareComparisonBlock, HardwareComparisonBlockProps } from '@/payload/blocks/HardwareComparison/Component'
-import { AIModelBlock, AIModelBlockProps } from '@/payload/blocks/AIModel/Component'
 
 import type {
   BannerBlock as BannerBlockProps,
-  // CallToActionBlock as CTABlockProps,
   MediaBlock as MediaBlockProps,
 } from '@/payload-types'
 import { BannerBlock } from '@/payload/blocks/Banner/Component'
@@ -34,9 +30,6 @@ type NodeTypes =
       | CodeBlockProps
       | XEmbedBlockProps
       | GitHubEmbedBlockProps
-      | HardwareProductBlockProps
-      | HardwareComparisonBlockProps
-      | AIModelBlockProps
     >
 
 const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
@@ -66,10 +59,6 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
     code: ({ node }) => <CodeBlock className="col-start-2" {...node.fields} />,
     xEmbed: ({ node }) => <XEmbedBlock className="col-start-2 mb-4" {...node.fields} />,
     githubEmbed: ({ node }) => <GitHubEmbedBlock className="col-start-2 mb-4" {...node.fields} />,
-    hardwareProduct: ({ node }) => <HardwareProductBlock className="col-start-2 mb-4" {...node.fields} />,
-    hardwareComparison: ({ node }) => <HardwareComparisonBlock className="col-start-1 col-span-3 mb-4" {...node.fields} />,
-    aiModel: ({ node }) => <AIModelBlock className="col-start-2 mb-4" {...node.fields} />,
-    // cta: ({ node }) => <CallToActionBlock {...node.fields} />,
   },
 })
 
@@ -89,7 +78,7 @@ export default function RichText(props: Props) {
         {
           container: enableGutter,
           'max-w-none': !enableGutter,
-          'mx-auto prose-sm md:prose dark:prose-invert': enableProse,
+          'prose-sm md:prose max-w-none': enableProse,
         },
         className,
       )}

@@ -1,1 +1,0 @@
-ALTER TABLE `huggingface_models` ADD `author_logo` text;

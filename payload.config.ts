@@ -16,17 +16,21 @@ import { Categories } from "./payload/collections/Categories";
 import { Media } from "./payload/collections/Media";
 import { Posts } from "./payload/collections/Posts";
 import { Users } from "./payload/collections/Users";
-import { ModelManagement } from "./payload/globals/ModelManagement";
+import { SuccessStories } from "./payload/collections/SuccessStories";
+import { PressReleases } from "./payload/collections/PressReleases";
+import { Locations } from "./payload/collections/Locations";
+import { Authors } from "./payload/collections/Authors";
+import { TeamMembers } from "./payload/collections/TeamMembers";
+import { JobListings } from "./payload/collections/JobListings";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 const generateTitle: GenerateTitle<Post> = ({ doc }) => {
-  return doc?.title ? `${doc.title} | Synteq AI` : "Synteq AI";
+  return doc?.title ? `${doc.title} | Synteq Digital` : "Synteq Digital";
 };
 
 const generateURL: GenerateURL<Post> = ({ doc }) => {
   const url = getServerSideURL();
-  console.log(doc);
   return doc?.slug ? `${url}/${doc.slug}` : url;
 };
 
@@ -35,12 +39,11 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     meta: {
-      titleSuffix: "- Synteq AI",
+      titleSuffix: "- Synteq Digital",
     },
   },
   editor: lexicalEditor(),
-  collections: [Users, Media, Categories, Posts],
-  globals: [ModelManagement],
+  collections: [Users, Media, Categories, Posts, SuccessStories, PressReleases, Locations, Authors, TeamMembers, JobListings],
   secret: process.env.PAYLOAD_SECRET || "my-im-crunchbits-ell-ell-cee-secure",
   db: postgresAdapter({
     pool: {
@@ -50,7 +53,7 @@ export default buildConfig({
   }),
   plugins: [
     redirectsPlugin({
-      collections: ["posts"],
+      collections: ["posts", "success-stories", "press-releases"],
       overrides: {
         // @ts-expect-error - This is a valid override, mapped fields don't resolve to the same type
         fields: ({ defaultFields }) => {
@@ -76,32 +79,15 @@ export default buildConfig({
       generateTitle,
       generateURL,
     }),
-    // s3Storage({
-    //   collections: {
-    //     media: true,
-    //   },
-    //   bucket: process.env.S3_BUCKET || "",
-    //   config: {
-    //     credentials: {
-    //       accessKeyId: process.env.S3_ACCESS_KEY_ID || "",
-    //       secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || "",
-    //     },
-    //     region: process.env.S3_REGION || "",
-    //     endpoint: process.env.S3_ENDPOINT || "",
-    //     // ... Other S3 configuration
-    //   },
-    // }),
-    // TODO: use this when we setup open-next / workers
     r2Storage({
       collections: {
         media: true,
       },
-      bucket: cloudflare.env.MEDIA_R2_BUCKET,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      bucket: cloudflare.env.MEDIA_R2_BUCKET as any,
     }),
   ],
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),
   },
-  // sharp is disabled for Cloudflare Workers compatibility
-  // Image processing is handled by Cloudflare Images instead
 });

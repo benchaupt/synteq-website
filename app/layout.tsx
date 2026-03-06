@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { DM_Sans, JetBrains_Mono } from "next/font/google";
-import "./globals.css";
-import { PostHogProvider } from "@/app/_components/posthog-provider";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -14,27 +12,30 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://synteqai.berrybyte.workers.dev"),
-  title: "Synteq AI",
-  description: "Build the fastest, modern platform to power AI",
+  metadataBase: new URL("https://synteqdigital.com"),
+  title: "Synteq Digital",
+  description:
+    "Enterprise hardware, HPC, and IT services — powering the infrastructure behind modern business.",
   openGraph: {
-    title: "Synteq AI",
-    description: "Build the fastest, modern platform to power AI",
+    title: "Synteq Digital",
+    description:
+      "Enterprise hardware, HPC, and IT services — powering the infrastructure behind modern business.",
     images: [
       {
-        url: "/assets/synteq-banner.png",
+        url: "/images/og/synteq-banner.png",
         width: 1200,
         height: 630,
-        alt: "Synteq AI - The AI Cloud",
+        alt: "Synteq Digital",
       },
     ],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Synteq AI",
-    description: "Build the fastest, modern platform to power AI",
-    images: ["/assets/synteq-banner.png"],
+    title: "Synteq Digital",
+    description:
+      "Enterprise hardware, HPC, and IT services — powering the infrastructure behind modern business.",
+    images: ["/images/og/synteq-banner.png"],
   },
 };
 
@@ -48,7 +49,7 @@ export default function RootLayout({
       <body
         className={`${dmSans.variable} ${jetbrainsMono.variable} antialiased`}
       >
-        <PostHogProvider>{children}</PostHogProvider>
+        {children}
       </body>
     </html>
   );

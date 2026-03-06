@@ -1,27 +1,59 @@
 "use client";
-import { CornerCard } from "@/app/_components/corner-card";
 import { cn } from "@/lib/utils";
 import useEmblaCarousel from "embla-carousel-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 interface TestimonialCarouselProps {
+    title?: string;
     testimonials: {
         name: string;
-        title: string;
+        role: string;
         company: string;
         logo: React.ReactNode;
         text: string;
     }[];
 }
 
-export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) {
+function NavButton({ direction, onClick }: { direction: "prev" | "next"; onClick: () => void }) {
+    return (
+        <button
+            onClick={(e) => {
+                e.stopPropagation();
+                onClick();
+            }}
+            aria-label={direction === "prev" ? "Previous testimonial" : "Next testimonial"}
+            className="inline-flex items-center justify-center size-6 bg-lava transition-colors hover:bg-lava-80"
+        >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+                src="/icons/button-arrow-right.svg"
+                alt=""
+                className={cn("size-3", direction === "prev" && "rotate-180")}
+            />
+        </button>
+    );
+}
+
+export function TestimonialCarousel({ title, testimonials }: TestimonialCarouselProps) {
     const [emblaRef, emblaApi] = useEmblaCarousel({
         loop: true,
         dragFree: false,
-        align: 'center',
+        align: "center",
+        watchDrag: (_emblaApi, event) => {
+            return event.type === "touchstart";
+        },
     });
     const [currentIndex, setCurrentIndex] = useState(0);
     const itemCount = testimonials.length;
+
+    const handleNav = useCallback(
+        (direction: "prev" | "next") => {
+            if (!emblaApi) return;
+            if (direction === "prev") emblaApi.scrollPrev();
+            else emblaApi.scrollNext();
+        },
+        [emblaApi],
+    );
 
     useEffect(() => {
         if (!emblaApi) return;
@@ -31,103 +63,87 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
         };
 
         emblaApi.on("select", onSelect);
-        onSelect(); // Set initial index
+        onSelect();
 
         return () => {
             emblaApi.off("select", onSelect);
         };
     }, [emblaApi]);
-    
+
     return (
-        <div className="relative flex flex-col gap-8 max-w-viewport w-full mx-auto px-5 pt-8 md:pt-12 lg:pt-16 pb-32 md:pb-24 lg:pb-32">
-            {/* Left gradient fade - hidden on mobile */}
-            <div className="hidden md:block absolute top-0 left-0 w-32 lg:w-[200px] h-full bg-linear-to-r from-background to-transparent pointer-events-none z-10" />
-            {/* Right gradient fade - hidden on mobile */}
-            <div className="hidden md:block absolute top-0 right-0 w-32 lg:w-[200px] h-full bg-linear-to-l from-background to-transparent pointer-events-none z-10" />
-            
-            <div className='w-full overflow-hidden py-4 md:py-8'>
-                <div className='overflow-hidden' ref={emblaRef}>
-                    <div className='flex gap-4 md:gap-0'>
-                        {testimonials.map((testimonial, index) => (
-                            <div
-                                key={index}
-                                className="flex-[0_0_100%] md:flex-[0_0_auto] min-w-0 md:px-4 cursor-pointer"
-                                onClick={() => {
-                                    if (emblaApi) emblaApi.scrollTo(index);
-                                }}
-                            >
-                                <CornerCard
-                                    className="w-full md:w-[500px] lg:w-[580px] hover:bg-background-secondary transition-all duration-300"
-                                >
-                                    <div className="flex flex-col gap-6 md:gap-10">
-                                        <div className="flex flex-row gap-4 md:gap-6 items-center">
-                                            <div className="shrink-0 [&_svg]:w-22 [&_svg]:md:w-auto [&_img]:w-16 [&_img]:md:w-auto">
-                                                {testimonial.logo}
+        <div className="flex flex-col gap-8">
+            {title && (
+                <h2 className="heading text-center max-w-5xl mx-auto">{title}</h2>
+            )}
+
+            <div className="flex flex-col gap-8">
+                <div className="relative w-full">
+                    {/* Left gradient fade */}
+                    <div className="hidden md:block absolute top-0 left-0 w-24 lg:w-40 h-full bg-linear-to-r from-white to-transparent pointer-events-none z-10" />
+                    {/* Right gradient fade */}
+                    <div className="hidden md:block absolute top-0 right-0 w-24 lg:w-40 h-full bg-linear-to-l from-white to-transparent pointer-events-none z-10" />
+
+                    <div className="w-full overflow-hidden">
+                        <div className="overflow-hidden" ref={emblaRef}>
+                            <div className="flex">
+                                {testimonials.map((testimonial, index) => (
+                                    <div
+                                        key={index}
+                                        className="flex-[0_0_85%] md:flex-[0_0_auto] min-w-0 px-2 md:px-3 cursor-pointer"
+                                        onClick={() => {
+                                            if (emblaApi) emblaApi.scrollTo(index);
+                                        }}
+                                    >
+                                        <div
+                                            className={cn(
+                                                "relative w-full md:w-[720px] lg:w-[720px] h-[400px] md:h-[340px] border-lava/25 border-[.75px] p-8 md:p-10 flex flex-col justify-between gap-8 transition-colors duration-200",
+                                                index !== currentIndex && "hover:bg-slate/5",
+                                            )}
+                                        >
+                                            {/* Quote + text */}
+                                            <div className="flex flex-col gap-3">
+                                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                <img src="/icons/quote.svg" alt="" className="h-3 w-auto self-start" />
+                                                <p className="text-body-lg leading-relaxed text-lava">{testimonial.text}</p>
+                                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                <img src="/icons/quote.svg" alt="" className="h-3 w-auto self-end rotate-180" />
                                             </div>
-                                            <div className="flex flex-col min-w-0">
-                                                <h3 className="text-lg md:text-md">{testimonial.name}</h3>
-                                                <p className="text-white/50 font-mono text-sm md:text-sm lg:text-sm truncate">{testimonial.title}, {testimonial.company}</p>
+                                            {/* Author + logo */}
+                                            <div className="flex items-center justify-between">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="flex flex-col">
+                                                        <span className="text-body-lg font-medium text-lava">{testimonial.name}</span>
+                                                        <span className="text-body-sm text-lava/50">{testimonial.role} of {testimonial.company}</span>
+                                                    </div>
+                                                    <div className="shrink-0 [&_svg]:h-6 [&_svg]:w-auto [&_img]:h-6 [&_img]:w-auto">
+                                                        {testimonial.logo}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <p className="text-dark-foreground text-base md:text-base font-normal leading-relaxed">{testimonial.text}</p>
                                     </div>
-                                </CornerCard>
+                                ))}
                             </div>
-                        ))}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Progress bar + arrows */}
+                <div className="flex items-center gap-6">
+                    <div className="flex-1 h-0.5 bg-cream relative">
+                        <div
+                            className="absolute inset-y-0 left-0 bg-lava transition-all duration-500 ease-out"
+                            style={{
+                                width: `${((currentIndex + 1) / itemCount) * 100}%`,
+                            }}
+                        />
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                        <NavButton direction="prev" onClick={() => handleNav("prev")} />
+                        <NavButton direction="next" onClick={() => handleNav("next")} />
                     </div>
                 </div>
             </div>
-            
-            {/* Navigation controls */}
-            <div className="flex flex-row gap-3 md:gap-4 items-center justify-center">
-                <button 
-                    className="size-10 relative flex items-center justify-center hover:bg-white/5 rounded-lg transition-colors group duration-300" 
-                    onClick={() => {
-                        if (emblaApi) emblaApi.scrollPrev();
-                    }}
-                    aria-label="Previous testimonial"
-                >
-                    {/* Corner arrows */}
-                    <span className="absolute top-0 left-0 w-2 h-2 border-l border-t border-white/30 group-hover:border-accent transition-colors" />
-                    <span className="absolute top-0 right-0 w-2 h-2 border-r border-t border-white/30 group-hover:border-accent transition-colors" />
-                    <span className="absolute bottom-0 left-0 w-2 h-2 border-l border-b border-white/30 group-hover:border-accent transition-colors" />
-                    <span className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-white/30 group-hover:border-accent transition-colors" />
-                    <svg className="size-4" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15.2927 7.36992C15.2927 6.87117 14.8881 6.46651 14.3889 6.46612L4.94015 6.46613C4.18743 6.46613 3.81031 5.55582 4.34272 5.02341L7.81181 1.55432C8.16484 1.20129 8.16484 0.6291 7.81181 0.276071L7.79881 0.263067C7.44616 -0.0888145 6.87435 -0.0891969 6.52132 0.263832L0.415415 6.36974C-0.137269 6.92243 -0.137269 7.81819 0.415414 8.37088L6.52132 14.4768C6.87435 14.8298 7.44654 14.8298 7.79957 14.4768L7.81257 14.4638C8.1656 14.1107 8.1656 13.5386 7.81257 13.1855L4.3431 9.71606C3.81069 9.18364 4.18781 8.27334 4.94053 8.27334L14.3889 8.27372C14.8877 8.27372 15.2924 7.86906 15.2924 7.37031L15.2927 7.36992Z" fill="white" />
-                    </svg>
-                </button>
-                <div className="px-3 md:px-5 flex flex-row items-center gap-1.5">
-                    {Array.from({ length: itemCount }).map((_, index) => (
-                        <button 
-                            key={index} 
-                            className={cn(
-                                "h-1.5 rounded-full transition-all duration-400",
-                                index === currentIndex ? "bg-white w-4" : "bg-white/50 w-1.5"
-                            )} 
-                            onClick={() => {
-                                if (emblaApi) emblaApi.scrollTo(index);
-                            }}
-                            aria-label={`Go to testimonial ${index + 1}`}
-                        />
-                    ))}
-                </div>
-                <button 
-                    className="size-10 relative flex items-center justify-center hover:bg-white/5 rounded-lg transition-colors group" 
-                    onClick={() => {
-                        if (emblaApi) emblaApi.scrollNext();
-                    }}
-                    aria-label="Next testimonial"
-                >
-                    {/* Corner arrows */}
-                    <span className="absolute top-0 left-0 w-2 h-2 border-l border-t border-white/30 group-hover:border-accent transition-colors" />
-                    <span className="absolute top-0 right-0 w-2 h-2 border-r border-t border-white/30 group-hover:border-accent transition-colors" />
-                    <span className="absolute bottom-0 left-0 w-2 h-2 border-l border-b border-white/30 group-hover:border-accent transition-colors" />
-                    <span className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-white/30 group-hover:border-accent transition-colors" />
-                    <svg className="size-4" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0.000235885 7.36992C0.000235485 6.87117 0.404899 6.46651 0.904036 6.46612L10.3528 6.46613C11.1055 6.46613 11.4827 5.55582 10.9503 5.02341L7.48116 1.55432C7.12813 1.20129 7.12813 0.6291 7.48116 0.276071L7.49416 0.263067C7.84681 -0.0888145 8.41862 -0.0891969 8.77164 0.263832L14.8776 6.36974C15.4302 6.92243 15.4302 7.81819 14.8776 8.37088L8.77165 14.4768C8.41862 14.8298 7.84643 14.8298 7.4934 14.4768L7.4804 14.4638C7.12737 14.1107 7.12737 13.5386 7.48039 13.1855L10.9499 9.71606C11.4823 9.18364 11.1052 8.27334 10.3524 8.27334L0.904036 8.27372C0.405282 8.27372 0.000618115 7.86906 0.000618368 7.37031L0.000235885 7.36992Z" fill="white" />
-                    </svg>
-                </button>
-            </div>
         </div>
-    )
+    );
 }

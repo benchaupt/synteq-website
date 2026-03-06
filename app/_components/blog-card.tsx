@@ -24,7 +24,7 @@ export function BlogCard({
 }: BlogCardProps) {
   return (
     <Link href={href} className="group flex flex-col gap-4 md:gap-6">
-      <div className="relative aspect-video w-full overflow-hidden bg-gradient-to-br from-accent/20 to-background rounded-lg">
+      <div className="relative aspect-video w-full overflow-hidden bg-offwhite rounded-lg">
         <img
           src={image}
           alt={title}
@@ -32,16 +32,16 @@ export function BlogCard({
         />
       </div>
       <div className="flex flex-col gap-2 md:gap-3">
-        <span className="font-mono text-xs md:text-sm leading-none tracking-tight text-darker-accent uppercase">
+        <span className="text-label text-slate uppercase tracking-wide">
           {category}
         </span>
-        <h3 className="text-lg md:text-xl lg:text-2xl text-white leading-tight tracking-tight group-hover:text-accent transition-colors">
+        <h3 className="text-lg md:text-xl lg:text-2xl text-lava leading-tight tracking-tight group-hover:text-slate transition-colors">
           {title}
         </h3>
-        <p className="text-base md:text-lg text-[#ccc] leading-normal tracking-tight line-clamp-3">
+        <p className="text-body text-slate-80 leading-normal line-clamp-3">
           {truncateWords(description, 20)}
         </p>
-        <span className="relative font-mono text-xs md:text-sm leading-none tracking-tight text-darker-accent uppercase group-hover:text-accent transition-colors flex items-center gap-2 w-fit">
+        <span className="relative text-label text-slate uppercase tracking-wide group-hover:text-lava transition-colors flex items-center gap-2 w-fit">
           LEARN MORE
           <svg
             className="size-3 -rotate-45 group-hover:rotate-0 transition-transform duration-300"

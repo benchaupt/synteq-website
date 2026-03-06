@@ -9,6 +9,7 @@ interface Stat {
 }
 
 interface StatsSectionProps {
+  title?: string;
   stats: Stat[];
 }
 
@@ -18,12 +19,12 @@ function AnimatedCounter({ value }: { value: string }) {
   const [count, setCount] = useState(0);
   const [started, setStarted] = useState(false);
 
-  // Extract format info
   const hasPercent = value.includes("%");
   const hasTilde = value.includes("~");
   const hasX = value.includes("x");
   const hasPlus = value.includes("+");
   const hasSlash = value.includes("/");
+  const hasComma = value.includes(",");
   const numericValue = useMemo(
     () => parseFloat(value.replace(/[^0-9.]/g, "")),
     [value]
@@ -52,7 +53,6 @@ function AnimatedCounter({ value }: { value: string }) {
     requestAnimationFrame(animate);
   }, [isInView, started, numericValue, hasSlash]);
 
-  // Format the display value
   const formatValue = (num: number) => {
     let formatted = "";
     if (hasTilde) formatted += "~";
@@ -62,6 +62,8 @@ function AnimatedCounter({ value }: { value: string }) {
       formatted += `${num.toFixed(decimals)}%`;
     } else if (hasX) {
       formatted += `${num.toFixed(num < 10 ? 1 : 0)}x`;
+    } else if (hasComma) {
+      formatted += Math.round(num).toLocaleString("en-US");
     } else {
       formatted += Math.round(num);
     }
@@ -70,7 +72,6 @@ function AnimatedCounter({ value }: { value: string }) {
     return formatted;
   };
 
-  // For non-numeric values like "24/7", just display as-is
   if (hasSlash || isNaN(numericValue)) {
     return <span ref={ref}>{value}</span>;
   }
@@ -82,26 +83,33 @@ function AnimatedCounter({ value }: { value: string }) {
   );
 }
 
-export function StatsSection({ stats }: StatsSectionProps) {
+export function StatsSection({ title, stats }: StatsSectionProps) {
   return (
-    <div className="grid grid-cols-2 lg:flex lg:justify-between gap-8 pt-8">
-      {stats.map((stat, index) => (
-        <motion.div
-          key={index}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
-          className="flex flex-col gap-2"
-        >
-          <div className="text-4xl md:text-5xl lg:text-6xl font-sequel-book text-accent">
-            <AnimatedCounter value={stat.value} />
-          </div>
-          <p className="font-mono text-xs text-white/40 uppercase tracking-wider">
-            {stat.label}
-          </p>
-        </motion.div>
-      ))}
+    <div className="flex flex-col items-center gap-12">
+      {title && (
+        <h2 className="text-2xl md:text-3xl lg:text-3xl font-medium text-lava text-center tracking-tight">
+          {title}
+        </h2>
+      )}
+      <div className="grid grid-cols-1 lg:flex lg:justify-between gap-12 w-full">
+        {stats.map((stat, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
+            className="flex flex-col items-center gap-2 text-center"
+          >
+            <div className="text-4xl md:text-5xl lg:text-6xl font-medium text-lava tabular-nums min-w-max">
+              <AnimatedCounter value={stat.value} />
+            </div>
+            <p className="heading6">
+              {stat.label}
+            </p>
+          </motion.div>
+        ))}
+      </div>
     </div>
   );
 }
